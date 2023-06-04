@@ -36,6 +36,7 @@ Em seguida, copie as variáveis de ambiente abaixo para o seu _Run Configuration
 #### Variáveis de ambiente
 
 ```bash
+TZ=America/Sao_Paulo
 DOMAIN=localhost
 MONGODB_HOST=mongo
 MONGODB_PORT=27017
@@ -47,7 +48,6 @@ RABBITMQ_USERNAME=guest
 RABBITMQ_PASSWORD=guest
 
 DATABASE_VENDOR=postgresql
-DATABASE_USERNAME=postgres
 DATABASE_HOST=database
 DATABASE_PORT=5432
 DATABASE_URL_NODB=jdbc:postgresql://database:5432/
@@ -55,6 +55,7 @@ DATABASE_URL=jdbc:postgresql://database:5432/molens
 DATABASE_NAME=molens
 DATABASE_CLASSNAME=org.postgresql.Driver
 DATABASE_USER=postgres
+DATABASE_USERNAME=postgres
 DATABASE_PASSWORD=postgres
 DATABASE_PLATFORM=org.hibernate.dialect.PostgreSQLDialect
 VALIDATION_QUERY=SELECT 1
