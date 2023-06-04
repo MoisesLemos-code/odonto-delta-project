@@ -15,7 +15,7 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 @Controller
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
-    @Value("${broker.relay.host}")
+    @Value("127.0.0.1")
     private String brokerRelayHost;
 
     @Override
