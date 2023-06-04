@@ -1,0 +1,54 @@
+application:
+  name: odonto-delta
+  version: Desenv
+  default-logo-path: /logo_exemplo.png
+  max-rubric-base64-size: 50000
+  ssl: false
+  domain:
+    url: localhost
+spring:
+  application:
+    name: odonto
+  servlet:
+    multipart:
+      max-file-size: 30MB
+      max-request-size: 50MB
+      enabled: true
+  jackson:
+    date-format: yyyy-MM-dd'T'HH:mm:ss.SSSZ
+  rabbitmq:
+    listener:
+      simple:
+        auto-startup: false
+  liquibase:
+    enabled: false
+  datasource:
+    driver-class-name: org.h2.Driver
+    name: molens
+    url: jdbc:h2:mem:testdb
+    username: testOdonto
+    password: 'testOdonto'
+    initial-size: 5
+    max-active: 30
+    max-idle: 10
+    max-wait: 60000
+    min-evictable-idle-time-millis: 60000
+    min-idle: 5
+    testOnBorrow: false
+    testWhileIdle: false
+    time-between-eviction-runs-millis: 5000
+    validationQuery: SELECT 1
+  h2:
+    console:
+      enabled: true
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: none
+  data:
+    mongodb:
+      port: 0
+hal:
+  config:
+    migration:
+      enabled: false

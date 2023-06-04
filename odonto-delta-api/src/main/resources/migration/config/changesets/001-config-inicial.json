@@ -1,0 +1,54 @@
+[
+  {
+    "key": "hystrix.command.default.execution.timeout.enabled",
+    "value": false
+  },
+  {
+    "key": "ribbon.ConnectTimeout",
+    "value": 60000
+  },
+  {
+    "key": "ribbon.ReadTimeout",
+    "value": 60000
+  },
+  {
+    "key": "spring.profiles.default",
+    "value": "prod"
+  },
+  {
+    "key": "spring.jackson.serialization.write_dates_as_timestamps",
+    "value": false
+  },
+  {
+    "key": "spring.jackson.date-format",
+    "value": "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+  },
+  {
+    "key": "spring.servlet.multipart.max-file-size",
+    "value": "30MB"
+  },
+  {
+    "key": "spring.servlet.multipart.max-request-size",
+    "value": "50MB"
+  },
+  {
+    "key": "spring.servlet.multipart.enabled",
+    "value": true
+  },
+  {
+    "key": "server.servlet.context-path",
+    "value": ""
+  },
+  {
+    "key": "spring.data.mongodb.database",
+    "value": "molens"
+  },
+  {
+    "key": "spring.data.mongodb.grid-fs-database",
+    "value": "molens"
+  },
+  {
+    "key": "spring.data.mongodb.uri",
+    "value": "mongodb://${MONGODB_HOST}:${MONGODB_PORT}"
+  }
+]

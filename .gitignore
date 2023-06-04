@@ -1,0 +1,17 @@
+.DS_Store
+.idea
+.scannerwork
+*.iml
+.docker-database.yml
+.docker-portainer.yml
+.letsencrypt
+.oracle
+odonto-delta-app/node_modules
+odonto-delta-app/.tmp
+odonto-delta-pub/node_modules
+odonto-delta-pub/.tmp
+odonto-delta-api/target
+variables.env
+/odonto-delta-api/target/
+/odonto-delta-app/node_modules/
+/odonto-delta-app/package-lock.json

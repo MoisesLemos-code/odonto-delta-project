@@ -1,0 +1,22 @@
+version: '3'
+services:
+  rabbitmq:
+    build: rabbitmq
+    labels:
+      kompose.service.type: nodeport
+    ports:
+      - 5672:5672
+      - 15672:15672
+      - 61613:61613
+    volumes:
+      - 'rabbitmq_data:/bitnami'
+    environment:
+          - RABBITMQ_DEFAULT_USER=guest
+          - RABBITMQ_DEFAULT_PASS=guest
+volumes:
+  rabbitmq_data:
+    driver: local
+networks:
+  default:
+    external:
+      name: siganet

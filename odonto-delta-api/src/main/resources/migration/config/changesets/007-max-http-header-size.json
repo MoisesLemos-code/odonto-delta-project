@@ -1,0 +1,6 @@
+[
+  {
+    "key": "server.max-http-header-size",
+    "value": "1000KB"
+  }
+]

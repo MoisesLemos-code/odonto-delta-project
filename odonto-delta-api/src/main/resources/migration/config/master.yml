@@ -1,0 +1,25 @@
+changesetList:
+  - name: 001-config-inicial
+    operation: update
+    filePath: /migration/config/changesets/001-config-inicial.json
+  - name: 002-habilitar-liquibase
+    operation: update
+    filePath: /migration/config/changesets/002-habilitar-liquibase.json
+  - name: 003-config-rabbitmq
+    operation: update
+    filePath: /migration/config/changesets/003-config-rabbitmq.json
+  - name: 004-config-image-base64-size
+    operation: update
+    filePath: /migration/config/changesets/004-config-image-base64-size.json
+  - name: 005-validation-query
+    operation: update
+    filePath: /migration/config/changesets/005-validation-query.json
+  - name: 006-application-domain-url-ssl
+    operation: update
+    filePath: /migration/config/changesets/006-application-domain-url-ssl.json
+  - name: 007-max-http-header-size.json
+    operation: update
+    filePath: /migration/config/changesets/007-max-http-header-size.json
+  - name: 008-parametro-show-sql.json
+    operation: update
+    filePath: /migration/config/changesets/008-parametro-show-sql.json

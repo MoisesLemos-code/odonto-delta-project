@@ -1,0 +1,18 @@
+[
+  {
+    "key": "spring.rabbitmq.host",
+    "value": "${RABBITMQ_HOST}"
+  },
+  {
+    "key": "spring.rabbitmq.port",
+    "value": "${RABBITMQ_PORT}"
+  },
+  {
+    "key": "spring.rabbitmq.username",
+    "value": "${RABBITMQ_USERNAME}"
+  },
+  {
+    "key": "spring.rabbitmq.password",
+    "value": "${RABBITMQ_PASSWORD}"
+  }
+]
