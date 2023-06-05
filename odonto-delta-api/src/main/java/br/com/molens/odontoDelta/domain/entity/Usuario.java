@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Data
 @Builder
 @AllArgsConstructor
@@ -13,6 +15,7 @@ public class Usuario {
 
     private Long id;
     private String login;
+    private String senha;
     private String nome;
     private String email;
     private String cnpjCpf;
@@ -28,6 +31,6 @@ public class Usuario {
     private Boolean situacao;
     private String cargo;
     private String departamento;
-    private String dataHoraUltimoAcesso;
+    private LocalDateTime dataHoraUltimoAcesso;
 
 }

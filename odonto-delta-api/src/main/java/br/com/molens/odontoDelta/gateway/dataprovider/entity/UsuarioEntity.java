@@ -4,6 +4,7 @@ package br.com.molens.odontoDelta.gateway.dataprovider.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Data
 @Builder
@@ -82,6 +83,6 @@ public class UsuarioEntity {
     private String senha;
 
     @Column(name = "us_dthr_ultimo_acesso")
-    private String dataHoraUltimoAcesso;
+    private LocalDateTime dataHoraUltimoAcesso;
 
 }

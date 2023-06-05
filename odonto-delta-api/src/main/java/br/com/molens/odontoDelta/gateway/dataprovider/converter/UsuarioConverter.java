@@ -1,6 +1,9 @@
 package br.com.molens.odontoDelta.gateway.dataprovider.converter;
 
 import br.com.molens.odontoDelta.domain.entity.*;
+import br.com.molens.odontoDelta.gateway.dataprovider.entity.EmpresaEntity;
+import br.com.molens.odontoDelta.gateway.dataprovider.entity.MunicipioEntity;
+import br.com.molens.odontoDelta.gateway.dataprovider.entity.PerfilEntity;
 import br.com.molens.odontoDelta.gateway.dataprovider.entity.UsuarioEntity;
 import br.com.molens.odontoDelta.utils.converter.GenericConverter;
 import org.springframework.stereotype.Component;
@@ -40,6 +43,37 @@ public class UsuarioConverter extends GenericConverter<UsuarioEntity, Usuario> {
             target.setMunicipio(Municipio.builder()
                             .id(source.getMunicipio().getId())
                             .nome(source.getMunicipio().getNome())
+                    .build());
+        }
+
+        return target;
+    }
+
+    @Override
+    public UsuarioEntity from(Usuario source) {
+        UsuarioEntity target = super.from(source);
+
+        if (Objects.nonNull(source.getMunicipio())) {
+            target.setMunicipio(MunicipioEntity.builder()
+                            .id(source.getMunicipio().getId())
+                    .build());
+        }
+
+        if (Objects.nonNull(source.getEmpresa())) {
+            target.setEmpresa(EmpresaEntity.builder()
+                            .id(source.getEmpresa().getId())
+                    .build());
+        }
+
+        if (Objects.nonNull(source.getEmpresa())) {
+            target.setEmpresa(EmpresaEntity.builder()
+                    .id(source.getEmpresa().getId())
+                    .build());
+        }
+
+        if (Objects.nonNull(source.getPerfil())) {
+            target.setPerfil(PerfilEntity.builder()
+                            .id(source.getPerfil().getId())
                     .build());
         }
 

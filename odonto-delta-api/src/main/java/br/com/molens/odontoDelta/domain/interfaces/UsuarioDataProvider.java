@@ -9,4 +9,8 @@ public interface UsuarioDataProvider {
     Optional<Usuario> buscarUsuarioPorLogin(String login);
 
     Optional<Usuario> buscarPorId(Long id);
+
+    void inserir(Usuario usuario);
+
+    Usuario atualizar(Usuario usuario);
 }

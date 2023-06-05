@@ -75,7 +75,7 @@ npm run serve
 
 ### Passo 5 - Acessando projeto
 
-Pronto, agora basta acessar: http://localhost/pregao/
+Pronto, agora basta acessar: http://localhost:8080
 
 #### Usuário para testes
 

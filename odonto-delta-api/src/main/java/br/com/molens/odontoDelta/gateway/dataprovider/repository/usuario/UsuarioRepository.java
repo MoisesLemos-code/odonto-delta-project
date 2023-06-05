@@ -1,11 +1,13 @@
 package br.com.molens.odontoDelta.gateway.dataprovider.repository.usuario;
 
 import br.com.molens.odontoDelta.gateway.dataprovider.entity.UsuarioEntity;
-import org.springframework.data.repository.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
-public interface UsuarioReadOnlyRepository extends Repository<UsuarioEntity, Long> {
+@Repository
+public interface UsuarioRepository extends JpaRepository<UsuarioEntity, Long> {
 
 
     Optional<UsuarioEntity> findByLogin(String login);
