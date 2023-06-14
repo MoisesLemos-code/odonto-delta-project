@@ -9,7 +9,7 @@ public interface EmpresaDataProvider {
 
     Optional<Empresa> buscarPorId(Long id);
 
-    void inserir(Empresa usuario);
+    void inserir(Empresa empresa);
 
-    Empresa atualizar(Empresa usuario);
+    Empresa atualizar(Empresa empresa);
 }

@@ -10,7 +10,7 @@ Database: PostgreSQL 10
 
 -- Create schemas section -------------------------------------------------
 
-CREATE SCHEMA "odonto"
+CREATE SCHEMA IF NOT EXISTS "odonto"
 ;
 
 COMMENT ON SCHEMA "odonto" IS 'standard odonto schema'
@@ -397,7 +397,7 @@ CREATE TABLE "odonto"."tb_paciente"
     "pa_cnpj_cpf" varchar(255) NOT NULL,
     "pa_telefone" varchar(15),
     "pa_rg" varchar(15),
-    "pa_data_nascimento" timestamp(6),
+    "pa_data_nascimento" DATE,
     "mu_id" Integer,
     "pa_cep" varchar(11),
     "pa_bairro" varchar(50),
@@ -405,7 +405,7 @@ CREATE TABLE "odonto"."tb_paciente"
     "pa_logra_num" varchar(6),
     "pa_complemento" varchar(50),
     "em_id" Integer,
-    "pa_situacao" Boolean DEFAULT true,
+    "pa_situacao" varchar(50),
     "pa_dthr_ultima_visita" timestamp(6),
     "pa_dthr_cadastro" timestamp(6),
     "pa_dthr_alteracao" timestamp(6),
@@ -461,7 +461,7 @@ COMMENT ON COLUMN "odonto"."tb_paciente"."pa_complemento" IS 'Complemento de end
 COMMENT ON COLUMN "odonto"."tb_paciente"."em_id" IS 'Codigo da empresa relacionada ao paciente.'
 ;
 
-COMMENT ON COLUMN "odonto"."tb_paciente"."pa_situacao" IS 'Ativo; Inativo.'
+COMMENT ON COLUMN "odonto"."tb_paciente"."pa_situacao" IS 'ATIVO; INATIVO.'
 ;
 
 COMMENT ON COLUMN "odonto"."tb_paciente"."pa_dthr_ultima_visita" IS 'Data da última visita do paciente no sistema.'

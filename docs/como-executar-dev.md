@@ -26,7 +26,10 @@ npm install
 ``` 
 > Nota: Esse comando pode demorar um pouco.
 
-### Passo 4 - IntelliJ
+### Passo 4 - Criar banco de dados
+É necessário criar o banco de dados "molens" e o schema "odonto".
+
+### Passo 5 - IntelliJ
 É recomendado utilizar o IntelliJ como IDE e instalar os plugins _Lombok_ e _VueJs_.
 
 Para subir a API, utilize a funcionalidade _Run Configurations_ do IntelliJ, presente em `Run > Edit Configurations`.
@@ -73,7 +76,7 @@ script `serve`, ou pode-se abrir o diretório _odonto-delta-app_ e executar o co
 npm run serve
 ```
 
-### Passo 5 - Acessando projeto
+### Passo 6 - Acessando projeto
 
 Pronto, agora basta acessar: http://localhost:8080
 
