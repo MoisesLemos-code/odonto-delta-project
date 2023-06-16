@@ -8,4 +8,25 @@
                  relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
     </changeSet>
 
+    <changeSet id="002-carga-estados" author="moises.santos">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="0">SELECT COUNT(*) FROM ODONTO.TB_ESTADO</sqlCheck>
+        </preConditions>
+        <sqlFile dbms="postgresql" encoding="utf8" path="postgresql/002-carga-estados.sql"
+                 relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="003-carga-municipios" author="moises.santos">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="0">SELECT COUNT(*) FROM ODONTO.TB_MUNICIPIO</sqlCheck>
+        </preConditions>
+        <sqlFile dbms="postgresql" encoding="utf8" path="postgresql/003-carga-municipios.sql"
+                 relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="004-carga-desenv" author="moises.santos" context="desenv">
+        <sqlFile dbms="postgresql" encoding="utf8" path="postgresql/004-carga-desenv.sql"
+                 relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+    </changeSet>
+
 </databaseChangeLog>

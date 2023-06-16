@@ -2,11 +2,12 @@ package br.com.molens.odontoDelta.domain.usecase.paciente.inserirPaciente;
 
 
 import br.com.molens.odontoDelta.domain.entity.Empresa;
-import br.com.molens.odontoDelta.domain.entity.Paciente;
+import br.com.molens.odontoDelta.domain.entity.Municipio;
+import br.com.molens.odontoDelta.domain.exception.InserirPacienteException;
 import br.com.molens.odontoDelta.domain.interfaces.EmpresaDataProvider;
+import br.com.molens.odontoDelta.domain.interfaces.MunicipioDataProvider;
 import br.com.molens.odontoDelta.domain.interfaces.PacienteDataProvider;
 import br.com.molens.odontoDelta.domain.usecase.paciente.inserirPaciente.converter.InserirPacienteOutputConverter;
-import br.com.molens.odontoDelta.domain.usecase.paciente.inserirPaciente.exception.InserirPacienteException;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 
@@ -19,25 +20,47 @@ public class InserirPacienteUsecase {
 
     private PacienteDataProvider pacienteDataProvider;
     private EmpresaDataProvider empresaDataProvider;
+    private MunicipioDataProvider municipioDataProvider;
     private InserirPacienteOutputConverter inserirPacienteOutputConverter;
 
-    public Paciente executar(InserirPacienteInput input){
+    public InserirPacienteOuput executar(InserirPacienteInput input) {
         validarDadosEntrada(input);
         validarEmpresa(input);
-        return pacienteDataProvider.inserir(inserirPacienteOutputConverter.from(input));
+        validarMunicipio(input);
+        validarPacienteJaCadastrado(input);
+        return inserirPaciente(input);
     }
 
     private void validarDadosEntrada(InserirPacienteInput input) {
 
-        if(Objects.isNull(input.getEmpresaId()) || input.getEmpresaId() == 0){
+        if (Objects.isNull(input.getEmpresaId()) || input.getEmpresaId() == 0) {
             throw new InserirPacienteException("Identificador de empresa inválido.");
         }
     }
 
     private void validarEmpresa(InserirPacienteInput input) {
         Optional<Empresa> empresa = empresaDataProvider.buscarPorId(input.getEmpresaId());
-        if(!empresa.isPresent()){
+        if (!empresa.isPresent()) {
             throw new InserirPacienteException("Empresa não identificada.");
         }
+    }
+
+    private void validarMunicipio(InserirPacienteInput input) {
+        Optional<Municipio> municipio = municipioDataProvider.buscarPorId(input.getEmpresaId());
+        if (!municipio.isPresent()) {
+            throw new InserirPacienteException("Municipio não identificado.");
+        }
+    }
+
+    private void validarPacienteJaCadastrado(InserirPacienteInput input) {
+        if (pacienteDataProvider.existeCnpjCpf(input.getCnpjCpf())) {
+            throw new InserirPacienteException("O paciente do documento " + input.getCnpjCpf() + " já está cadastrado.");
+        }
+    }
+
+    private InserirPacienteOuput inserirPaciente(InserirPacienteInput input) {
+        Long pacienteId = pacienteDataProvider.inserir(inserirPacienteOutputConverter.from(input));
+
+        return new InserirPacienteOuput(pacienteId);
     }
 }

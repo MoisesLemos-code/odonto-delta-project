@@ -62,7 +62,7 @@ public class PacienteEntity {
     @Column(name = "pa_data_nascimento")
     private Date dataNascimento;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "mu_id")
     private MunicipioEntity municipio;
 

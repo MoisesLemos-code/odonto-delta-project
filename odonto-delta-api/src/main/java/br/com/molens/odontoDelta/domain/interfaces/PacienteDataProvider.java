@@ -9,7 +9,9 @@ public interface PacienteDataProvider {
 
     Optional<Paciente> buscarPorId(Long id);
 
-    Paciente inserir(Paciente paciente);
+    boolean existeCnpjCpf(String cpfCnpj);
+
+    Long inserir(Paciente paciente);
 
     Paciente atualizar(Paciente paciente);
 

@@ -2,12 +2,11 @@ package br.com.molens.odontoDelta.adapter.entrypoint.controller.paciente;
 
 import br.com.molens.odontoDelta.domain.entity.Paciente;
 import br.com.molens.odontoDelta.domain.usecase.paciente.inserirPaciente.InserirPacienteInput;
+import br.com.molens.odontoDelta.domain.usecase.paciente.inserirPaciente.InserirPacienteOuput;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -16,7 +15,11 @@ import javax.validation.Valid;
 public interface PacienteController {
 
     @ApiOperation(value = "Insere um novo paciente")
-    @PostMapping
-    ResponseEntity<Paciente> inserir(@RequestBody @Valid InserirPacienteInput input);
+    @PostMapping("/inserir")
+    ResponseEntity<InserirPacienteOuput> inserir(@RequestBody @Valid InserirPacienteInput input);
+
+    @ApiOperation(value = "Busca único Paciente")
+    @GetMapping(value = "{id}")
+    ResponseEntity<Paciente> buscarPorId(@PathVariable @Valid Long id);
 
 }

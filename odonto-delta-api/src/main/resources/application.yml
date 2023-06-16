@@ -2,8 +2,6 @@ application:
   version: @project.version@
   name: odonto-delta-api
   default-logo-path: /img/logo.png
-server:
-  port: 5050
 spring:
   application:
     name: odonto-delta-api
@@ -11,13 +9,17 @@ spring:
     change-log: classpath:migration/master.xml
     liquibase-schema: odonto
     default-schema: odonto
+    contexts: ${LIQUIBASE_CONTEXTS}
   servlet:
     multipart:
       max-file-size: 10MB
       max-request-size: 10MB
       enabled: true
   datasource:
-    url: jdbc:postgresql://localhost:5432/molens
-    username: postgres
-    password: postgres
-    driver-class-name: org.postgresql.Driver
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
+    driver-class-name: ${DATABASE_CLASSNAME}
+jwt:
+  secret: DiaSeteDeAbrilDoisMilEVinte
+  expiration: 23400000

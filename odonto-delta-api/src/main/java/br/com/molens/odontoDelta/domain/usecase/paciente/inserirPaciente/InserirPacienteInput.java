@@ -29,7 +29,7 @@ public class InserirPacienteInput {
     private String telefone;
     private String rg;
     @DateFormat(message="O parametro 'dataNascimento' é inválido, o formato esperado yyyy-MM-dd")
-    private Date dataNascimento;
+    private String dataNascimento;
     private Long municipioId;
     private String cep;
     private String bairro;

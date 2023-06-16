@@ -1,6 +1,7 @@
 package br.com.molens.odontoDelta.application.factory.paciente;
 
 import br.com.molens.odontoDelta.domain.interfaces.EmpresaDataProvider;
+import br.com.molens.odontoDelta.domain.interfaces.MunicipioDataProvider;
 import br.com.molens.odontoDelta.domain.interfaces.PacienteDataProvider;
 import br.com.molens.odontoDelta.domain.usecase.paciente.inserirPaciente.InserirPacienteUsecase;
 import br.com.molens.odontoDelta.domain.usecase.paciente.inserirPaciente.converter.InserirPacienteOutputConverter;
@@ -20,6 +21,9 @@ public class InserirPacienteFactory {
     @Autowired
     private EmpresaDataProvider empresaDataProvider;
 
+    @Autowired
+    private MunicipioDataProvider municipioDataProvider;
+
     @Bean("InserirPacienteUsecase")
     @DependsOn({"InserirPacienteOutputConverter"})
     @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
@@ -27,6 +31,7 @@ public class InserirPacienteFactory {
         return InserirPacienteUsecase.builder()
                 .pacienteDataProvider(pacienteDataProvider)
                 .empresaDataProvider(empresaDataProvider)
+                .municipioDataProvider(municipioDataProvider)
                 .inserirPacienteOutputConverter(inserirPacienteOutputConverter)
                 .build();
     }

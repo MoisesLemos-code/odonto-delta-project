@@ -175,9 +175,6 @@ COMMENT ON COLUMN "odonto"."tb_municipio"."mu_nome" IS 'Nome do municipio.'
 COMMENT ON COLUMN "odonto"."tb_municipio"."uf_id" IS 'Código do estado.'
 ;
 
-CREATE UNIQUE INDEX "uk_municipio" ON "odonto"."tb_municipio" ("mu_nome")
-;
-
 ALTER TABLE "odonto"."tb_municipio" ADD CONSTRAINT "pk_municipio" PRIMARY KEY ("mu_id")
 ;
 
@@ -468,10 +465,6 @@ COMMENT ON COLUMN "odonto"."tb_paciente"."pa_dthr_ultima_visita" IS 'Data da úl
 ;
 
 CREATE UNIQUE INDEX "uk_paciente_cnpj_cpf" ON "odonto"."tb_paciente" ("pa_cnpj_cpf")
-;
-CREATE UNIQUE INDEX "uk_paciente_empresa" ON "odonto"."tb_paciente" ("em_id")
-;
-CREATE UNIQUE INDEX "uk_paciente_municipio" ON "odonto"."tb_paciente" ("mu_id")
 ;
 
 ALTER TABLE "odonto"."tb_paciente" ADD CONSTRAINT "pk_tb_paciente" PRIMARY KEY ("pa_id")

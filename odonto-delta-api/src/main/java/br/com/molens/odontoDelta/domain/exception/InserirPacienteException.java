@@ -1,4 +1,4 @@
-package br.com.molens.odontoDelta.domain.usecase.paciente.inserirPaciente.exception;
+package br.com.molens.odontoDelta.domain.exception;
 
 public class InserirPacienteException extends RuntimeException {
 

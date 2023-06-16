@@ -20,14 +20,20 @@ public class PacienteDataProviderImpl implements PacienteDataProvider {
 
     @Override
     public Optional<Paciente> buscarPorId(Long id) {
-        return repository.findById(id).map(converter::to);
+        return repository.buscarPorId(id).map(converter::to);
     }
 
     @Override
-    public Paciente inserir(Paciente paciente) {
+    public boolean existeCnpjCpf(String cpfCnpj) {
+        return repository.existsByCnpjCpf(cpfCnpj);
+    }
+
+    @Override
+    public Long inserir(Paciente paciente) {
         paciente.setId(null);
         PacienteEntity pacienteEntity = repository.save(converter.from(paciente));
-        return converter.to(pacienteEntity);
+
+        return pacienteEntity.getId();
     }
 
     @Override
