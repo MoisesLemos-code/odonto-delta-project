@@ -13,7 +13,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Table(name = "TB_MUNICIPIO", schema = "odonto")
 @SequenceGenerator(name = "seq_municipio", sequenceName = "odonto.seq_municipio", allocationSize = 1)
-public class MunicipioEntity {
+public class Municipio {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "seq_municipio")
@@ -26,7 +26,7 @@ public class MunicipioEntity {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "uf_id")
-    private EstadoEntity estado;
+    private Estado estado;
 
     @Column(name = "mu_cod_ibge")
     private String codigoIbge;

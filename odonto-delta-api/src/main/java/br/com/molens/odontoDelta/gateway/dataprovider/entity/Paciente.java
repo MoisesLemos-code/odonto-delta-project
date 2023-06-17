@@ -1,24 +1,10 @@
 package br.com.molens.odontoDelta.gateway.dataprovider.entity;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import br.com.molens.odontoDelta.domain.entity.FiltroBase;
+import lombok.*;
 
-import javax.persistence.AttributeOverride;
-import javax.persistence.AttributeOverrides;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -36,7 +22,7 @@ import java.util.Date;
         @AttributeOverride(name = "usuarioCadastro", column = @Column(name = "pa_usuario_cadastro")),
         @AttributeOverride(name = "usuarioAlteracao", column = @Column(name = "pa_usuario_alteracao"))
 })
-public class PacienteEntity {
+public class Paciente {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "seq_paciente")
@@ -64,7 +50,7 @@ public class PacienteEntity {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "mu_id")
-    private MunicipioEntity municipio;
+    private Municipio municipio;
 
     @Column(name = "pa_cep")
     private String cep;
@@ -83,12 +69,22 @@ public class PacienteEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "em_id")
-    private EmpresaEntity empresa;
+    private Empresa empresa;
 
     @Column(name = "pa_situacao")
     private String situacao;
 
     @Column(name = "pa_dthr_ultima_visita")
     private LocalDateTime ultimaVisita;
+
+    @EqualsAndHashCode(callSuper = true)
+    @Data
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class Filtro extends FiltroBase {
+        String conteudo;
+        private Long empresaId;
+    }
 
 }

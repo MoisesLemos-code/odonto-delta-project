@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
         @AttributeOverride(name = "usuarioCadastro", column = @Column(name = "us_usuario_cadastro")),
         @AttributeOverride(name = "usuarioAlteracao", column = @Column(name = "us_usuario_alteracao"))
 })
-public class UsuarioEntity {
+public class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "seq_usuario")
@@ -45,7 +45,7 @@ public class UsuarioEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "mu_id")
-    private MunicipioEntity municipio;
+    private Municipio municipio;
 
     @Column(name = "us_cep")
     private String cep;
@@ -64,11 +64,11 @@ public class UsuarioEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "pf_id")
-    private PerfilEntity perfil;
+    private Perfil perfil;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "em_id")
-    private EmpresaEntity empresa;
+    private Empresa empresa;
 
     @Column(name = "us_situacao")
     private Boolean situacao;

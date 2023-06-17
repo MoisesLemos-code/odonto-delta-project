@@ -1,7 +1,7 @@
 package br.com.molens.odontoDelta.domain.interfaces;
 
 
-import br.com.molens.odontoDelta.domain.entity.Usuario;
+import br.com.molens.odontoDelta.gateway.dataprovider.entity.Usuario;
 
 import java.util.Optional;
 

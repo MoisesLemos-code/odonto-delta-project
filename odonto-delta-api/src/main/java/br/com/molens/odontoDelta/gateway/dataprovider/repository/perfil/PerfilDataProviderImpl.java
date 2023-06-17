@@ -1,9 +1,7 @@
 package br.com.molens.odontoDelta.gateway.dataprovider.repository.perfil;
 
-import br.com.molens.odontoDelta.domain.entity.Perfil;
 import br.com.molens.odontoDelta.domain.interfaces.PerfilDataProvider;
-import br.com.molens.odontoDelta.gateway.dataprovider.converter.PerfilConverter;
-import br.com.molens.odontoDelta.gateway.dataprovider.entity.PerfilEntity;
+import br.com.molens.odontoDelta.gateway.dataprovider.entity.Perfil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -15,23 +13,19 @@ public class PerfilDataProviderImpl implements PerfilDataProvider {
     @Autowired
     private PerfilRepository repository;
 
-    @Autowired
-    private PerfilConverter converter;
-
     @Override
     public Optional<Perfil> buscarPorId(Long id) {
-        return repository.findById(id).map(converter::to);
+        return repository.findById(id);
     }
 
     @Override
     public void inserir(Perfil perfil) {
-        repository.save(converter.from(perfil));
+        repository.save(perfil);
     }
 
     @Override
     public Perfil atualizar(Perfil perfil) {
-        PerfilEntity perfilEntity = repository.save(converter.from(perfil));
-        return converter.to(perfilEntity);
+        return repository.save(perfil);
     }
 
     @Override

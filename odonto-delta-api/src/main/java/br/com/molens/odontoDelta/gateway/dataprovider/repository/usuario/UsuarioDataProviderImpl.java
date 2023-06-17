@@ -1,9 +1,7 @@
 package br.com.molens.odontoDelta.gateway.dataprovider.repository.usuario;
 
-import br.com.molens.odontoDelta.domain.entity.Usuario;
 import br.com.molens.odontoDelta.domain.interfaces.UsuarioDataProvider;
-import br.com.molens.odontoDelta.gateway.dataprovider.converter.UsuarioConverter;
-import br.com.molens.odontoDelta.gateway.dataprovider.entity.UsuarioEntity;
+import br.com.molens.odontoDelta.gateway.dataprovider.entity.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -15,27 +13,23 @@ public class UsuarioDataProviderImpl implements UsuarioDataProvider {
     @Autowired
     private UsuarioRepository repository;
 
-    @Autowired
-    private UsuarioConverter converter;
-
     @Override
     public Optional<Usuario> buscarUsuarioPorLogin(String login) {
-        return repository.findByLogin(login).map(converter::to);
+        return repository.findByLogin(login);
     }
 
     @Override
     public Optional<Usuario> buscarPorId(Long id) {
-        return repository.findById(id).map(converter::to);
+        return repository.findById(id);
     }
 
     @Override
     public void inserir(Usuario usuario) {
-        repository.save(converter.from(usuario));
+        repository.save(usuario);
     }
 
     @Override
     public Usuario atualizar(Usuario usuario) {
-        UsuarioEntity usuarioEntity = repository.save(converter.from(usuario));
-        return converter.to(usuarioEntity);
+        return repository.save(usuario);
     }
 }

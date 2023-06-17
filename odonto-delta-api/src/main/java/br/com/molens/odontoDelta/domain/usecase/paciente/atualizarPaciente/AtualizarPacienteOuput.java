@@ -1,36 +1,35 @@
-package br.com.molens.odontoDelta.domain.entity;
+package br.com.molens.odontoDelta.domain.usecase.paciente.atualizarPaciente;
 
+import br.com.molens.odontoDelta.gateway.dataprovider.entity.Empresa;
+import br.com.molens.odontoDelta.gateway.dataprovider.entity.Municipio;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Data
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
-public class Usuario {
+@AllArgsConstructor
+public class AtualizarPacienteOuput {
 
     private Long id;
-    private String login;
-    private String senha;
     private String nome;
     private String email;
     private String cnpjCpf;
     private String telefone;
+    private String rg;
+    private Date dataNascimento;
     private Municipio municipio;
     private String cep;
     private String bairro;
     private String logradouro;
     private String logradouroNumero;
     private String complemento;
-    private Perfil perfil;
     private Empresa empresa;
-    private Boolean situacao;
-    private String cargo;
-    private String departamento;
-    private LocalDateTime dataHoraUltimoAcesso;
-
+    private String situacao;
+    private LocalDateTime ultimaVisita;
 }

@@ -1,13 +1,14 @@
 package br.com.molens.odontoDelta.domain.interfaces;
 
 
-import br.com.molens.odontoDelta.domain.entity.Paciente;
+import br.com.molens.odontoDelta.domain.entity.ListaPaginada;
+import br.com.molens.odontoDelta.gateway.dataprovider.entity.Paciente;
 
 import java.util.Optional;
 
 public interface PacienteDataProvider {
 
-    Optional<Paciente> buscarPorId(Long id);
+    Optional<Paciente> buscarPorId(Long pacienteId, Long empresaId);
 
     boolean existeCnpjCpf(String cpfCnpj);
 
@@ -15,5 +16,9 @@ public interface PacienteDataProvider {
 
     Paciente atualizar(Paciente paciente);
 
-    void remover(Paciente paciente);
+    void remover(Long id);
+
+    ListaPaginada<Paciente> buscaPaginadaComFiltro(Paciente.Filtro filtro);
+
+    Optional<Paciente> buscarPorCnpjCpf(String cnpjCpf);
 }

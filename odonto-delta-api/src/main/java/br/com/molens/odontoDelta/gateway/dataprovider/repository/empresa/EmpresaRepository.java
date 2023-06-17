@@ -1,13 +1,13 @@
 package br.com.molens.odontoDelta.gateway.dataprovider.repository.empresa;
 
-import br.com.molens.odontoDelta.gateway.dataprovider.entity.EmpresaEntity;
+import br.com.molens.odontoDelta.gateway.dataprovider.entity.Empresa;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
-public interface EmpresaRepository extends JpaRepository<EmpresaEntity, Long> {
+public interface EmpresaRepository extends JpaRepository<Empresa, Long> {
 
-    Optional<EmpresaEntity> findById(Long id);
+    Optional<Empresa> findById(Long id);
 }

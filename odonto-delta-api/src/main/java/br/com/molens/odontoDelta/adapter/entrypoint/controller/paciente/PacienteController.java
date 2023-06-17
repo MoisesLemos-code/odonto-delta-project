@@ -1,6 +1,10 @@
 package br.com.molens.odontoDelta.adapter.entrypoint.controller.paciente;
 
-import br.com.molens.odontoDelta.domain.entity.Paciente;
+import br.com.molens.odontoDelta.domain.usecase.paciente.atualizarPaciente.AtualizarPacienteInput;
+import br.com.molens.odontoDelta.domain.usecase.paciente.atualizarPaciente.AtualizarPacienteOuput;
+import br.com.molens.odontoDelta.domain.usecase.paciente.buscaPaginada.BuscaPaginadaPacienteInput;
+import br.com.molens.odontoDelta.domain.usecase.paciente.buscaPaginada.BuscaPaginadaPacienteOutput;
+import br.com.molens.odontoDelta.domain.usecase.paciente.buscarPacientePorId.BuscarPacientePorIdOutput;
 import br.com.molens.odontoDelta.domain.usecase.paciente.inserirPaciente.InserirPacienteInput;
 import br.com.molens.odontoDelta.domain.usecase.paciente.inserirPaciente.InserirPacienteOuput;
 import io.swagger.annotations.Api;
@@ -19,7 +23,20 @@ public interface PacienteController {
     ResponseEntity<InserirPacienteOuput> inserir(@RequestBody @Valid InserirPacienteInput input);
 
     @ApiOperation(value = "Busca único Paciente")
-    @GetMapping(value = "{id}")
-    ResponseEntity<Paciente> buscarPorId(@PathVariable @Valid Long id);
+    @GetMapping(value = "{empresaId}/{pacienteId}")
+    ResponseEntity<BuscarPacientePorIdOutput> buscarPorId(@PathVariable @Valid Long pacienteId, @PathVariable @Valid Long empresaId);
+
+    @ApiOperation(value = "Busca paginada de Paciente")
+    @GetMapping
+    ResponseEntity<BuscaPaginadaPacienteOutput> buscar(@Valid BuscaPaginadaPacienteInput inputData);
+
+    @ApiOperation(value = "Remove um Paciente")
+    @DeleteMapping(value = "{empresaId}/{pacienteId}")
+    ResponseEntity<Void> remover(@PathVariable @Valid Long pacienteId, @PathVariable @Valid Long empresaId);
+
+    @ApiOperation(value = "Atualiza um Paciente")
+    @PutMapping(value = "{pacienteId}")
+    ResponseEntity<AtualizarPacienteOuput> atualizar(@PathVariable Long pacienteId, @RequestBody @Valid AtualizarPacienteInput input);
+
 
 }

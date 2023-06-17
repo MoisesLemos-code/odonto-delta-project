@@ -13,7 +13,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Table(name = "TB_ESTADO", schema = "odonto")
 @SequenceGenerator(name = "seq_estado", sequenceName = "odonto.seq_estado", allocationSize = 1)
-public class EstadoEntity {
+public class Estado {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "seq_estado")

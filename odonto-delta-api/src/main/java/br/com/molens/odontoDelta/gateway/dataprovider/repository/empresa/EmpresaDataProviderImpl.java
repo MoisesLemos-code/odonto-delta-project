@@ -1,9 +1,7 @@
 package br.com.molens.odontoDelta.gateway.dataprovider.repository.empresa;
 
-import br.com.molens.odontoDelta.domain.entity.Empresa;
 import br.com.molens.odontoDelta.domain.interfaces.EmpresaDataProvider;
-import br.com.molens.odontoDelta.gateway.dataprovider.converter.EmpresaConverter;
-import br.com.molens.odontoDelta.gateway.dataprovider.entity.EmpresaEntity;
+import br.com.molens.odontoDelta.gateway.dataprovider.entity.Empresa;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -15,22 +13,18 @@ public class EmpresaDataProviderImpl implements EmpresaDataProvider {
     @Autowired
     private EmpresaRepository repository;
 
-    @Autowired
-    private EmpresaConverter converter;
-
     @Override
     public Optional<Empresa> buscarPorId(Long id) {
-        return repository.findById(id).map(converter::to);
+        return repository.findById(id);
     }
 
     @Override
     public void inserir(Empresa empresa) {
-        repository.save(converter.from(empresa));
+        repository.save(empresa);
     }
 
     @Override
     public Empresa atualizar(Empresa empresa) {
-        EmpresaEntity empresaEntity = repository.save(converter.from(empresa));
-        return converter.to(empresaEntity);
+        return repository.save(empresa);
     }
 }

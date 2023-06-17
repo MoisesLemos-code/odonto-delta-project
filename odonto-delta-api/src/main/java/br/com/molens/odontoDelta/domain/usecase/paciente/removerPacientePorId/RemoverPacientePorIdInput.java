@@ -1,4 +1,4 @@
-package br.com.molens.odontoDelta.domain.usecase.paciente.buscarPacientePorId;
+package br.com.molens.odontoDelta.domain.usecase.paciente.removerPacientePorId;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class BuscarPacientePorIdInput {
+public class RemoverPacientePorIdInput {
 
     @NotNull(message = "O atributo 'pacienteId' não pode ser nulo.")
     private Long pacienteId;

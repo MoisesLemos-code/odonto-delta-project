@@ -1,8 +1,7 @@
 package br.com.molens.odontoDelta.application.config;
 
 import br.com.molens.odontoDelta.adapter.gateway.integration.utils.exception.AsaasValidationException;
-import br.com.molens.odontoDelta.domain.exception.BuscarPacientePorIdException;
-import br.com.molens.odontoDelta.domain.exception.InserirPacienteException;
+import br.com.molens.odontoDelta.domain.exception.*;
 import br.com.molens.odontoDelta.utils.exception.ExceptionCommons;
 import br.com.molens.odontoDelta.utils.exception.ExceptionServer;
 import br.com.molens.odontoDelta.utils.exception.ExceptionValidFields;
@@ -78,7 +77,10 @@ public class ExceptionHandlerConfig {
     @ExceptionHandler(
             {
                     InserirPacienteException.class,
-                    BuscarPacientePorIdException.class
+                    BuscarPacientePorIdException.class,
+                    RemoverPacientePorIdException.class,
+                    AtualizarPacienteException.class,
+                    JaExistePacienteCnpjCpfException.class
             })
     public ResponseEntity<ExceptionServer> handlerMethodArgumentNotValidException(
             RuntimeException exception) {

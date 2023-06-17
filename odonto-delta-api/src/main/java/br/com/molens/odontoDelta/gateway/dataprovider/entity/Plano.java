@@ -20,7 +20,7 @@ import java.math.BigDecimal;
         @AttributeOverride(name = "usuarioCadastro", column = @Column(name = "pla_usuario_cadastro")),
         @AttributeOverride(name = "usuarioAlteracao", column = @Column(name = "pla_usuario_alteracao"))
 })
-public class PlanoEntity {
+public class Plano {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "seq_plano")

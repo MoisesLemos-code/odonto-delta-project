@@ -1,13 +1,13 @@
 package br.com.molens.odontoDelta.domain.usecase.paciente.inserirPaciente;
 
-
-import br.com.molens.odontoDelta.domain.entity.Empresa;
-import br.com.molens.odontoDelta.domain.entity.Municipio;
 import br.com.molens.odontoDelta.domain.exception.InserirPacienteException;
+import br.com.molens.odontoDelta.domain.exception.JaExistePacienteCnpjCpfException;
 import br.com.molens.odontoDelta.domain.interfaces.EmpresaDataProvider;
 import br.com.molens.odontoDelta.domain.interfaces.MunicipioDataProvider;
 import br.com.molens.odontoDelta.domain.interfaces.PacienteDataProvider;
 import br.com.molens.odontoDelta.domain.usecase.paciente.inserirPaciente.converter.InserirPacienteOutputConverter;
+import br.com.molens.odontoDelta.gateway.dataprovider.entity.Empresa;
+import br.com.molens.odontoDelta.gateway.dataprovider.entity.Municipio;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 
@@ -54,7 +54,7 @@ public class InserirPacienteUsecase {
 
     private void validarPacienteJaCadastrado(InserirPacienteInput input) {
         if (pacienteDataProvider.existeCnpjCpf(input.getCnpjCpf())) {
-            throw new InserirPacienteException("O paciente do documento " + input.getCnpjCpf() + " já está cadastrado.");
+            throw new JaExistePacienteCnpjCpfException();
         }
     }
 

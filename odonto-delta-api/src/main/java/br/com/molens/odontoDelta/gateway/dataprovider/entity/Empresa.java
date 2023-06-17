@@ -19,7 +19,7 @@ import javax.persistence.*;
         @AttributeOverride(name = "usuarioCadastro", column = @Column(name = "em_usuario_cadastro")),
         @AttributeOverride(name = "usuarioAlteracao", column = @Column(name = "em_usuario_alteracao"))
 })
-public class EmpresaEntity {
+public class Empresa {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "seq_empresa")
@@ -48,9 +48,9 @@ public class EmpresaEntity {
     @Column(name = "em_logra_num")
     private String logradouroNumero;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "mu_id")
-    private MunicipioEntity municipio;
+    private Municipio municipio;
 
     @Column(name = "em_telefone")
     private String telefone;
@@ -58,8 +58,8 @@ public class EmpresaEntity {
     @Column(name = "em_insc_est")
     private String inscricaoEstadual;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "pla_id")
-    private PlanoEntity plano;
+    private Plano plano;
 
 }

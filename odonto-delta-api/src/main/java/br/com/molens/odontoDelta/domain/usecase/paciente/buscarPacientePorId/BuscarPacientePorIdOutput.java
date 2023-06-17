@@ -1,5 +1,7 @@
-package br.com.molens.odontoDelta.domain.entity;
+package br.com.molens.odontoDelta.domain.usecase.paciente.buscarPacientePorId;
 
+import br.com.molens.odontoDelta.gateway.dataprovider.entity.Empresa;
+import br.com.molens.odontoDelta.gateway.dataprovider.entity.Municipio;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,9 +12,9 @@ import java.util.Date;
 
 @Data
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
-public class Paciente {
+@AllArgsConstructor
+public class BuscarPacientePorIdOutput {
 
     private Long id;
     private String nome;
