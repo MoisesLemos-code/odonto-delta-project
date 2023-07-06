@@ -27,12 +27,12 @@ public class InserirPacienteFactory {
     @Bean("InserirPacienteUsecase")
     @DependsOn({"InserirPacienteOutputConverter"})
     @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-    public InserirPacienteUsecase criar(InserirPacienteOutputConverter inserirPacienteOutputConverter) {
+    public InserirPacienteUsecase criar(InserirPacienteOutputConverter outputConverter) {
         return InserirPacienteUsecase.builder()
                 .pacienteDataProvider(pacienteDataProvider)
                 .empresaDataProvider(empresaDataProvider)
                 .municipioDataProvider(municipioDataProvider)
-                .inserirPacienteOutputConverter(inserirPacienteOutputConverter)
+                .outputConverter(outputConverter)
                 .build();
     }
 

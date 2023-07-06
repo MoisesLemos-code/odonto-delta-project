@@ -1,12 +1,19 @@
 import accounting from 'accounting'
 
-export default (valor, casasDecimais) => {
+export default (valor) => {
     if (!valor) {
-        return 'R$0,00'
+        return '-'
     }
     if (!isNaN(valor)) {
-        const casasDecimaisQtd = casasDecimais ? casasDecimais : 2
-        return 'R$ ' + accounting.formatNumber(accounting.unformat(valor, ','), casasDecimaisQtd, '.', ',')
+        const moneyConfig = {
+            decimal: ',',
+            thousands: '.',
+            prefix: '',
+            suffix: '',
+            precision: 2,
+            masked: true
+        }
+        return 'R$ ' + accounting.formatMoney(valor, moneyConfig.prefix, moneyConfig.precision, moneyConfig.thousands, moneyConfig.decimal)
     }
     return valor
 }

@@ -1,12 +1,13 @@
-import valorParaReal from './valor-para-real'
 import textoSemValor from './texto-sem-valor'
-import valorParaData from './valor-para-data'
+import filterEnum from './filterEnum'
+import filterDate from './filterDate'
+import valorParaReal from './valor-para-real'
 
 export default {
     install(Vue) {
-        Vue.filter('valorParaReal', valorParaReal)
         Vue.filter('textoSemValor', textoSemValor)
-        Vue.filter('valorParaData', valorParaData)
+        Vue.filter('filterEnum', filterEnum)
+        Vue.filter('filterDate', filterDate)
+        Vue.filter('valorParaReal', valorParaReal)
     }
-
 }

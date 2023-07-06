@@ -37,14 +37,5 @@ module.exports = {
         'text-summary',
         'lcov'
     ],
-    coverageDirectory: '.tmp/coverage',
-    coveragePathIgnorePatterns: [
-        '<rootDir>/src/application/',
-        '<rootDir>/src/views/routers/',
-        '<rootDir>/src/plugins/',
-        '<rootDir>/src/main.js',
-        '<rootDir>/vue.config.js',
-        '<rootDir>/jest.config.js',
-        '<rootDir>/babel.config.js'
-    ]
+    coverageDirectory: '.tmp'
 }

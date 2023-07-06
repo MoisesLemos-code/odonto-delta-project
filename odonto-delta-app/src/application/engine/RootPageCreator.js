@@ -1,10 +1,8 @@
 import Vue from 'vue'
-import {buildMenu} from '@azinformatica/loki'
 import RootPage from '@/views/pages/RootPage.vue'
 import router from '@/views/routers'
 import store from '@/core/store'
 import exceptionHandler from '@/core/exceptions/ExceptionHandler'
-import {mutationTypes} from '@/core/constants'
 import vuetify from '@/plugins/vuetify'
 
 class RootPageCreator {
@@ -14,9 +12,6 @@ class RootPageCreator {
             store,
             vuetify,
             render: h => h(RootPage),
-            created() {
-                this.$store.commit(mutationTypes.LOKI.SET_MENU_ACTIONS, buildMenu(store, router))
-            },
             errorCaptured(error) {
                 exceptionHandler.execute(error)
                 return false

@@ -1,21 +1,41 @@
-import { mutationTypes } from '@/core/constants'
+import {mutationTypes} from '@/core/constants'
 
 export default class Alert {
+
     constructor(store) {
         this.store = store
     }
 
-    showError(key) {
-        if (!key) {
-            key = 'Não foi possível realizar a operação!'
+    showError(mensagem) {
+        if (!mensagem) {
+            mensagem = 'Não foi possível realizar a operação!'
         }
-        this.store.commit(mutationTypes.LOKI.SHOW_ALERT, { message: key, type: 'error' })
+        this.store.commit(mutationTypes.COMUM.SET_NOTIFICACAO, {
+            mensagem,
+            cor: 'error',
+            mostrar: true
+        })
     }
 
-    showInfo(key) {
-        if (!key) {
-            key = 'Operação realizada com sucesso!'
+    showAlert(mensagem) {
+        if (!mensagem) {
+            mensagem = 'Oops, há algo errado!'
         }
-        this.store.commit(mutationTypes.LOKI.SHOW_ALERT, { message: key, type: 'success' })
+        this.store.commit(mutationTypes.COMUM.SET_NOTIFICACAO, {
+            mensagem,
+            cor: 'warning',
+            mostrar: true
+        })
+    }
+
+    showInfo(mensagem) {
+        if (!mensagem) {
+            mensagem = 'Operação realizada com sucesso!'
+        }
+        this.store.commit(mutationTypes.COMUM.SET_NOTIFICACAO, {
+            mensagem,
+            cor: 'success',
+            mostrar: true
+        })
     }
 }

@@ -21,7 +21,7 @@ public class InserirPacienteUsecase {
     private PacienteDataProvider pacienteDataProvider;
     private EmpresaDataProvider empresaDataProvider;
     private MunicipioDataProvider municipioDataProvider;
-    private InserirPacienteOutputConverter inserirPacienteOutputConverter;
+    private InserirPacienteOutputConverter outputConverter;
 
     public InserirPacienteOuput executar(InserirPacienteInput input) {
         validarDadosEntrada(input);
@@ -59,7 +59,7 @@ public class InserirPacienteUsecase {
     }
 
     private InserirPacienteOuput inserirPaciente(InserirPacienteInput input) {
-        Long pacienteId = pacienteDataProvider.inserir(inserirPacienteOutputConverter.from(input));
+        Long pacienteId = pacienteDataProvider.inserir(outputConverter.from(input));
 
         return new InserirPacienteOuput(pacienteId);
     }

@@ -80,7 +80,8 @@ public class ExceptionHandlerConfig {
                     BuscarPacientePorIdException.class,
                     RemoverPacientePorIdException.class,
                     AtualizarPacienteException.class,
-                    JaExistePacienteCnpjCpfException.class
+                    JaExistePacienteCnpjCpfException.class,
+                    InserirUsuarioException.class
             })
     public ResponseEntity<ExceptionServer> handlerMethodArgumentNotValidException(
             RuntimeException exception) {

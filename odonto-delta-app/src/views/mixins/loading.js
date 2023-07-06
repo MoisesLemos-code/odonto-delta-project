@@ -1,5 +1,5 @@
-import { mapMutations } from 'vuex'
-import { mutationTypes } from '@/core/constants'
+import {mapMutations} from 'vuex'
+import {mutationTypes} from '@/core/constants'
 
 export default {
     methods: {
@@ -13,9 +13,8 @@ export default {
             this.setLoadingMessage(mensagem)
         },
         ...mapMutations([
-            mutationTypes.LOKI.DISABLE_GLOBAL_LOADING,
-            mutationTypes.LOKI.ENABLE_GLOBAL_LOADING,
-            mutationTypes.LOKI.SET_LOADING_MESSAGE
-        ])
+            mutationTypes.COMUM.DISABLE_GLOBAL_LOADING,
+            mutationTypes.COMUM.ENABLE_GLOBAL_LOADING,
+            mutationTypes.COMUM.SET_LOADING_MESSAGE])
     }
 }

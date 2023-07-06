@@ -1,4 +1,6 @@
 import HttpStatus from '@/core/utils/HttpStatus'
+import exceptionHandler from '@/core/exceptions/ExceptionHandler'
+
 
 export default class ApiErrorValidations extends Error {
     constructor(message, response) {
@@ -8,6 +10,12 @@ export default class ApiErrorValidations extends Error {
         this.httpStatus = new HttpStatus(response)
 
         if (Error.captureStackTrace) {
+            if(this.unauthorized()){
+                exceptionHandler.handleUnauthorized()
+            }
+            if(this.loginInvalid()){
+               exceptionHandler.tratarError(response)
+            }
             Error.captureStackTrace(this, ApiErrorValidations)
         }
     }
@@ -20,16 +28,24 @@ export default class ApiErrorValidations extends Error {
         return this.httpStatus.internalError()
     }
 
+    badRequest(){
+        return this.httpStatus.badRequest()
+    }
+
     unauthorized() {
         return this.httpStatus.unauthorized()
     }
 
-    notFound() {
-        return this.httpStatus.notFound()
+    loginInvalid() {
+        return this.httpStatus.loginInvalid()
     }
 
-    badRequest() {
-        return this.httpStatus.badRequest()
+    forbidden(){
+        return this.httpStatus.forbidden()
+    }
+
+    notFound() {
+        return this.httpStatus.notFound()
     }
 
     multipleErrors() {

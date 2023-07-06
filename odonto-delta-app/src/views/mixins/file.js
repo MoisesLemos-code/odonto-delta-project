@@ -1,21 +1,13 @@
 export default {
     methods: {
-        criarLinkDownload(uri) {
-            return `${this.$store.state.loki.file.api}${uri}`
+        criarLinkDownload(uri, thumbnail) {
+            return `${this.$store.state.loki.file.api}?uri=${uri}&thumbnail=${thumbnail === true}`
         },
-
-        criarLinkDownloadArquivo(id) {
-            return `api/arquivos/${id}/download`
+        criarLinkDownloadTemporario(uri, thumbnail) {
+            return `${this.$store.state.loki.file.api}/temporario?uri=${uri}&thumbnail=${thumbnail === true}`
         },
-
-        async downloadArquivo(arquivoId, nome) {
-            const url = this.criarLinkDownloadArquivo(arquivoId)
-            const btn = document.createElement('a')
-            btn.setAttribute('href', url)
-            btn.setAttribute('download', nome)
-            document.body.appendChild(btn)
-            btn.click()
-            btn.remove()
+        tratarErroEnvioArquivo() {
+            this.mostrarNotificacaoErro(`O arquivo selecionado deve ter no máximo ${this.$store.state.loki.file.maxSize}.`)
         }
     }
 }

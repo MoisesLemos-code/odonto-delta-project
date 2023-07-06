@@ -24,12 +24,20 @@ public class UsuarioDataProviderImpl implements UsuarioDataProvider {
     }
 
     @Override
-    public void inserir(Usuario usuario) {
-        repository.save(usuario);
+    public Long inserir(Usuario usuario) {
+        usuario.setId(null);
+        Usuario usuarioEntity = repository.save(usuario);
+
+        return usuarioEntity.getId();
     }
 
     @Override
     public Usuario atualizar(Usuario usuario) {
         return repository.save(usuario);
+    }
+
+    @Override
+    public void remover(Long id) {
+        repository.deleteById(id);
     }
 }

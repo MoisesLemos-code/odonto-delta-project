@@ -1,13 +1,14 @@
 import axios from 'axios'
 import store from '@/core/store'
-import { LoadingScreen } from '@/core/utils'
+import {LoadingScreen} from '@/core/utils'
 import ApiErrorValidations from '@/core/exceptions/ApiErrorValidations'
+import LocalStorageManager from '@/core/utils/LocalStorageManager'
 
 const loading = new LoadingScreen(store)
 
 class InterceptadorHttp {
     async execute() {
-        return new Promise(resolve => {
+        return new Promise((resolve) => {
             this.registrarInterceptadores()
             this.setarVariaveisFixasNoHeaderDaRequest()
             resolve()
@@ -15,6 +16,7 @@ class InterceptadorHttp {
     }
 
     registrarInterceptadores() {
+        axios.defaults.baseURL = process.env.VUE_APP_BASE_API_URL
         axios.interceptors.request.use(this.tratarRequest, this.tratarErros)
         axios.interceptors.response.use(this.tratarResponse, this.tratarErros)
     }
@@ -24,8 +26,13 @@ class InterceptadorHttp {
     }
 
     tratarRequest(config) {
+        const usuario = LocalStorageManager.getItemStorage()
+        let request = config
+        if(usuario && usuario.token){
+            request.headers = {... request.headers, authorization: usuario.token }
+        }
         loading.start()
-        return config
+        return request
     }
 
     tratarResponse(response) {
@@ -35,7 +42,7 @@ class InterceptadorHttp {
 
     tratarErros(error) {
         loading.stop()
-        throw new ApiErrorValidations(error.response.data.message, error.response)
+        throw new ApiErrorValidations(error.response.data, error.response)
     }
 }
 

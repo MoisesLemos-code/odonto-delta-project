@@ -1,23 +1,29 @@
-import actionTypes from './action-types'
+import actionTypes from './actionTypes'
 import exceptions from './exceptions'
-import formatosDefault from './formatos-default'
-import fusoHorario from './fuso-horario'
+import formatosDefault from './formatosDefault'
+import fusoHorario from './fusoHorario'
 import mensagens from './mensagens'
-import mutationTypes from './mutation-types'
-import notificacoesDefault from './notificacoes-default'
+import mutationTypes from './mutationTypes'
+import notificacoesDefault from './notificacoesDefault'
 import produto from './produto'
-import routesNames from './routes-names'
-import extensoes from './extensoes'
+import situacoesPaciente from './enums/situacoesPaciente'
+import tipoPaciente from './enums/tipoPaciente'
+import statusOrcamento from './enums/statusOrcamento'
+import humanizaPermissao from './enums/humanizaPermissao'
+import facesDente from './enums/facesDente'
 
 export {
     actionTypes,
     exceptions,
     formatosDefault,
     fusoHorario,
-    mutationTypes,
     mensagens,
+    mutationTypes,
     notificacoesDefault,
     produto,
-    routesNames,
-    extensoes
+    situacoesPaciente,
+    tipoPaciente,
+    statusOrcamento,
+    humanizaPermissao,
+    facesDente
 }

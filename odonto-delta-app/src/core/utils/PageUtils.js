@@ -10,4 +10,5 @@ export default class PageUtils {
     reload() {
         setTimeout(() => window.location.reload(), 3000)
     }
+
 }

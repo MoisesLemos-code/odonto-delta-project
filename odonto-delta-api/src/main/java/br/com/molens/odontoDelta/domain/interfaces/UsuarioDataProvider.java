@@ -10,7 +10,9 @@ public interface UsuarioDataProvider {
 
     Optional<Usuario> buscarPorId(Long id);
 
-    void inserir(Usuario usuario);
+    Long inserir(Usuario usuario);
 
     Usuario atualizar(Usuario usuario);
+
+    void remover(Long id);
 }

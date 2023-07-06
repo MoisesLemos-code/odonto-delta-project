@@ -2,9 +2,8 @@ import packageJson from '../../../package'
 
 export default {
     VERSAO: packageJson.version,
-    NOME: 'pregao',
-    PARAMETRO_NAMESPACE: 'az.pregao',
+    NOME: 'patrimonio-mobiliario',
+    PARAMETRO_NAMESPACE: 'az.compra-direta',
     COPYRIGHT: 'Todos os direitos reservados',
-    LOGOUT_URL: '/hal/logout',
-    API_URL: 'api/swagger-ui.html#/'
+    LOGOUT_URL: '/hal/logout'
 }

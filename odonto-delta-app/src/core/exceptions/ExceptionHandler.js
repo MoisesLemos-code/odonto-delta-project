@@ -1,8 +1,8 @@
 import router from '@/views/routers'
 import store from '@/core/store'
-import { Alert, PageUtils } from '@/core/utils'
+import {Alert, PageUtils} from '@/core/utils'
 import ApiErrorValidations from '@/core/exceptions/ApiErrorValidations'
-import { mensagens } from '@/core/constants'
+import {mensagens, mutationTypes} from '@/core/constants'
 
 const alert = new Alert(store)
 const pageUtils = new PageUtils(router)
@@ -14,11 +14,15 @@ class ExceptionHandler {
         } else {
             this.tratarError(error)
         }
+        store.commit(mutationTypes.COMUM.SET_GLOBAL_LOADING, false)
+        store.commit(mutationTypes.COMUM.SET_LOADING_MESSAGE, store.state.defaultLoadingMessage)
     }
 
     tratarValidationError(error) {
         if (error.multipleErrors()) {
-            this.handleMultipleErrors(error.response.data.errorMessages)
+            this.handleMultipleErrors(error.response.data.errors)
+        }else if (error.forbidden()) {
+            this.tratarAlertPadrao(error.response.data)
         } else if (error.disconnected()) {
             this.handleDisconnected()
         } else if (error.unauthorized()) {
@@ -27,24 +31,31 @@ class ExceptionHandler {
             this.handleInternalError(error)
         } else if (error.notFound()) {
             this.handleNotFound(error)
-        } else if (error.badRequest()) {
-            this.tratarError(error)
+        } else if (error.badRequest()){
+            if(error.response.data.errors && error.response.data.errors.length > 0) {
+                this.handleMultipleErrors(error.response.data.errors)
+            }else{
+                this.tratarErrorPadrao(error.response.data)
+            }
         } else {
             this.handleUnknown()
         }
     }
 
+    tratarErrorPadrao(error) {
+        alert.showError(error.msg)
+    }
+
+    tratarAlertPadrao(error) {
+        alert.showAlert(error.msg)
+    }
+
     tratarError(error) {
-        alert.showError(error.message)
+        alert.showError(error.data.message)
     }
 
     handleMultipleErrors(errors) {
-        const errorMsg = errors
-            .map(err => err.message)
-            .reduce((total, prox) => {
-                return total + ' \n' + prox
-            })
-        alert.showError(errorMsg)
+        alert.showError(errors[0].message)
     }
 
     handleDisconnected() {
@@ -54,19 +65,29 @@ class ExceptionHandler {
 
     handleUnauthorized() {
         alert.showError(mensagens.LOST_SESSION)
+        localStorage.removeItem('login')
         pageUtils.reload()
     }
 
     handleNotFound(error) {
         this.handleInternalError(error)
+        pageUtils.goToHome()
     }
 
     handleInternalError(error) {
-        const msgFormatted = error.response.data.message
-        if (msgFormatted) {
-            alert.showError(msgFormatted)
-        } else {
-            this.handleUnknown()
+        if(typeof error.response.data.message !== 'undefined'){
+            const msgFormatted = error.data.errors[0]
+            if (msgFormatted) {
+                alert.showError(msgFormatted)
+            } else {
+                this.handleUnknown()
+            }
+        }else{
+            var dataView = new DataView(error.data)
+            var decoder = new TextDecoder('utf8')
+            var response = JSON.parse(decoder.decode(dataView))
+            var message = response['message']
+            alert.showError(message)
         }
     }
 

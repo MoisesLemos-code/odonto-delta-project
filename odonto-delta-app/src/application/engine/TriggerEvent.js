@@ -1,6 +1,7 @@
 import listeners from '../listeners'
 
 class TriggerEvent {
+
     async triggerOnStartEvents() {
         const starterPromise = Promise.resolve(null)
         const tasks = Object.keys(listeners)

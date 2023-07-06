@@ -1,22 +1,40 @@
 import axios from 'axios'
+import SearchUrlBuilder from '@/core/utils/SearchUrlBuilder'
+
 
 class UsuarioApiClient {
 
-    async atualiazarSessaoDominio(produtoId, dominioTipoCliente) {
-        return await axios.put(`/hal/usuario/sessao/atualizarSessaoMultiplosDominios?produtoId=${produtoId}
-        &dominioTipoCliente=${dominioTipoCliente}`)
+    async efetuarLogin(dados) {
+        return await axios.post('/login', dados)
     }
 
-    async buscarLogado(produtoId) {
-        return await axios.get(`/hal/usuario/sessao?produtoId=${produtoId}`)
+    async verificarLogin(){
+        return await axios.get('/auth/userData')
     }
 
-    async buscarPermissoesUsuario(produtoId) {
-        return await axios.get(`/hal/usuario/sessao?produtoId=${produtoId}`)
+    async buscarTodos(filtros, paginacao) {
+        const url = SearchUrlBuilder.build(
+            '/usuario/page',
+            filtros,
+            paginacao
+        )
+        return axios.get(url)
     }
 
-    async editar(payload) {
-        return await axios.post('/hal/editarUsuario', payload)
+    async buscarId(id){
+        return await axios.get(`/usuario/find/${id}`)
+    }
+
+    async cadastrar(dados){
+        return await axios.post('/usuario/insert', dados)
+    }
+
+    async editar(dados) {
+        return await axios.put(`/usuario/update/${dados.id}`, dados)
+    }
+
+    async remover(id){
+        return await axios.delete(`/usuario/delete/${id}`)
     }
 }
 

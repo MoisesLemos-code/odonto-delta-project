@@ -1,6 +1,6 @@
 export default (value) => {
     if (!value) {
-        return '-------'
+        return '----'
     }
     return value
 }
