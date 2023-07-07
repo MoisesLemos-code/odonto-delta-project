@@ -10,7 +10,7 @@
               <v-form @submit.prevent="efetuarLogin">
               <v-card-text>
                 <v-text-field
-                    v-model="usuario.nome"
+                    v-model="usuario.login"
                     name="usuario"
                     label="Usuário"
                     prepend-inner-icon="mdi-account"
@@ -57,11 +57,11 @@
                 loadingBtn: false,
                 showPassword: false,
                 usuario: {
-                    nome: '',
+                    login: '',
                     senha: ''
                 },
                 usuarioAutenticado: {
-                    nome: '',
+                    login: '',
                     token: ''
                 }
             }
@@ -79,7 +79,7 @@
                         if (data) {
                             this.usuarioAutenticado = {
                                 codigo: data.userId,
-                                nome: data.nome,
+                                nome: data.login,
                                 nomeCompleto: data.nomeCompleto,
                                 token: data.token,
                                 admin: data.isAdmin

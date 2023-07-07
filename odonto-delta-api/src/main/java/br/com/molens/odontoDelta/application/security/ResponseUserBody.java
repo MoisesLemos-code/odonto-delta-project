@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class ResponseUserBody {
 
     private Long userId;
-    private String nome;
+    private String login;
     private String nomeCompleto;
     private String token;
     private boolean isAdmin;

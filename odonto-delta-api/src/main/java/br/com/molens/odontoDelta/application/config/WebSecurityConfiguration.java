@@ -84,7 +84,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         config.setAllowedHeaders(Arrays.asList("X-Requested-With", "Origin", "Content-Type", "Accept", "Authorization"));
         config.setExposedHeaders(Arrays.asList("Access-Control-Allow-Headers", "Authorization, x-xsrf-token, Access-Control-Allow-Headers, Origin, Accept, X-Requested-With, " +
                 "Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers"));
-        config.addAllowedOrigin("*");
+        config.setAllowedOriginPatterns(Arrays.asList("*"));
         config.addAllowedHeader("*");
         config.addAllowedMethod("OPTIONS");
         config.addAllowedMethod("GET");

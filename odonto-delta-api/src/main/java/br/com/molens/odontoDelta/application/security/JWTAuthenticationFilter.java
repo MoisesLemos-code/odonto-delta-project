@@ -38,7 +38,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 			CredenciaisDTO creds = new ObjectMapper()
 	                .readValue(req.getInputStream(), CredenciaisDTO.class);
 	
-	        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(creds.getNome(), creds.getSenha(), new ArrayList<>());
+	        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(creds.getLogin(), creds.getSenha(), new ArrayList<>());
 	        
 	        Authentication auth = authenticationManager.authenticate(authToken);
 	        return auth;
@@ -82,7 +82,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             return "{\"timestamp\": " + date + ", "
                 + "\"status\": 406, "
                 + "\"error\": \"Não autorizado\", "
-                + "\"message\": \"Nome ou senha inválidos!\", "
+                + "\"message\": \"Usuário ou senha inválidos!\", "
                 + "\"path\": \"/login\"}";
         }
     }

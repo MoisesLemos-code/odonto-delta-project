@@ -16,7 +16,7 @@ class InterceptadorHttp {
     }
 
     registrarInterceptadores() {
-        axios.defaults.baseURL = process.env.VUE_APP_BASE_API_URL
+        axios.defaults.baseURL = process.env.VUE_APP_BASE_API_URL || 'http://localhost:5050/odonto/api'
         axios.interceptors.request.use(this.tratarRequest, this.tratarErros)
         axios.interceptors.response.use(this.tratarResponse, this.tratarErros)
     }

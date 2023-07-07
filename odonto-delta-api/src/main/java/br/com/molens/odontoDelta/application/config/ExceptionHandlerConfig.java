@@ -7,6 +7,7 @@ import br.com.molens.odontoDelta.utils.exception.ExceptionServer;
 import br.com.molens.odontoDelta.utils.exception.ExceptionValidFields;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
@@ -81,7 +82,8 @@ public class ExceptionHandlerConfig {
                     RemoverPacientePorIdException.class,
                     AtualizarPacienteException.class,
                     JaExistePacienteCnpjCpfException.class,
-                    InserirUsuarioException.class
+                    InserirUsuarioException.class,
+                    UsernameNotFoundException.class
             })
     public ResponseEntity<ExceptionServer> handlerMethodArgumentNotValidException(
             RuntimeException exception) {

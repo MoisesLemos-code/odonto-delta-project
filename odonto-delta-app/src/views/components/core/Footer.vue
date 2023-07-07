@@ -5,7 +5,7 @@
          <router-link to="ajuda" class="copyright footer-items">Precisa de ajuda?</router-link>
       </span>
         <span class="copyright mr-2">{{$store.state.comum.nomeSistema}}  -</span>
-        <span class="copyright">&copy;{{ (new Date()).getFullYear() }}</span>
+        <span class="copyright">&copy; 2023</span>
       <v-img :src="require('@/images/Icon_dente_01.png')" max-height="24" max-width="24"/>
     </v-footer>
 </template>

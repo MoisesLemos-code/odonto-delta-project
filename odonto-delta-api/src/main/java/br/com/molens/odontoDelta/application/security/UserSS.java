@@ -17,11 +17,13 @@ public class UserSS implements UserDetails {
 	private static final long serialVersionUID = 1L;
 	
 	private Long id;
-	private String nome;
+	private String login;
 	private String nomeCompleto;
 	private String senha;
 	private boolean isAdmin;
 	Collection<? extends GrantedAuthority> authorities;
+
+	public Long getId() {return id;}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -35,7 +37,7 @@ public class UserSS implements UserDetails {
 
 	@Override
 	public String getUsername() {
-		return nome;
+		return login;
 	}
 
 	@Override
