@@ -5,22 +5,21 @@ import br.com.molens.odontoDelta.domain.interfaces.SessaoUsuarioDataProvider;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-import java.util.Objects;
-
 @AllArgsConstructor
 @NoArgsConstructor
 public class SessaoUsuarioDataProviderImpl implements SessaoUsuarioDataProvider {
 
+    private Long id;
     private String login;
-    private Long empresaId;
+    private String nomeCompleto;
 
     @Override
     public SessaoUsuario get() {
         SessaoUsuario sessaoUsuario = SessaoUsuario
                 .builder()
+                .id(this.id)
                 .login(this.login)
-                .empresaId(this.empresaId)
+                .nomeCompleto(this.nomeCompleto)
                 .build();
 
         return sessaoUsuario;

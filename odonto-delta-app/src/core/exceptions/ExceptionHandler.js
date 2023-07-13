@@ -21,7 +21,7 @@ class ExceptionHandler {
     tratarValidationError(error) {
         if (error.multipleErrors()) {
             this.handleMultipleErrors(error.response.data.errors)
-        }else if (error.forbidden()) {
+        } else if (error.forbidden()) {
             this.tratarAlertPadrao(error.response.data)
         } else if (error.disconnected()) {
             this.handleDisconnected()
@@ -31,10 +31,10 @@ class ExceptionHandler {
             this.handleInternalError(error)
         } else if (error.notFound()) {
             this.handleNotFound(error)
-        } else if (error.badRequest()){
-            if(error.response.data.errors && error.response.data.errors.length > 0) {
+        } else if (error.badRequest()) {
+            if (error.response.data.errors && error.response.data.errors.length > 0) {
                 this.handleMultipleErrors(error.response.data.errors)
-            }else{
+            } else {
                 this.tratarErrorPadrao(error.response.data)
             }
         } else {
@@ -51,7 +51,11 @@ class ExceptionHandler {
     }
 
     tratarError(error) {
-        alert.showError(error.data.message)
+        if (error.data.message) {
+            alert.showError(error.data.message)
+        } else if (error.data.mensagem) {
+            alert.showError(error.data.mensagem)
+        }
     }
 
     handleMultipleErrors(errors) {
@@ -75,14 +79,17 @@ class ExceptionHandler {
     }
 
     handleInternalError(error) {
-        if(typeof error.response.data.message !== 'undefined'){
-            const msgFormatted = error.data.errors[0]
+        console.log('--- handleInternalError')
+        console.log(error.response)
+        console.log(error.data)
+        if (typeof error.response.data.message !== 'undefined') {
+            const msgFormatted = error.response.data.message
             if (msgFormatted) {
                 alert.showError(msgFormatted)
             } else {
                 this.handleUnknown()
             }
-        }else{
+        } else {
             var dataView = new DataView(error.data)
             var decoder = new TextDecoder('utf8')
             var response = JSON.parse(decoder.decode(dataView))

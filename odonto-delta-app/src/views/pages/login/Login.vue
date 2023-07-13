@@ -78,7 +78,7 @@
                         )
                         if (data) {
                             this.usuarioAutenticado = {
-                                codigo: data.userId,
+                                id: data.id,
                                 nome: data.login,
                                 nomeCompleto: data.nomeCompleto,
                                 token: data.token,

@@ -3,11 +3,11 @@ export default {
     asideHide: true,
     avatarActions: {},
     menuActions: [
-        {
-            path: '/orcamentos',
-            icon: 'mdi-account-cash',
-            name: 'Orçamentos'
-        },
+        // {
+        //     path: '/orcamentos',
+        //     icon: 'mdi-account-cash',
+        //     name: 'Orçamentos'
+        // },
         {
             path: '/cadastros',
             icon: 'mdi-book',
@@ -25,23 +25,23 @@ export default {
                 }
             ]
         },
-        {
-            path: '/relatorios',
-            icon: 'mdi-clipboard-outline',
-            name: 'Relatórios',
-            children: [
-                {
-                    path: '/relatorios/pacientes',
-                    icon: 'mdi-clipboard-account-outline',
-                    name: 'Relatório de Pacientes'
-                },
-                {
-                    path: '/relatorios/orcamentos',
-                    icon: 'mdi-clipboard-pulse-outline',
-                    name: 'Relatório de Orçamentos'
-                },
-            ]
-        },
+        // {
+        //     path: '/relatorios',
+        //     icon: 'mdi-clipboard-outline',
+        //     name: 'Relatórios',
+        //     children: [
+        //         {
+        //             path: '/relatorios/pacientes',
+        //             icon: 'mdi-clipboard-account-outline',
+        //             name: 'Relatório de Pacientes'
+        //         },
+        //         {
+        //             path: '/relatorios/orcamentos',
+        //             icon: 'mdi-clipboard-pulse-outline',
+        //             name: 'Relatório de Orçamentos'
+        //         },
+        //     ]
+        // },
         {
             path: '/configuracao',
             icon: 'settings',

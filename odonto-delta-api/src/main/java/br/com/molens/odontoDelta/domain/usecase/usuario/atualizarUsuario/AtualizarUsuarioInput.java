@@ -1,8 +1,5 @@
-package br.com.molens.odontoDelta.domain.usecase.paciente.atualizarPaciente;
+package br.com.molens.odontoDelta.domain.usecase.usuario.atualizarUsuario;
 
-import br.com.molens.odontoDelta.domain.enumeration.SituacaoPacienteEnum;
-import br.com.molens.odontoDelta.utils.validate.DateFormat;
-import br.com.molens.odontoDelta.utils.validate.enumeration.EnumType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,28 +13,30 @@ import javax.validation.constraints.Pattern;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AtualizarPacienteInput {
+public class AtualizarUsuarioInput {
 
-    private Long pacienteId;
+    private Long id;
+    @NotNull(message = "O atributo 'login' não pode ser nulo.")
+    private String login;
     @NotNull(message = "O atributo 'nome' não pode ser nulo.")
     private String nome;
     @Email(message = "O parametro 'email' é inválido")
     private String email;
     @Pattern(regexp = "^\\d{11}$|^\\d{14}$", message = "O parametro 'cpfCnpj' é inválido")
     private String cnpjCpf;
-    @NotNull(message = "O atributo 'telefone' não pode ser nulo.")
     private String telefone;
-    private String rg;
-    @DateFormat(message="O parametro 'dataNascimento' é inválido, o formato esperado yyyy-MM-dd")
-    private String dataNascimento;
     private Long municipioId;
     private String cep;
     private String bairro;
     private String logradouro;
     private String logradouroNumero;
     private String complemento;
+    private Long perfilId;
     @NotNull(message = "O atributo 'empresaId' não pode ser nulo.")
     private Long empresaId;
-    @EnumType(enumClass = SituacaoPacienteEnum.class, message = "O atributo 'situação' é inválido.")
-    private String situacao;
+    private Boolean situacao;
+    private String cargo;
+    private String departamento;
+    @NotNull(message = "O atributo 'senha' não pode ser nulo.")
+    private String senha;
 }

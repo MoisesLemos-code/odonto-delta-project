@@ -10,11 +10,10 @@ export default class ApiErrorValidations extends Error {
         this.httpStatus = new HttpStatus(response)
 
         if (Error.captureStackTrace) {
-            if(this.unauthorized()){
+            if (this.unauthorized()) {
                 exceptionHandler.handleUnauthorized()
-            }
-            if(this.loginInvalid()){
-               exceptionHandler.tratarError(response)
+            } else {
+                exceptionHandler.tratarError(response)
             }
             Error.captureStackTrace(this, ApiErrorValidations)
         }
@@ -28,7 +27,7 @@ export default class ApiErrorValidations extends Error {
         return this.httpStatus.internalError()
     }
 
-    badRequest(){
+    badRequest() {
         return this.httpStatus.badRequest()
     }
 
@@ -40,7 +39,7 @@ export default class ApiErrorValidations extends Error {
         return this.httpStatus.loginInvalid()
     }
 
-    forbidden(){
+    forbidden() {
         return this.httpStatus.forbidden()
     }
 

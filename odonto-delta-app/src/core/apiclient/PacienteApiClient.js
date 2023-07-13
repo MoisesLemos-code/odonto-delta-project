@@ -9,7 +9,7 @@ class PacienteApiClient {
 
     async buscarTodos(filtros, paginacao) {
         const url = SearchUrlBuilder.buildAvanced(
-            '/paciente/page',
+            '/paciente',
             filtros,
             paginacao
         )

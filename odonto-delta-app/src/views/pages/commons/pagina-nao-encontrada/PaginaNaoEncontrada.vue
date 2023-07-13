@@ -42,7 +42,7 @@
         name: 'PaginaNaoEncontrada',
         methods: {
             irParaInicio() {
-                this.$router.push({name: 'OrcamentoListagem'})
+                this.$router.push({name: 'Inicio'})
             }
         }
     }

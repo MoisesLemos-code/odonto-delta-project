@@ -25,6 +25,8 @@ export default {
 
     [mutationTypes.COMUM.SET_USUARIO_LOGADO](state, usuario) {
         LocalStorageManager.setItemStorage(usuario)
+        console.log('--- SET_USUARIO_LOGADO')
+        console.log(usuario)
         usuario.token = null
         state.comum.usuarioLogado = usuario
     },

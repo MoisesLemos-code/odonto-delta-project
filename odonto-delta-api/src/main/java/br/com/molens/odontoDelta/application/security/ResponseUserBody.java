@@ -11,10 +11,21 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ResponseUserBody {
 
-    private Long userId;
+    private Long id;
     private String login;
     private String nomeCompleto;
     private String token;
     private boolean isAdmin;
+    private Empresa empresa;
+
+    @Data
+    @Builder
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public class Empresa{
+        private Long id;
+        private String nome;
+        private String razaoSocial;
+    }
 
 }

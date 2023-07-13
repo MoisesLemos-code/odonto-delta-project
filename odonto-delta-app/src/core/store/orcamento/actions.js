@@ -17,7 +17,7 @@ export default {
     },
 
     async [actionTypes.ORCAMENTO.CADASTRAR_ORCAMENTO]({getters}, dados) {
-        const usuarioLogado = {id: getters.getUsuarioLogado.userId}
+        const usuarioLogado = {id: getters.getUsuarioLogado.id}
         dados = {...dados, usuario: usuarioLogado}
         const {data} = await api.orcamento.cadastrar(dados)
         return data

@@ -15,5 +15,6 @@ public class SessaoUsuario {
 
     private Long id;
     private String login;
+    private String nomeCompleto;
     private Long empresaId;
 }

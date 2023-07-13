@@ -1,5 +1,7 @@
 package br.com.molens.odontoDelta.application.factory;
 
+import br.com.molens.odontoDelta.application.security.UserSS;
+import br.com.molens.odontoDelta.domain.exception.SessaoUsuarioException;
 import br.com.molens.odontoDelta.domain.interfaces.SessaoUsuarioDataProvider;
 import br.com.molens.odontoDelta.gateway.dataprovider.repository.sessaousuario.SessaoUsuarioDataProviderImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.context.WebApplicationContext;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,18 +21,19 @@ public class SessaoUsuarioFactory {
     @Autowired
     private HttpServletRequest request;
 
-    @Bean
+    @Bean("SessaoUsuarioDataProvider")
     @Scope(value = WebApplicationContext.SCOPE_REQUEST, proxyMode = ScopedProxyMode.TARGET_CLASS)
     public SessaoUsuarioDataProvider createSessaoUsuarioDataProviderImpl() {
-        String username = "";
-        Long empresaID = 0L;
         if (Objects.nonNull(request.getUserPrincipal())) {
-            username = "teste";
+            UserSS usuario = (UserSS) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            return new SessaoUsuarioDataProviderImpl(
+                    usuario.getId(),
+                    usuario.getLogin(),
+                    usuario.getNomeCompleto()
+            );
+        } else {
+            throw new SessaoUsuarioException("Falha ao obter informações do usuário!");
         }
 
-        return new SessaoUsuarioDataProviderImpl(
-                username,
-                empresaID
-        );
     }
 }

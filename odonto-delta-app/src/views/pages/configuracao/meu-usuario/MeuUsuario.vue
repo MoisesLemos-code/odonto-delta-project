@@ -152,8 +152,10 @@
                 await this.verificarToken()
             },
             async buscarUsuarioLogado(){
-                const { userId } = this.getUsuarioLogado()
-                this.dadosGerais = await this.buscarUsuarioPorId(userId)
+                const { id } = this.getUsuarioLogado()
+                console.log('--- buscarUsuarioLogado')
+                console.log(id)
+                this.dadosGerais = await this.buscarUsuarioPorId(id)
                 this.dadosGerais.permissao = null
                 this.nome_usuario = this.dadosGerais.nome_completo
             },

@@ -22,7 +22,7 @@ class UsuarioApiClient {
     }
 
     async buscarId(id){
-        return await axios.get(`/usuario/find/${id}`)
+        return await axios.get(`/usuario/${id}`)
     }
 
     async cadastrar(dados){

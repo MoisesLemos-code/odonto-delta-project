@@ -19,7 +19,10 @@ export default {
     },
 
     async [actionTypes.USUARIO.BUSCAR_USUARIO_POR_ID](context, id) {
+        console.log('--- BUSCAR_USUARIO_POR_ID')
+        console.log(id)
         const {data} = await api.usuario.buscarId(id)
+        console.log(data)
         return data
     }
 }

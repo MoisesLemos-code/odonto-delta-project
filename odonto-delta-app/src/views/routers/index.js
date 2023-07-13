@@ -18,15 +18,15 @@ let router = new Router({
             path: '/',
             name: 'Inicio',
             redirect: () => {
-                return { name: 'OrcamentoListagem' }
+                return { name: 'PacienteListagem' }
             },
         },
         ...comum,
         ...login,
-        ...orcamento,
+        //...orcamento,
         ...cadastros,
         ...configuracao,
-        ...relatorios
+        //...relatorios
     ],
     scrollBehavior: (to, from, savedPosition) => {
         let scrollTo = 0
