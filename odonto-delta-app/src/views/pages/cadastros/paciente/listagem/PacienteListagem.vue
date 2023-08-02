@@ -64,7 +64,8 @@
                 itens: [],
                 paginas: 0,
                 totalItens: 0,
-                maxInputPesquisa: 30
+                maxInputPesquisa: 30,
+                empresaId: 0
             }
         },
         methods: {
@@ -82,11 +83,14 @@
                 await this.buscaTodosPacientes()
             },
             async buscaTodosPacientes() {
-                const resultado = await this.buscarTodosPacientes()
+                this.empresaId = this.$store.state.comum.usuarioLogado.empresa.id
+                const resultado = await this.buscarTodosPacientes(this.empresaId)
                 if (resultado) {
                     this.itens = resultado.content
                     this.paginas = resultado.totalPages
                     this.totalItens = resultado.totalElements
+                    console.log('--- buscaTodosPacientes')
+                    console.log(resultado)
                 }
             },
             getFiltros() {

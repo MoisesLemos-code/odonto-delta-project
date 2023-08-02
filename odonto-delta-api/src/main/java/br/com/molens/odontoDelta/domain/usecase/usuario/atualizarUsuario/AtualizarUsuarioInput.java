@@ -39,4 +39,6 @@ public class AtualizarUsuarioInput {
     private String departamento;
     @NotNull(message = "O atributo 'senha' não pode ser nulo.")
     private String senha;
+    @NotNull(message = "O atributo 'senhaAtual' não pode ser nulo.")
+    private String senhaAtual;
 }

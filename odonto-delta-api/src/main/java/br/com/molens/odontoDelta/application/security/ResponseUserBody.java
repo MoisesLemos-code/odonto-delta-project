@@ -22,7 +22,7 @@ public class ResponseUserBody {
     @Builder
     @AllArgsConstructor
     @NoArgsConstructor
-    public class Empresa{
+    public static class Empresa{
         private Long id;
         private String nome;
         private String razaoSocial;

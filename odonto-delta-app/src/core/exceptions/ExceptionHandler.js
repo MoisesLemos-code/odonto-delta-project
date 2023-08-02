@@ -43,11 +43,11 @@ class ExceptionHandler {
     }
 
     tratarErrorPadrao(error) {
-        alert.showError(error.msg)
+        alert.showError(error.mensagem)
     }
 
     tratarAlertPadrao(error) {
-        alert.showAlert(error.msg)
+        alert.showAlert(error.mensagem)
     }
 
     tratarError(error) {
@@ -79,9 +79,6 @@ class ExceptionHandler {
     }
 
     handleInternalError(error) {
-        console.log('--- handleInternalError')
-        console.log(error.response)
-        console.log(error.data)
         if (typeof error.response.data.message !== 'undefined') {
             const msgFormatted = error.response.data.message
             if (msgFormatted) {

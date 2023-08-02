@@ -15,7 +15,7 @@
     </v-app-bar>
     <v-main>
       <v-container fluid class="containerBody">
-        <router-view v-if="rotaIndividual" />
+        <core-view-individual v-if="rotaIndividual" />
         <core-view v-else/>
       </v-container>
       <core-footer/>
@@ -28,10 +28,11 @@
     import Loading from '@/views/components/Loading'
     import Notificacao from '@/views/components/Notificacao'
     import {mapActions} from 'vuex'
+    import CoreViewIndividual from '@/views/components/core/ViewIndividual.vue'
 
     export default {
         name: 'core-template-default',
-        components: {Notificacao, Loading},
+        components: {CoreViewIndividual, Notificacao, Loading},
         computed:{
             rotaIndividual(){
                 return this.$route.meta.containerProprio

@@ -84,6 +84,10 @@ class SearchUrlBuilder {
             param += `&direction=${!pagingAndSorting.sortDesc[0] ? 'ASC' : 'DESC'}`
         }
 
+        if (pagingAndSorting.empresaId) {
+            param += `&empresaId=${pagingAndSorting.empresaId}`
+        }
+
         if (!hasFilters) {
             param = param.length > 0 ? param.substr(1) : param
         }

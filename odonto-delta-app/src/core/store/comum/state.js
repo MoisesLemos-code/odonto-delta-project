@@ -10,7 +10,11 @@ export default {
             subtitle: ''
         },
         nomeSistema: 'Odonto Delta',
-        usuarioLogado: {},
+        usuarioLogado: {
+            empresa: {
+                id: 0
+            }
+        },
         isGlobalLoadingEnabled: true,
         isLoading: false,
         loadingMessage: 'Por favor, aguarde...',

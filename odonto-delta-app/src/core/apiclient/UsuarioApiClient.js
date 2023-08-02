@@ -30,7 +30,7 @@ class UsuarioApiClient {
     }
 
     async editar(dados) {
-        return await axios.put(`/usuario/update/${dados.id}`, dados)
+        return await axios.put(`/usuario/${dados.id}`, dados)
     }
 
     async remover(id){

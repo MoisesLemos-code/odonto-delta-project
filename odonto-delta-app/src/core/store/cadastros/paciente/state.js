@@ -28,7 +28,8 @@ export default {
             rowsPerPage: 10,
             sortBy: ['nome'],
             descending: false,
-            sortDesc: [false]
+            sortDesc: [false],
+            empresaId: 0,
         }
     },
     resultadoBuscaTodosPacientesOrtodontia: {

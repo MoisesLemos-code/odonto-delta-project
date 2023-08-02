@@ -60,12 +60,22 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         String token = "Bearer " + jwtUtil.generateToken(nome);
         Boolean isAdmin = ((UserSS) auth.getPrincipal()).isAdmin();
 
-        ResponseUserBody responseBody = new ResponseUserBody(id, nome, nomeCompleto, token, isAdmin);
+        ResponseUserBody responseBody = montarResponseUserBody(id, nome, nomeCompleto, token, isAdmin);
         PrintWriter out = res.getWriter();
         res.setContentType("application/json;charset=UTF-8");
         out.print(JsonHelper.toJson(responseBody));
         out.flush();
 	}
+
+    public ResponseUserBody montarResponseUserBody(Long id, String nome, String nomeCompleto, String token, Boolean isAdmin){
+        return ResponseUserBody.builder()
+                .id(id)
+                .login(nome)
+                .nomeCompleto(nomeCompleto)
+                .token(token)
+                .isAdmin(isAdmin)
+                .build();
+    }
 	
 	private class JWTAuthenticationFailureHandler implements AuthenticationFailureHandler {
 		 

@@ -43,6 +43,7 @@ public class AtualizarUsuarioOutputConverter extends GenericConverter<Usuario, A
 
         target.setId(source.getId());
         target.setLogin(source.getLogin());
+        target.setSenha(source.getSenha());
         target.setNome(source.getNome());
         target.setEmail(source.getEmail());
         target.setCnpjCpf(source.getCnpjCpf());

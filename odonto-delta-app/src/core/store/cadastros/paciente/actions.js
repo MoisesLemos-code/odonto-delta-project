@@ -8,8 +8,9 @@ export default {
         return data
     },
 
-    async [actionTypes.CADASTROS.PACIENTE.BUSCAR_TODOS_PACIENTES]({state}) {
+    async [actionTypes.CADASTROS.PACIENTE.BUSCAR_TODOS_PACIENTES]({state}, empresaId) {
         const {filtros, paginacao} = state.resultadoBuscaTodosPacientes
+        paginacao.empresaId = empresaId
         const {data} = await api.paciente.buscarTodos(filtros, paginacao)
         return data
     },

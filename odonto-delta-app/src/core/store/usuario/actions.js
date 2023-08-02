@@ -14,7 +14,10 @@ export default {
     },
 
     async [actionTypes.USUARIO.EDITAR_USUARIO]({commit}, dados) {
+        console.log('--- EDITAR_USUARIO')
+        console.log(dados)
         const { data } = await api.usuario.editar(dados)
+        console.log(data)
         return data
     },
 
