@@ -1,5 +1,6 @@
 <template>
-  <v-form class="form-user form-content altura-componente-container mt-0 pl-0 pr-0">
+  <div class="form-user form-content altura-componente-container mt-0 pl-0 pr-0">
+  <v-form >
     <v-container fluid grid-list-xl class="pt-0">
       <v-row justify="center">
         <v-card class="card-usuario-container">
@@ -75,13 +76,35 @@
                     v-model="dadosGerais.cnpjCpf"
                     name="cnpjCpf"
                     placeholder="Informe o documento"
-                    counter="100"
-                    maxlength="100"
+                    v-mask="[masks.cpf, masks.cnpj]"
                     v-validate="{required: true, min: 2, max: 100}"
                     :error-messages="errors.collect('cnpjCpf')">
                   <template v-slot:label>
                     Documento (CPF/CNPJ)
                     <span class="ml-1 red--text">*</span>
+                  </template>
+                </v-text-field>
+              </v-col>
+              <v-col cols="12" md="6" sm="6" xs="12">
+                <v-text-field
+                    v-model="dadosGerais.telefone"
+                    name="telefone"
+                    v-mask="[masks.tel, masks.tel2]"
+                    placeholder="Informe o telefone"
+                    :error-messages="errors.collect('telefone')">
+                  <template v-slot:label>
+                    Telefone
+                  </template>
+                </v-text-field>
+              </v-col>
+              <v-col cols="12" md="6" sm="6" xs="12">
+                <v-text-field
+                    v-model="dadosGerais.departamento"
+                    name="departamento"
+                    placeholder="Informe o departamento"
+                    :error-messages="errors.collect('departamento')">
+                  <template v-slot:label>
+                    Departamento
                   </template>
                 </v-text-field>
               </v-col>
@@ -96,13 +119,49 @@
                     v-model="dadosGerais.cep"
                     name="cep"
                     placeholder="Informe o CEP"
-                    counter="100"
-                    maxlength="100"
                     v-mask="masks.cep"
-                    v-validate="{min: 2, max: 100}"
                     :error-messages="errors.collect('cep')">
                   <template v-slot:label>
                     CEP
+                  </template>
+                </v-text-field>
+              </v-col>
+              <v-col cols="12" md="6" sm="6" xs="12">
+                  <buscar-municipio :municipio-id="dadosGerais.municipio.id"
+                                    :estado-id="dadosGerais.municipio.estado.id"
+                                    @emitirSelecionarCidade="selecionarCidade"
+                  />
+              </v-col>
+              <v-col cols="12" md="6" sm="6" xs="12">
+                <v-text-field
+                    v-model="dadosGerais.logradouro"
+                    name="logradouro"
+                    placeholder="Informe o logradouro"
+                    :error-messages="errors.collect('logradouro')">
+                  <template v-slot:label>
+                    Logradouro
+                  </template>
+                </v-text-field>
+              </v-col>
+              <v-col cols="12" md="6" sm="6" xs="12">
+                <v-text-field
+                    v-model="dadosGerais.logradouroNumero"
+                    name="numero"
+                    placeholder="Informe o número"
+                    :error-messages="errors.collect('numero')">
+                  <template v-slot:label>
+                    Número
+                  </template>
+                </v-text-field>
+              </v-col>
+              <v-col cols="12" md="6" sm="6" xs="12">
+                <v-text-field
+                    v-model="dadosGerais.complemento"
+                    name="complemento"
+                    placeholder="Informe o complemento"
+                    :error-messages="errors.collect('complemento')">
+                  <template v-slot:label>
+                    Complemento
                   </template>
                 </v-text-field>
               </v-col>
@@ -181,14 +240,17 @@
       </v-row>
     </v-container>
   </v-form>
+  </div>
 </template>
 
 <script>
     import {mapActions, mapGetters} from 'vuex'
     import {actionTypes} from '@/core/constants'
+    import BuscarMunicipio from '@/views/components/BuscarMunicipio.vue'
 
     export default {
         name: 'MeuUsuario',
+        components: {BuscarMunicipio},
         data() {
             return {
                 showPasswordAtual: false,
@@ -205,17 +267,17 @@
                     empresa: {
                         id: null
                     },
-                    perfil: {
-                        id: null
-                    },
                 },
+                municipioId: null,
                 nome_usuario: null,
                 senhaDois: null,
                 masks: {
                     cep: '##.###-###',
-                    tel8: '(##) ####-####',
-                    tel9: '(##) #####-####'
-                },
+                    tel: '(##) ####-####',
+                    tel2: '(##) #####-####',
+                    cpf: '###.###.###-##',
+                    cnpj: '##.###.###/####-##',
+                }
             }
         },
         async mounted() {
@@ -239,6 +301,7 @@
                 this.dadosGerais = await this.buscarUsuarioPorId(id)
                 this.dadosGerais.permissao = null
                 this.nome_usuario = this.dadosGerais.nome
+                this.municipioId = this.dadosGerais.municipio.id
             },
             async tratarEventoSalvar() {
                 if (await this.validarDadosFormulario()) {
@@ -246,28 +309,35 @@
                         this.mostrarNotificacaoErro('Informe a senha nova!')
                         return
                     }
-                    this.setMensagemLoading('Salvando alterações do usuário...')
+                    if(!this.municipioId){
+                        this.mostrarNotificacaoErro('Informe o município')
+                        return
+                    }
                     this.formatarInput()
+                    this.setMensagemLoading('Salvando alterações do usuário...')
+                    console.log('---tratarEventoSalvar')
+                    console.log(this.dadosGerais)
                     const data = await this.editarUsuario(this.dadosGerais)
                     this.nome_usuario = data.nome
                     await this.atualizarRegistroUsuario()
                     this.mostrarNotificacaoSucessoDefault()
                 }
             },
+            selecionarCidade(municipioId){
+                console.log('---selecionarCidade')
+                console.log(municipioId)
+                this.municipioId = municipioId
+            },
             async validarDadosFormulario() {
                 return this.$validator._base.validateAll()
             },
             formatarInput() {
-                if (!this.dadosGerais.perfil) {
-                    this.dadosGerais.perfil = {id: null}
-                }
                 this.dadosGerais = {
                     ...this.dadosGerais,
                     empresaId: this.dadosGerais.empresa.id,
-                    municipioId: this.dadosGerais.municipio.id,
-                    perfilId: this.dadosGerais.perfil.id
+                    municipioId: this.municipioId
                 }
-            }
+            },
         }
     }
 </script>
@@ -279,7 +349,7 @@
   display flex
   justify-content center
   align-items center
-  height 80vh
+  height 100%
 
 
 .row-bottom

@@ -22,7 +22,6 @@ public class AtualizarUsuarioInput {
     private String nome;
     @Email(message = "O parametro 'email' é inválido")
     private String email;
-    @Pattern(regexp = "^\\d{11}$|^\\d{14}$", message = "O parametro 'cpfCnpj' é inválido")
     private String cnpjCpf;
     private String telefone;
     private Long municipioId;
@@ -31,7 +30,6 @@ public class AtualizarUsuarioInput {
     private String logradouro;
     private String logradouroNumero;
     private String complemento;
-    private Long perfilId;
     @NotNull(message = "O atributo 'empresaId' não pode ser nulo.")
     private Long empresaId;
     private Boolean situacao;

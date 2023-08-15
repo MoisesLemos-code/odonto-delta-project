@@ -9,8 +9,8 @@ export default {
         return data
     },
 
-    async [actionTypes.CADASTROS.CIDADE.BUSCAR_TODAS_CIDADES_SEM_PAGINACAO]({commit}) {
-        const {data} = await api.cidade.buscarTodosSemPaginacao()
+    async [actionTypes.CADASTROS.CIDADE.BUSCAR_TODAS_CIDADES_SEM_PAGINACAO]({commit}, dados) {
+        const {data} = await api.cidade.buscarTodosSemPaginacao(dados)
         return data
     },
 

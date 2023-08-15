@@ -27,9 +27,6 @@ public class AtualizarUsuarioFactory {
     private MunicipioDataProvider municipioDataProvider;
 
     @Autowired
-    private PerfilDataProvider perfilDataProvider;
-
-    @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
     @Bean("AtualizarUsuarioUsecase")
@@ -40,7 +37,6 @@ public class AtualizarUsuarioFactory {
                 .usuarioDataProvider(usuarioDataProvider)
                 .empresaDataProvider(empresaDataProvider)
                 .municipioDataProvider(municipioDataProvider)
-                .perfilDataProvider(perfilDataProvider)
                 .passwordEncoder(passwordEncoder)
                 .outputConverter(outputConverter)
                 .build();

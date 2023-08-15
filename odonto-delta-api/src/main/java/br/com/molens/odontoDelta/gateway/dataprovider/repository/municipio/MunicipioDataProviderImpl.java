@@ -2,10 +2,10 @@ package br.com.molens.odontoDelta.gateway.dataprovider.repository.municipio;
 
 import br.com.molens.odontoDelta.domain.interfaces.MunicipioDataProvider;
 import br.com.molens.odontoDelta.gateway.dataprovider.entity.Municipio;
+import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.Optional;
 
 @Component
 public class MunicipioDataProviderImpl implements MunicipioDataProvider {
@@ -16,5 +16,10 @@ public class MunicipioDataProviderImpl implements MunicipioDataProvider {
     @Override
     public Optional<Municipio> buscarPorId(Long id) {
         return repository.findById(id);
+    }
+
+    @Override
+    public List<Municipio> buscarTodosPorEstado(Long idEstado) {
+        return repository.buscarTodosPorEstado(idEstado);
     }
 }

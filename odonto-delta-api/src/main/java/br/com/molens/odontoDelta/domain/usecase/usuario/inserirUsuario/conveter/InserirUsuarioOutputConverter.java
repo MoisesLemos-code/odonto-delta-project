@@ -27,12 +27,6 @@ public class InserirUsuarioOutputConverter extends GenericConverter<Usuario, Ins
                     .build());
         }
 
-        if (Objects.nonNull(source.getPerfilId())) {
-            target.setPerfil(Perfil.builder()
-                    .id(source.getPerfilId())
-                    .build());
-        }
-
         return target;
     }
 }

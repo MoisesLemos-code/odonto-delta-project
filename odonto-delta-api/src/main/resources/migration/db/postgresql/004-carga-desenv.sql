@@ -9,3 +9,9 @@ em_email, em_razao_social, em_logra, em_logra_num, mu_id, em_telefone, em_insc_e
 em_dthr_cadastro, em_dthr_alteracao, em_usuario_cadastro, em_usuario_alteracao)
 VALUES (nextval('odonto.seq_empresa'), 'Sistemas Molens', '66959004000100', 'J', 'moisesconta4@outlook.com',
         'Sistemas Molens LTDA', null, null, 1301, '67998483400', null, 1, null, null, null, null);
+
+
+INSERT INTO odonto.tb_usuario (us_id, us_login, us_nome, us_cnpj_cpf, us_email, mu_id, em_id, us_situacao, us_cargo,
+us_senha)
+VALUES (nextval('odonto.seq_usuario'), 'admin', 'Administrador', '11122233344', 'admin_molens@molens.com', 1301, 1, true, 'Administrador do sistema',
+        '$2a$10$c3LO9Q1a7woNhtNey/N.8egG9Ffyp80aW3gRPybcaS1oChU51fp4i');

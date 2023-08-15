@@ -12,8 +12,8 @@ class CidadeApiClient {
         return axios.get(url)
     }
 
-    async buscarTodosSemPaginacao() {
-        return axios.get('/cidade/all')
+    async buscarTodosSemPaginacao(dados) {
+        return axios.get(`/municipio/all/estado=${dados.idEstado}`, dados)
     }
 
     async cadastrar(dados) {

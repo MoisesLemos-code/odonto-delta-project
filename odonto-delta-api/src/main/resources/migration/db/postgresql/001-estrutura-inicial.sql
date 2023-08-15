@@ -58,6 +58,14 @@ CREATE SEQUENCE "odonto"."seq_perfil"
     CACHE 1
 ;
 
+CREATE SEQUENCE "odonto"."seq_perfil_item"
+    INCREMENT BY 1
+    START WITH 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1
+;
+
 CREATE SEQUENCE "odonto"."seq_usuario"
     INCREMENT BY 1
     START WITH 1
@@ -287,6 +295,75 @@ COMMENT ON COLUMN "odonto"."tb_perfil"."pf_ativo" IS 'Indica se o perfil está a
 ALTER TABLE "odonto"."tb_perfil" ADD CONSTRAINT "pk_perfil" PRIMARY KEY ("pf_id")
 ;
 
+-- Table odonto.tb_perfil_item
+
+CREATE TABLE "odonto"."tb_perfil_item"
+(
+    "pfi_id" Integer NOT NULL,
+    "pf_id" Integer NOT NULL,
+    "pfi_nome" varchar(255) NOT NULL,
+    "pfi_descricao" varchar(255) NOT NULL,
+    "pfi_ativo" Boolean DEFAULT true,
+    "pfi_dthr_cadastro" timestamp(6),
+    "pfi_dthr_alteracao" timestamp(6),
+    "pfi_usuario_cadastro" varchar(255),
+    "pfi_usuario_alteracao" varchar(255)
+)
+    WITH (
+        autovacuum_enabled=true)
+;
+
+COMMENT ON TABLE "odonto"."tb_perfil_item" IS 'Armazena os dados de perfil.'
+;
+
+COMMENT ON COLUMN "odonto"."tb_perfil_item"."pfi_id" IS 'Codigo gerado automaticamente que identifica um perfil.'
+;
+
+COMMENT ON COLUMN "odonto"."tb_perfil"."pf_id" IS 'Código referente ao perfil.'
+;
+
+COMMENT ON COLUMN "odonto"."tb_perfil_item"."pfi_nome" IS 'Nome do perfil.'
+;
+
+COMMENT ON COLUMN "odonto"."tb_perfil_item"."pfi_descricao" IS 'Descrição do perfil.'
+;
+
+COMMENT ON COLUMN "odonto"."tb_perfil_item"."pfi_ativo" IS 'Indica se o perfil está ativo ou não.'
+;
+
+ALTER TABLE "odonto"."tb_perfil_item" ADD CONSTRAINT "pk_perfil_item" PRIMARY KEY ("pfi_id")
+;
+
+-- Table odonto.tb_perfil_usuario
+
+CREATE TABLE "odonto"."tb_perfil_usuario"
+(
+    "pf_id" Integer NOT NULL,
+    "us_id" Integer NOT NULL,
+    "pfu_dthr_cadastro" timestamp(6),
+    "pfu_dthr_alteracao" timestamp(6),
+    "pfu_usuario_cadastro" varchar(255),
+    "pfu_usuario_alteracao" varchar(255)
+)
+    WITH (
+        autovacuum_enabled=true)
+;
+
+COMMENT ON TABLE "odonto"."tb_perfil_usuario" IS 'Armazena os dados de perfil item.'
+;
+
+COMMENT ON COLUMN "odonto"."tb_perfil_usuario"."pf_id" IS 'Código referente ao perfil.'
+;
+
+COMMENT ON COLUMN "odonto"."tb_perfil_usuario"."us_id" IS 'Código referente ao usuario.'
+;
+
+CREATE INDEX "in_perfil_usuario2" ON "odonto"."tb_perfil_usuario" ("us_id")
+;
+
+ALTER TABLE "odonto"."tb_perfil_usuario" ADD CONSTRAINT "pk_perfil_usuario" PRIMARY KEY ("pf_id", "us_id")
+;
+
 -- Table odonto.tb_usuario
 
 CREATE TABLE "odonto"."tb_usuario"
@@ -303,7 +380,6 @@ CREATE TABLE "odonto"."tb_usuario"
     "us_logra" varchar(70),
     "us_logra_num" varchar(6),
     "us_complemento" varchar(50),
-    "pf_id" Integer,
     "em_id" Integer,
     "us_situacao" Boolean DEFAULT true,
     "us_cargo" varchar(250),
@@ -356,9 +432,6 @@ COMMENT ON COLUMN "odonto"."tb_usuario"."us_logra_num" IS 'Numero de endereco do
 ;
 
 COMMENT ON COLUMN "odonto"."tb_usuario"."us_complemento" IS 'Complemento de endereco do usuario.'
-;
-
-COMMENT ON COLUMN "odonto"."tb_usuario"."pf_id" IS 'Codigo do perfil de usuario.'
 ;
 
 COMMENT ON COLUMN "odonto"."tb_usuario"."em_id" IS 'Codigo da empresa relacionada ao usuario.'
@@ -582,9 +655,6 @@ ALTER TABLE "odonto"."tb_perfil" ADD CONSTRAINT "fk_perfil_empresa" FOREIGN KEY 
 ALTER TABLE "odonto"."tb_usuario" ADD CONSTRAINT "fk_usuario_empresa" FOREIGN KEY ("em_id") REFERENCES "odonto"."tb_empresa" ("em_id")
 ;
 
-ALTER TABLE "odonto"."tb_usuario" ADD CONSTRAINT "fk_usuario_perfil" FOREIGN KEY ("pf_id") REFERENCES "odonto"."tb_perfil" ("pf_id")
-;
-
 ALTER TABLE "odonto"."tb_usuario" ADD CONSTRAINT "fk_usuario_municipio" FOREIGN KEY ("mu_id") REFERENCES "odonto"."tb_municipio" ("mu_id")
 ;
 
@@ -595,4 +665,13 @@ ALTER TABLE "odonto"."tb_paciente" ADD CONSTRAINT "fk_paciente_municipio" FOREIG
 ;
 
 ALTER TABLE "odonto"."tb_ficha" ADD CONSTRAINT "fk_ficha_paciente" FOREIGN KEY ("pa_id") REFERENCES "odonto"."tb_paciente" ("pa_id")
+;
+
+ALTER TABLE "odonto"."tb_perfil_usuario" ADD CONSTRAINT "fk_perfil_usuario_pf" FOREIGN KEY ("pf_id") REFERENCES "odonto"."tb_perfil" ("pf_id")
+;
+
+ALTER TABLE "odonto"."tb_perfil_usuario" ADD CONSTRAINT "fk_perfil_usuario_us" FOREIGN KEY ("us_id") REFERENCES "odonto"."tb_usuario" ("us_id")
+;
+
+ALTER TABLE "odonto"."tb_perfil_item" ADD CONSTRAINT "fk_perfil_item_pf" FOREIGN KEY ("pf_id") REFERENCES "odonto"."tb_perfil" ("pf_id")
 ;

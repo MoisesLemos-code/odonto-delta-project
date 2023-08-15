@@ -22,12 +22,6 @@ public class AtualizarUsuarioOutputConverter extends GenericConverter<Usuario, A
                     .build());
         }
 
-        if (Objects.nonNull(source.getPerfil())) {
-            target.setPerfil(Perfil.builder()
-                    .id(source.getPerfil().getId())
-                    .build());
-        }
-
         if (Objects.nonNull(source.getMunicipio())) {
             target.setMunicipio(Municipio.builder()
                     .id(source.getMunicipio().getId())
@@ -66,12 +60,6 @@ public class AtualizarUsuarioOutputConverter extends GenericConverter<Usuario, A
         if (Objects.nonNull(source.getMunicipioId())) {
             target.setMunicipio(Municipio.builder()
                     .id(source.getMunicipioId())
-                    .build());
-        }
-
-        if (Objects.nonNull(source.getPerfilId())) {
-            target.setPerfil(Perfil.builder()
-                    .id(source.getPerfilId())
                     .build());
         }
 

@@ -26,7 +26,6 @@ public class AtualizarUsuarioUsecase {
     private UsuarioDataProvider usuarioDataProvider;
     private EmpresaDataProvider empresaDataProvider;
     private MunicipioDataProvider municipioDataProvider;
-    private PerfilDataProvider perfilDataProvider;
     private AtualizarUsuarioOutputConverter outputConverter;
 
     private BCryptPasswordEncoder passwordEncoder;
@@ -34,30 +33,21 @@ public class AtualizarUsuarioUsecase {
     public AtualizarUsuarioOutput executar(AtualizarUsuarioInput input) {
         validarDadosEntrada(input);
         buscarPaciente(input);
-
         buscarEmpresa(input);
         buscarMunicipio(input);
-        buscarPerfil(input);
-
         validarUsuarioLoginJaCadastrado(input);
         validarSenhaUsuario(input);
         Usuario usuario = atualizarUsuario(outputConverter.from(input));
         return outputConverter.to(usuario);
     }
 
-    private Perfil buscarPerfil(AtualizarUsuarioInput input) {
-        Optional<Perfil> perfil = perfilDataProvider.buscarPorId(input.getEmpresaId());
-
-        if (perfil.isPresent()) {
-            return perfil.get();
-        }
-        return null;
-    }
-
     private void validarDadosEntrada(AtualizarUsuarioInput input) {
 
         if (Objects.isNull(input.getId())) {
             throw new AtualizarPacienteException("Identificador de usuário é obrigatório.");
+        }
+        if (Objects.isNull(input.getMunicipioId())) {
+            throw new AtualizarPacienteException("Identificador de municipio é obrigatório.");
         }
         if (input.getEmpresaId() == 0) {
             throw new AtualizarPacienteException("Identificador de empresa inválido.");
@@ -95,6 +85,9 @@ public class AtualizarUsuarioUsecase {
         if (usuario.isPresent()) {
             if (usuario.get().getId() != input.getId()) {
                 throw new AtualizarUsuarioException("Já existe um usuário com este login! (" + input.getLogin() + ")");
+            }
+            if(usuario.get().getLogin().equals("admin")){
+                throw new AtualizarUsuarioException("Não é possível alterar este usuário!");
             }
             if(!passwordEncoder.matches(input.getSenhaAtual(), usuario.get().getSenha())){
                 throw new AtualizarUsuarioException("A senha atual é inválida!");
