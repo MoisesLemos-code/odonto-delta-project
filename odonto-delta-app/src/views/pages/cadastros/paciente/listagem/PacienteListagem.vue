@@ -89,8 +89,6 @@
                     this.itens = resultado.content
                     this.paginas = resultado.totalPages
                     this.totalItens = resultado.totalElements
-                    console.log('--- buscaTodosPacientes')
-                    console.log(resultado)
                 }
             },
             getFiltros() {

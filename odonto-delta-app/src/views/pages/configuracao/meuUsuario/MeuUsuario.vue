@@ -262,7 +262,10 @@
                     email: null,
                     senha: null,
                     municipio: {
-                        id: null
+                        id: null,
+                        estado: {
+                            id: null
+                        }
                     },
                     empresa: {
                         id: null
@@ -315,8 +318,6 @@
                     }
                     this.formatarInput()
                     this.setMensagemLoading('Salvando alterações do usuário...')
-                    console.log('---tratarEventoSalvar')
-                    console.log(this.dadosGerais)
                     const data = await this.editarUsuario(this.dadosGerais)
                     this.nome_usuario = data.nome
                     await this.atualizarRegistroUsuario()
@@ -324,8 +325,6 @@
                 }
             },
             selecionarCidade(municipioId){
-                console.log('---selecionarCidade')
-                console.log(municipioId)
                 this.municipioId = municipioId
             },
             async validarDadosFormulario() {

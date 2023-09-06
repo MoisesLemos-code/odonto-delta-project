@@ -1,4 +1,4 @@
-package br.com.molens.odontoDelta.application.factory;
+package br.com.molens.odontoDelta.application.factory.sessaoUsuario;
 
 import br.com.molens.odontoDelta.application.security.UserSS;
 import br.com.molens.odontoDelta.domain.exception.SessaoUsuarioException;

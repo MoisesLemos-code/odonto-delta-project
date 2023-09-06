@@ -30,6 +30,11 @@ export default {
         SET_RESUMO_DO_USUARIO: 'setResumoDoUsuario',
         RESETA_PAGE: 'resetaPage',
     },
+    PERFIL:{
+        SET_FILTROS_BUSCA_TODOS_PERFIS: 'setFiltrosBuscaTodosPerfis',
+        SET_PAGINACAO_BUSCA_TODOS_PERFIS: 'setPaginacaoBuscaTodosPerfis',
+        RESETA_PAGE: 'resetaPage',
+    },
     ORCAMENTO:{
         SET_FILTROS_BUSCA_TODOS_ORCAMENTOS: 'setFiltrosBuscaTodosOrcamentos',
         SET_PAGINACAO_BUSCA_TODOS_ORCAMENTOS: 'setPaginacaoBuscaTodosOrcamentos',

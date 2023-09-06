@@ -14,6 +14,7 @@ import denteItem from './denteItem'
 import servicoItem from './servicoItem'
 import pecaItem from './pecaItem'
 import relatorios from './relatorios'
+import perfil from './perfil'
 
 export default new Vuex.Store({
     state,
@@ -34,6 +35,7 @@ export default new Vuex.Store({
         denteItem,
         servicoItem,
         pecaItem,
-        relatorios
+        relatorios,
+        perfil,
     }
 })

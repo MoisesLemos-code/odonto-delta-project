@@ -10,6 +10,8 @@ export default {
 
     async [actionTypes.COMUM.VERIFICAR_TOKEN]({ commit }){
         const { data } = await api.usuario.verificarLogin()
+        console.log('---VERIFICAR_TOKEN')
+        console.log(data)
         if(data){
             commit(mutationTypes.COMUM.SET_USUARIO_LOGADO_UPDATE, data)
         }

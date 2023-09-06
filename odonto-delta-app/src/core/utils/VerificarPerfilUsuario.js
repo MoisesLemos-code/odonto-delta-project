@@ -16,6 +16,9 @@ function precisaDePermissao(permissao) {
 }
 
 function possuiAcesso(permissaoUsuario, permissao) {
+    console.log('--- possuiAcesso')
+    console.log(permissaoUsuario)
+    console.log(permissao)
     if (!precisaDePermissao(permissao)) {
         return true
     }

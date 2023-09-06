@@ -50,12 +50,12 @@
     import _ from 'lodash'
     import {mapActions, mapMutations} from 'vuex'
     import {actionTypes, mutationTypes} from '@/core/constants'
-    import GerenciarUsuarioListagem from '@/views/pages/configuracao/gerenciar-usuario/GerenciarUsuarioListagem'
+    import GerenciarUsuarioListagem from '@/views/pages/configuracao/gerenciarUsuario/GerenciarUsuarioListagem'
     import PesquisaAvancada from '@/views/components/PesquisaAvancada'
-    import GerenciarUsuarioItem from '@/views/pages/configuracao/gerenciar-usuario/GerenciarUsuarioItem'
+    import GerenciarUsuarioItem from '@/views/pages/configuracao/gerenciarUsuario/GerenciarUsuarioItem'
     import ContainerComponent from '@/views/components/Container'
-    import GerenciarUsuarioEdicaoModal from '@/views/pages/configuracao/gerenciar-usuario/GerenciarUsuarioEdicaoModal'
-    import GerenciarUsuarioPermissaoModal from '@/views/pages/configuracao/gerenciar-usuario/GerenciarUsuarioPermissaoModal'
+    import GerenciarUsuarioEdicaoModal from '@/views/pages/configuracao/gerenciarUsuario/GerenciarUsuarioEdicaoModal'
+    import GerenciarUsuarioPermissaoModal from '@/views/pages/configuracao/gerenciarUsuario/GerenciarUsuarioPermissaoModal'
 
     export default {
         name: 'GerenciarUsuario',

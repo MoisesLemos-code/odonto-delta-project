@@ -12,6 +12,13 @@ export default {
         EDITAR_USUARIO: 'editarUsuario',
         BUSCAR_USUARIO_POR_ID: 'buscarUsuarioPorId'
     },
+    PERFIL: {
+        BUSCAR_TODOS_PERFIS: 'buscarTodosPerfis',
+        CADASTRAR_PERFIL: 'cadastrarPerfil',
+        EDITAR_PERFIL: 'editarPerfil',
+        BUSCAR_PERFIL_POR_ID: 'buscarPerfilPorId',
+        REMOVER_PERFIL: 'removerPerfil'
+    },
     ROTULOS_PERSONALIZADOS: {
         GET_ALL_ROTULOS_PERSONALIZADOS: 'getAllRotulosPersonlizados',
     },

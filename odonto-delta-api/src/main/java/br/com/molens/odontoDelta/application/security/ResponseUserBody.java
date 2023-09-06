@@ -1,5 +1,6 @@
 package br.com.molens.odontoDelta.application.security;
 
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,6 +18,7 @@ public class ResponseUserBody {
     private String token;
     private boolean isAdmin;
     private Empresa empresa;
+    private List<String> permissao;
 
     @Data
     @Builder
@@ -27,5 +29,4 @@ public class ResponseUserBody {
         private String nome;
         private String razaoSocial;
     }
-
 }

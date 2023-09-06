@@ -1,7 +1,8 @@
 import Configuracao from '@/views/pages/configuracao/Configuracao'
-import MeuUsuario from '@/views/pages/configuracao/meu-usuario/MeuUsuario'
-import GerenciarUsuario from '@/views/pages/configuracao/gerenciar-usuario/GerenciarUsuario'
-import GerenciarUsuarioCadastro from '@/views/pages/configuracao/gerenciar-usuario/GerenciarUsuarioCadastro'
+import MeuUsuario from '@/views/pages/configuracao/meuUsuario/MeuUsuario'
+import GerenciarUsuario from '@/views/pages/configuracao/gerenciarUsuario/GerenciarUsuario'
+import GerenciarUsuarioCadastro from '@/views/pages/configuracao/gerenciarUsuario/GerenciarUsuarioCadastro'
+import GerenciarPerfis from '@/views/pages/configuracao/gerenciarPerfis/GerenciarPerfis.vue'
 
 export default [
     {
@@ -32,6 +33,18 @@ export default [
                         title: 'Gerenciar Usuários'
                     },
                     perfis: ['ADMINISTRADOR', 'USER_FIND'],
+                }
+            },
+            {
+                path: '/configuracao/gerenciar-perfis',
+                name: 'GerenciarPerfis',
+                component: GerenciarPerfis,
+                meta: {
+                    requiresAuth: true,
+                    page: {
+                        title: 'Gerenciar Perfis'
+                    },
+                    perfis: ['ADMINISTRADOR'],
                 }
             },
             {

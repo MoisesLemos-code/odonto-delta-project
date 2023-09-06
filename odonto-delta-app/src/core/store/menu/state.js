@@ -57,6 +57,11 @@ export default {
                     icon: 'mdi-account-settings',
                     name: 'Gerenciar Usuários'
                 },
+                {
+                    path: '/configuracao/gerenciar-perfis',
+                    icon: 'mdi-key',
+                    name: 'Gerenciar Perfis'
+                },
             ]
         },
 
