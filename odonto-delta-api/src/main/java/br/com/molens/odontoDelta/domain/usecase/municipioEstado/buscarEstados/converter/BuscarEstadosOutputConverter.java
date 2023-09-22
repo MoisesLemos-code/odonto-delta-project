@@ -1,7 +1,7 @@
 package br.com.molens.odontoDelta.domain.usecase.municipioEstado.buscarEstados.converter;
 
 import br.com.molens.odontoDelta.domain.usecase.municipioEstado.buscarEstados.BuscarEstadosOutput;
-import br.com.molens.odontoDelta.gateway.dataprovider.entity.Estado;
+import br.com.molens.odontoDelta.gateway.entity.Estado;
 import br.com.molens.odontoDelta.utils.converter.GenericConverter;
 import java.util.List;
 import java.util.stream.Collectors;

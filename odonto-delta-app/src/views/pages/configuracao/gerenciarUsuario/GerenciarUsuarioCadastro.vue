@@ -116,42 +116,42 @@
 </template>
 
 <script>
-    import {mapActions} from 'vuex'
-    import {actionTypes} from '@/core/constants'
+import {mapActions} from 'vuex'
+import {actionTypes} from '@/core/constants'
 
-    export default {
-        name: 'CadastrarUsuario',
-        data() {
-            return {
-                showPassword: false,
-                showPassword2: false,
-                dadosGerais: {
-                    nome: null,
-                    nome_completo: null,
-                    email: null,
-                    senha: null,
-                },
-                nome_usuario: null,
-                senhaDois: null
+export default {
+    name: 'CadastrarUsuario',
+    data() {
+        return {
+            showPassword: false,
+            showPassword2: false,
+            dadosGerais: {
+                nome: null,
+                nome_completo: null,
+                email: null,
+                senha: null,
+            },
+            nome_usuario: null,
+            senhaDois: null
+        }
+    },
+    methods:{
+        ...mapActions([
+            actionTypes.USUARIO.CADASTRAR_USUARIO
+        ]),
+        async tratarEventoSalvar() {
+            if (await this.validarDadosFormulario()) {
+                this.setMensagemLoading('Salvando o usuário...')
+                await this.cadastrarUsuario(this.dadosGerais)
+                this.mostrarNotificacaoSucessoDefault()
+                this.$router.push({name: 'GerenciarUsuarios'})
             }
         },
-        methods:{
-            ...mapActions([
-                actionTypes.USUARIO.CADASTRAR_USUARIO
-            ]),
-            async tratarEventoSalvar() {
-                if (await this.validarDadosFormulario()) {
-                    this.setMensagemLoading('Salvando o usuário...')
-                    await this.cadastrarUsuario(this.dadosGerais)
-                    this.mostrarNotificacaoSucessoDefault()
-                    this.$router.push({name: 'GerenciarUsuarios'})
-                }
-            },
-            async validarDadosFormulario() {
-                return this.$validator._base.validateAll()
-            },
-        }
+        async validarDadosFormulario() {
+            return this.$validator._base.validateAll()
+        },
     }
+}
 </script>
 
 <style scoped lang="stylus">

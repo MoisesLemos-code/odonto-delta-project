@@ -1,7 +1,7 @@
 package br.com.molens.odontoDelta.adapter.entrypoint.controller.paciente;
 
 import br.com.molens.odontoDelta.domain.usecase.paciente.atualizarPaciente.AtualizarPacienteInput;
-import br.com.molens.odontoDelta.domain.usecase.paciente.atualizarPaciente.AtualizarPacienteOuput;
+import br.com.molens.odontoDelta.domain.usecase.paciente.atualizarPaciente.AtualizarPacienteOutput;
 import br.com.molens.odontoDelta.domain.usecase.paciente.atualizarPaciente.AtualizarPacienteUsecase;
 import br.com.molens.odontoDelta.domain.usecase.paciente.buscaPaginada.BuscaPaginadaPacienteInput;
 import br.com.molens.odontoDelta.domain.usecase.paciente.buscaPaginada.BuscaPaginadaPacienteOutput;
@@ -10,7 +10,7 @@ import br.com.molens.odontoDelta.domain.usecase.paciente.buscarPacientePorId.Bus
 import br.com.molens.odontoDelta.domain.usecase.paciente.buscarPacientePorId.BuscarPacientePorIdOutput;
 import br.com.molens.odontoDelta.domain.usecase.paciente.buscarPacientePorId.BuscarPacientePorIdUsecase;
 import br.com.molens.odontoDelta.domain.usecase.paciente.inserirPaciente.InserirPacienteInput;
-import br.com.molens.odontoDelta.domain.usecase.paciente.inserirPaciente.InserirPacienteOuput;
+import br.com.molens.odontoDelta.domain.usecase.paciente.inserirPaciente.InserirPacienteOutput;
 import br.com.molens.odontoDelta.domain.usecase.paciente.inserirPaciente.InserirPacienteUsecase;
 import br.com.molens.odontoDelta.domain.usecase.paciente.removerPacientePorId.RemoverPacientePorIdInput;
 import br.com.molens.odontoDelta.domain.usecase.paciente.removerPacientePorId.RemoverPacientePorIdUsecase;
@@ -30,7 +30,7 @@ public class PacienteControllerImpl implements PacienteController {
     private AtualizarPacienteUsecase atualizarPacienteUsecase;
 
     @Override
-    public ResponseEntity<InserirPacienteOuput> inserir(InserirPacienteInput input) {
+    public ResponseEntity<InserirPacienteOutput> inserir(InserirPacienteInput input) {
         return new ResponseEntity<>(inserirPacienteUsecase.executar(input), HttpStatus.CREATED);
     }
 
@@ -58,9 +58,9 @@ public class PacienteControllerImpl implements PacienteController {
     }
 
     @Override
-    public ResponseEntity<AtualizarPacienteOuput> atualizar(Long pacienteId, AtualizarPacienteInput input) {
+    public ResponseEntity<AtualizarPacienteOutput> atualizar(Long pacienteId, AtualizarPacienteInput input) {
         input.setPacienteId(pacienteId);
-        AtualizarPacienteOuput output = atualizarPacienteUsecase.executar(input);
+        AtualizarPacienteOutput output = atualizarPacienteUsecase.executar(input);
         return new ResponseEntity<>(output, HttpStatus.OK);
     }
 

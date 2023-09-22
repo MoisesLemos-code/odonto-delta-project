@@ -2,10 +2,9 @@ package br.com.molens.odontoDelta.domain.usecase.usuario.atualizarUsuario.conver
 
 import br.com.molens.odontoDelta.domain.usecase.usuario.atualizarUsuario.AtualizarUsuarioInput;
 import br.com.molens.odontoDelta.domain.usecase.usuario.atualizarUsuario.AtualizarUsuarioOutput;
-import br.com.molens.odontoDelta.gateway.dataprovider.entity.Empresa;
-import br.com.molens.odontoDelta.gateway.dataprovider.entity.Municipio;
-import br.com.molens.odontoDelta.gateway.dataprovider.entity.Perfil;
-import br.com.molens.odontoDelta.gateway.dataprovider.entity.Usuario;
+import br.com.molens.odontoDelta.gateway.entity.Empresa;
+import br.com.molens.odontoDelta.gateway.entity.Municipio;
+import br.com.molens.odontoDelta.gateway.entity.Usuario;
 import br.com.molens.odontoDelta.utils.converter.GenericConverter;
 
 import java.util.Objects;

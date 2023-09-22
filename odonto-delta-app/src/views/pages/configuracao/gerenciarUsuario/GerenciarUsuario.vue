@@ -47,104 +47,104 @@
 </template>
 
 <script>
-    import _ from 'lodash'
-    import {mapActions, mapMutations} from 'vuex'
-    import {actionTypes, mutationTypes} from '@/core/constants'
-    import GerenciarUsuarioListagem from '@/views/pages/configuracao/gerenciarUsuario/GerenciarUsuarioListagem'
-    import PesquisaAvancada from '@/views/components/PesquisaAvancada'
-    import GerenciarUsuarioItem from '@/views/pages/configuracao/gerenciarUsuario/GerenciarUsuarioItem'
-    import ContainerComponent from '@/views/components/Container'
-    import GerenciarUsuarioEdicaoModal from '@/views/pages/configuracao/gerenciarUsuario/GerenciarUsuarioEdicaoModal'
-    import GerenciarUsuarioPermissaoModal from '@/views/pages/configuracao/gerenciarUsuario/GerenciarUsuarioPermissaoModal'
+import _ from 'lodash'
+import {mapActions, mapMutations} from 'vuex'
+import {actionTypes, mutationTypes} from '@/core/constants'
+import GerenciarUsuarioListagem from '@/views/pages/configuracao/gerenciarUsuario/GerenciarUsuarioListagem'
+import PesquisaAvancada from '@/views/components/PesquisaAvancada'
+import GerenciarUsuarioItem from '@/views/pages/configuracao/gerenciarUsuario/GerenciarUsuarioItem'
+import ContainerComponent from '@/views/components/Container'
+import GerenciarUsuarioEdicaoModal from '@/views/pages/configuracao/gerenciarUsuario/GerenciarUsuarioEdicaoModal'
+import GerenciarUsuarioPermissaoModal from '@/views/pages/configuracao/gerenciarUsuario/GerenciarUsuarioPermissaoModal'
 
-    export default {
-        name: 'GerenciarUsuario',
-        components: {
-            GerenciarUsuarioPermissaoModal,
-            GerenciarUsuarioEdicaoModal,
-            ContainerComponent, GerenciarUsuarioItem, GerenciarUsuarioListagem, PesquisaAvancada
-        },
-        data() {
-            return {
-                filtrosInterno: this.getFiltros(),
-                itens: [],
-                paginas: 0,
-                totalItens: 0,
-                maxInputPesquisa: 30,
-                usuarioSelecionado: {},
-                modalEdicao: false,
-                modalPermissao: false
+export default {
+    name: 'GerenciarUsuario',
+    components: {
+        GerenciarUsuarioPermissaoModal,
+        GerenciarUsuarioEdicaoModal,
+        ContainerComponent, GerenciarUsuarioItem, GerenciarUsuarioListagem, PesquisaAvancada
+    },
+    data() {
+        return {
+            filtrosInterno: this.getFiltros(),
+            itens: [],
+            paginas: 0,
+            totalItens: 0,
+            maxInputPesquisa: 30,
+            usuarioSelecionado: {},
+            modalEdicao: false,
+            modalPermissao: false
+        }
+    },
+    async mounted() {
+        await this.buscar()
+    },
+    methods: {
+        ...mapActions([
+            actionTypes.USUARIO.BUSCAR_TODOS_USUARIOS,
+            actionTypes.USUARIO.EDITAR_USUARIO,
+        ]),
+        ...mapMutations([
+            mutationTypes.USUARIO.SET_FILTROS_BUSCA_TODOS_USUARIOS,
+            mutationTypes.USUARIO.SET_PAGINACAO_BUSCA_TODOS_USUARIOS,
+            mutationTypes.USUARIO.RESETA_PAGE
+        ]),
+        async buscarUsuarios() {
+            const resultado = await this.buscarTodosUsuarios()
+            if (resultado) {
+                this.itens = resultado.content
+                this.paginas = resultado.totalPages
+                this.totalItens = resultado.totalElements
             }
         },
-        async mounted() {
-            await this.buscar()
+        async buscar() {
+            this.setFiltrosBuscaTodosUsuarios(this.getFiltrosInterno())
+            await this.buscarUsuarios()
         },
-        methods: {
-            ...mapActions([
-                actionTypes.USUARIO.BUSCAR_TODOS_USUARIOS,
-                actionTypes.USUARIO.EDITAR_USUARIO,
-            ]),
-            ...mapMutations([
-                mutationTypes.USUARIO.SET_FILTROS_BUSCA_TODOS_USUARIOS,
-                mutationTypes.USUARIO.SET_PAGINACAO_BUSCA_TODOS_USUARIOS,
-                mutationTypes.USUARIO.RESETA_PAGE
-            ]),
-            async buscarUsuarios() {
-                const resultado = await this.buscarTodosUsuarios()
-                if (resultado) {
-                    this.itens = resultado.content
-                    this.paginas = resultado.totalPages
-                    this.totalItens = resultado.totalElements
-                }
-            },
-            async buscar() {
-                this.setFiltrosBuscaTodosUsuarios(this.getFiltrosInterno())
-                await this.buscarUsuarios()
-            },
-            cadastrarUsuario() {
-                this.$router.push({name: 'CadastrarUsuario'})
-            },
-            tratarEventoEditar(item) {
-                this.usuarioSelecionado = item
-                this.modalEdicao = true
-            },
-            tratarEventoEditarPermissoes(item) {
-                this.usuarioSelecionado = item
-                this.modalPermissao = true
-            },
-            tratarEventoPaginar(paginacao) {
-                this.setPaginacaoBuscaTodosUsuarios(paginacao)
-                this.buscar()
-            },
-            getFiltros() {
-                return _.cloneDeep(this.$store.state.usuario.resultadoBuscaTodosUsuarios.filtros)
-            },
-            getFiltrosInterno() {
-                return _.cloneDeep(this.filtrosInterno)
-            },
-            fecharModalEdicao() {
-                this.modalEdicao = false
-                this.usuarioSelecionado = null
-                this.buscar()
-            },
-            fecharModalEdicaoPermissao() {
-                this.modalPermissao = false
-                this.usuarioSelecionado = null
-                this.buscar()
-            },
-            tratarEventoBuscaSimples(valor) {
-                this.resetaPage()
-                this.filtrosInterno.conteudo.value = valor
-                this.buscar()
-            },
-            tratarEventoRemoverFiltro(propriedade) {
-                if (this.filtrosInterno[propriedade]) {
-                    this.filtrosInterno[propriedade].value = this.filtrosInterno[propriedade].default
-                }
-                this.buscar()
+        cadastrarUsuario() {
+            this.$router.push({name: 'CadastrarUsuario'})
+        },
+        tratarEventoEditar(item) {
+            this.usuarioSelecionado = item
+            this.modalEdicao = true
+        },
+        tratarEventoEditarPermissoes(item) {
+            this.usuarioSelecionado = item
+            this.modalPermissao = true
+        },
+        tratarEventoPaginar(paginacao) {
+            this.setPaginacaoBuscaTodosUsuarios(paginacao)
+            this.buscar()
+        },
+        getFiltros() {
+            return _.cloneDeep(this.$store.state.usuario.resultadoBuscaTodosUsuarios.filtros)
+        },
+        getFiltrosInterno() {
+            return _.cloneDeep(this.filtrosInterno)
+        },
+        fecharModalEdicao() {
+            this.modalEdicao = false
+            this.usuarioSelecionado = null
+            this.buscar()
+        },
+        fecharModalEdicaoPermissao() {
+            this.modalPermissao = false
+            this.usuarioSelecionado = null
+            this.buscar()
+        },
+        tratarEventoBuscaSimples(valor) {
+            this.resetaPage()
+            this.filtrosInterno.conteudo.value = valor
+            this.buscar()
+        },
+        tratarEventoRemoverFiltro(propriedade) {
+            if (this.filtrosInterno[propriedade]) {
+                this.filtrosInterno[propriedade].value = this.filtrosInterno[propriedade].default
             }
+            this.buscar()
         }
     }
+}
 </script>
 
 <style scoped lang="stylus">

@@ -6,20 +6,18 @@ import br.com.molens.odontoDelta.domain.interfaces.EmpresaDataProvider;
 import br.com.molens.odontoDelta.domain.interfaces.MunicipioDataProvider;
 import br.com.molens.odontoDelta.domain.interfaces.PerfilDataProvider;
 import br.com.molens.odontoDelta.domain.interfaces.UsuarioDataProvider;
-import br.com.molens.odontoDelta.domain.usecase.usuario.atualizarUsuario.AtualizarUsuarioInput;
 import br.com.molens.odontoDelta.domain.usecase.usuario.inserirUsuario.conveter.InserirUsuarioOutputConverter;
-import br.com.molens.odontoDelta.gateway.dataprovider.entity.Empresa;
-import br.com.molens.odontoDelta.gateway.dataprovider.entity.Municipio;
-import br.com.molens.odontoDelta.gateway.dataprovider.entity.Perfil;
-import br.com.molens.odontoDelta.gateway.dataprovider.entity.Usuario;
+import br.com.molens.odontoDelta.gateway.entity.Empresa;
+import br.com.molens.odontoDelta.gateway.entity.Municipio;
+import br.com.molens.odontoDelta.gateway.entity.Perfil;
+import br.com.molens.odontoDelta.gateway.entity.Usuario;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
-import java.util.Objects;
-import java.util.Optional;
 
 @Builder
 @AllArgsConstructor
@@ -65,7 +63,7 @@ public class InserirUsuarioUsecase {
     }
 
     private void validarPerfil(InserirUsuarioInput input) {
-        Optional<Perfil> perfil = perfilDataProvider.buscarPorId(input.getPerfilId());
+        Optional<Perfil> perfil = perfilDataProvider.buscarPorId(input.getPerfilId(), input.getEmpresaId());
         if (!perfil.isPresent()) {
             throw new InserirUsuarioException("Perfil de usuário não identificado.");
         }

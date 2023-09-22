@@ -2,7 +2,7 @@ package br.com.molens.odontoDelta.domain.usecase.municipioEstado.buscarCidadesPo
 
 import br.com.molens.odontoDelta.domain.interfaces.MunicipioDataProvider;
 import br.com.molens.odontoDelta.domain.usecase.municipioEstado.buscarCidadesPorEstado.converter.BuscaDeCidadesPorEstadoOutputConverter;
-import br.com.molens.odontoDelta.gateway.dataprovider.entity.Municipio;
+import br.com.molens.odontoDelta.gateway.entity.Municipio;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

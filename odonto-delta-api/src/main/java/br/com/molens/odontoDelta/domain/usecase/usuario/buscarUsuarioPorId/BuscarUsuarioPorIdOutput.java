@@ -1,8 +1,8 @@
 package br.com.molens.odontoDelta.domain.usecase.usuario.buscarUsuarioPorId;
 
-import br.com.molens.odontoDelta.gateway.dataprovider.entity.Empresa;
-import br.com.molens.odontoDelta.gateway.dataprovider.entity.Municipio;
-import br.com.molens.odontoDelta.gateway.dataprovider.entity.Perfil;
+import br.com.molens.odontoDelta.gateway.entity.Empresa;
+import br.com.molens.odontoDelta.gateway.entity.Municipio;
+import br.com.molens.odontoDelta.gateway.entity.Perfil;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

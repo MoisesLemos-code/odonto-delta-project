@@ -3,7 +3,7 @@ package br.com.molens.odontoDelta.domain.usecase.paciente.removerPacientePorId;
 import br.com.molens.odontoDelta.domain.exception.BuscarPacientePorIdException;
 import br.com.molens.odontoDelta.domain.exception.RemoverPacientePorIdException;
 import br.com.molens.odontoDelta.domain.interfaces.PacienteDataProvider;
-import br.com.molens.odontoDelta.gateway.dataprovider.entity.Paciente;
+import br.com.molens.odontoDelta.gateway.entity.Paciente;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 

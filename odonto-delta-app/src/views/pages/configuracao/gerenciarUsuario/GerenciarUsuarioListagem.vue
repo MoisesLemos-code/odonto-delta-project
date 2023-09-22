@@ -17,36 +17,36 @@
 </template>
 
 <script>
-    import FormTable from '@/views/components/FormTable'
-    import mutationTypes from '@/core/constants/mutationTypes'
+import FormTable from '@/views/components/FormTable'
+import mutationTypes from '@/core/constants/mutationTypes'
 
-    export default {
-        name: 'GerenciarUsuarioListagem',
-        components: { FormTable},
-        props: ['paginacao', 'paginas', 'totalItens'],
-        data() {
-            return {
-                paginacaoInterna: this.paginacao,
-                linhasPorPagina: [6, 10, 25, 50, 100],
-            }
+export default {
+    name: 'GerenciarUsuarioListagem',
+    components: { FormTable},
+    props: ['paginacao', 'paginas', 'totalItens'],
+    data() {
+        return {
+            paginacaoInterna: this.paginacao,
+            linhasPorPagina: [6, 10, 25, 50, 100],
+        }
+    },
+    methods: {
+        tratarPaginacao(pagina) {
+            this.paginacaoInterna.page = pagina
         },
-        methods: {
-            tratarPaginacao(pagina) {
-                this.paginacaoInterna.page = pagina
-            },
-            resetaPage() {
-                this.$store.commit(mutationTypes.USUARIO.RESETA_PAGE)
-            },
+        resetaPage() {
+            this.$store.commit(mutationTypes.USUARIO.RESETA_PAGE)
         },
-        watch: {
-            paginacaoInterna: {
-                handler(novoValor) {
-                    this.$emit('paginar', novoValor)
-                },
-                deep: true,
+    },
+    watch: {
+        paginacaoInterna: {
+            handler(novoValor) {
+                this.$emit('paginar', novoValor)
             },
+            deep: true,
         },
-    }
+    },
+}
 </script>
 
 <style scoped lang="stylus">

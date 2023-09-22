@@ -4,12 +4,11 @@ import br.com.molens.odontoDelta.domain.exception.AtualizarPacienteException;
 import br.com.molens.odontoDelta.domain.exception.JaExistePacienteCnpjCpfException;
 import br.com.molens.odontoDelta.domain.interfaces.PacienteDataProvider;
 import br.com.molens.odontoDelta.domain.usecase.paciente.atualizarPaciente.converter.AtualizarPacienteOutputConverter;
-import br.com.molens.odontoDelta.gateway.dataprovider.entity.Paciente;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-
+import br.com.molens.odontoDelta.gateway.entity.Paciente;
 import java.util.Objects;
 import java.util.Optional;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 
 @Builder
 @AllArgsConstructor
@@ -18,7 +17,7 @@ public class AtualizarPacienteUsecase {
     private PacienteDataProvider pacienteDataProvider;
     private AtualizarPacienteOutputConverter outputConverter;
 
-    public AtualizarPacienteOuput executar(AtualizarPacienteInput input) {
+    public AtualizarPacienteOutput executar(AtualizarPacienteInput input) {
         validarDadosEntrada(input);
         buscarPaciente(input);
         validarPacienteCnpjJaCadastrado(input);
@@ -45,7 +44,7 @@ public class AtualizarPacienteUsecase {
     }
 
     private void validarPacienteCnpjJaCadastrado(AtualizarPacienteInput input) {
-        Optional<Paciente> paciente = pacienteDataProvider.buscarPorCnpjCpf(input.getCnpjCpf());
+        Optional<Paciente> paciente = pacienteDataProvider.buscarPorCnpjCpf(input.getCnpjCpf(), input.getEmpresaId());
         if (paciente.isPresent()) {
             if (paciente.get().getId() != input.getPacienteId()) {
                 throw new JaExistePacienteCnpjCpfException();

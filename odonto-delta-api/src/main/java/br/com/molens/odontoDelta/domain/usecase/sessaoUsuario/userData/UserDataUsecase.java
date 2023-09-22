@@ -5,7 +5,7 @@ import br.com.molens.odontoDelta.domain.entity.SessaoUsuario;
 import br.com.molens.odontoDelta.domain.exception.SessaoUsuarioException;
 import br.com.molens.odontoDelta.domain.interfaces.SessaoUsuarioDataProvider;
 import br.com.molens.odontoDelta.domain.interfaces.UsuarioDataProvider;
-import br.com.molens.odontoDelta.gateway.dataprovider.entity.Usuario;
+import br.com.molens.odontoDelta.gateway.entity.Usuario;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;

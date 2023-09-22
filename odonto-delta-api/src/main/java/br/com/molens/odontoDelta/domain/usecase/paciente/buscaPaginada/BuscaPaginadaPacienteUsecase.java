@@ -4,7 +4,7 @@ import br.com.molens.odontoDelta.domain.entity.ListaPaginada;
 import br.com.molens.odontoDelta.domain.interfaces.PacienteDataProvider;
 import br.com.molens.odontoDelta.domain.usecase.paciente.buscaPaginada.converter.BuscaPaginadaPacienteFiltroConverter;
 import br.com.molens.odontoDelta.domain.usecase.paciente.buscaPaginada.converter.BuscaPaginadaPacienteOutputConverter;
-import br.com.molens.odontoDelta.gateway.dataprovider.entity.Paciente;
+import br.com.molens.odontoDelta.gateway.entity.Paciente;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 

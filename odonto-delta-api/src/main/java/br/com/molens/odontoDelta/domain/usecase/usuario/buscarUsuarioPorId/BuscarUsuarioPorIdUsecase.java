@@ -4,7 +4,7 @@ import br.com.molens.odontoDelta.domain.exception.BuscarPacientePorIdException;
 import br.com.molens.odontoDelta.domain.exception.BuscarUsuarioPorIdException;
 import br.com.molens.odontoDelta.domain.interfaces.UsuarioDataProvider;
 import br.com.molens.odontoDelta.domain.usecase.usuario.buscarUsuarioPorId.converter.BuscarUsuarioPorIdOutputConverter;
-import br.com.molens.odontoDelta.gateway.dataprovider.entity.Usuario;
+import br.com.molens.odontoDelta.gateway.entity.Usuario;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 

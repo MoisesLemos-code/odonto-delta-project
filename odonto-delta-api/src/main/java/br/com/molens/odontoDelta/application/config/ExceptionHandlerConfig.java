@@ -1,10 +1,25 @@
 package br.com.molens.odontoDelta.application.config;
 
 import br.com.molens.odontoDelta.adapter.gateway.integration.utils.exception.AsaasValidationException;
-import br.com.molens.odontoDelta.domain.exception.*;
+import br.com.molens.odontoDelta.domain.exception.AtualizarPacienteException;
+import br.com.molens.odontoDelta.domain.exception.AtualizarPerfilException;
+import br.com.molens.odontoDelta.domain.exception.AtualizarUsuarioException;
+import br.com.molens.odontoDelta.domain.exception.BuscarPacientePorIdException;
+import br.com.molens.odontoDelta.domain.exception.BuscarPerfilPorIdException;
+import br.com.molens.odontoDelta.domain.exception.BuscarUsuarioPorIdException;
+import br.com.molens.odontoDelta.domain.exception.InserirPacienteException;
+import br.com.molens.odontoDelta.domain.exception.InserirPerfilException;
+import br.com.molens.odontoDelta.domain.exception.InserirUsuarioException;
+import br.com.molens.odontoDelta.domain.exception.JaExistePacienteCnpjCpfException;
+import br.com.molens.odontoDelta.domain.exception.RemoverPacientePorIdException;
+import br.com.molens.odontoDelta.domain.exception.RemoverPerfilPorIdException;
+import br.com.molens.odontoDelta.domain.exception.SessaoUsuarioException;
 import br.com.molens.odontoDelta.utils.exception.ExceptionCommons;
 import br.com.molens.odontoDelta.utils.exception.ExceptionServer;
 import br.com.molens.odontoDelta.utils.exception.ExceptionValidFields;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -14,10 +29,6 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @ControllerAdvice
 public class ExceptionHandlerConfig {
@@ -86,7 +97,11 @@ public class ExceptionHandlerConfig {
                     UsernameNotFoundException.class,
                     BuscarUsuarioPorIdException.class,
                     AtualizarUsuarioException.class,
-                    SessaoUsuarioException.class
+                    SessaoUsuarioException.class,
+                    RemoverPerfilPorIdException.class,
+                    InserirPerfilException.class,
+                    BuscarPerfilPorIdException.class,
+                    AtualizarPerfilException.class
             })
     public ResponseEntity<ExceptionServer> handlerMethodArgumentNotValidException(
             RuntimeException exception) {

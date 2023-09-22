@@ -6,8 +6,8 @@ import br.com.molens.odontoDelta.domain.interfaces.EmpresaDataProvider;
 import br.com.molens.odontoDelta.domain.interfaces.MunicipioDataProvider;
 import br.com.molens.odontoDelta.domain.interfaces.PacienteDataProvider;
 import br.com.molens.odontoDelta.domain.usecase.paciente.inserirPaciente.converter.InserirPacienteOutputConverter;
-import br.com.molens.odontoDelta.gateway.dataprovider.entity.Empresa;
-import br.com.molens.odontoDelta.gateway.dataprovider.entity.Municipio;
+import br.com.molens.odontoDelta.gateway.entity.Empresa;
+import br.com.molens.odontoDelta.gateway.entity.Municipio;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 
@@ -23,7 +23,7 @@ public class InserirPacienteUsecase {
     private MunicipioDataProvider municipioDataProvider;
     private InserirPacienteOutputConverter outputConverter;
 
-    public InserirPacienteOuput executar(InserirPacienteInput input) {
+    public InserirPacienteOutput executar(InserirPacienteInput input) {
         validarDadosEntrada(input);
         validarEmpresa(input);
         validarMunicipio(input);
@@ -53,14 +53,14 @@ public class InserirPacienteUsecase {
     }
 
     private void validarPacienteJaCadastrado(InserirPacienteInput input) {
-        if (pacienteDataProvider.existeCnpjCpf(input.getCnpjCpf())) {
+        if (pacienteDataProvider.existeCnpjCpf(input.getCnpjCpf(), input.getEmpresaId())) {
             throw new JaExistePacienteCnpjCpfException();
         }
     }
 
-    private InserirPacienteOuput inserirPaciente(InserirPacienteInput input) {
+    private InserirPacienteOutput inserirPaciente(InserirPacienteInput input) {
         Long pacienteId = pacienteDataProvider.inserir(outputConverter.from(input));
 
-        return new InserirPacienteOuput(pacienteId);
+        return new InserirPacienteOutput(pacienteId);
     }
 }

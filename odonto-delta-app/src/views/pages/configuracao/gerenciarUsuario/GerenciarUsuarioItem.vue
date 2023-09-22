@@ -38,27 +38,27 @@
 </template>
 
 <script>
-    export default {
-        name: 'GerenciarUsuarioItem',
-        props: {
-            value: {
-                default: () => {
-                    return {}
-                },
-            },
-            index: {
-                type: Number,
+export default {
+    name: 'GerenciarUsuarioItem',
+    props: {
+        value: {
+            default: () => {
+                return {}
             },
         },
-        methods: {
-            editarUsuario(){
-                this.$emit('editarUsuario', this.value)
-            },
-            inserirPermissoes(){
-                this.$emit('permissaoUsuario', this.value)
-            },
-        }
+        index: {
+            type: Number,
+        },
+    },
+    methods: {
+        editarUsuario(){
+            this.$emit('editarUsuario', this.value)
+        },
+        inserirPermissoes(){
+            this.$emit('permissaoUsuario', this.value)
+        },
     }
+}
 </script>
 
 

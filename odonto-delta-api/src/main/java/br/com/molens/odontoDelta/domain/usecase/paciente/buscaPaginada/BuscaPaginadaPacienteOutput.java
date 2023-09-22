@@ -1,7 +1,7 @@
 package br.com.molens.odontoDelta.domain.usecase.paciente.buscaPaginada;
 
-import br.com.molens.odontoDelta.gateway.dataprovider.entity.Empresa;
-import br.com.molens.odontoDelta.gateway.dataprovider.entity.Municipio;
+import br.com.molens.odontoDelta.gateway.entity.Empresa;
+import br.com.molens.odontoDelta.gateway.entity.Municipio;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

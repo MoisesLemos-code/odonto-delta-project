@@ -1,12 +1,12 @@
 package br.com.molens.odontoDelta.adapter.entrypoint.controller.paciente;
 
 import br.com.molens.odontoDelta.domain.usecase.paciente.atualizarPaciente.AtualizarPacienteInput;
-import br.com.molens.odontoDelta.domain.usecase.paciente.atualizarPaciente.AtualizarPacienteOuput;
+import br.com.molens.odontoDelta.domain.usecase.paciente.atualizarPaciente.AtualizarPacienteOutput;
 import br.com.molens.odontoDelta.domain.usecase.paciente.buscaPaginada.BuscaPaginadaPacienteInput;
 import br.com.molens.odontoDelta.domain.usecase.paciente.buscaPaginada.BuscaPaginadaPacienteOutput;
 import br.com.molens.odontoDelta.domain.usecase.paciente.buscarPacientePorId.BuscarPacientePorIdOutput;
 import br.com.molens.odontoDelta.domain.usecase.paciente.inserirPaciente.InserirPacienteInput;
-import br.com.molens.odontoDelta.domain.usecase.paciente.inserirPaciente.InserirPacienteOuput;
+import br.com.molens.odontoDelta.domain.usecase.paciente.inserirPaciente.InserirPacienteOutput;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +20,7 @@ public interface PacienteController {
 
     @ApiOperation(value = "Insere um novo paciente")
     @PostMapping("/inserir")
-    ResponseEntity<InserirPacienteOuput> inserir(@RequestBody @Valid InserirPacienteInput input);
+    ResponseEntity<InserirPacienteOutput> inserir(@RequestBody @Valid InserirPacienteInput input);
 
     @ApiOperation(value = "Busca único Paciente")
     @GetMapping(value = "{empresaId}/{pacienteId}")
@@ -36,7 +36,7 @@ public interface PacienteController {
 
     @ApiOperation(value = "Atualiza um Paciente")
     @PutMapping(value = "{pacienteId}")
-    ResponseEntity<AtualizarPacienteOuput> atualizar(@PathVariable Long pacienteId, @RequestBody @Valid AtualizarPacienteInput input);
+    ResponseEntity<AtualizarPacienteOutput> atualizar(@PathVariable Long pacienteId, @RequestBody @Valid AtualizarPacienteInput input);
 
 
 }

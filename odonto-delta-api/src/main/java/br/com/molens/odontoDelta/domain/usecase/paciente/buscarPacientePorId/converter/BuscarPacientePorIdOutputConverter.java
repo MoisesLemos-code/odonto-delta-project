@@ -1,8 +1,8 @@
 package br.com.molens.odontoDelta.domain.usecase.paciente.buscarPacientePorId.converter;
 
 import br.com.molens.odontoDelta.domain.usecase.paciente.buscarPacientePorId.BuscarPacientePorIdOutput;
-import br.com.molens.odontoDelta.gateway.dataprovider.entity.Empresa;
-import br.com.molens.odontoDelta.gateway.dataprovider.entity.Paciente;
+import br.com.molens.odontoDelta.gateway.entity.Empresa;
+import br.com.molens.odontoDelta.gateway.entity.Paciente;
 import br.com.molens.odontoDelta.utils.converter.GenericConverter;
 
 import java.util.Objects;

@@ -2,8 +2,8 @@ package br.com.molens.odontoDelta.domain.usecase.paciente.buscaPaginada.converte
 
 import br.com.molens.odontoDelta.domain.entity.ListaPaginada;
 import br.com.molens.odontoDelta.domain.usecase.paciente.buscaPaginada.BuscaPaginadaPacienteOutput;
-import br.com.molens.odontoDelta.gateway.dataprovider.entity.Empresa;
-import br.com.molens.odontoDelta.gateway.dataprovider.entity.Paciente;
+import br.com.molens.odontoDelta.gateway.entity.Empresa;
+import br.com.molens.odontoDelta.gateway.entity.Paciente;
 import br.com.molens.odontoDelta.utils.converter.GenericConverter;
 
 import java.util.Objects;

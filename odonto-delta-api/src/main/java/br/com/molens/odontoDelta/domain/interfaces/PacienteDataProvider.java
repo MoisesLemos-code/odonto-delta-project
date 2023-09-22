@@ -2,7 +2,7 @@ package br.com.molens.odontoDelta.domain.interfaces;
 
 
 import br.com.molens.odontoDelta.domain.entity.ListaPaginada;
-import br.com.molens.odontoDelta.gateway.dataprovider.entity.Paciente;
+import br.com.molens.odontoDelta.gateway.entity.Paciente;
 
 import java.util.Optional;
 
@@ -10,7 +10,7 @@ public interface PacienteDataProvider {
 
     Optional<Paciente> buscarPorId(Long pacienteId, Long empresaId);
 
-    boolean existeCnpjCpf(String cpfCnpj);
+    boolean existeCnpjCpf(String cpfCnpj, Long empresaId);
 
     Long inserir(Paciente paciente);
 
@@ -20,5 +20,5 @@ public interface PacienteDataProvider {
 
     ListaPaginada<Paciente> buscaPaginadaComFiltro(Paciente.Filtro filtro);
 
-    Optional<Paciente> buscarPorCnpjCpf(String cnpjCpf);
+    Optional<Paciente> buscarPorCnpjCpf(String cnpjCpf, Long empresaId);
 }

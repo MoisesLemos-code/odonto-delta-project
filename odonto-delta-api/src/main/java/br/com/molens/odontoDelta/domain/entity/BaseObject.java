@@ -1,6 +1,6 @@
 package br.com.molens.odontoDelta.domain.entity;
 
-import br.com.molens.odontoDelta.gateway.dataprovider.listener.AuditListener;
+import br.com.molens.odontoDelta.gateway.listener.AuditListener;
 import lombok.Data;
 
 import javax.persistence.EntityListeners;

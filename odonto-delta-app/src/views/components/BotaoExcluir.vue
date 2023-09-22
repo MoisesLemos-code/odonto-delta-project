@@ -12,19 +12,19 @@
 </template>
 
 <script>
-    export default {
-        name: 'BotaoExcluir',
-        props: {
-            disabled: {
-                type: Boolean,
-                default: false
-            },
-            color: {
-                type: String,
-                default: 'white'
-            }
+export default {
+    name: 'BotaoExcluir',
+    props: {
+        disabled: {
+            type: Boolean,
+            default: false
+        },
+        color: {
+            type: String,
+            default: 'white'
         }
     }
+}
 </script>
 
 <style lang="stylus" scoped>

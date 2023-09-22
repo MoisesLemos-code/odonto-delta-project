@@ -2,9 +2,9 @@ package br.com.molens.odontoDelta.domain.usecase.paciente.inserirPaciente.conver
 
 import br.com.molens.odontoDelta.domain.exception.DataEmFormatoIncorretoException;
 import br.com.molens.odontoDelta.domain.usecase.paciente.inserirPaciente.InserirPacienteInput;
-import br.com.molens.odontoDelta.gateway.dataprovider.entity.Empresa;
-import br.com.molens.odontoDelta.gateway.dataprovider.entity.Municipio;
-import br.com.molens.odontoDelta.gateway.dataprovider.entity.Paciente;
+import br.com.molens.odontoDelta.gateway.entity.Empresa;
+import br.com.molens.odontoDelta.gateway.entity.Municipio;
+import br.com.molens.odontoDelta.gateway.entity.Paciente;
 import br.com.molens.odontoDelta.utils.converter.GenericConverter;
 
 import java.text.ParseException;
