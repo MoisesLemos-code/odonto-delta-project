@@ -58,7 +58,7 @@ CREATE SEQUENCE "odonto"."seq_perfil"
     CACHE 1
 ;
 
-CREATE SEQUENCE "odonto"."seq_perfil_item"
+CREATE SEQUENCE "odonto"."seq_perfil_permissao"
     INCREMENT BY 1
     START WITH 1
     NO MAXVALUE
@@ -295,43 +295,43 @@ COMMENT ON COLUMN "odonto"."tb_perfil"."pf_ativo" IS 'Indica se o perfil está a
 ALTER TABLE "odonto"."tb_perfil" ADD CONSTRAINT "pk_perfil" PRIMARY KEY ("pf_id")
 ;
 
--- Table odonto.tb_perfil_item
+-- Table odonto.tb_perfil_permissao
 
-CREATE TABLE "odonto"."tb_perfil_item"
+CREATE TABLE "odonto"."tb_perfil_permissao"
 (
-    "pfi_id" Integer NOT NULL,
+    "pp_id" Integer NOT NULL,
     "pf_id" Integer NOT NULL,
-    "pfi_nome" varchar(255) NOT NULL,
-    "pfi_descricao" varchar(255) NOT NULL,
-    "pfi_ativo" Boolean DEFAULT true,
-    "pfi_dthr_cadastro" timestamp(6),
-    "pfi_dthr_alteracao" timestamp(6),
-    "pfi_usuario_cadastro" varchar(255),
-    "pfi_usuario_alteracao" varchar(255)
+    "pp_nome" varchar(255) NOT NULL,
+    "pp_descricao" varchar(255) NOT NULL,
+    "pp_ativo" Boolean DEFAULT true,
+    "pp_dthr_cadastro" timestamp(6),
+    "pp_dthr_alteracao" timestamp(6),
+    "pp_usuario_cadastro" varchar(255),
+    "pp_usuario_alteracao" varchar(255)
 )
     WITH (
         autovacuum_enabled=true)
 ;
 
-COMMENT ON TABLE "odonto"."tb_perfil_item" IS 'Armazena os dados de perfil.'
+COMMENT ON TABLE "odonto"."tb_perfil_permissao" IS 'Armazena os dados de perfil.'
 ;
 
-COMMENT ON COLUMN "odonto"."tb_perfil_item"."pfi_id" IS 'Codigo gerado automaticamente que identifica um perfil.'
+COMMENT ON COLUMN "odonto"."tb_perfil_permissao"."pp_id" IS 'Codigo gerado automaticamente que identifica um perfil.'
 ;
 
 COMMENT ON COLUMN "odonto"."tb_perfil"."pf_id" IS 'Código referente ao perfil.'
 ;
 
-COMMENT ON COLUMN "odonto"."tb_perfil_item"."pfi_nome" IS 'Nome do perfil.'
+COMMENT ON COLUMN "odonto"."tb_perfil_permissao"."pp_nome" IS 'Nome do perfil.'
 ;
 
-COMMENT ON COLUMN "odonto"."tb_perfil_item"."pfi_descricao" IS 'Descrição do perfil.'
+COMMENT ON COLUMN "odonto"."tb_perfil_permissao"."pp_descricao" IS 'Descrição do perfil.'
 ;
 
-COMMENT ON COLUMN "odonto"."tb_perfil_item"."pfi_ativo" IS 'Indica se o perfil está ativo ou não.'
+COMMENT ON COLUMN "odonto"."tb_perfil_permissao"."pp_ativo" IS 'Indica se o perfil está ativo ou não.'
 ;
 
-ALTER TABLE "odonto"."tb_perfil_item" ADD CONSTRAINT "pk_perfil_item" PRIMARY KEY ("pfi_id")
+ALTER TABLE "odonto"."tb_perfil_permissao" ADD CONSTRAINT "pk_perfil_permissao" PRIMARY KEY ("pp_id")
 ;
 
 -- Table odonto.tb_perfil_usuario
@@ -673,5 +673,5 @@ ALTER TABLE "odonto"."tb_perfil_usuario" ADD CONSTRAINT "fk_perfil_usuario_pf" F
 ALTER TABLE "odonto"."tb_perfil_usuario" ADD CONSTRAINT "fk_perfil_usuario_us" FOREIGN KEY ("us_id") REFERENCES "odonto"."tb_usuario" ("us_id")
 ;
 
-ALTER TABLE "odonto"."tb_perfil_item" ADD CONSTRAINT "fk_perfil_item_pf" FOREIGN KEY ("pf_id") REFERENCES "odonto"."tb_perfil" ("pf_id")
+ALTER TABLE "odonto"."tb_perfil_permissao" ADD CONSTRAINT "fk_perfil_permissao_pf" FOREIGN KEY ("pf_id") REFERENCES "odonto"."tb_perfil" ("pf_id")
 ;

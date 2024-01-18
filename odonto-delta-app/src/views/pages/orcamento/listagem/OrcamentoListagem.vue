@@ -48,90 +48,90 @@
 </template>
 
 <script>
-    import _ from 'lodash'
-    import { mapActions, mapMutations } from 'vuex'
-    import { actionTypes, mutationTypes } from '@/core/constants'
-    import OrcamentoListagemTabela from '@/views/pages/orcamento/listagem/OrcamentoListagemTabela'
-    import PesquisaAvancada from '@/views/components/PesquisaAvancada'
-    import ItemDePesquisa from '@/views/components/ItemDePesquisa'
+import _ from 'lodash'
+import { mapActions, mapMutations } from 'vuex'
+import { actionTypes, mutationTypes } from '@/core/constants'
+import OrcamentoListagemTabela from '@/views/pages/orcamento/listagem/OrcamentoListagemTabela'
+import PesquisaAvancada from '@/views/components/PesquisaAvancada'
+import ItemDePesquisa from '@/views/components/ItemDePesquisa'
 
-    export default {
-        name: 'OrcamentoListagem',
-        components: {ItemDePesquisa, PesquisaAvancada, OrcamentoListagemTabela },
-        data() {
-            return {
-                filtrosInterno: this.getFiltros(),
-                itens: [],
-                paginas: 0,
-                totalItens: 0,
-                maxInputPesquisa: 30
+export default {
+    name: 'OrcamentoListagem',
+    components: {ItemDePesquisa, PesquisaAvancada, OrcamentoListagemTabela },
+    data() {
+        return {
+            filtrosInterno: this.getFiltros(),
+            itens: [],
+            paginas: 0,
+            totalItens: 0,
+            maxInputPesquisa: 30
+        }
+    },
+    methods:{
+        ...mapActions([
+            actionTypes.ORCAMENTO.BUSCAR_TODOS_ORCAMENTOS,
+            actionTypes.ORCAMENTO.CADASTRAR_ORCAMENTO
+        ]),
+        ...mapMutations([
+            mutationTypes.ORCAMENTO.SET_FILTROS_BUSCA_TODOS_ORCAMENTOS,
+            mutationTypes.ORCAMENTO.SET_PAGINACAO_BUSCA_TODOS_ORCAMENTOS,
+            mutationTypes.ORCAMENTO.RESETA_PAGE
+        ]),
+        async tratarEventoIniciarOrcamento(){
+            let orcamentoSalvo = await this.cadastrarOrcamento({})
+            await this.$router.push({name: 'OrcamentoPaciente', params: {orcamentoId: orcamentoSalvo.id}})
+        },
+        async buscar() {
+            this.setFiltrosBuscaTodosOrcamentos(this.getFiltrosInterno())
+            await this.buscaTodosOrcamentos()
+        },
+        async buscaTodosOrcamentos() {
+            const resultado = await this.buscarTodosOrcamentos()
+            if (resultado) {
+                this.itens = resultado.content
+                this.paginas = resultado.totalPages
+                this.totalItens = resultado.totalElements
             }
         },
-        methods:{
-            ...mapActions([
-                actionTypes.ORCAMENTO.BUSCAR_TODOS_ORCAMENTOS,
-                actionTypes.ORCAMENTO.CADASTRAR_ORCAMENTO
-            ]),
-            ...mapMutations([
-                mutationTypes.ORCAMENTO.SET_FILTROS_BUSCA_TODOS_ORCAMENTOS,
-                mutationTypes.ORCAMENTO.SET_PAGINACAO_BUSCA_TODOS_ORCAMENTOS,
-                mutationTypes.ORCAMENTO.RESETA_PAGE
-            ]),
-            async tratarEventoIniciarOrcamento(){
-                let orcamentoSalvo = await this.cadastrarOrcamento({})
-                await this.$router.push({name: 'OrcamentoPaciente', params: {orcamentoId: orcamentoSalvo.id}})
-            },
-            async buscar() {
-                this.setFiltrosBuscaTodosOrcamentos(this.getFiltrosInterno())
-                await this.buscaTodosOrcamentos()
-            },
-            async buscaTodosOrcamentos() {
-                const resultado = await this.buscarTodosOrcamentos()
-                if (resultado) {
-                    this.itens = resultado.content
-                    this.paginas = resultado.totalPages
-                    this.totalItens = resultado.totalElements
-                }
-            },
-            getFiltros() {
-                return _.cloneDeep(this.$store.state.orcamento.resultadoBuscaTodosOrcamentos.filtros)
-            },
-            getFiltrosInterno() {
-                return _.cloneDeep(this.filtrosInterno)
-            },
-            tratarEventoAcessar(item) {
-                const id = item.id
-                this.$router.push({name: 'OrcamentoPaciente', params: {orcamentoId: id}})
-            },
-            tratarEventoBuscaSimples(busca) {
-                this.resetaPage()
-                this.filtrosInterno.tipo.value = busca.tipo
-                this.filtrosInterno.atributo.value = busca.atributo
-                this.filtrosInterno.conteudo.value = busca.conteudo
-                this.buscar()
-            },
-            tratarEventoBuscaAvancada(){
-                this.resetaPage()
-                this.buscar()
-            },
-            tratarEventoLimparBuscaAvancada(){
-                this.filtrosInterno.tipo.value = this.filtrosInterno.tipo.default
-                this.filtrosInterno.atributo.value = this.filtrosInterno.atributo.default
-                this.filtrosInterno.conteudo.value = this.filtrosInterno.conteudo.default
-                this.buscar()
-            },
-            tratarEventoPaginar(paginacao) {
-                this.setPaginacaoBuscaTodosOrcamentos(paginacao)
-                this.buscar()
-            },
-            tratarEventoRemoverFiltro(propriedade) {
-                if (this.filtrosInterno[propriedade]) {
-                    this.filtrosInterno[propriedade].value = this.filtrosInterno[propriedade].default
-                }
-                this.buscar()
+        getFiltros() {
+            return _.cloneDeep(this.$store.state.orcamento.resultadoBuscaTodosOrcamentos.filtros)
+        },
+        getFiltrosInterno() {
+            return _.cloneDeep(this.filtrosInterno)
+        },
+        tratarEventoAcessar(item) {
+            const id = item.id
+            this.$router.push({name: 'OrcamentoPaciente', params: {orcamentoId: id}})
+        },
+        tratarEventoBuscaSimples(busca) {
+            this.resetaPage()
+            this.filtrosInterno.tipo.value = busca.tipo
+            this.filtrosInterno.atributo.value = busca.atributo
+            this.filtrosInterno.conteudo.value = busca.conteudo
+            this.buscar()
+        },
+        tratarEventoBuscaAvancada(){
+            this.resetaPage()
+            this.buscar()
+        },
+        tratarEventoLimparBuscaAvancada(){
+            this.filtrosInterno.tipo.value = this.filtrosInterno.tipo.default
+            this.filtrosInterno.atributo.value = this.filtrosInterno.atributo.default
+            this.filtrosInterno.conteudo.value = this.filtrosInterno.conteudo.default
+            this.buscar()
+        },
+        tratarEventoPaginar(paginacao) {
+            this.setPaginacaoBuscaTodosOrcamentos(paginacao)
+            this.buscar()
+        },
+        tratarEventoRemoverFiltro(propriedade) {
+            if (this.filtrosInterno[propriedade]) {
+                this.filtrosInterno[propriedade].value = this.filtrosInterno[propriedade].default
             }
+            this.buscar()
         }
     }
+}
 </script>
 
 <style scoped lang="stylus">

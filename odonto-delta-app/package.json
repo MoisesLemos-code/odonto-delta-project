@@ -20,6 +20,7 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "lodash": "^4.17.10",
+    "module_name": "^1.0.0",
     "moment": "^2.22.2",
     "moment-timezone": "^0.5.23",
     "register-service-worker": "^1.7.1",
@@ -84,7 +85,9 @@
       "indent": [
         "error",
         4,
-        {"SwitchCase": 1}
+        {
+          "SwitchCase": 1
+        }
       ],
       "no-console": "off",
       "max-len": [

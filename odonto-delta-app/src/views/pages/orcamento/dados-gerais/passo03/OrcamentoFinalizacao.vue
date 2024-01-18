@@ -28,72 +28,72 @@
 </template>
 
 <script>
-    import {mapActions} from 'vuex'
-    import {actionTypes} from '@/core/constants'
-    import AcoesOrcamento from '@/views/pages/orcamento/dados-gerais/registro-orcamento/AcoesOrcamento'
-    import ServicosRealizadosTabela from './servicosRealizados/ServicosRealizadosTabela'
-    import PecasRealizadasTabela from './pecasRealizadas/PecasRealizadasTabela'
+import {mapActions} from 'vuex'
+import {actionTypes} from '@/core/constants'
+import AcoesOrcamento from '@/views/pages/orcamento/dados-gerais/registro-orcamento/AcoesOrcamento'
+import ServicosRealizadosTabela from './servicosRealizados/ServicosRealizadosTabela'
+import PecasRealizadasTabela from './pecasRealizadas/PecasRealizadasTabela'
 
-    export default {
-        name: 'OrcamentoFinalizacao',
-        components: {PecasRealizadasTabela, ServicosRealizadosTabela, AcoesOrcamento},
-        data() {
-            return {
-                dadosDeEntrada: {
-                    id: null
-                },
-                orcamentoId: null,
+export default {
+    name: 'OrcamentoFinalizacao',
+    components: {PecasRealizadasTabela, ServicosRealizadosTabela, AcoesOrcamento},
+    data() {
+        return {
+            dadosDeEntrada: {
+                id: null
+            },
+            orcamentoId: null,
+        }
+    },
+    computed: {
+        podeContinuar() {
+            return this.dadosDeEntrada.id
+        }
+    },
+    async mounted() {
+        this.setOrcamentoId()
+        await this.buscarOrcamento()
+        this.verificarPasso2()
+    },
+    methods: {
+        ...mapActions([
+            actionTypes.ORCAMENTO.FINALIZAR_ORCAMENTO,
+            actionTypes.ORCAMENTO.BUSCAR_ORCAMENTO_POR_ID,
+        ]),
+        setOrcamentoId() {
+            if (this.$route.params.orcamentoId) {
+                this.orcamentoId = this.$route.params.orcamentoId
             }
         },
-        computed: {
-            podeContinuar() {
-                return this.dadosDeEntrada.id
+        async buscarOrcamento() {
+            this.dadosDeEntrada = await this.buscarOrcamentoPorId(this.orcamentoId)
+        },
+        async finalizar() {
+            this.setMensagemLoading('Finalizando o orçamento...')
+            await this.finalizarOrcamento(this.orcamentoId)
+            await this.$router.push({name: 'OrcamentoListagem'})
+        },
+        verificarPasso2() {
+            if (this.podeContinuar) {
+                this.$emit('habilitaPasso2')
+            } else {
+                this.$emit('desabilitaPasso2')
             }
         },
-        async mounted() {
-            this.setOrcamentoId()
-            await this.buscarOrcamento()
-            this.verificarPasso2()
+        tratarEventoVoltar() {
+            this.$router.push({
+                name: 'OrcamentoOdontograma',
+                params: {orcamentoId: this.orcamentoId}
+            })
         },
-        methods: {
-            ...mapActions([
-                actionTypes.ORCAMENTO.FINALIZAR_ORCAMENTO,
-                actionTypes.ORCAMENTO.BUSCAR_ORCAMENTO_POR_ID,
-            ]),
-            setOrcamentoId() {
-                if (this.$route.params.orcamentoId) {
-                    this.orcamentoId = this.$route.params.orcamentoId
-                }
-            },
-            async buscarOrcamento() {
-                this.dadosDeEntrada = await this.buscarOrcamentoPorId(this.orcamentoId)
-            },
-            async finalizar() {
-                this.setMensagemLoading('Finalizando o orçamento...')
-                await this.finalizarOrcamento(this.orcamentoId)
-                await this.$router.push({name: 'OrcamentoListagem'})
-            },
-            verificarPasso2() {
-                if (this.podeContinuar) {
-                    this.$emit('habilitaPasso2')
-                } else {
-                    this.$emit('desabilitaPasso2')
-                }
-            },
-            tratarEventoVoltar() {
-                this.$router.push({
-                    name: 'OrcamentoOdontograma',
-                    params: {orcamentoId: this.orcamentoId}
-                })
-            },
-            tratarEventoContinuar() {
-                this.$router.push({
-                    name: 'OrcamentoPaciente',
-                    params: {orcamentoId: this.orcamentoId}
-                })
-            }
+        tratarEventoContinuar() {
+            this.$router.push({
+                name: 'OrcamentoPaciente',
+                params: {orcamentoId: this.orcamentoId}
+            })
         }
     }
+}
 </script>
 
 <style lang="stylus">

@@ -1,16 +1,12 @@
 package br.com.molens.odontoDelta.domain.usecase.perfil.removerPerfilPorId;
 
-import br.com.molens.odontoDelta.domain.exception.BuscarPacientePorIdException;
-import br.com.molens.odontoDelta.domain.exception.RemoverPacientePorIdException;
 import br.com.molens.odontoDelta.domain.exception.RemoverPerfilPorIdException;
-import br.com.molens.odontoDelta.domain.interfaces.PacienteDataProvider;
 import br.com.molens.odontoDelta.domain.interfaces.PerfilDataProvider;
-import br.com.molens.odontoDelta.domain.usecase.paciente.removerPacientePorId.RemoverPacientePorIdInput;
-import br.com.molens.odontoDelta.gateway.entity.Paciente;
 import br.com.molens.odontoDelta.gateway.entity.Perfil;
-import java.util.Optional;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+
+import java.util.Optional;
 
 @Builder
 @AllArgsConstructor
@@ -27,10 +23,10 @@ public class RemoverPerfilPorIdUsecase {
     private void validarDadosEntrada(RemoverPerfilPorIdInput input) {
 
         if (input.getPerfilId() == 0) {
-            throw new BuscarPacientePorIdException("Identificador de paciente inválido.");
+            throw new RemoverPerfilPorIdException("Identificador de perfil inválido.");
         }
         if (input.getEmpresaId() == 0) {
-            throw new BuscarPacientePorIdException("Identificador de empresa inválido.");
+            throw new RemoverPerfilPorIdException("Identificador de empresa inválido.");
         }
     }
 
