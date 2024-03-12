@@ -1,5 +1,11 @@
 <template>
   <div>
+    <gerenciar-perfil-edicao-modal
+        v-if="modalEdicao"
+        v-model="modalEdicao"
+        :item="itemSelecionado"
+        @fecharEdicao="fecharModalEdicao"
+    />
     <toolbar-view>
       <botao-acao slot="actions" hideBorder @click="cadastrarPerfil">
         <v-icon>add_circle</v-icon>
@@ -32,13 +38,16 @@
 <script>
 import _ from 'lodash'
 import {mapActions, mapMutations} from 'vuex'
-import {mutationTypes} from '@/core/constants'
+import {actionTypes, mutationTypes} from '@/core/constants'
 import PesquisaAvancada from '@/views/components/PesquisaAvancada.vue'
 import ContainerComponent from '@/views/components/Container.vue'
 import GerenciarPerfilCard from '@/views/pages/configuracao/gerenciarPerfis/GerenciarPerfilCard.vue'
+import GerenciarPerfilEdicaoModal from '@/views/pages/configuracao/gerenciarPerfis/GerenciarPerfilEdicaoModal.vue'
+
 export default {
     name: 'GerenciarPerfis',
-    components: {GerenciarPerfilCard, ContainerComponent, PesquisaAvancada},
+    components: {
+        GerenciarPerfilEdicaoModal, GerenciarPerfilCard, ContainerComponent, PesquisaAvancada},
     data() {
         return {
             filtrosInterno: this.getFiltros(),
@@ -46,32 +55,17 @@ export default {
             paginas: 0,
             totalItens: 0,
             maxInputPesquisa: 30,
-            dados: {
-                content: [
-                    {id: 1, nome: 'teste', descricao: 'descrição de teste'},
-                    {id: 2, nome: 'testeaaaaaaaaaaaaaaaaaaaaaaaa', descricao: 'descrição de testeeeeeeeeeeeee' +
-                          'eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee, testeeeee' +
-                          'eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'},
-                    {id: 3, nome: 'teste', descricao: 'descrição de teste'},
-                    {id: 4, nome: 'teste', descricao: 'descrição de teste'},
-                    {id: 5, nome: 'teste', descricao: 'descrição de teste'},
-                    {id: 6, nome: 'teste', descricao: 'descrição de teste'},
-                    {id: 7, nome: 'teste', descricao: 'descrição de teste'},
-                    {id: 8, nome: 'teste', descricao: 'descrição de testeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee' +
-                          'eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'},
-                    {id: 9, nome: 'teste', descricao: 'descrição de teste'},
-                    {id: 10, nome: 'teste', descricao: 'descrição de teste'},
-                ],
-                totalPages: 2,
-                totalElements: 20
-            }
+            itemSelecionado: null,
+            modalEdicao: false
         }
     },
     async mounted() {
         await this.buscar()
     },
     methods: {
-        ...mapActions([]),
+        ...mapActions([
+            actionTypes.PERFIL.BUSCAR_TODOS_PERFIS
+        ]),
         ...mapMutations([
             mutationTypes.PERFIL.SET_FILTROS_BUSCA_TODOS_PERFIS,
             mutationTypes.PERFIL.SET_PAGINACAO_BUSCA_TODOS_PERFIS,
@@ -79,12 +73,12 @@ export default {
         ]),
         async buscar() {
             this.setFiltrosBuscaTodosPerfis(this.getFiltrosInterno())
-            await this.buscarUsuarios()
+            await this.buscarPerfis()
         },
-        async buscarUsuarios() {
-            const resultado = this.dados
+        async buscarPerfis() {
+            const resultado = await this.buscarTodosPerfis()
             if (resultado) {
-                this.itens = resultado.content
+                this.itens = resultado.items
                 this.paginas = resultado.totalPages
                 this.totalItens = resultado.totalElements
             }
@@ -93,11 +87,16 @@ export default {
             this.$router.push({name: 'CadastrarPerfil'})
         },
         tratarEventoEditarPerfil(perfil){
-            console.log('---tratarEventoEditarPerfil')
-            console.log(perfil)
+            this.itemSelecionado = perfil
+            this.modalEdicao = true
+        },
+        fecharModalEdicao() {
+            this.modalEdicao = false
+            this.itemSelecionado = null
+            this.buscar()
         },
         getFiltros() {
-            return _.cloneDeep(this.$store.state.usuario.resultadoBuscaTodosUsuarios.filtros)
+            return _.cloneDeep(this.$store.state.perfil.resultadoBuscaTodosPerfis.filtros)
         },
         getFiltrosInterno() {
             return _.cloneDeep(this.filtrosInterno)

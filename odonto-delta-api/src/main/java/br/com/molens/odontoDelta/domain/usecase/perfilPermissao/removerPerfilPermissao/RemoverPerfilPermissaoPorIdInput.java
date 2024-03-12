@@ -13,6 +13,6 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 public class RemoverPerfilPermissaoPorIdInput {
 
-    @NotNull(message = "O atributo 'perfilId' não pode ser nulo.")
-    private Long permissaoId;
+    @NotNull(message = "O atributo 'perfilPermissaoId' não pode ser nulo.")
+    private Long perfilPermissaoId;
 }

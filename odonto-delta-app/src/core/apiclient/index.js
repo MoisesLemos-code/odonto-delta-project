@@ -1,4 +1,3 @@
-import permissao from './PermissaoApiClient'
 import usuario from './UsuarioApiClient'
 import cidade from './CidadeApiClient'
 import estado from './EstadoApiClient'
@@ -11,9 +10,11 @@ import servicoItem from './ServicoItemApiClient'
 import pecaItem from './PecaItemApiClient'
 import peca from './PecaApiClient'
 import relatorios from './RelatoriosApiClient'
+import perfil from './PerfilApiClient'
+import perfilPermissao from './PerfilPermissaoApiClient'
+import permissao from './PermissaoApiClient'
 
 export default {
-    permissao,
     usuario,
     cidade,
     estado,
@@ -25,5 +26,8 @@ export default {
     servicoItem,
     pecaItem,
     peca,
-    relatorios
+    relatorios,
+    perfil,
+    perfilPermissao,
+    permissao
 }

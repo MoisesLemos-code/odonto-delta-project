@@ -17,7 +17,6 @@ public class AtualizarPerfilInput {
     private String nome;
     @NotNull(message = "O atributo 'descricao' não pode ser nulo.")
     private String descricao;
-    @NotNull(message = "O atributo 'empresa' não pode ser nulo.")
     private Long empresaId;
     private Boolean ativo;
 }

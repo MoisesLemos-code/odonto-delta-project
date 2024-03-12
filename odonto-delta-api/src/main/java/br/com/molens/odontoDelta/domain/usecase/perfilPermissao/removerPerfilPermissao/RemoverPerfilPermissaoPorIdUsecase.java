@@ -7,6 +7,7 @@ import br.com.molens.odontoDelta.gateway.entity.PerfilPermissao;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 
+import java.util.Objects;
 import java.util.Optional;
 
 @Builder
@@ -23,20 +24,20 @@ public class RemoverPerfilPermissaoPorIdUsecase {
 
     private void validarDadosEntrada(RemoverPerfilPermissaoPorIdInput input) {
 
-        if (input.getPermissaoId() == 0) {
-            throw new BuscarPacientePorIdException("Identificador de permissão inválido.");
+        if (Objects.isNull(input.getPerfilPermissaoId())) {
+            throw new BuscarPacientePorIdException("Identificador de perfil permissão inválido.");
         }
     }
 
     private void buscarPermissao(RemoverPerfilPermissaoPorIdInput input) {
-        Optional<PerfilPermissao> perfilPermissao = perfilPermissaoDataProvider.buscarPorId(input.getPermissaoId());
+        Optional<PerfilPermissao> perfilPermissao = perfilPermissaoDataProvider.buscarPorId(input.getPerfilPermissaoId());
 
         if (!perfilPermissao.isPresent()) {
-            throw new RemoverPerfilPorIdException("Permissão não encontrada.");
+            throw new RemoverPerfilPorIdException("Perfil Permissão não encontrada.");
         }
     }
 
     private void removerPermissao(RemoverPerfilPermissaoPorIdInput input) {
-        perfilPermissaoDataProvider.remover(input.getPermissaoId());
+        perfilPermissaoDataProvider.remover(input.getPerfilPermissaoId());
     }
 }

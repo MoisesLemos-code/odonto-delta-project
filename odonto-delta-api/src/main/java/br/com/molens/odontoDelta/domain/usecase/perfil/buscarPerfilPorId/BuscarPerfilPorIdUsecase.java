@@ -5,6 +5,8 @@ import br.com.molens.odontoDelta.domain.exception.BuscarPerfilPorIdException;
 import br.com.molens.odontoDelta.domain.interfaces.PerfilDataProvider;
 import br.com.molens.odontoDelta.domain.usecase.perfil.buscarPerfilPorId.converter.BuscarPerfilPorIdOutputConverter;
 import br.com.molens.odontoDelta.gateway.entity.Perfil;
+
+import java.util.Objects;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,10 +25,10 @@ public class BuscarPerfilPorIdUsecase {
 
     private void validarDadosEntrada(BuscarPerfilPorIdInput input) {
 
-        if (input.getPerfilId() == 0) {
+        if (Objects.isNull(input.getPerfilId())) {
             throw new BuscarPacientePorIdException("Identificador de perfil inválido.");
         }
-        if (input.getEmpresaId() == 0) {
+        if (Objects.isNull(input.getEmpresaId())) {
             throw new BuscarPacientePorIdException("Identificador de empresa inválido.");
         }
     }

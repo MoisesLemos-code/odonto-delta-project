@@ -1,4 +1,4 @@
-package br.com.molens.odontoDelta.domain.usecase.perfilPermissao.buscarPermissoesPorPerfil;
+package br.com.molens.odontoDelta.domain.usecase.perfilPermissao.buscarPerfilPermissoesPorPerfil;
 
 import br.com.molens.odontoDelta.gateway.entity.Perfil;
 import lombok.AllArgsConstructor;

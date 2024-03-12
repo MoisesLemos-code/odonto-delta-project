@@ -1,6 +1,7 @@
 package br.com.molens.odontoDelta.domain.usecase.perfilPermissao.atualizarPerfilPermissao;
 
 import br.com.molens.odontoDelta.gateway.entity.Perfil;
+import br.com.molens.odontoDelta.gateway.entity.Permissao;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,7 +15,6 @@ public class AtualizarPerfilPermissaoOutput {
 
         private Long id;
         private Perfil perfil;
-        private String nome;
-        private String descricao;
+        private Permissao permissao;
         private Boolean ativo;
 }

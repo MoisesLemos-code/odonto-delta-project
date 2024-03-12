@@ -1,6 +1,6 @@
 ## Como executar em desenvolvimento 💻
 
-Esse é um guia básico de como executar em desenvolvimento o Pregao, mais informações sobre requisitos, variáveis de ambiente
+Esse é um guia básico de como executar em desenvolvimento o projeto, mais informações sobre requisitos, variáveis de ambiente
 e formas de configuração podem ser encontradas na [nota técnica](./nota-tecnica.md).
 
 ### Passo 1 - Configuração do ambiente
@@ -8,11 +8,13 @@ Para utilização dos sistemas Molens é necessário primeiro fazer uma configur
 para utilizar as ferramentas corporativas.
 
 ### Passo 2 - Subindo containers docker
-Este comando irá subir todas as dependências como containers docker. Para isso ele deverá ser executado na pasta
+Estes comandos irá subir todas as dependências como containers docker. Para isso ele deverá ser executado na pasta
 raíz do repositório.
 
 ```bash
 docker-compose -f docker-database.yml up -d
+```
+```bash
 docker-compose -f docker-dependencies.yml up -d
 ```
 

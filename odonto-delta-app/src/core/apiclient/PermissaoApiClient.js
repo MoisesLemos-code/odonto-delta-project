@@ -2,8 +2,8 @@ import axios from 'axios'
 
 class PermissaoApiClient {
 
-    async buscarTodos(id){
-        return axios.get(`/permissao/all/user/${id}`)
+    async buscarTodos(){
+        return axios.get('/permissao/buscarTodas')
     }
 }
 

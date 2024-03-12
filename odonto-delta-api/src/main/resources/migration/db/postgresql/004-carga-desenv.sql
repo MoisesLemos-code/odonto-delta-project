@@ -3,7 +3,6 @@ pla_disponivel, pla_dthr_cadastro, pla_dthr_alteracao, pla_usuario_cadastro,
 pla_usuario_alteracao) VALUES (nextval('odonto.seq_plano'), 'MENSAL', 'Plano Profissional', 250,
                                true, null, null, null, null);
 
-
 INSERT INTO odonto.tb_empresa (em_id, em_nome_fantasia, em_cnpj_cpf, em_tipo_pessoa,
 em_email, em_razao_social, em_logra, em_logra_num, mu_id, em_telefone, em_insc_est, pla_id,
 em_dthr_cadastro, em_dthr_alteracao, em_usuario_cadastro, em_usuario_alteracao)
@@ -15,3 +14,9 @@ INSERT INTO odonto.tb_usuario (us_id, us_login, us_nome, us_cnpj_cpf, us_email, 
 us_senha)
 VALUES (nextval('odonto.seq_usuario'), 'admin', 'Administrador', '11122233344', 'admin_molens@molens.com', 1301, 1, true, 'Administrador do sistema',
         '$2a$10$c3LO9Q1a7woNhtNey/N.8egG9Ffyp80aW3gRPybcaS1oChU51fp4i');
+
+INSERT INTO odonto.tb_perfil (pf_id, pf_nome, pf_descricao, "em_id", "pf_ativo")
+VALUES (nextval('odonto.seq_perfil'), 'Administrador', 'Administrador do sistema.', 1, true);
+
+INSERT INTO odonto.tb_perfil (pf_id, pf_nome, pf_descricao, "em_id", "pf_ativo")
+VALUES (nextval('odonto.seq_perfil'), 'Recepcionista', 'Realiza cadastros no geral.', 1, true);

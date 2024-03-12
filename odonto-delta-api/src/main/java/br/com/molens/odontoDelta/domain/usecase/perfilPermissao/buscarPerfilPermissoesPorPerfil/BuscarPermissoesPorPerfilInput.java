@@ -1,4 +1,4 @@
-package br.com.molens.odontoDelta.domain.usecase.perfilPermissao.buscarPermissoesPorPerfil;
+package br.com.molens.odontoDelta.domain.usecase.perfilPermissao.buscarPerfilPermissoesPorPerfil;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,7 +13,6 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 public class BuscarPermissoesPorPerfilInput {
 
-    @NotNull(message = "O atributo 'perfilId' não pode ser nulo.")
     private Long perfilId;
     @NotNull(message = "O atributo 'empresa' não pode ser nulo.")
     private Long empresaId;

@@ -28,16 +28,16 @@ public interface PerfilController {
     ResponseEntity<InserirPerfilOutput> inserir(@RequestBody @Valid InserirPerfilInput input);
 
     @ApiOperation(value = "Busca único perfil")
-    @GetMapping(value = "{empresaId}/{perfilId}")
-    ResponseEntity<BuscarPerfilPorIdOutput> buscarPorId(@PathVariable @Valid Long perfilId, @PathVariable @Valid Long empresaId);
+    @GetMapping(value = "/{perfilId}")
+    ResponseEntity<BuscarPerfilPorIdOutput> buscarPorId(@PathVariable @Valid Long perfilId);
 
     @ApiOperation(value = "Busca paginada de perfil")
     @GetMapping
     ResponseEntity<BuscaPaginadaPerfilOutput> buscar(@Valid BuscaPaginadaPerfilInput inputData);
 
     @ApiOperation(value = "Remove um perfil")
-    @DeleteMapping(value = "{empresaId}/{perfilId}")
-    ResponseEntity<Void> remover(@PathVariable @Valid Long perfilId, @PathVariable @Valid Long empresaId);
+    @DeleteMapping(value = "/{perfilId}")
+    ResponseEntity<Void> remover(@PathVariable @Valid Long perfilId);
 
     @ApiOperation(value = "Atualiza um perfil")
     @PutMapping(value = "{perfilId}")

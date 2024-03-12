@@ -12,7 +12,7 @@
                     <v-text-field
                         v-model="dadosGerais.nome"
                         name="nome"
-                        placeholder="Informe o nome de usuário"
+                        placeholder="Informe o nome"
                         counter="100"
                         maxlength="100"
                         v-validate="{required: true, min: 2, max: 100}"
@@ -71,14 +71,14 @@ export default {
     },
     methods:{
         ...mapActions([
-            actionTypes.USUARIO.CADASTRAR_USUARIO
+            actionTypes.PERFIL.CADASTRAR_PERFIL
         ]),
         async tratarEventoSalvar() {
             if (await this.validarDadosFormulario()) {
-                this.setMensagemLoading('Salvando o usuário...')
-                await this.cadastrarUsuario(this.dadosGerais)
+                this.setMensagemLoading('Salvando o perfil...')
+                await this.cadastrarPerfil(this.dadosGerais)
                 this.mostrarNotificacaoSucessoDefault()
-                this.$router.push({name: 'GerenciarUsuarios'})
+                this.$router.push({name: 'GerenciarPerfis'})
             }
         },
         async validarDadosFormulario() {
@@ -94,6 +94,7 @@ export default {
     background-color #EEEEEE;
 
   .card-perfil-container
+    min-width 30%
     margin-top 20px
 
   .row-bottom

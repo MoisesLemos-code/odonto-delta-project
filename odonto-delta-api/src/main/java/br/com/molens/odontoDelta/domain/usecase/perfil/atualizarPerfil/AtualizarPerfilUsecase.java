@@ -29,7 +29,7 @@ public class AtualizarPerfilUsecase {
         if (Objects.isNull(input.getId())) {
             throw new AtualizarPerfilException("Identificador de perfil é obrigatório.");
         }
-        if (input.getEmpresaId() == 0) {
+        if (Objects.isNull(input.getEmpresaId())) {
             throw new AtualizarPerfilException("Identificador de empresa inválido.");
         }
     }

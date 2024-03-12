@@ -45,11 +45,9 @@ public class PerfilPermissao {
     @JoinColumn(name = "pf_id")
     private Perfil perfil;
 
-    @Column(name = "pp_nome")
-    private String nome;
-
-    @Column(name = "pp_descricao")
-    private String descricao;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "pe_id")
+    private Permissao permissao;
 
     @Column(name = "pp_ativo")
     private Boolean ativo;

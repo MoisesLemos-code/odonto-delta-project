@@ -11,55 +11,55 @@
 </template>
 
 <script>
-    export default {
-        name: 'botaoAcao',
-        props: {
-            active: {
-                type: Boolean,
-                default: true
-            },
-            dark: {
-                type: Boolean,
-                default: false
-            },
-            hideBorder: {
-                type: Boolean,
-                default: false
-            },
-            cssClass: {
-                type: String,
-                default: ''
+export default {
+    name: 'botaoAcao',
+    props: {
+        active: {
+            type: Boolean,
+            default: true
+        },
+        dark: {
+            type: Boolean,
+            default: false
+        },
+        hideBorder: {
+            type: Boolean,
+            default: false
+        },
+        cssClass: {
+            type: String,
+            default: ''
+        }
+    },
+    computed: {
+        color() {
+            if (this.active) {
+                return 'secondary'
+            } else if (this.dark) {
+                return ''
+            } else {
+                return 'primary'
             }
         },
-        computed: {
-            color() {
-                if (this.active) {
-                    return 'secondary'
-                } else if (this.dark) {
-                    return ''
-                } else {
-                    return 'primary'
-                }
-            },
-            isDark() {
-                return this.dark && !this.active
-            },
-            isOutline() {
-                return !this.active
-            },
-            style() {
-                let styleObj = {
-                    'call-to-action': true,
-                    'hide-border': this.hideBorder
-                }
-                if (this.cssClass) {
-                    const classes = this.cssClass.split(' ')
-                    classes.forEach(clazz => (styleObj[clazz] = true))
-                }
-                return styleObj
+        isDark() {
+            return this.dark && !this.active
+        },
+        isOutline() {
+            return !this.active
+        },
+        style() {
+            let styleObj = {
+                'call-to-action': true,
+                'hide-border': this.hideBorder
             }
+            if (this.cssClass) {
+                const classes = this.cssClass.split(' ')
+                classes.forEach(clazz => (styleObj[clazz] = true))
+            }
+            return styleObj
         }
     }
+}
 </script>
 
 <style scoped lang="stylus">

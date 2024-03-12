@@ -66,101 +66,101 @@
 </template>
 
 <script>
-    import _ from 'lodash'
-    import {mapActions} from 'vuex'
-    import {actionTypes} from '@/core/constants'
-    import BotaoSalvar from '@/views/components/BotaoSalvar'
-    import BotaoCancelar from '@/views/components/BotaoCancelar'
-    import humanizaPermissao from '@/core/constants/enums/humanizaPermissao'
-    import VerificarPerfilUsuario from '@/core/utils/VerificarPerfilUsuario'
+import _ from 'lodash'
+import {mapActions} from 'vuex'
+import {actionTypes} from '@/core/constants'
+import BotaoSalvar from '@/views/components/BotaoSalvar'
+import BotaoCancelar from '@/views/components/BotaoCancelar'
+import humanizaPermissao from '@/core/constants/enums/humanizaPermissao'
+import VerificarPerfilUsuario from '@/core/utils/VerificarPerfilUsuario'
 
 
-    export default {
-        name: 'GerenciarUsuarioPermissaoModal',
-        components: {BotaoCancelar, BotaoSalvar},
-        props: {
-            value: Boolean,
-            item: Object
-        },
-        data() {
-            return {
-                permissoes: {},
-                dadosGerais: {},
-                nome_usuario: null,
-                gruposHeader: [
-                    {id: 1, nome: 'Administração', grupo: 'administracao'},
-                    {id: 2, nome: 'Usuários', grupo: 'usuarios'},
-                    {id: 3, nome: 'Pacientes', grupo: 'pacientes'},
-                    {id: 4, nome: 'Dentes', grupo: 'dentes'},
-                    {id: 5, nome: 'Finalizadores', grupo: 'finalizadores'},
-                    {id: 6, nome: 'Orçamentos', grupo: 'orcamentos'},
-                    {id: 7, nome: 'Pagamentos', grupo: 'pagamentos'},
-                    {id: 8, nome: 'Peças', grupo: 'pecas'},
-                    {id: 9, nome: 'Serviços', grupo: 'servicos'},
-                    {id: 10, nome: 'Relatórios', grupo: 'relatorios'}
-                ],
-                grupos: [
-                    'administracao',
-                    'usuarios',
-                    'pacientes',
-                    'dentes',
-                    'finalizadores',
-                    'orcamentos',
-                    'pagamentos',
-                    'pecas',
-                    'servicos',
-                    'relatorios'
-                ],
-                humanizaPermissao
+export default {
+    name: 'GerenciarUsuarioPermissaoModal',
+    components: {BotaoCancelar, BotaoSalvar},
+    props: {
+        value: Boolean,
+        item: Object
+    },
+    data() {
+        return {
+            permissoes: {},
+            dadosGerais: {},
+            nome_usuario: null,
+            gruposHeader: [
+                {id: 1, nome: 'Administração', grupo: 'administracao'},
+                {id: 2, nome: 'Usuários', grupo: 'usuarios'},
+                {id: 3, nome: 'Pacientes', grupo: 'pacientes'},
+                {id: 4, nome: 'Dentes', grupo: 'dentes'},
+                {id: 5, nome: 'Finalizadores', grupo: 'finalizadores'},
+                {id: 6, nome: 'Orçamentos', grupo: 'orcamentos'},
+                {id: 7, nome: 'Pagamentos', grupo: 'pagamentos'},
+                {id: 8, nome: 'Peças', grupo: 'pecas'},
+                {id: 9, nome: 'Serviços', grupo: 'servicos'},
+                {id: 10, nome: 'Relatórios', grupo: 'relatorios'}
+            ],
+            grupos: [
+                'administracao',
+                'usuarios',
+                'pacientes',
+                'dentes',
+                'finalizadores',
+                'orcamentos',
+                'pagamentos',
+                'pecas',
+                'servicos',
+                'relatorios'
+            ],
+            humanizaPermissao
+        }
+    },
+    computed: {
+        possuiPermissao() {
+            return VerificarPerfilUsuario(['ADMINISTRADOR'])
+        }
+    },
+    async mounted() {
+        this.setarDadosGerais(this.item)
+        await this.buscarPermissoes()
+    },
+    methods: {
+        ...mapActions([
+            actionTypes.USUARIO.EDITAR_USUARIO,
+            actionTypes.PERFIL_PERMISSAO.BUSCAR_TODAS_PERMISSOES
+        ]),
+        async buscarPermissoes() {
+            const resultado = await this.buscarTodasPermissoes(this.dadosGerais.id)
+            if (resultado) {
+                this.permissoes = resultado
             }
         },
-        computed: {
-            possuiPermissao() {
-                return VerificarPerfilUsuario(['ADMINISTRADOR'])
-            }
+        setarDadosGerais(objeto) {
+            this.dadosGerais = _.cloneDeep(objeto)
+            this.nome_usuario = this.dadosGerais.nome_completo
         },
-        async mounted() {
-            this.setarDadosGerais(this.item)
-            await this.buscarPermissoes()
-        },
-        methods: {
-            ...mapActions([
-                actionTypes.USUARIO.EDITAR_USUARIO,
-                actionTypes.PERMISSAO.BUSCAR_TODAS_PERMISSOES
-            ]),
-            async buscarPermissoes() {
-                const resultado = await this.buscarTodasPermissoes(this.dadosGerais.id)
-                if (resultado) {
-                    this.permissoes = resultado
-                }
-            },
-            setarDadosGerais(objeto) {
-                this.dadosGerais = _.cloneDeep(objeto)
-                this.nome_usuario = this.dadosGerais.nome_completo
-            },
-            setarPermissoesEdit() {
-                this.dadosGerais.permissao = []
-                this.grupos.forEach(grupoNome => {
-                    this.permissoes[grupoNome].map(permissao => {
-                        if (permissao.atribuido) {
-                            this.dadosGerais.permissao.push(permissao.cod)
-                        }
-                    })
+        setarPermissoesEdit() {
+            this.dadosGerais.permissao = []
+            this.grupos.forEach(grupoNome => {
+                this.permissoes[grupoNome].map(permissao => {
+                    if (permissao.atribuido) {
+                        this.dadosGerais.permissao.push(permissao.cod)
+                    }
                 })
-            },
-            async tratarEventoEditar() {
-                if (this.possuiPermissao) {
-                    this.setarPermissoesEdit()
-                    this.setMensagemLoading('Salvando alterações do usuário...')
-                    await this.editarUsuario(this.dadosGerais)
-                    this.mostrarNotificacaoSucessoDefault()
-                }
-            },
-            fecharModal() {
-                this.$emit('fecharEdicaoPermissao')
+            })
+        },
+        async tratarEventoEditar() {
+            if (this.possuiPermissao) {
+                this.setarPermissoesEdit()
+                this.setMensagemLoading('Salvando alterações do usuário...')
+                await this.editarUsuario(this.dadosGerais)
+                this.mostrarNotificacaoSucessoDefault()
             }
+        },
+        fecharModal() {
+            this.$emit('fecharEdicaoPermissao')
         }
     }
+}
 </script>
 
 <style scoped lang="stylus">

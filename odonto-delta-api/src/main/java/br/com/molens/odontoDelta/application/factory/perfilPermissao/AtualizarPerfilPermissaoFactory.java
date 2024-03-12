@@ -15,15 +15,11 @@ public class AtualizarPerfilPermissaoFactory {
     @Autowired
     private PerfilPermissaoDataProvider perfilPermissaoDataProvider;
 
-    @Autowired
-    private PerfilDataProvider perfilDataProvider;
-
     @Bean("AtualizarPerfilPermissaolUsecase")
     @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
     public AtualizarPerfilPermissaolUsecase criar() {
         return AtualizarPerfilPermissaolUsecase.builder()
                 .perfilPermissaoDataProvider(perfilPermissaoDataProvider)
-                .perfilDataProvider(perfilDataProvider)
                 .build();
     }
 

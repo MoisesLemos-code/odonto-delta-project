@@ -6,6 +6,7 @@ import br.com.molens.odontoDelta.gateway.entity.Perfil;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 
+import java.util.Objects;
 import java.util.Optional;
 
 @Builder
@@ -22,10 +23,10 @@ public class RemoverPerfilPorIdUsecase {
 
     private void validarDadosEntrada(RemoverPerfilPorIdInput input) {
 
-        if (input.getPerfilId() == 0) {
+        if (Objects.isNull(input.getPerfilId())) {
             throw new RemoverPerfilPorIdException("Identificador de perfil inválido.");
         }
-        if (input.getEmpresaId() == 0) {
+        if (Objects.isNull(input.getEmpresaId())) {
             throw new RemoverPerfilPorIdException("Identificador de empresa inválido.");
         }
     }

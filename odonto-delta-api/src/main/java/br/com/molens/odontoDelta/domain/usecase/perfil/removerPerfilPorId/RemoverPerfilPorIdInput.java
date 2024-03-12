@@ -14,6 +14,5 @@ public class RemoverPerfilPorIdInput {
 
     @NotNull(message = "O atributo 'perfilId' não pode ser nulo.")
     private Long perfilId;
-    @NotNull(message = "O atributo 'empresaId' não pode ser nulo.")
     private Long empresaId;
 }

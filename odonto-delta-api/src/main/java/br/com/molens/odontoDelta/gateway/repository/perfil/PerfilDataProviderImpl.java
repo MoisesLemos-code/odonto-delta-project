@@ -62,7 +62,7 @@ public class PerfilDataProviderImpl implements PerfilDataProvider {
 
     @Override
     public boolean existeNome(String nome, Long empresaId) {
-        return repository.existsByNomeAndEmpresa(nome, empresaId);
+        return repository.existsByNomeAndEmpresaId(nome, empresaId);
     }
 
     @Override
@@ -76,10 +76,10 @@ public class PerfilDataProviderImpl implements PerfilDataProvider {
 
         if (!StringUtils.isEmpty(filtro.getConteudo())) {
             BooleanExpression filtrosParaBusca = compararSemAcentuacao(query.nome, filtro.getConteudo())
-                    .or(compararSemAcentuacao(query.descricao, filtro.getConteudo()))
-                    .and(query.empresa.id.eq(filtro.getEmpresaId()));
+                    .or(compararSemAcentuacao(query.descricao, filtro.getConteudo()));
             expressaoDeBusca = expressaoDeBusca.and(filtrosParaBusca);
         }
+        expressaoDeBusca.and(query.empresa.id.eq(filtro.getEmpresaId()));
         return expressaoDeBusca;
     }
 

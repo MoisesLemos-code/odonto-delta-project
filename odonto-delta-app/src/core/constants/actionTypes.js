@@ -3,9 +3,6 @@ export default {
         EFETUAR_LOGIN: 'efetuarLogin',
         VERIFICAR_TOKEN: 'verificarToken'
     },
-    PERMISSAO:{
-        BUSCAR_TODAS_PERMISSOES: 'buscarTodasPermissoes',
-    },
     USUARIO: {
         BUSCAR_TODOS_USUARIOS: 'buscarTodosUsuarios',
         CADASTRAR_USUARIO: 'cadastrarUsuario',
@@ -18,6 +15,15 @@ export default {
         EDITAR_PERFIL: 'editarPerfil',
         BUSCAR_PERFIL_POR_ID: 'buscarPerfilPorId',
         REMOVER_PERFIL: 'removerPerfil'
+    },
+    PERFIL_PERMISSAO: {
+        BUSCAR_POR_PERFIL: 'buscarPorPerfil',
+        CADASTRAR_PERMISSAO: 'cadastrarPermissao',
+        EDITAR_PERMISSAO: 'editarPermissao',
+        REMOVER_PERMISSAO: 'removerPermissao'
+    },
+    PERMISSAO: {
+        BUSCAR_TODAS_PERMISSOES: 'buscarTodasPermissoes',
     },
     ROTULOS_PERSONALIZADOS: {
         GET_ALL_ROTULOS_PERSONALIZADOS: 'getAllRotulosPersonlizados',

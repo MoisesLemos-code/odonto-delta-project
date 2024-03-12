@@ -27,7 +27,7 @@ public class InserirPerfilUsecase {
 
     private void validarDadosEntrada(InserirPerfilInput input) {
 
-        if (Objects.isNull(input.getEmpresaId()) || input.getEmpresaId() == 0) {
+        if (Objects.isNull(input.getEmpresaId())) {
             throw new InserirPerfilException("Identificador de empresa inválido.");
         }
     }
@@ -46,6 +46,7 @@ public class InserirPerfilUsecase {
     }
 
     private InserirPerfilOutput inserirPerfil(InserirPerfilInput input) {
+        input.setAtivo(Boolean.TRUE);
         Long perfilId = perfilDataProvider.inserir(outputConverter.from(input));
 
         return new InserirPerfilOutput(perfilId);

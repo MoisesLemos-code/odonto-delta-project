@@ -1,9 +1,8 @@
-package br.com.molens.odontoDelta.domain.usecase.perfilPermissao.buscarPermissoesPorPerfil;
+package br.com.molens.odontoDelta.domain.usecase.perfilPermissao.buscarPerfilPermissoesPorPerfil;
 
 import br.com.molens.odontoDelta.domain.exception.BuscarPermissaoPorPerfilException;
 import br.com.molens.odontoDelta.domain.interfaces.PerfilDataProvider;
 import br.com.molens.odontoDelta.domain.interfaces.PerfilPermissaoDataProvider;
-import br.com.molens.odontoDelta.domain.usecase.perfilPermissao.buscarPermissoesPorPerfil.converter.BuscarPermissoesPorPerfilOutputConverter;
 import br.com.molens.odontoDelta.gateway.entity.PerfilPermissao;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,25 +12,23 @@ import java.util.Objects;
 
 @Builder
 @AllArgsConstructor
-public class BuscarPermissoesPorPerfilUsecase {
+public class BuscarPerfilPermissoesPorPerfilUsecase {
 
     private PerfilPermissaoDataProvider perfilPermissaoDataProvider;
     private PerfilDataProvider perfilDataProvider;
-    private BuscarPermissoesPorPerfilOutputConverter outputConverter;
 
-    public BuscarPermissoesPorPerfilOutput executar(BuscarPermissoesPorPerfilInput input) {
+    public List<PerfilPermissao> executar(BuscarPermissoesPorPerfilInput input) {
         validarDadosEntrada(input);
         validarPerfil(input);
-        List<PerfilPermissao> permissaoList = buscarPermissoes(input);
-        return outputConverter.to(permissaoList);
+        return buscar(input);
     }
 
     private void validarDadosEntrada(BuscarPermissoesPorPerfilInput input) {
 
-        if (Objects.isNull(input.getPerfilId()) || input.getPerfilId() == 0) {
+        if (Objects.isNull(input.getPerfilId())) {
             throw new BuscarPermissaoPorPerfilException("Identificador de perfil inválido.");
         }
-        if (Objects.isNull(input.getEmpresaId()) || input.getEmpresaId() == 0) {
+        if (Objects.isNull(input.getEmpresaId())) {
             throw new BuscarPermissaoPorPerfilException("Identificador de empresa inválido.");
         }
     }
@@ -40,7 +37,7 @@ public class BuscarPermissoesPorPerfilUsecase {
         perfilDataProvider.buscarPorId(input.getPerfilId(), input.getEmpresaId()).orElseThrow( () -> new BuscarPermissaoPorPerfilException("Perfil não identificado."));
     }
 
-    private List<PerfilPermissao> buscarPermissoes(BuscarPermissoesPorPerfilInput input){
+    private List<PerfilPermissao> buscar(BuscarPermissoesPorPerfilInput input){
         return perfilPermissaoDataProvider.buscarPorPerfil(input.getPerfilId());
     }
 

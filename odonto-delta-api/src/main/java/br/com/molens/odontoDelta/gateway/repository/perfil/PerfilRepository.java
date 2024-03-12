@@ -17,7 +17,7 @@ public interface PerfilRepository extends JpaRepository<Perfil, Long>, QuerydslP
     @Query("SELECT obj FROM Perfil obj WHERE obj.id = :perfilId and obj.empresa.id = :empresaId")
     Optional<Perfil> buscarPorId(@Param("perfilId") Long perfilId, @Param("empresaId") Long empresaId);
 
-    boolean existsByNomeAndEmpresa(String nome, Long empresaId);
+    boolean existsByNomeAndEmpresaId(String nome, Long empresaId);
 
     @Transactional(readOnly = true)
     @Query("SELECT obj FROM Perfil obj WHERE obj.nome = :nome and obj.empresa.id = :empresaId")

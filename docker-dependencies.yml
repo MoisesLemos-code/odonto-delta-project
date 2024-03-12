@@ -2,6 +2,7 @@ version: '3'
 services:
   rabbitmq:
     build: rabbitmq
+    container_name: "odonto-delta-deps-rabbitmq"
     labels:
       kompose.service.type: nodeport
     ports:

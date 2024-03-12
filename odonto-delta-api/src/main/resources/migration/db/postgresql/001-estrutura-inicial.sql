@@ -10,9 +10,6 @@ Database: PostgreSQL 10
 
 -- Create schemas section -------------------------------------------------
 
-CREATE SCHEMA IF NOT EXISTS "odonto"
-;
-
 COMMENT ON SCHEMA "odonto" IS 'standard odonto schema'
 ;
 
@@ -51,6 +48,14 @@ CREATE SEQUENCE "odonto"."seq_empresa"
 ;
 
 CREATE SEQUENCE "odonto"."seq_perfil"
+    INCREMENT BY 1
+    START WITH 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1
+;
+
+CREATE SEQUENCE "odonto"."seq_permissao"
     INCREMENT BY 1
     START WITH 1
     NO MAXVALUE
@@ -295,14 +300,44 @@ COMMENT ON COLUMN "odonto"."tb_perfil"."pf_ativo" IS 'Indica se o perfil está a
 ALTER TABLE "odonto"."tb_perfil" ADD CONSTRAINT "pk_perfil" PRIMARY KEY ("pf_id")
 ;
 
+-- Table odonto.tb_permissao
+
+CREATE TABLE "odonto"."tb_permissao"
+(
+    "pe_id" Integer NOT NULL,
+    "pe_nome" varchar(255) NOT NULL,
+    "pe_descricao" varchar(255) NOT NULL,
+    "pe_dthr_cadastro" timestamp(6),
+    "pe_dthr_alteracao" timestamp(6),
+    "pe_usuario_cadastro" varchar(255),
+    "pe_usuario_alteracao" varchar(255)
+)
+    WITH (
+        autovacuum_enabled=true)
+;
+
+COMMENT ON TABLE "odonto"."tb_permissao" IS 'Armazena os dados de permissão.'
+;
+
+COMMENT ON COLUMN "odonto"."tb_permissao"."pe_id" IS 'Codigo gerado automaticamente que identifica uma permissão.'
+;
+
+COMMENT ON COLUMN "odonto"."tb_permissao"."pe_nome" IS 'Nome da permissão.'
+;
+
+COMMENT ON COLUMN "odonto"."tb_permissao"."pe_descricao" IS 'Descrição da permissão.'
+;
+
+ALTER TABLE "odonto"."tb_permissao" ADD CONSTRAINT "pk_tb_permissao" PRIMARY KEY ("pe_id")
+;
+
 -- Table odonto.tb_perfil_permissao
 
 CREATE TABLE "odonto"."tb_perfil_permissao"
 (
     "pp_id" Integer NOT NULL,
     "pf_id" Integer NOT NULL,
-    "pp_nome" varchar(255) NOT NULL,
-    "pp_descricao" varchar(255) NOT NULL,
+    "pe_id" Integer NOT NULL,
     "pp_ativo" Boolean DEFAULT true,
     "pp_dthr_cadastro" timestamp(6),
     "pp_dthr_alteracao" timestamp(6),
@@ -313,25 +348,17 @@ CREATE TABLE "odonto"."tb_perfil_permissao"
         autovacuum_enabled=true)
 ;
 
-COMMENT ON TABLE "odonto"."tb_perfil_permissao" IS 'Armazena os dados de perfil.'
+COMMENT ON TABLE "odonto"."tb_perfil_permissao" IS 'Armazena os dados de permissão.'
 ;
 
-COMMENT ON COLUMN "odonto"."tb_perfil_permissao"."pp_id" IS 'Codigo gerado automaticamente que identifica um perfil.'
+COMMENT ON COLUMN "odonto"."tb_perfil_permissao"."pp_id" IS 'Codigo gerado automaticamente que identifica uma permissão de perfil.'
+;
+COMMENT ON COLUMN "odonto"."tb_perfil_permissao"."pf_id" IS 'Codigo referente a um perfil.'
+;
+COMMENT ON COLUMN "odonto"."tb_perfil_permissao"."pe_id" IS 'Codigo referente a uma permissão.'
 ;
 
-COMMENT ON COLUMN "odonto"."tb_perfil"."pf_id" IS 'Código referente ao perfil.'
-;
-
-COMMENT ON COLUMN "odonto"."tb_perfil_permissao"."pp_nome" IS 'Nome do perfil.'
-;
-
-COMMENT ON COLUMN "odonto"."tb_perfil_permissao"."pp_descricao" IS 'Descrição do perfil.'
-;
-
-COMMENT ON COLUMN "odonto"."tb_perfil_permissao"."pp_ativo" IS 'Indica se o perfil está ativo ou não.'
-;
-
-ALTER TABLE "odonto"."tb_perfil_permissao" ADD CONSTRAINT "pk_perfil_permissao" PRIMARY KEY ("pp_id")
+ALTER TABLE "odonto"."tb_perfil_permissao" ADD CONSTRAINT "pk_tb_perfil_permissao" PRIMARY KEY ("pp_id")
 ;
 
 -- Table odonto.tb_perfil_usuario
@@ -674,4 +701,7 @@ ALTER TABLE "odonto"."tb_perfil_usuario" ADD CONSTRAINT "fk_perfil_usuario_us" F
 ;
 
 ALTER TABLE "odonto"."tb_perfil_permissao" ADD CONSTRAINT "fk_perfil_permissao_pf" FOREIGN KEY ("pf_id") REFERENCES "odonto"."tb_perfil" ("pf_id")
+;
+
+ALTER TABLE "odonto"."tb_perfil_permissao" ADD CONSTRAINT "fk_perfil_permissao_pe" FOREIGN KEY ("pe_id") REFERENCES "odonto"."tb_permissao" ("pe_id")
 ;

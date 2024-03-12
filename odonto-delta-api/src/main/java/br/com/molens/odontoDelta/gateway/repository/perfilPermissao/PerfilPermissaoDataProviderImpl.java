@@ -41,4 +41,9 @@ public class PerfilPermissaoDataProviderImpl implements PerfilPermissaoDataProvi
     public List<PerfilPermissao> buscarPorPerfil(Long perfilId) {
         return repository.buscarPorPerfil(perfilId);
     }
+
+    @Override
+    public List<PerfilPermissao> buscarPorPermissaoEhPerfil(Long permissaoId, Long perfilId) {
+        return repository.buscarPorPermissaoEhPerfil(permissaoId, perfilId);
+    }
 }

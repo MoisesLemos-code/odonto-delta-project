@@ -1,6 +1,5 @@
 import Vuex from 'vuex'
 import { actions, getters, mutations, state } from './comum'
-import permissao from './permissao'
 import usuario from './usuario'
 import menu from './menu'
 import cidade from './cadastros/cidade'
@@ -15,6 +14,8 @@ import servicoItem from './servicoItem'
 import pecaItem from './pecaItem'
 import relatorios from './relatorios'
 import perfil from './perfil'
+import permissao from './permissao'
+import perfilPermissao from './perfilPermissao'
 
 export default new Vuex.Store({
     state,
@@ -22,7 +23,6 @@ export default new Vuex.Store({
     mutations,
     actions,
     modules: {
-        permissao,
         usuario,
         menu,
         cidade,
@@ -37,5 +37,7 @@ export default new Vuex.Store({
         pecaItem,
         relatorios,
         perfil,
+        permissao,
+        perfilPermissao
     }
 })

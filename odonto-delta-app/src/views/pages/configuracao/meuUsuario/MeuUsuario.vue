@@ -244,101 +244,101 @@
 </template>
 
 <script>
-    import {mapActions, mapGetters} from 'vuex'
-    import {actionTypes} from '@/core/constants'
-    import BuscarMunicipio from '@/views/components/BuscarMunicipio.vue'
+import {mapActions, mapGetters} from 'vuex'
+import {actionTypes} from '@/core/constants'
+import BuscarMunicipio from '@/views/components/BuscarMunicipio.vue'
 
-    export default {
-        name: 'MeuUsuario',
-        components: {BuscarMunicipio},
-        data() {
-            return {
-                showPasswordAtual: false,
-                showPassword: false,
-                showPassword2: false,
-                dadosGerais: {
-                    nome: null,
-                    nome_completo: null,
-                    email: null,
-                    senha: null,
-                    municipio: {
-                        id: null,
-                        estado: {
-                            id: null
-                        }
-                    },
-                    empresa: {
+export default {
+    name: 'MeuUsuario',
+    components: {BuscarMunicipio},
+    data() {
+        return {
+            showPasswordAtual: false,
+            showPassword: false,
+            showPassword2: false,
+            dadosGerais: {
+                nome: null,
+                nome_completo: null,
+                email: null,
+                senha: null,
+                municipio: {
+                    id: null,
+                    estado: {
                         id: null
-                    },
+                    }
                 },
-                municipioId: null,
-                nome_usuario: null,
-                senhaDois: null,
-                masks: {
-                    cep: '##.###-###',
-                    tel: '(##) ####-####',
-                    tel2: '(##) #####-####',
-                    cpf: '###.###.###-##',
-                    cnpj: '##.###.###/####-##',
+                empresa: {
+                    id: null
+                },
+            },
+            municipioId: null,
+            nome_usuario: null,
+            senhaDois: null,
+            masks: {
+                cep: '##.###-###',
+                tel: '(##) ####-####',
+                tel2: '(##) #####-####',
+                cpf: '###.###.###-##',
+                cnpj: '##.###.###/####-##',
+            }
+        }
+    },
+    async mounted() {
+        await this.atualizarRegistroUsuario()
+        await this.buscarUsuarioLogado()
+    },
+    methods: {
+        ...mapActions([
+            actionTypes.USUARIO.BUSCAR_USUARIO_POR_ID,
+            actionTypes.USUARIO.EDITAR_USUARIO,
+            actionTypes.COMUM.VERIFICAR_TOKEN
+        ]),
+        ...mapGetters([
+            'getUsuarioLogado'
+        ]),
+        async atualizarRegistroUsuario() {
+            await this.verificarToken()
+        },
+        async buscarUsuarioLogado() {
+            const {id} = this.getUsuarioLogado()
+            this.dadosGerais = await this.buscarUsuarioPorId(id)
+            this.dadosGerais.permissao = null
+            this.nome_usuario = this.dadosGerais.nome
+            this.municipioId = this.dadosGerais.municipio.id
+        },
+        async tratarEventoSalvar() {
+            if (await this.validarDadosFormulario()) {
+                if(!this.senhaDois){
+                    this.mostrarNotificacaoErro('Informe a senha nova!')
+                    return
                 }
+                if(!this.municipioId){
+                    this.mostrarNotificacaoErro('Informe o município')
+                    return
+                }
+                this.formatarInput()
+                this.setMensagemLoading('Salvando alterações do usuário...')
+                const data = await this.editarUsuario(this.dadosGerais)
+                this.nome_usuario = data.nome
+                await this.atualizarRegistroUsuario()
+                this.mostrarNotificacaoSucessoDefault()
             }
         },
-        async mounted() {
-            await this.atualizarRegistroUsuario()
-            await this.buscarUsuarioLogado()
+        selecionarCidade(municipioId){
+            this.municipioId = municipioId
         },
-        methods: {
-            ...mapActions([
-                actionTypes.USUARIO.BUSCAR_USUARIO_POR_ID,
-                actionTypes.USUARIO.EDITAR_USUARIO,
-                actionTypes.COMUM.VERIFICAR_TOKEN
-            ]),
-            ...mapGetters([
-                'getUsuarioLogado'
-            ]),
-            async atualizarRegistroUsuario() {
-                await this.verificarToken()
-            },
-            async buscarUsuarioLogado() {
-                const {id} = this.getUsuarioLogado()
-                this.dadosGerais = await this.buscarUsuarioPorId(id)
-                this.dadosGerais.permissao = null
-                this.nome_usuario = this.dadosGerais.nome
-                this.municipioId = this.dadosGerais.municipio.id
-            },
-            async tratarEventoSalvar() {
-                if (await this.validarDadosFormulario()) {
-                    if(!this.senhaDois){
-                        this.mostrarNotificacaoErro('Informe a senha nova!')
-                        return
-                    }
-                    if(!this.municipioId){
-                        this.mostrarNotificacaoErro('Informe o município')
-                        return
-                    }
-                    this.formatarInput()
-                    this.setMensagemLoading('Salvando alterações do usuário...')
-                    const data = await this.editarUsuario(this.dadosGerais)
-                    this.nome_usuario = data.nome
-                    await this.atualizarRegistroUsuario()
-                    this.mostrarNotificacaoSucessoDefault()
-                }
-            },
-            selecionarCidade(municipioId){
-                this.municipioId = municipioId
-            },
-            async validarDadosFormulario() {
-                return this.$validator._base.validateAll()
-            },
-            formatarInput() {
-                this.dadosGerais = {
-                    ...this.dadosGerais,
-                    empresaId: this.dadosGerais.empresa.id,
-                    municipioId: this.municipioId
-                }
-            },
-        }
+        async validarDadosFormulario() {
+            return this.$validator._base.validateAll()
+        },
+        formatarInput() {
+            this.dadosGerais = {
+                ...this.dadosGerais,
+                empresaId: this.dadosGerais.empresa.id,
+                municipioId: this.municipioId
+            }
+        },
     }
+}
 </script>
 
 <style scoped lang="stylus">

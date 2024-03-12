@@ -127,140 +127,140 @@
 </template>
 
 <script>
-    import ContainerComponent from '@/views/components/Container'
-    import {actionTypes, mutationTypes} from '@/core/constants'
-    import {mapActions} from 'vuex'
+import ContainerComponent from '@/views/components/Container'
+import {actionTypes, mutationTypes} from '@/core/constants'
+import {mapActions} from 'vuex'
 
-    export default {
-        name: 'OrcamentoPassos',
-        components: {ContainerComponent},
-        data() {
-            return {
-                passos: [
-                    {
-                        titulo: 'Paciente',
-                        rotaPadrao: 'OrcamentoPaciente',
-                        rotaVisualizacao: 'VisualizarOrcamentoPaciente',
-                        rotaEdicao: 'OrcamentoPaciente',
-                        desabilitado: false,
-                        numero: 1,
-                    },
-                    {
-                        titulo: 'Odontograma',
-                        rotaPadrao: 'OrcamentoOdontograma',
-                        rotaVisualizacao: 'VisualizarOrcamentoOdontograma',
-                        rotaEdicao: 'OrcamentoOdontograma',
-                        desabilitado: false,
-                        numero: 2,
-                    },
-                    {
-                        titulo: 'Finalização',
-                        rotaPadrao: 'OrcamentoFinalizacao',
-                        rotaVisualizacao: 'VisualizacaoOrcamentoFinalizacao',
-                        rotaEdicao: 'OrcamentoFinalizacao',
-                        desabilitado: false,
-                        numero: 3,
-                    }
-                ],
-                modalExcluir: false,
-                passoAtual: {},
-                orcamentoId: null,
-                rotaOrigem: this.$store.state.orcamento.rota.origem,
-            }
-        },
-        watch: {
-            $route() {
-                this.setOrcamentoId()
-                this.setPassoAtual(this.$route)
-            },
-        },
-        async mounted() {
-            this.retrairMenu()
+export default {
+    name: 'OrcamentoPassos',
+    components: {ContainerComponent},
+    data() {
+        return {
+            passos: [
+                {
+                    titulo: 'Paciente',
+                    rotaPadrao: 'OrcamentoPaciente',
+                    rotaVisualizacao: 'VisualizarOrcamentoPaciente',
+                    rotaEdicao: 'OrcamentoPaciente',
+                    desabilitado: false,
+                    numero: 1,
+                },
+                {
+                    titulo: 'Odontograma',
+                    rotaPadrao: 'OrcamentoOdontograma',
+                    rotaVisualizacao: 'VisualizarOrcamentoOdontograma',
+                    rotaEdicao: 'OrcamentoOdontograma',
+                    desabilitado: false,
+                    numero: 2,
+                },
+                {
+                    titulo: 'Finalização',
+                    rotaPadrao: 'OrcamentoFinalizacao',
+                    rotaVisualizacao: 'VisualizacaoOrcamentoFinalizacao',
+                    rotaEdicao: 'OrcamentoFinalizacao',
+                    desabilitado: false,
+                    numero: 3,
+                }
+            ],
+            modalExcluir: false,
+            passoAtual: {},
+            orcamentoId: null,
+            rotaOrigem: this.$store.state.orcamento.rota.origem,
+        }
+    },
+    watch: {
+        $route() {
             this.setOrcamentoId()
             this.setPassoAtual(this.$route)
         },
-        methods: {
-            ...mapActions([
-                actionTypes.ORCAMENTO.EXCLUIR_ORCAMENTO
-            ]),
-            fecharModalExcluir() {
-                this.modalExcluir = false
-            },
-            abrirModalExcluir() {
-                this.modalExcluir = true
-            },
-            contralaAcessoAosPassosEmCadaRota() {
-                if (this.$route.name === 'OrcamentoOdontograma' || this.$route.name === 'VisualizarOrcamentoOdontograma') {
-                    this.passos[1].desabilitado = false
-                    this.passos[2].desabilitado = false
-                }
-                if (this.$route.name === 'OrcamentoPaciente' || this.$route.name === 'VisualizarOrcamentoPaciente') {
-                    this.passos[1].desabilitado = false
-                    this.passos[2].desabilitado = true
-                }
-                if (this.$route.name === 'OrcamentoFinalizacao' || this.$route.name === 'VisualizacaoOrcamentoFinalizacao') {
-                    this.passos[0].desabilitado = false
-                    this.passos[1].desabilitado = false
-                    this.passos[2].desabilitado = false
-                }
-            },
-            desabilitaPasso3() {
-                this.passos[2].desabilitado = true
-            },
-            habilitaPasso3() {
-                this.passos[2].desabilitado = false
-            },
-            desabilitaPasso2() {
-                this.passos[1].desabilitado = true
-            },
-            habilitaPasso2() {
+    },
+    async mounted() {
+        this.retrairMenu()
+        this.setOrcamentoId()
+        this.setPassoAtual(this.$route)
+    },
+    methods: {
+        ...mapActions([
+            actionTypes.ORCAMENTO.EXCLUIR_ORCAMENTO
+        ]),
+        fecharModalExcluir() {
+            this.modalExcluir = false
+        },
+        abrirModalExcluir() {
+            this.modalExcluir = true
+        },
+        contralaAcessoAosPassosEmCadaRota() {
+            if (this.$route.name === 'OrcamentoOdontograma' || this.$route.name === 'VisualizarOrcamentoOdontograma') {
                 this.passos[1].desabilitado = false
-            },
-            expandirMenu() {
-                this.$store.commit(mutationTypes.DRAWER.SET_ASIDE, false)
-            },
-            retrairMenu() {
-                this.$store.commit(mutationTypes.DRAWER.SET_ASIDE, true)
-            },
-            setOrcamentoId() {
-                if (this.$route.params.orcamentoId) {
-                    this.orcamentoId = this.$route.params.orcamentoId
-                }
-            },
-            setPassoAtual(route) {
-                const encontrado = this.passos.filter(
-                    passo =>
-                        passo.rotaPadrao === route.name ||
-                        passo.rotaEdicao === route.name ||
-                        passo.rotaVisualizacao === route.name
-                )
-                this.passoAtual = encontrado[0]
-                this.contralaAcessoAosPassosEmCadaRota()
-            },
-            async tratarEventoDeletarIncorporacao() {
-                await this.excluirOrcamento(this.orcamentoId)
-                this.mostrarNotificacaoSucessoDefault()
-                await this.$router.push({name: this.rotaOrigem})
-            },
-            tratarEventoClick(item) {
-                if (item.desabilitado === false) {
-                    if (this.orcamentoId) {
-                        this.$router.push({
-                            name: item.rotaEdicao,
-                            params: {orcamentoId: this.orcamentoId}
-                        })
-                    } else {
-                        this.$router.push({
-                            name: this.rotaOrigem,
-                        })
-                    }
-                }
+                this.passos[2].desabilitado = false
+            }
+            if (this.$route.name === 'OrcamentoPaciente' || this.$route.name === 'VisualizarOrcamentoPaciente') {
+                this.passos[1].desabilitado = false
+                this.passos[2].desabilitado = true
+            }
+            if (this.$route.name === 'OrcamentoFinalizacao' || this.$route.name === 'VisualizacaoOrcamentoFinalizacao') {
+                this.passos[0].desabilitado = false
+                this.passos[1].desabilitado = false
+                this.passos[2].desabilitado = false
             }
         },
-        destroyed() {
-            this.expandirMenu()
+        desabilitaPasso3() {
+            this.passos[2].desabilitado = true
+        },
+        habilitaPasso3() {
+            this.passos[2].desabilitado = false
+        },
+        desabilitaPasso2() {
+            this.passos[1].desabilitado = true
+        },
+        habilitaPasso2() {
+            this.passos[1].desabilitado = false
+        },
+        expandirMenu() {
+            this.$store.commit(mutationTypes.DRAWER.SET_ASIDE, false)
+        },
+        retrairMenu() {
+            this.$store.commit(mutationTypes.DRAWER.SET_ASIDE, true)
+        },
+        setOrcamentoId() {
+            if (this.$route.params.orcamentoId) {
+                this.orcamentoId = this.$route.params.orcamentoId
+            }
+        },
+        setPassoAtual(route) {
+            const encontrado = this.passos.filter(
+                passo =>
+                    passo.rotaPadrao === route.name ||
+                        passo.rotaEdicao === route.name ||
+                        passo.rotaVisualizacao === route.name
+            )
+            this.passoAtual = encontrado[0]
+            this.contralaAcessoAosPassosEmCadaRota()
+        },
+        async tratarEventoDeletarIncorporacao() {
+            await this.excluirOrcamento(this.orcamentoId)
+            this.mostrarNotificacaoSucessoDefault()
+            await this.$router.push({name: this.rotaOrigem})
+        },
+        tratarEventoClick(item) {
+            if (item.desabilitado === false) {
+                if (this.orcamentoId) {
+                    this.$router.push({
+                        name: item.rotaEdicao,
+                        params: {orcamentoId: this.orcamentoId}
+                    })
+                } else {
+                    this.$router.push({
+                        name: this.rotaOrigem,
+                    })
+                }
+            }
         }
+    },
+    destroyed() {
+        this.expandirMenu()
     }
+}
 </script>
 
 <style lang="stylus">

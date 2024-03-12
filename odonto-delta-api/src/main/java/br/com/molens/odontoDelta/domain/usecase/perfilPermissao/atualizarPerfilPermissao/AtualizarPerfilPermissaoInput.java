@@ -15,11 +15,8 @@ public class AtualizarPerfilPermissaoInput {
 
     @NotNull(message = "O atributo 'id' não pode ser nulo.")
     private Long id;
-    @NotNull(message = "O atributo 'perfilId' não pode ser nulo.")
-    private Long perfilId;
     @NotNull(message = "O atributo 'empresa' não pode ser nulo.")
     private Long empresaId;
-    private String nome;
-    private String descricao;
     private Boolean ativo;
+
 }

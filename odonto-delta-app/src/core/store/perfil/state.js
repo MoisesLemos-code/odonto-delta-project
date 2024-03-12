@@ -5,6 +5,10 @@ export default {
                 default: null,
                 label: 'Pesquisa',
                 value: ''
+            },
+            empresaId: {
+                default: null,
+                value: ''
             }
         },
         paginacao: {

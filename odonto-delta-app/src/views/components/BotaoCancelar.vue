@@ -10,9 +10,9 @@
 </template>
 
 <script>
-    export default {
-        name: 'BotaoCancelar'
-    }
+export default {
+    name: 'BotaoCancelar'
+}
 </script>
 
 <style lang="stylus" scoped>

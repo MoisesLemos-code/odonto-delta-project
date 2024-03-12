@@ -17,4 +17,6 @@ public interface PerfilPermissaoDataProvider {
     void remover(Long id);
 
     List<PerfilPermissao> buscarPorPerfil(Long perfilId);
+
+    List<PerfilPermissao> buscarPorPermissaoEhPerfil(Long permissaoId, Long perfilId);
 }

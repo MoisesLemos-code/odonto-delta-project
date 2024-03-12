@@ -29,4 +29,9 @@
                  relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
     </changeSet>
 
+    <changeSet id="005-carga-permissoes" author="moises.santos">
+        <sqlFile dbms="postgresql" encoding="utf8" path="postgresql/005-carga-permissoes.sql"
+                 relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+    </changeSet>
+
 </databaseChangeLog>
