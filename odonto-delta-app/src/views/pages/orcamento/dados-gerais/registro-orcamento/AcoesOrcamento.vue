@@ -46,21 +46,21 @@
 </template>
 
 <script>
-    export default {
-        name: 'AcoesOrcamento',
-        props: ['controleContinuar', 'final'],
-        methods: {
-            voltar() {
-                this.$emit('voltar')
-            },
-            continuar() {
-                this.$emit('continuar')
-            },
-            finalizar() {
-                this.$emit('finalizarOrcamento')
-            }
+export default {
+    name: 'AcoesOrcamento',
+    props: ['controleContinuar', 'final'],
+    methods: {
+        voltar() {
+            this.$emit('voltar')
+        },
+        continuar() {
+            this.$emit('continuar')
+        },
+        finalizar() {
+            this.$emit('finalizarOrcamento')
         }
     }
+}
 </script>
 
 <style lang="stylus">

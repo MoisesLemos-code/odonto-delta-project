@@ -33,7 +33,7 @@ class SearchUrlBuilder {
     }
 
     _validateFilters(filters) {
-        const pagingAndSortingKeys = ['page', 'size', 'orderBy', 'direction']
+        const pagingAndSortingKeys = ['page', 'size', 'sort', 'direction']
 
         for (const key of pagingAndSortingKeys) {
             if (filters.hasOwnProperty.call(key, key)) {
@@ -75,12 +75,12 @@ class SearchUrlBuilder {
             param += `&page=${pagingAndSorting.page}`
         }
 
-        if (pagingAndSorting.rowsPerPage) {
-            param += `&size=${pagingAndSorting.rowsPerPage}`
+        if (pagingAndSorting.size) {
+            param += `&size=${pagingAndSorting.size}`
         }
 
-        if (pagingAndSorting.sortBy) {
-            param += `&orderBy=${pagingAndSorting.sortBy}`
+        if (pagingAndSorting.sort) {
+            param += `&sort=${pagingAndSorting.sort}`
             param += `&direction=${!pagingAndSorting.sortDesc[0] ? 'ASC' : 'DESC'}`
         }
 

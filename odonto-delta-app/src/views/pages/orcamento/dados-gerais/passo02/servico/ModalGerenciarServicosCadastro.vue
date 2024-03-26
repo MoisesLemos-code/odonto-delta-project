@@ -53,39 +53,39 @@
 </template>
 
 <script>
-    import {mapActions} from 'vuex'
-    import {actionTypes} from '@/core/constants'
+import {mapActions} from 'vuex'
+import {actionTypes} from '@/core/constants'
 
-    export default {
-        name: 'ModalGerenciarServicosCadastro',
-        props: {
-            value: Boolean,
+export default {
+    name: 'ModalGerenciarServicosCadastro',
+    props: {
+        value: Boolean,
+    },
+    data() {
+        return {
+            dadosGerais: {},
+        }
+    },
+    methods: {
+        ...mapActions([
+            actionTypes.ORCAMENTO.SERVICO.CADASTRAR_SERVICO
+        ]),
+        tratarEventoCancelar() {
+            this.$emit('cancelarAcaoCadastro')
         },
-        data() {
-            return {
-                dadosGerais: {},
+        async tratarEventoSalvar() {
+            if (await this.validarDadosFormulario()) {
+                this.setMensagemLoading('Salvando o serviço...')
+                await this.cadastrarServico(this.dadosGerais)
+                this.mostrarNotificacaoSucessoDefault()
+                this.tratarEventoCancelar()
             }
         },
-        methods: {
-            ...mapActions([
-                actionTypes.ORCAMENTO.SERVICO.CADASTRAR_SERVICO
-            ]),
-            tratarEventoCancelar() {
-                this.$emit('cancelarAcaoCadastro')
-            },
-            async tratarEventoSalvar() {
-                if (await this.validarDadosFormulario()) {
-                    this.setMensagemLoading('Salvando o serviço...')
-                    await this.cadastrarServico(this.dadosGerais)
-                    this.mostrarNotificacaoSucessoDefault()
-                    this.tratarEventoCancelar()
-                }
-            },
-            async validarDadosFormulario() {
-                return this.$validator._base.validateAll()
-            },
-        }
+        async validarDadosFormulario() {
+            return this.$validator._base.validateAll()
+        },
     }
+}
 </script>
 
 <style scoped lang="stylus">

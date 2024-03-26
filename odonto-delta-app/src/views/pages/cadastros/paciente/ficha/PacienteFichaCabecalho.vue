@@ -30,26 +30,26 @@
 </template>
 
 <script>
-    import BotaoEditar from '@/views/components/BotaoEditar'
-    import BotaoExcluir from '@/views/components/BotaoExcluir'
+import BotaoEditar from '@/views/components/BotaoEditar'
+import BotaoExcluir from '@/views/components/BotaoExcluir'
 
-    export default {
-        name: 'PacienteFichaCabecalho',
-        components: { BotaoExcluir, BotaoEditar},
-        props: {
-            paciente: {
-                required: true
-            }
+export default {
+    name: 'PacienteFichaCabecalho',
+    components: { BotaoExcluir, BotaoEditar},
+    props: {
+        paciente: {
+            required: true
+        }
+    },
+    methods:{
+        abrirModalExcluir(){
+            this.$emit('abrirModalExcluir')
         },
-        methods:{
-            abrirModalExcluir(){
-                this.$emit('abrirModalExcluir')
-            },
-            editarPaciente(){
-                this.$emit('editarPaciente')
-            }
+        editarPaciente(){
+            this.$emit('editarPaciente')
         }
     }
+}
 </script>
 
 <style scoped lang="stylus">

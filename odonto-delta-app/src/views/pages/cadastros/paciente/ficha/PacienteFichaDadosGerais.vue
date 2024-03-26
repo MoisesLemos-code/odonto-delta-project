@@ -71,34 +71,34 @@
 </template>
 
 <script>
-    import tipoPaciente from '@/core/constants/enums/tipoPaciente'
+import tipoPaciente from '@/core/constants/enums/tipoPaciente'
 
-    export default {
-        name: 'PacienteFichaDadosGerais',
-        props: {
-            paciente: {
-                required: true
-            }
-        },
-        data() {
-            return {
-                exibirPanel: 0,
-                tipoPaciente
-            }
-        },
-        methods: {
-            formatarCpfCnpj(cpfCnpjValue) {
-                if (cpfCnpjValue) {
-                    const cnpjCpf = cpfCnpjValue.replace(/\D/g, '')
-                    if (cnpjCpf.length === 11) {
-                        return cnpjCpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/g, '$1.$2.$3-$4')
-                    }
-                    return cnpjCpf.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/g, '$1.$2.$3/$4-$5')
+export default {
+    name: 'PacienteFichaDadosGerais',
+    props: {
+        paciente: {
+            required: true
+        }
+    },
+    data() {
+        return {
+            exibirPanel: 0,
+            tipoPaciente
+        }
+    },
+    methods: {
+        formatarCpfCnpj(cpfCnpjValue) {
+            if (cpfCnpjValue) {
+                const cnpjCpf = cpfCnpjValue.replace(/\D/g, '')
+                if (cnpjCpf.length === 11) {
+                    return cnpjCpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/g, '$1.$2.$3-$4')
                 }
-                return ''
+                return cnpjCpf.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/g, '$1.$2.$3/$4-$5')
             }
+            return ''
         }
     }
+}
 </script>
 
 <style scoped lang="stylus">

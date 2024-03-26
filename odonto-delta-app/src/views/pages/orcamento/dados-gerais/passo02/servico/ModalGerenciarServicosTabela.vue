@@ -47,65 +47,65 @@
 </template>
 
 <script>
-    import mutationTypes from '@/core/constants/mutationTypes'
-    import BotaoAcao from '@/views/components/BotaoAcao'
+import mutationTypes from '@/core/constants/mutationTypes'
+import BotaoAcao from '@/views/components/BotaoAcao'
 
-    export default {
-        name: 'ModalGerenciarServicosTabela',
-        components: {BotaoAcao},
-        props: ['itens', 'paginacao', 'paginas', 'totalItens'],
-        data() {
-            return {
-                colunas: [
-                    {
-                        text: 'Descrição',
-                        value: 'descricao',
-                        sortable: true,
-                        align: 'left',
-                        width: '55%',
-                        class: 'gray--text'
-                    },
-                    {
-                        text: 'Valor',
-                        value: 'valor',
-                        sortable: true,
-                        align: 'left',
-                        width: '20%',
-                        class: 'gray--text'
-                    },
-                    {
-                        text: '',
-                        value: 'acoes',
-                        sortable: false,
-                        align: 'right',
-                        width: '25%',
-                        class: 'gray--text'
-                    }
-                ],
-                paginacaoInterna: this.paginacao,
-                linhasPorPagina: [5, 10, 25, 50, 100],
-            }
-        },
-        methods: {
-            tratarEventoAcessar(item) {
-                this.$emit('acessar', item)
-            },
-            tratarPaginacao(pagina) {
-                this.paginacaoInterna.page = pagina
-            },
-            resetaPage() {
-                this.$store.commit(mutationTypes.ORCAMENTO.SERVICO.RESETA_PAGE)
-            },
-        },
-        watch: {
-            paginacaoInterna: {
-                handler(novoValor) {
-                    this.$emit('paginar', novoValor)
+export default {
+    name: 'ModalGerenciarServicosTabela',
+    components: {BotaoAcao},
+    props: ['itens', 'paginacao', 'paginas', 'totalItens'],
+    data() {
+        return {
+            colunas: [
+                {
+                    text: 'Descrição',
+                    value: 'descricao',
+                    sortable: true,
+                    align: 'left',
+                    width: '55%',
+                    class: 'gray--text'
                 },
-                deep: true,
-            },
+                {
+                    text: 'Valor',
+                    value: 'valor',
+                    sortable: true,
+                    align: 'left',
+                    width: '20%',
+                    class: 'gray--text'
+                },
+                {
+                    text: '',
+                    value: 'acoes',
+                    sortable: false,
+                    align: 'right',
+                    width: '25%',
+                    class: 'gray--text'
+                }
+            ],
+            paginacaoInterna: this.paginacao,
+            linhasPorPagina: [5, 10, 25, 50, 100],
+        }
+    },
+    methods: {
+        tratarEventoAcessar(item) {
+            this.$emit('acessar', item)
         },
-    }
+        tratarPaginacao(pagina) {
+            this.paginacaoInterna.page = pagina
+        },
+        resetaPage() {
+            this.$store.commit(mutationTypes.ORCAMENTO.SERVICO.RESETA_PAGE)
+        },
+    },
+    watch: {
+        paginacaoInterna: {
+            handler(novoValor) {
+                this.$emit('paginar', novoValor)
+            },
+            deep: true,
+        },
+    },
+}
 </script>
 
 <style scoped lang="stylus">

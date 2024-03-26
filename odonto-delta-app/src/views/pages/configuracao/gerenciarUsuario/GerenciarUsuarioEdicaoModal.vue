@@ -2,7 +2,7 @@
     <v-dialog v-model="value" max-width="720" scrollable persistent>
         <v-card>
             <v-toolbar dark color="primary" elevation="0">
-                <v-toolbar-title>Editar usuário {{ nome_usuario }}
+                <v-toolbar-title>Editar usuário {{ this.item.nome }}
                 </v-toolbar-title>
                 <v-spacer/>
                 <v-btn class="close__button" text @click="fecharModal" icon>
@@ -15,7 +15,7 @@
                         <v-row wrap align-center white class="pl-5 pr-5">
                             <v-col cols="12" md="6" sm="6" xs="12">
                                 <v-text-field
-                                        v-model="dadosGerais.nome"
+                                        v-model="dadosGerais.login"
                                         name="nome"
                                         placeholder="Informe o nome de usuário"
                                         counter="100"
@@ -30,7 +30,7 @@
                             </v-col>
                             <v-col cols="12" md="6" sm="6" xs="12">
                                 <v-text-field
-                                        v-model="dadosGerais.nome_completo"
+                                        v-model="dadosGerais.nome"
                                         name="nome_completo"
                                         placeholder="Informe o nome completo"
                                         counter="100"
@@ -61,6 +61,132 @@
                                 </v-text-field>
                             </v-col>
                         </v-row>
+                      <v-row wrap align-center white class="pl-5 pr-5">
+                        <v-col cols="12" md="6" sm="6" xs="12">
+                          <v-text-field
+                              v-model="dadosGerais.cargo"
+                              name="cargo"
+                              placeholder="Informe o cargo do usuário"
+                              counter="100"
+                              maxlength="100"
+                              v-validate="{min: 2, max: 100}"
+                              :error-messages="errors.collect('cargo')">
+                            <template v-slot:label>Cargo</template>
+                          </v-text-field>
+                        </v-col>
+                        <v-col cols="12" md="6" sm="6" xs="12">
+                          <v-text-field
+                              v-model="dadosGerais.cnpjCpf"
+                              name="cnpjCpf"
+                              placeholder="Informe o documento"
+                              v-mask="[masks.cpf, masks.cnpj]"
+                              v-validate="{required: true, min: 2, max: 100}"
+                              :error-messages="errors.collect('cnpjCpf')">
+                            <template v-slot:label>
+                              Documento (CPF/CNPJ)
+                              <span class="ml-1 red--text">*</span>
+                            </template>
+                          </v-text-field>
+                        </v-col>
+                        <v-col cols="12" md="6" sm="6" xs="12">
+                          <v-text-field
+                              v-model="dadosGerais.telefone"
+                              name="telefone"
+                              v-mask="[masks.tel, masks.tel2]"
+                              placeholder="Informe o telefone"
+                              :error-messages="errors.collect('telefone')">
+                            <template v-slot:label>
+                              Telefone
+                            </template>
+                          </v-text-field>
+                        </v-col>
+                        <v-col cols="12" md="6" sm="6" xs="12">
+                          <v-text-field
+                              v-model="dadosGerais.departamento"
+                              name="departamento"
+                              placeholder="Informe o departamento"
+                              :error-messages="errors.collect('departamento')">
+                            <template v-slot:label>
+                              Departamento
+                            </template>
+                          </v-text-field>
+                        </v-col>
+                      </v-row>
+                      <v-row wrap align-center white class="pl-5 pr-5">
+                        <v-col cols="12" md="12" sm="12" xs="12">
+                          <v-divider :inset="false" class="divider"></v-divider>
+                          <span class="section-label">Endereço</span>
+                        </v-col>
+                        <v-col cols="12" md="6" sm="6" xs="12">
+                          <v-text-field
+                              v-model="dadosGerais.cep"
+                              name="cep"
+                              placeholder="Informe o CEP"
+                              v-mask="masks.cep"
+                              :error-messages="errors.collect('cep')">
+                            <template v-slot:label>
+                              CEP
+                            </template>
+                          </v-text-field>
+                        </v-col>
+                        <v-col cols="12" md="6" sm="6" xs="12">
+                          <buscar-municipio
+                                            v-if="carregarCidadesEstados"
+                                            :municipio-id="dadosGerais.municipio.id"
+                                            :estado-id="dadosGerais.municipio.estado.id"
+                                            @emitirSelecionarCidade="selecionarCidade"
+                          />
+                        </v-col>
+                        <v-col cols="12" md="6" sm="6" xs="12">
+                          <v-text-field
+                              v-model="dadosGerais.logradouro"
+                              name="logradouro"
+                              placeholder="Informe o logradouro"
+                              :error-messages="errors.collect('logradouro')">
+                            <template v-slot:label>
+                              Logradouro
+                            </template>
+                          </v-text-field>
+                        </v-col>
+                        <v-col cols="12" md="6" sm="6" xs="12">
+                          <v-text-field
+                              v-model="dadosGerais.logradouroNumero"
+                              name="numero"
+                              placeholder="Informe o número"
+                              :error-messages="errors.collect('numero')">
+                            <template v-slot:label>
+                              Número
+                            </template>
+                          </v-text-field>
+                        </v-col>
+                        <v-col cols="12" md="6" sm="6" xs="12">
+                          <v-text-field
+                              v-model="dadosGerais.complemento"
+                              name="complemento"
+                              placeholder="Informe o complemento"
+                              :error-messages="errors.collect('complemento')">
+                            <template v-slot:label>
+                              Complemento
+                            </template>
+                          </v-text-field>
+                        </v-col>
+                      </v-row>
+                      <v-row wrap align-center white class="pl-5 pr-5">
+                        <v-col cols="12" md="12" sm="12" xs="12">
+                          <v-divider :inset="false" class="divider"></v-divider>
+                          <span class="section-label">Senha atual</span>
+                        </v-col>
+                        <v-col cols="12" md="6" sm="6" xs="12">
+                          <v-text-field
+                              v-model="dadosGerais.senhaAtual"
+                              name="senhaAtual"
+                              prepend-inner-icon="mdi-lock"
+                              :append-icon="showPasswordAtual ? 'mdi-eye' : 'mdi-eye-off'"
+                              :type="showPasswordAtual ? 'text' : 'password'"
+                              @click:append="showPasswordAtual = !showPasswordAtual"
+                          />
+                        </v-col>
+                      </v-row>
                         <v-row wrap align-center white class="pl-5 pr-5">
                             <v-col cols="12" md="12" sm="12" xs="12">
                                 <v-divider :inset="false" class="divider"></v-divider>
@@ -118,57 +244,96 @@
 </template>
 
 <script>
-    import _ from 'lodash'
-    import {mapActions} from 'vuex'
-    import {actionTypes} from '@/core/constants'
-    import BotaoSalvar from '@/views/components/BotaoSalvar'
-    import BotaoCancelar from '@/views/components/BotaoCancelar'
+import {actionTypes} from '@/core/constants'
+import BotaoSalvar from '@/views/components/BotaoSalvar'
+import BotaoCancelar from '@/views/components/BotaoCancelar'
+import BuscarMunicipio from '../../../components/BuscarMunicipio.vue'
 
-    export default {
-        name: 'GerenciarUsuarioEdicaoModal',
-        components: {BotaoCancelar, BotaoSalvar},
-        props: {
-            value: Boolean,
-            item: Object
-        },
-        data() {
-            return {
-                dadosGerais: {},
-                showPassword: false,
-                showPassword2: false,
-                nome_usuario: null,
-                senhaDois: null
+export default {
+    name: 'GerenciarUsuarioEdicaoModal',
+    components: {BuscarMunicipio, BotaoCancelar, BotaoSalvar},
+    props: {
+        value: Boolean,
+        item: Object
+    },
+    data() {
+        return {
+            showPasswordAtual: false,
+            showPassword: false,
+            showPassword2: false,
+            carregarCidadesEstados: false,
+            dadosGerais: {
+                nome: null,
+                login: null,
+                email: null,
+                senha: null,
+                senhaAtual: null,
+                municipio: {
+                    id: null,
+                    estado: {
+                        id: null
+                    }
+                },
+                empresa: {
+                    id: null
+                },
+            },
+            municipioId: null,
+            senhaDois: null,
+            masks: {
+                cep: '##.###-###',
+                tel: '(##) ####-####',
+                tel2: '(##) #####-####',
+                cpf: '###.###.###-##',
+                cnpj: '##.###.###/####-##',
+            }
+        }
+    },
+    async mounted() {
+        await this.buscarUsuario()
+    },
+    methods: {
+        async buscarUsuario(){
+            const resultado =  await this.$store.dispatch(actionTypes.USUARIO.BUSCAR_USUARIO_POR_ID, this.item.id)
+            if(resultado){
+                this.dadosGerais = resultado
+                this.municipioId = resultado.municipio.id
+                this.carregarCidadesEstados = true
             }
         },
-        mounted() {
-            this.setarDadosGerais(this.item)
-        },
-        methods: {
-            ...mapActions([
-                actionTypes.USUARIO.EDITAR_USUARIO
-            ]),
-            setarDadosGerais(objeto) {
-                this.dadosGerais = _.cloneDeep(objeto)
-                this.dadosGerais.permissao = null
-                this.senhaDois = this.dadosGerais.senha
-                this.nome_usuario = this.dadosGerais.nome_completo
-            },
-            async tratarEventoEditar() {
-                if (await this.validarDadosFormulario()) {
-                    this.setMensagemLoading('Salvando alterações do usuário...')
-                    const resultado = await this.editarUsuario(this.dadosGerais)
-                    this.setarDadosGerais(resultado)
-                    this.mostrarNotificacaoSucessoDefault()
+        async tratarEventoEditar() {
+            if (await this.validarDadosFormulario()) {
+                if(this.dadosGerais.senhaAtual && !this.senhaDois){
+                    this.mostrarNotificacaoErro('Digite a senha de confirmação!')
+                    return
                 }
-            },
-            async validarDadosFormulario() {
-                return this.$validator._base.validateAll()
-            },
-            fecharModal() {
-                this.$emit('fecharEdicao')
-            },
-        }
+                if(!this.municipioId){
+                    this.mostrarNotificacaoErro('Informe o município')
+                    return
+                }
+                this.formatarInput()
+                this.setMensagemLoading('Salvando alterações do usuário...')
+                await this.$store.dispatch(actionTypes.USUARIO.EDITAR_USUARIO, this.dadosGerais)
+                this.mostrarNotificacaoSucessoDefault()
+            }
+        },
+        async validarDadosFormulario() {
+            return this.$validator._base.validateAll()
+        },
+        fecharModal() {
+            this.$emit('fecharEdicao')
+        },
+        selecionarCidade(municipioId){
+            this.municipioId = municipioId
+        },
+        formatarInput() {
+            this.dadosGerais = {
+                ...this.dadosGerais,
+                municipioId: this.municipioId
+            }
+        },
     }
+}
 </script>
 
 <style scoped lang="stylus">

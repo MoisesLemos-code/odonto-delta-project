@@ -6,6 +6,7 @@ import br.com.molens.odontoDelta.gateway.entity.Permissao;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -15,9 +16,10 @@ public class BuscarPermissoesUsecase {
 
     private PermissaoDataProvider permissaoDataProvider;
 
-    public List<Permissao> executar(BuscarPermissoesInput input){
+    public BuscarPermissoesOutput executar(BuscarPermissoesInput input){
         validarDadosEntrada(input);
-        return buscarTodasPermissoes();
+        List<Permissao> permissaoList = buscarTodasPermissoes();
+        return setarDados(permissaoList);
     }
 
     private void validarDadosEntrada(BuscarPermissoesInput input) {
@@ -29,5 +31,22 @@ public class BuscarPermissoesUsecase {
 
     private List<Permissao> buscarTodasPermissoes() {
         return permissaoDataProvider.buscarTodas();
+    }
+
+    private BuscarPermissoesOutput setarDados(List<Permissao> permissaoList) {
+        List<BuscarPermissoesOutput.Permissao> list = new ArrayList<>();
+
+        for(Permissao permissao : permissaoList){
+            BuscarPermissoesOutput.Permissao item = new BuscarPermissoesOutput.Permissao();
+            item.setId(permissao.getId());
+            item.setNome(permissao.getNome());
+            item.setDescricao(permissao.getDescricao());
+            item.setAtivo(Boolean.FALSE);
+            list.add(item);
+        }
+
+        return BuscarPermissoesOutput.builder()
+                .items(list)
+                .build();
     }
 }

@@ -10,9 +10,9 @@
 </template>
 
 <script>
-    export default {
-        name: 'form-table'
-    }
+export default {
+    name: 'form-table'
+}
 </script>
 
 <style lang="stylus">

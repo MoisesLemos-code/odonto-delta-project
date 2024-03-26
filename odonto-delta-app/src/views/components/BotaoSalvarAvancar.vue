@@ -12,9 +12,9 @@
 </template>
 
 <script>
-    export default {
-        name: 'BotaoSalvarAvancar'
-    }
+export default {
+    name: 'BotaoSalvarAvancar'
+}
 </script>
 
 <style scoped lang="stylus">

@@ -29,51 +29,51 @@
 </template>
 
 <script>
-    import facesDente from '@/core/constants/enums/facesDente'
+import facesDente from '@/core/constants/enums/facesDente'
 
-    export default {
-        name: 'ServicosRealizadosTabela',
-        props: ['itens', 'valorTotal'],
-        data() {
-            return {
-                colunas: [
-                    {
-                        text: 'Descrição',
-                        value: 'servico.descricao',
-                        sortable: true,
-                        align: 'left',
-                        width: '10%',
-                        class: 'gray--text'
-                    },
-                    {
-                        text: 'Dente',
-                        value: 'denteItem',
-                        sortable: false,
-                        align: 'left',
-                        width: '30%',
-                        class: 'gray--text'
-                    },
-                    {
-                        text: 'Face',
-                        value: 'localizacao',
-                        sortable: true,
-                        align: 'left',
-                        width: '10%',
-                        class: 'gray--text'
-                    },
-                    {
-                        text: 'Valor',
-                        value: 'valor',
-                        sortable: true,
-                        align: 'left',
-                        width: '8%',
-                        class: 'gray--text'
-                    },
-                ],
-                facesDente
-            }
+export default {
+    name: 'ServicosRealizadosTabela',
+    props: ['itens', 'valorTotal'],
+    data() {
+        return {
+            colunas: [
+                {
+                    text: 'Descrição',
+                    value: 'servico.descricao',
+                    sortable: true,
+                    align: 'left',
+                    width: '10%',
+                    class: 'gray--text'
+                },
+                {
+                    text: 'Dente',
+                    value: 'denteItem',
+                    sortable: false,
+                    align: 'left',
+                    width: '30%',
+                    class: 'gray--text'
+                },
+                {
+                    text: 'Face',
+                    value: 'localizacao',
+                    sortable: true,
+                    align: 'left',
+                    width: '10%',
+                    class: 'gray--text'
+                },
+                {
+                    text: 'Valor',
+                    value: 'valor',
+                    sortable: true,
+                    align: 'left',
+                    width: '8%',
+                    class: 'gray--text'
+                },
+            ],
+            facesDente
         }
     }
+}
 </script>
 
 <style scoped lang="stylus">

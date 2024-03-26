@@ -44,59 +44,59 @@
 </template>
 
 <script>
-    import {mapMutations} from 'vuex'
-    import {actionTypes, mutationTypes} from '@/core/constants'
+import {mapMutations} from 'vuex'
+import {actionTypes, mutationTypes} from '@/core/constants'
 
-    export default {
-        name: 'Login',
-        $_veeValidate: {
-            validator: 'new'
-        },
-        data() {
-            return {
-                loadingBtn: false,
-                showPassword: false,
-                usuario: {
-                    login: '',
-                    senha: ''
-                },
-                usuarioAutenticado: {
-                    login: '',
-                    token: ''
-                }
-            }
-        },
-        methods: {
-            ...mapMutations([mutationTypes.COMUM.SET_USUARIO_LOGADO]),
-            async efetuarLogin() {
-                if (await this.validarDadosFormulario()) {
-                    try {
-                        this.loadingBtn = true
-                        const { data } = await this.$store.dispatch(
-                            actionTypes.COMUM.EFETUAR_LOGIN,
-                            this.usuario
-                        )
-                        if (data) {
-                            this.usuarioAutenticado = {
-                                id: data.id,
-                                nome: data.login,
-                                nomeCompleto: data.nomeCompleto,
-                                token: data.token,
-                                admin: data.isAdmin
-                            }
-                            this.setUsuarioLogado(this.usuarioAutenticado)
-                            await this.$router.push({name: 'Inicio'})
-                        }
-                    } catch (err) {
-                        this.loadingBtn = false
-                    }
-                }
+export default {
+    name: 'Login',
+    $_veeValidate: {
+        validator: 'new'
+    },
+    data() {
+        return {
+            loadingBtn: false,
+            showPassword: false,
+            usuario: {
+                login: '',
+                senha: ''
             },
-            async validarDadosFormulario() {
-                return this.$validator._base.validateAll()
+            usuarioAutenticado: {
+                login: '',
+                token: ''
             }
         }
+    },
+    methods: {
+        ...mapMutations([mutationTypes.COMUM.SET_USUARIO_LOGADO]),
+        async efetuarLogin() {
+            if (await this.validarDadosFormulario()) {
+                try {
+                    this.loadingBtn = true
+                    const { data } = await this.$store.dispatch(
+                        actionTypes.COMUM.EFETUAR_LOGIN,
+                        this.usuario
+                    )
+                    if (data) {
+                        this.usuarioAutenticado = {
+                            id: data.id,
+                            nome: data.login,
+                            nomeCompleto: data.nomeCompleto,
+                            token: data.token,
+                            admin: data.isAdmin
+                        }
+                        this.setUsuarioLogado(this.usuarioAutenticado)
+                        await this.$router.push({name: 'Inicio'})
+                    }
+                } catch (err) {
+                    this.loadingBtn = false
+                }
+            }
+        },
+        async validarDadosFormulario() {
+            return this.$validator._base.validateAll()
+        }
     }
+}
 </script>
 
 <style lang="stylus" scoped>

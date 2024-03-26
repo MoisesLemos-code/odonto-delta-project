@@ -1,6 +1,7 @@
 package br.com.molens.odontoDelta.adapter.entrypoint.controller.permissao;
 
 import br.com.molens.odontoDelta.domain.usecase.permissao.buscarPermissoes.BuscarPermissoesInput;
+import br.com.molens.odontoDelta.domain.usecase.permissao.buscarPermissoes.BuscarPermissoesOutput;
 import br.com.molens.odontoDelta.domain.usecase.permissao.buscarPermissoes.BuscarPermissoesUsecase;
 import br.com.molens.odontoDelta.domain.usecase.sessaoUsuario.userData.UserDataUsecase;
 import br.com.molens.odontoDelta.gateway.entity.Permissao;
@@ -20,7 +21,7 @@ public class PermissaoControllerImpl implements PermissaoController {
     private UserDataUsecase userDataUsecase;
 
     @Override
-    public ResponseEntity<List<Permissao>> buscar(BuscarPermissoesInput inputData) {
+    public ResponseEntity<BuscarPermissoesOutput> buscar(BuscarPermissoesInput inputData) {
         inputData.setEmpresaId(userDataUsecase.executar().getEmpresa().getId());
         return new ResponseEntity<>(buscarPermissoesUsecase.executar(inputData), HttpStatus.OK);
     }

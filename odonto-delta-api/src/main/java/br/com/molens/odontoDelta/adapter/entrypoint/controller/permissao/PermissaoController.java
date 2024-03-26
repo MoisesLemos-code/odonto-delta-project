@@ -8,6 +8,7 @@ import br.com.molens.odontoDelta.domain.usecase.perfil.buscarPerfilPorId.BuscarP
 import br.com.molens.odontoDelta.domain.usecase.perfil.inserirPerfil.InserirPerfilInput;
 import br.com.molens.odontoDelta.domain.usecase.perfil.inserirPerfil.InserirPerfilOutput;
 import br.com.molens.odontoDelta.domain.usecase.permissao.buscarPermissoes.BuscarPermissoesInput;
+import br.com.molens.odontoDelta.domain.usecase.permissao.buscarPermissoes.BuscarPermissoesOutput;
 import br.com.molens.odontoDelta.gateway.entity.Permissao;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -30,5 +31,5 @@ public interface PermissaoController {
 
     @ApiOperation(value = "Busca todas permissões")
     @GetMapping("/buscarTodas")
-    ResponseEntity<List<Permissao>> buscar(@Valid BuscarPermissoesInput inputData);
+    ResponseEntity<BuscarPermissoesOutput> buscar(@Valid BuscarPermissoesInput inputData);
 }

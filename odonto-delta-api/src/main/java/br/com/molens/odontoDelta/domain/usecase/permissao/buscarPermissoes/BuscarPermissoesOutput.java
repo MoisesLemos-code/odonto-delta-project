@@ -1,4 +1,4 @@
-package br.com.molens.odontoDelta.domain.usecase.perfilPermissao.buscarPerfilPermissoesPorPerfil;
+package br.com.molens.odontoDelta.domain.usecase.permissao.buscarPermissoes;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,7 +11,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class BuscarPermissoesPorPerfilOutput {
+public class BuscarPermissoesOutput {
 
     private List<Permissao> items;
 
@@ -19,8 +19,6 @@ public class BuscarPermissoesPorPerfilOutput {
     @NoArgsConstructor
     public static class Permissao {
         private Long id;
-        private Long perfilId;
-        private Long permissaoId;
         private String nome;
         private String descricao;
         private Boolean ativo;

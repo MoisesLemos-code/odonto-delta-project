@@ -178,79 +178,79 @@
 </template>
 
 <script>
-    import _ from 'lodash'
-    import {mapActions} from 'vuex'
-    import {actionTypes} from '@/core/constants'
-    import tipoPaciente from '@/core/constants/enums/tipoPaciente'
-    import CampoCheckBoxEditavel from '@/views/components/camposEditaveis/campo-check-box-editavel'
-    import CampoRadioGroupEditavel from '@/views/components/camposEditaveis/campo-radio-group-editavel'
-    import CampoDeTextoEditavel from '@/views/components/camposEditaveis/campo-texto-editavel'
-    import CampoTextAreaEditavel from '@/views/components/camposEditaveis/campo-text-area-editavel'
+import _ from 'lodash'
+import {mapActions} from 'vuex'
+import {actionTypes} from '@/core/constants'
+import tipoPaciente from '@/core/constants/enums/tipoPaciente'
+import CampoCheckBoxEditavel from '@/views/components/camposEditaveis/campo-check-box-editavel'
+import CampoRadioGroupEditavel from '@/views/components/camposEditaveis/campo-radio-group-editavel'
+import CampoDeTextoEditavel from '@/views/components/camposEditaveis/campo-texto-editavel'
+import CampoTextAreaEditavel from '@/views/components/camposEditaveis/campo-text-area-editavel'
 
-    export default {
-        name: 'PacienteFichaDetalhes',
-        components: {CampoTextAreaEditavel, CampoDeTextoEditavel, CampoRadioGroupEditavel, CampoCheckBoxEditavel},
-        props: ['pacienteId'],
-        data() {
-            return {
-                fichaDadosGerais: {},
-                historiaMedicaAnterior: {},
-                usoMedicamentoAnterior: {},
-                exibirPanel: false,
-                tipoPaciente
-            }
+export default {
+    name: 'PacienteFichaDetalhes',
+    components: {CampoTextAreaEditavel, CampoDeTextoEditavel, CampoRadioGroupEditavel, CampoCheckBoxEditavel},
+    props: ['pacienteId'],
+    data() {
+        return {
+            fichaDadosGerais: {},
+            historiaMedicaAnterior: {},
+            usoMedicamentoAnterior: {},
+            exibirPanel: false,
+            tipoPaciente
+        }
+    },
+    async mounted() {
+        await this.buscarFicha()
+        await this.setarHistoriaMedicaAnterior()
+        await this.setarUsoMedicamentoAnterior()
+    },
+    methods: {
+        ...mapActions([ actionTypes.CADASTROS.PACIENTE.FICHA.BUSCAR_POR_PACIENTE ]),
+        async buscarFicha() {
+            this.fichaDadosGerais = await this.buscarPorPaciente(this.pacienteId)
         },
-        async mounted() {
-            await this.buscarFicha()
-            await this.setarHistoriaMedicaAnterior()
-            await this.setarUsoMedicamentoAnterior()
+        async setarHistoriaMedicaAnterior() {
+            this.historiaMedicaAnterior = _.cloneDeep(this.fichaDadosGerais.historiaMedica)
         },
-        methods: {
-            ...mapActions([ actionTypes.CADASTROS.PACIENTE.FICHA.BUSCAR_POR_PACIENTE ]),
-            async buscarFicha() {
-                this.fichaDadosGerais = await this.buscarPorPaciente(this.pacienteId)
-            },
-            async setarHistoriaMedicaAnterior() {
-                this.historiaMedicaAnterior = _.cloneDeep(this.fichaDadosGerais.historiaMedica)
-            },
-            async setarUsoMedicamentoAnterior() {
-                this.usoMedicamentoAnterior = _.cloneDeep(this.fichaDadosGerais.usoMedicamento)
-            },
-            cancelarEdicaoHistoriaMedica() {
-                this.fichaDadosGerais.historiaMedica = _.cloneDeep(this.historiaMedicaAnterior)
-            },
-            cancelarEdicaoUsoMedico() {
-                this.fichaDadosGerais.usoMedicamento = _.cloneDeep(this.usoMedicamentoAnterior)
-            },
-            construirHistoriaMedica() {
-                let historiaMedicaFilter = []
-                this.setarHistoriaMedicaAnterior()
-                this.fichaDadosGerais.historiaMedica.forEach(x => {
-                    if (x.atribuido) {
-                        historiaMedicaFilter.push(x.cod)
-                    }
-                })
-                return historiaMedicaFilter
-            },
-            construirUsoMedicamento() {
-                let usoMedicamentoFilter = []
-                this.fichaDadosGerais.usoMedicamento.forEach(x => {
-                    if (x.atribuido) {
-                        usoMedicamentoFilter.push(x.cod)
-                    }
-                })
-                return usoMedicamentoFilter
-            },
-            tratarEventoSalvar() {
-                let ficha = _.cloneDeep(this.fichaDadosGerais)
-                ficha.historiaMedica = this.construirHistoriaMedica()
-                ficha.usoMedicamento = this.construirUsoMedicamento()
-                this.setarHistoriaMedicaAnterior()
-                this.setarUsoMedicamentoAnterior()
-                this.$emit('salvar', ficha)
-            }
+        async setarUsoMedicamentoAnterior() {
+            this.usoMedicamentoAnterior = _.cloneDeep(this.fichaDadosGerais.usoMedicamento)
+        },
+        cancelarEdicaoHistoriaMedica() {
+            this.fichaDadosGerais.historiaMedica = _.cloneDeep(this.historiaMedicaAnterior)
+        },
+        cancelarEdicaoUsoMedico() {
+            this.fichaDadosGerais.usoMedicamento = _.cloneDeep(this.usoMedicamentoAnterior)
+        },
+        construirHistoriaMedica() {
+            let historiaMedicaFilter = []
+            this.setarHistoriaMedicaAnterior()
+            this.fichaDadosGerais.historiaMedica.forEach(x => {
+                if (x.atribuido) {
+                    historiaMedicaFilter.push(x.cod)
+                }
+            })
+            return historiaMedicaFilter
+        },
+        construirUsoMedicamento() {
+            let usoMedicamentoFilter = []
+            this.fichaDadosGerais.usoMedicamento.forEach(x => {
+                if (x.atribuido) {
+                    usoMedicamentoFilter.push(x.cod)
+                }
+            })
+            return usoMedicamentoFilter
+        },
+        tratarEventoSalvar() {
+            let ficha = _.cloneDeep(this.fichaDadosGerais)
+            ficha.historiaMedica = this.construirHistoriaMedica()
+            ficha.usoMedicamento = this.construirUsoMedicamento()
+            this.setarHistoriaMedicaAnterior()
+            this.setarUsoMedicamentoAnterior()
+            this.$emit('salvar', ficha)
         }
     }
+}
 </script>
 
 <style scoped lang="stylus">

@@ -7,7 +7,7 @@
 </template>
 
 <script>
-    export default {
-        name: 'Inicio',
-    }
+export default {
+    name: 'Inicio',
+}
 </script>

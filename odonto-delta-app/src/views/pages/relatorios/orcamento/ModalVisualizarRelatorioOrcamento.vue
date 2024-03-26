@@ -39,16 +39,20 @@
                                 <span class="expand-text-header">Serviços</span>
                                 <div class="expand-item" :key="itemServico.id + '-servico'"
                                      v-for="itemServico in item.servicosItens">
-                                    <span class="expand-text">{{itemServico.servico.descricao}}</span><span> - {{itemServico.denteItem.dente.nome}} </span><span>({{itemServico.denteItem.dente.numero}}<span
-                                        v-if="itemServico.denteItem.dente.numero2">/{{itemServico.denteItem.dente.numero2}}</span>)</span><span> - {{itemServico.subTotal | valorParaReal}}</span>
+                                    <span class="expand-text">{{itemServico.servico.descricao}}</span><span> - {{itemServico.denteItem.dente.nome}} </span>
+                                  <span>({{itemServico.denteItem.dente.numero}}<span
+                                        v-if="itemServico.denteItem.dente.numero2">/{{itemServico.denteItem.dente.numero2}}
+                                </span>)</span><span> - {{itemServico.subTotal | valorParaReal}}</span>
                                 </div>
                             </div>
                             <div class="mt-3" v-if="item.pecasItens.length > 0">
                                 <span class="expand-text-header">Peças</span>
                                 <div class="expand-item" :key="itemPeca.id + '-peca'"
                                      v-for="itemPeca in item.pecasItens">
-                                    <span class="expand-text">{{itemPeca.peca.descricao}}</span><span> - {{itemPeca.denteItem.dente.nome}} </span><span>({{itemPeca.denteItem.dente.numero}}<span
-                                        v-if="itemPeca.denteItem.dente.numero2">/{{itemPeca.denteItem.dente.numero2}}</span>)</span><span> - {{itemPeca.subTotal | valorParaReal}}</span>
+                                    <span class="expand-text">{{itemPeca.peca.descricao}}</span><span> - {{itemPeca.denteItem.dente.nome}} </span>
+                                  <span>({{itemPeca.denteItem.dente.numero}}<span
+                                        v-if="itemPeca.denteItem.dente.numero2">/{{itemPeca.denteItem.dente.numero2}}</span>)</span>
+                                  <span> - {{itemPeca.subTotal | valorParaReal}}</span>
                                 </div>
                             </div>
                         </td>
@@ -60,80 +64,80 @@
 </template>
 
 <script>
-    import statusOrcamento from '@/core/constants/enums/statusOrcamento'
+import statusOrcamento from '@/core/constants/enums/statusOrcamento'
 
-    export default {
-        name: 'ModalVisualizarRelatorioOrcamento',
-        props: ['itens', 'value'],
-        data() {
-            return {
-                colunas: [
-                    {
-                        text: 'Paciente',
-                        value: 'paciente.nome',
-                        sortable: true,
-                        align: 'left',
-                        width: '20%',
-                        class: 'gray--text'
-                    },
-                    {
-                        text: 'Status',
-                        value: 'status',
-                        sortable: true,
-                        align: 'left',
-                        width: '10%',
-                        class: 'gray--text'
-                    },
-                    {
-                        text: 'Total Serviços',
-                        value: 'servicosItensTotal',
-                        sortable: true,
-                        align: 'left',
-                        width: '15%',
-                        class: 'gray--text'
-                    },
-                    {
-                        text: 'Total Peças',
-                        value: 'pecasItensTotal',
-                        sortable: true,
-                        align: 'left',
-                        width: '15%',
-                        class: 'gray--text'
-                    },
-                    {
-                        text: 'Total',
-                        value: 'valorTotal',
-                        sortable: true,
-                        align: 'left',
-                        width: '10%',
-                        class: 'gray--text'
-                    },
-                    {
-                        text: 'Expandir',
-                        align: 'right',
-                        value: 'data-table-expand'
-                    },
-                ],
-                expandidos: [],
-                statusOrcamento
-            }
-        },
-        methods: {
-            formatarCpfCnpj(cpfCnpjValue) {
-                if (cpfCnpjValue) {
-                    const cnpjCpf = cpfCnpjValue.replace(/\D/g, '')
-                    if (cnpjCpf.length === 11) {
-                        return cnpjCpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/g, '$1.$2.$3-$4')
-                    }
-                    return cnpjCpf.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/g, '$1.$2.$3/$4-$5')
-                }
-                return ''
-            },
-            fecharModal() {
-                this.$emit('fecharModal')
-            },
+export default {
+    name: 'ModalVisualizarRelatorioOrcamento',
+    props: ['itens', 'value'],
+    data() {
+        return {
+            colunas: [
+                {
+                    text: 'Paciente',
+                    value: 'paciente.nome',
+                    sortable: true,
+                    align: 'left',
+                    width: '20%',
+                    class: 'gray--text'
+                },
+                {
+                    text: 'Status',
+                    value: 'status',
+                    sortable: true,
+                    align: 'left',
+                    width: '10%',
+                    class: 'gray--text'
+                },
+                {
+                    text: 'Total Serviços',
+                    value: 'servicosItensTotal',
+                    sortable: true,
+                    align: 'left',
+                    width: '15%',
+                    class: 'gray--text'
+                },
+                {
+                    text: 'Total Peças',
+                    value: 'pecasItensTotal',
+                    sortable: true,
+                    align: 'left',
+                    width: '15%',
+                    class: 'gray--text'
+                },
+                {
+                    text: 'Total',
+                    value: 'valorTotal',
+                    sortable: true,
+                    align: 'left',
+                    width: '10%',
+                    class: 'gray--text'
+                },
+                {
+                    text: 'Expandir',
+                    align: 'right',
+                    value: 'data-table-expand'
+                },
+            ],
+            expandidos: [],
+            statusOrcamento
         }
+    },
+    methods: {
+        formatarCpfCnpj(cpfCnpjValue) {
+            if (cpfCnpjValue) {
+                const cnpjCpf = cpfCnpjValue.replace(/\D/g, '')
+                if (cnpjCpf.length === 11) {
+                    return cnpjCpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/g, '$1.$2.$3-$4')
+                }
+                return cnpjCpf.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/g, '$1.$2.$3/$4-$5')
+            }
+            return ''
+        },
+        fecharModal() {
+            this.$emit('fecharModal')
+        },
     }
+}
 </script>
 
 <style scoped lang="stylus">

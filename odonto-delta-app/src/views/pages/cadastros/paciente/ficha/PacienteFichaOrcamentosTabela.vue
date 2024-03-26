@@ -51,102 +51,102 @@
 </template>
 
 <script>
-    import mutationTypes from '@/core/constants/mutationTypes'
-    import FormTable from '@/views/components/FormTable'
-    import ContainerComponent from '@/views/components/Container'
-    import statusOrcamento from '@/core/constants/enums/statusOrcamento'
+import mutationTypes from '@/core/constants/mutationTypes'
+import FormTable from '@/views/components/FormTable'
+import ContainerComponent from '@/views/components/Container'
+import statusOrcamento from '@/core/constants/enums/statusOrcamento'
 
-    export default {
-        name: 'PacienteFichaOrcamentosTabela',
-        components: {ContainerComponent, FormTable},
-        props: ['itens', 'paginacao', 'paginas', 'totalItens'],
-        data() {
-            return {
-                colunas: [
-                    {
-                        text: 'Código',
-                        value: 'id',
-                        sortable: true,
-                        align: 'left',
-                        width: '10%',
-                        class: 'gray--text'
-                    },
-                    {
-                        text: 'Nome',
-                        value: 'paciente',
-                        sortable: true,
-                        align: 'left',
-                        width: '20%',
-                        class: 'gray--text'
-                    },
-                    {
-                        text: 'CPF/CNPJ',
-                        value: 'cpfOuCnpj',
-                        sortable: true,
-                        align: 'left',
-                        width: '15%',
-                        class: 'gray--text'
-                    },
-                    {
-                        text: 'Status',
-                        value: 'status',
-                        sortable: true,
-                        align: 'left',
-                        width: '10%',
-                        class: 'gray--text'
-                    },
-                    {
-                        text: 'Data de abertura',
-                        value: 'data_abertura',
-                        sortable: true,
-                        align: 'left',
-                        width: '10%',
-                        class: 'gray--text'
-                    },
-                    {
-                        text: '',
-                        value: 'acoes',
-                        sortable: false,
-                        align: 'right',
-                        width: '20%',
-                        class: 'gray--text'
-                    }
-                ],
-                paginacaoInterna: this.paginacao,
-                linhasPorPagina: [10, 25, 50, 100],
-                statusOrcamento
-            }
-        },
-        methods: {
-            tratarEventoAcessar(item) {
-                this.$emit('acessar', item)
-            },
-            tratarPaginacao(pagina) {
-                this.paginacaoInterna.page = pagina
-            },
-            resetaPage() {
-                this.$store.commit(mutationTypes.ORCAMENTO.RESETA_PAGE_POR_PACIENTE)
-            },
-            formatarCpfCnpj(cpfCnpjValue) {
-                if (cpfCnpjValue) {
-                    const cnpjCpf = cpfCnpjValue.replace(/\D/g, '')
-                    if (cnpjCpf.length === 11) {
-                        return cnpjCpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/g, '$1.$2.$3-$4')
-                    }
-                    return cnpjCpf.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/g, '$1.$2.$3/$4-$5')
-                }
-                return ''
-            }
-        },
-        watch: {
-            paginacaoInterna: {
-                handler(novoValor) {
-                    this.$emit('paginar', novoValor)
+export default {
+    name: 'PacienteFichaOrcamentosTabela',
+    components: {ContainerComponent, FormTable},
+    props: ['itens', 'paginacao', 'paginas', 'totalItens'],
+    data() {
+        return {
+            colunas: [
+                {
+                    text: 'Código',
+                    value: 'id',
+                    sortable: true,
+                    align: 'left',
+                    width: '10%',
+                    class: 'gray--text'
                 },
-                deep: true,
-            },
+                {
+                    text: 'Nome',
+                    value: 'paciente',
+                    sortable: true,
+                    align: 'left',
+                    width: '20%',
+                    class: 'gray--text'
+                },
+                {
+                    text: 'CPF/CNPJ',
+                    value: 'cpfOuCnpj',
+                    sortable: true,
+                    align: 'left',
+                    width: '15%',
+                    class: 'gray--text'
+                },
+                {
+                    text: 'Status',
+                    value: 'status',
+                    sortable: true,
+                    align: 'left',
+                    width: '10%',
+                    class: 'gray--text'
+                },
+                {
+                    text: 'Data de abertura',
+                    value: 'data_abertura',
+                    sortable: true,
+                    align: 'left',
+                    width: '10%',
+                    class: 'gray--text'
+                },
+                {
+                    text: '',
+                    value: 'acoes',
+                    sortable: false,
+                    align: 'right',
+                    width: '20%',
+                    class: 'gray--text'
+                }
+            ],
+            paginacaoInterna: this.paginacao,
+            linhasPorPagina: [10, 25, 50, 100],
+            statusOrcamento
+        }
+    },
+    methods: {
+        tratarEventoAcessar(item) {
+            this.$emit('acessar', item)
         },
-    }
+        tratarPaginacao(pagina) {
+            this.paginacaoInterna.page = pagina
+        },
+        resetaPage() {
+            this.$store.commit(mutationTypes.ORCAMENTO.RESETA_PAGE_POR_PACIENTE)
+        },
+        formatarCpfCnpj(cpfCnpjValue) {
+            if (cpfCnpjValue) {
+                const cnpjCpf = cpfCnpjValue.replace(/\D/g, '')
+                if (cnpjCpf.length === 11) {
+                    return cnpjCpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/g, '$1.$2.$3-$4')
+                }
+                return cnpjCpf.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/g, '$1.$2.$3/$4-$5')
+            }
+            return ''
+        }
+    },
+    watch: {
+        paginacaoInterna: {
+            handler(novoValor) {
+                this.$emit('paginar', novoValor)
+            },
+            deep: true,
+        },
+    },
+}
 </script>
 
 <style scoped lang="stylus">

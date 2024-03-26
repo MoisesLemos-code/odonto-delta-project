@@ -14,7 +14,7 @@ class UsuarioApiClient {
 
     async buscarTodos(filtros, paginacao) {
         const url = SearchUrlBuilder.build(
-            '/usuario/page',
+            '/usuario',
             filtros,
             paginacao
         )
@@ -26,7 +26,7 @@ class UsuarioApiClient {
     }
 
     async cadastrar(dados){
-        return await axios.post('/usuario/insert', dados)
+        return await axios.post('/usuario/inserir', dados)
     }
 
     async editar(dados) {

@@ -2,6 +2,7 @@ package br.com.molens.odontoDelta.application.factory.perfilPermissao;
 
 import br.com.molens.odontoDelta.domain.interfaces.PerfilDataProvider;
 import br.com.molens.odontoDelta.domain.interfaces.PerfilPermissaoDataProvider;
+import br.com.molens.odontoDelta.domain.interfaces.PermissaoDataProvider;
 import br.com.molens.odontoDelta.domain.usecase.perfilPermissao.buscarPerfilPermissoesPorPerfil.BuscarPerfilPermissoesPorPerfilUsecase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -16,6 +17,9 @@ public class BuscarPermissoesPorPerfilFactory {
     private PerfilPermissaoDataProvider perfilPermissaoDataProvider;
 
     @Autowired
+    private PermissaoDataProvider permissaoDataProvider;
+
+    @Autowired
     private PerfilDataProvider perfilDataProvider;
 
     @Bean("BuscarPerfilPermissoesPorPerfilUsecase")
@@ -23,6 +27,7 @@ public class BuscarPermissoesPorPerfilFactory {
     public BuscarPerfilPermissoesPorPerfilUsecase criar() {
         return BuscarPerfilPermissoesPorPerfilUsecase.builder()
                 .perfilPermissaoDataProvider(perfilPermissaoDataProvider)
+                .permissaoDataProvider(permissaoDataProvider)
                 .perfilDataProvider(perfilDataProvider)
                 .build();
     }

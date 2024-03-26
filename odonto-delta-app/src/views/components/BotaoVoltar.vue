@@ -6,25 +6,25 @@
 </template>
 
 <script>
-    export default {
-        name: 'BotaoVoltar',
-        props: {
-            text: {
-                type: String,
-                required: true
-            },
-            route: Object
+export default {
+    name: 'BotaoVoltar',
+    props: {
+        text: {
+            type: String,
+            required: true
         },
-        methods: {
-            voltar() {
-                if(this.route){
-                    this.$router.push(this.route)
-                    return
-                }
-                window.history.back()
+        route: Object
+    },
+    methods: {
+        voltar() {
+            if(this.route){
+                this.$router.push(this.route)
+                return
             }
+            window.history.back()
         }
     }
+}
 </script>
 
 <style scoped lang="stylus">

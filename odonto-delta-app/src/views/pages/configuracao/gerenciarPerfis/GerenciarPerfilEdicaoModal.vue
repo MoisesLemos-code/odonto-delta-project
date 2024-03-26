@@ -84,7 +84,6 @@
 
 <script>
 import _ from 'lodash'
-import {mapActions} from 'vuex'
 import {actionTypes} from '@/core/constants'
 import BotaoSalvar from '@/views/components/BotaoSalvar'
 import BotaoCancelar from '@/views/components/BotaoCancelar'
@@ -103,19 +102,14 @@ export default {
             nomeItem: null,
             modalExcluir: false,
             itemId: null,
-            permissoes: []
+            permissoes: [],
         }
     },
     async mounted() {
         this.setarDadosGerais(this.item)
-        await this.buscarPermissoes()
+        await this.buscarPermissoesDoPerfil()
     },
     methods: {
-        ...mapActions([
-            actionTypes.PERFIL.EDITAR_PERFIL,
-            actionTypes.PERFIL.REMOVER_PERFIL,
-            actionTypes.PERMISSAO.BUSCAR_TODAS_PERMISSOES
-        ]),
         setarDadosGerais(objeto) {
             this.dadosGerais = _.cloneDeep(objeto)
             this.itemId = this.dadosGerais.id
@@ -124,17 +118,20 @@ export default {
         async tratarEventoEditar() {
             if (await this.validarDadosFormulario()) {
                 this.setMensagemLoading('Salvando alterações do perfil...')
-                const resultado = await this.editarPerfil(this.dadosGerais)
+                const resultado = await this.$store.dispatch(actionTypes.PERFIL.EDITAR_PERFIL, this.dadosGerais)
                 this.setarDadosGerais(resultado)
+                this.setMensagemLoading('Salvando alterações de permissões...')
+                await this.$store.dispatch(actionTypes.PERFIL_PERMISSAO.EDITAR_PERMISSAO, {
+                    perfilId: this.itemId,
+                    items: this.permissoes
+                } )
                 this.mostrarNotificacaoSucessoDefault()
             }
         },
-        async buscarPermissoes(){
-            const resultado = await this.buscarTodasPermissoes()
+        async buscarPermissoesDoPerfil(){
+            const resultado = await this.$store.dispatch(actionTypes.PERFIL_PERMISSAO.BUSCAR_POR_PERFIL, this.itemId)
             if(resultado){
                 this.permissoes = resultado.items
-                console.log('---permissoes')
-                console.log(this.permissoes)
             }
         },
         abrirModalExcluir() {
@@ -144,7 +141,7 @@ export default {
             this.modalExcluir = false
         },
         async tratarEventoExcluir() {
-            await this.removerPerfil(this.itemId)
+            await this.$store.dispatch(actionTypes.PERFIL.REMOVER_PERFIL, this.itemId)
             this.mostrarNotificacaoSucessoDefault()
             this.fecharModal()
         },

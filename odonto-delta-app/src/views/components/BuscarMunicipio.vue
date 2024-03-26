@@ -1,11 +1,12 @@
 <template>
 <div class="container-municipio">
-  <v-select
+  <v-autocomplete
       v-model="estadoSelecionado"
       label="Estado"
       :items="estados"
       item-text="nome"
       item-value="id"
+      :filter="filtroComboAutoCompleteEstado"
       v-on:change="buscarCidades"
       class="select-estados"
       />
@@ -33,76 +34,82 @@
 </template>
 
 <script>
-    import {mapActions} from 'vuex'
-    import {actionTypes} from '@/core/constants'
+import {mapActions} from 'vuex'
+import {actionTypes} from '@/core/constants'
 
-    export default {
-        name: 'buscarMunicipio',
-        props: {
-            estadoId:{
-                type: Number
-            },
-            municipioId:{
-                type: Number
-            },
-            obrigatorio: {
-                type: Boolean,
-                default: false
-            },
+export default {
+    name: 'buscarMunicipio',
+    props: {
+        estadoId:{
+            type: Number
         },
-        data(){
-            return{
-                estadoSelecionado: null,
-                municipioSelecionado: null,
-                estados: [],
-                cidades: []
+        municipioId:{
+            type: Number
+        },
+        obrigatorio: {
+            type: Boolean,
+            default: false
+        },
+    },
+    data(){
+        return{
+            estadoSelecionado: null,
+            municipioSelecionado: null,
+            estados: [],
+            cidades: []
+        }
+    },
+    async mounted() {
+        this.setarMunicipio()
+        await this.setarEstado()
+        await this.buscarEstados()
+    },
+    methods:{
+        ...mapActions([
+            actionTypes.CADASTROS.ESTADO.BUSCAR_TODOS_ESTADOS_SEM_PAGINACAO,
+            actionTypes.CADASTROS.CIDADE.BUSCAR_TODAS_CIDADES_SEM_PAGINACAO,
+        ]),
+        async setarEstado(){
+            this.estadoSelecionado = this.estadoId
+            await this.buscarCidades()
+        },
+        setarMunicipio(){
+            this.municipioSelecionado = this.municipioId
+        },
+        async buscarEstados(){
+            const resultado = await this.buscarTodosEstadosSemPaginacao()
+            if (resultado) {
+                this.estados = resultado.items
             }
         },
-        async mounted() {
-            this.setarMunicipio()
-            await this.setarEstado()
-            await this.buscarEstados()
-        },
-        methods:{
-            ...mapActions([
-                actionTypes.CADASTROS.ESTADO.BUSCAR_TODOS_ESTADOS_SEM_PAGINACAO,
-                actionTypes.CADASTROS.CIDADE.BUSCAR_TODAS_CIDADES_SEM_PAGINACAO,
-            ]),
-            async setarEstado(){
-                this.estadoSelecionado = this.estadoId
-                await this.buscarCidades()
-            },
-            setarMunicipio(){
-                this.municipioSelecionado = this.municipioId
-            },
-            async buscarEstados(){
-                const resultado = await this.buscarTodosEstadosSemPaginacao()
+        async buscarCidades() {
+            if(this.estadoSelecionado){
+                const resultado = await this.buscarTodasCidadesSemPaginacao({idEstado: this.estadoSelecionado})
                 if (resultado) {
-                    this.estados = resultado.items
+                    this.cidades = resultado.items
                 }
-            },
-            async buscarCidades() {
-                if(this.estadoSelecionado){
-                    const resultado = await this.buscarTodasCidadesSemPaginacao({idEstado: this.estadoSelecionado})
-                    if (resultado) {
-                        this.cidades = resultado.items
-                    }
-                    const cidade = this.cidades.find( item => item.id === this.municipioSelecionado)
-                    if(!cidade)
-                        this.municipioSelecionado = null
-                    this.emitirSelecionarCidade()
-                }
-            },
-            emitirSelecionarCidade(){
-                this.$emit('emitirSelecionarCidade', this.municipioSelecionado)
-            },
-            filtroComboAutoComplete(item, queryText) {
-                const text = item.nome.toLowerCase()
-                const searchText = queryText.toLowerCase()
-                return text.indexOf(searchText) > -1
-            },
-        }
+                const cidade = this.cidades.find( item => item.id === this.municipioSelecionado)
+                if(!cidade)
+                    this.municipioSelecionado = null
+                this.emitirSelecionarCidade()
+            }
+        },
+        emitirSelecionarCidade(){
+            this.$emit('emitirSelecionarCidade', this.municipioSelecionado)
+        },
+        filtroComboAutoComplete(item, queryText) {
+            const text = item.nome.toLowerCase()
+            const searchText = queryText.toLowerCase()
+            return text.indexOf(searchText) > -1
+        },
+        filtroComboAutoCompleteEstado(item, queryText) {
+            const text = item.nome.toLowerCase()
+            const sigla = item.sigla.toLowerCase()
+            const searchText = queryText.toLowerCase()
+            return text.indexOf(searchText) > -1 || sigla.indexOf(searchText) > -1
+        },
     }
+}
 </script>
 
 <style scoped lang="stylus">

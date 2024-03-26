@@ -2,6 +2,7 @@ package br.com.molens.odontoDelta.domain.usecase.perfil.removerPerfilPorId;
 
 import br.com.molens.odontoDelta.domain.exception.RemoverPerfilPorIdException;
 import br.com.molens.odontoDelta.domain.interfaces.PerfilDataProvider;
+import br.com.molens.odontoDelta.domain.interfaces.PerfilPermissaoDataProvider;
 import br.com.molens.odontoDelta.gateway.entity.Perfil;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

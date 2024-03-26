@@ -1,6 +1,7 @@
 package br.com.molens.odontoDelta.application.factory.perfil;
 
 import br.com.molens.odontoDelta.domain.interfaces.PerfilDataProvider;
+import br.com.molens.odontoDelta.domain.interfaces.PerfilPermissaoDataProvider;
 import br.com.molens.odontoDelta.domain.usecase.perfil.removerPerfilPorId.RemoverPerfilPorIdUsecase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;

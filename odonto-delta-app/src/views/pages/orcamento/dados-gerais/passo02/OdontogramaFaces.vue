@@ -50,93 +50,93 @@
 </template>
 
 <script>
-    export default {
-        name: 'OdontogramaFaces',
-        props: {
-            tipoEstilo: {
-                type: String,
-                default: 'normal'
-            },
-            ativar: Boolean,
-            face: String
+export default {
+    name: 'OdontogramaFaces',
+    props: {
+        tipoEstilo: {
+            type: String,
+            default: 'normal'
         },
-        data() {
-            return {
-                lingual: false,
-                distal: false,
-                oclusal: false,
-                mesial: false,
-                vestibular: false
+        ativar: Boolean,
+        face: String
+    },
+    data() {
+        return {
+            lingual: false,
+            distal: false,
+            oclusal: false,
+            mesial: false,
+            vestibular: false
+        }
+    },
+    mounted() {
+        this.ativarFace(this.face)
+    },
+    methods: {
+        selecionarFace(face) {
+            if (this.ativar) {
+                this.$emit('faceSelecionada', this.ativarFace(face))
+                this.desativarFace(face)
+            } else {
+                this.$emit('faceSelecionada', face)
             }
         },
-        mounted() {
-            this.ativarFace(this.face)
-        },
-        methods: {
-            selecionarFace(face) {
-                if (this.ativar) {
-                    this.$emit('faceSelecionada', this.ativarFace(face))
-                    this.desativarFace(face)
+        ativarFace(face) {
+            if (face === 'Lingual/Palatal') {
+                if (this.lingual) {
+                    this.lingual = false
+                    return null
                 } else {
-                    this.$emit('faceSelecionada', face)
+                    this.lingual = true
+                    return face
                 }
-            },
-            ativarFace(face) {
-                if (face === 'Lingual/Palatal') {
-                    if (this.lingual) {
-                        this.lingual = false
-                        return null
-                    } else {
-                        this.lingual = true
-                        return face
-                    }
-                }
-                if (face === 'Distal') {
-                    if (this.distal) {
-                        this.distal = false
-                        return null
-                    } else {
-                        this.distal = true
-                        return face
-                    }
-                }
-                if (face === 'Oclusal') {
-                    if (this.oclusal) {
-                        this.oclusal = false
-                        return null
-                    } else {
-                        this.oclusal = true
-                        return face
-                    }
-                }
-                if (face === 'Mesial') {
-                    if (this.mesial) {
-                        this.mesial = false
-                        return null
-                    } else {
-                        this.mesial = true
-                        return face
-                    }
-                }
-                if (face === 'Vestibular') {
-                    if (this.vestibular) {
-                        this.vestibular = false
-                        return null
-                    } else {
-                        this.vestibular = true
-                        return face
-                    }
-                }
-            },
-            desativarFace(face) {
-                if (face !== 'Lingual/Palatal') this.lingual = false
-                if (face !== 'Distal') this.distal = false
-                if (face !== 'Oclusal') this.oclusal = false
-                if (face !== 'Mesial') this.mesial = false
-                if (face !== 'Vestibular') this.vestibular = false
             }
+            if (face === 'Distal') {
+                if (this.distal) {
+                    this.distal = false
+                    return null
+                } else {
+                    this.distal = true
+                    return face
+                }
+            }
+            if (face === 'Oclusal') {
+                if (this.oclusal) {
+                    this.oclusal = false
+                    return null
+                } else {
+                    this.oclusal = true
+                    return face
+                }
+            }
+            if (face === 'Mesial') {
+                if (this.mesial) {
+                    this.mesial = false
+                    return null
+                } else {
+                    this.mesial = true
+                    return face
+                }
+            }
+            if (face === 'Vestibular') {
+                if (this.vestibular) {
+                    this.vestibular = false
+                    return null
+                } else {
+                    this.vestibular = true
+                    return face
+                }
+            }
+        },
+        desativarFace(face) {
+            if (face !== 'Lingual/Palatal') this.lingual = false
+            if (face !== 'Distal') this.distal = false
+            if (face !== 'Oclusal') this.oclusal = false
+            if (face !== 'Mesial') this.mesial = false
+            if (face !== 'Vestibular') this.vestibular = false
         }
     }
+}
 </script>
 
 <style scoped lang="stylus">

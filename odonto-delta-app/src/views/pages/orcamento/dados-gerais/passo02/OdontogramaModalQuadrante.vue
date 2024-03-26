@@ -18,18 +18,18 @@
 
 <script>
 
-    export default {
-        name: 'OdontogramaModalQuadrante',
-        props: {
-            value: Boolean
-        },
-        methods: {
+export default {
+    name: 'OdontogramaModalQuadrante',
+    props: {
+        value: Boolean
+    },
+    methods: {
 
-            fecharModal() {
-                this.$emit('fecharQuadrante')
-            },
-        }
+        fecharModal() {
+            this.$emit('fecharQuadrante')
+        },
     }
+}
 </script>
 
 <style scoped>

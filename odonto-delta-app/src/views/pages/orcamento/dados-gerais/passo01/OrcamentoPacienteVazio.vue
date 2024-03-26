@@ -20,14 +20,14 @@
 </template>
 
 <script>
-    export default {
-        name: 'OrcamentoPacienteVazio',
-        methods:{
-            adicionarPaciente(){
-                this.$emit('adicionarPaciente')
-            }
+export default {
+    name: 'OrcamentoPacienteVazio',
+    methods:{
+        adicionarPaciente(){
+            this.$emit('adicionarPaciente')
         }
     }
+}
 </script>
 
 <style scoped>

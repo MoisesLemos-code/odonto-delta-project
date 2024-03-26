@@ -93,72 +93,72 @@
 </template>
 
 <script>
-    import {mapActions} from 'vuex'
-    import {actionTypes} from '@/core/constants'
-    import ComboEnum from '@/views/components/ComboEnum'
-    import statusOrcamento from '@/core/constants/enums/statusOrcamento'
-    import ModalVisualizarRelatorioOrcamento from './ModalVisualizarRelatorioOrcamento'
+import {mapActions} from 'vuex'
+import {actionTypes} from '@/core/constants'
+import ComboEnum from '@/views/components/ComboEnum'
+import statusOrcamento from '@/core/constants/enums/statusOrcamento'
+import ModalVisualizarRelatorioOrcamento from './ModalVisualizarRelatorioOrcamento'
 
-    export default {
-        name: 'RelatorioOrcamento',
-        components: {ModalVisualizarRelatorioOrcamento, ComboEnum},
-        data() {
-            return {
-                statusOrcamento,
-                dadosGerais: {
-                    filtroStatus: false,
-                    status: 'ABERTO',
-                    filtroPaciente: false,
-                    pacienteId: null
-                },
-                itens: [],
-                pacientes: [],
-                modalRelatorio: false
+export default {
+    name: 'RelatorioOrcamento',
+    components: {ModalVisualizarRelatorioOrcamento, ComboEnum},
+    data() {
+        return {
+            statusOrcamento,
+            dadosGerais: {
+                filtroStatus: false,
+                status: 'ABERTO',
+                filtroPaciente: false,
+                pacienteId: null
+            },
+            itens: [],
+            pacientes: [],
+            modalRelatorio: false
+        }
+    },
+    async mounted() {
+        await this.buscarPacientes()
+    },
+    methods: {
+        ...mapActions([
+            actionTypes.CADASTROS.PACIENTE.BUSCAR_TODOS_PACIENTES_SEM_PAGINACAO,
+            actionTypes.RELATORIOS.GERAR_RELATORIO_ORCAMENTOS
+        ]),
+        async buscarPacientes() {
+            const resultado = await this.buscarTodosPacientesSemPaginacao()
+            if (resultado) {
+                this.pacientes = resultado
             }
         },
-        async mounted() {
-            await this.buscarPacientes()
+        filtroComboAutoComplete(item, queryText) {
+            const text = item.nome.toLowerCase()
+            const searchText = queryText.toLowerCase()
+            return text.indexOf(searchText) > -1
         },
-        methods: {
-            ...mapActions([
-                actionTypes.CADASTROS.PACIENTE.BUSCAR_TODOS_PACIENTES_SEM_PAGINACAO,
-                actionTypes.RELATORIOS.GERAR_RELATORIO_ORCAMENTOS
-            ]),
-            async buscarPacientes() {
-                const resultado = await this.buscarTodosPacientesSemPaginacao()
-                if (resultado) {
-                    this.pacientes = resultado
+        async gerarRelatorio() {
+            if (await this.validarDadosFormulario()) {
+                const data = {
+                    status: (this.dadosGerais.filtroStatus ? this.dadosGerais.status : null),
+                    pacienteId: (this.dadosGerais.filtroPaciente ? this.dadosGerais.pacienteId : null)
                 }
-            },
-            filtroComboAutoComplete(item, queryText) {
-                const text = item.nome.toLowerCase()
-                const searchText = queryText.toLowerCase()
-                return text.indexOf(searchText) > -1
-            },
-            async gerarRelatorio() {
-                if (await this.validarDadosFormulario()) {
-                    const data = {
-                        status: (this.dadosGerais.filtroStatus ? this.dadosGerais.status : null),
-                        pacienteId: (this.dadosGerais.filtroPaciente ? this.dadosGerais.pacienteId : null)
-                    }
-                    const response = await this.gerarRelatorioOrcamentos(data)
-                    if (response) {
-                        this.itens = response
-                        this.abrirModalRelatorio()
-                    }
+                const response = await this.gerarRelatorioOrcamentos(data)
+                if (response) {
+                    this.itens = response
+                    this.abrirModalRelatorio()
                 }
-            },
-            async validarDadosFormulario() {
-                return this.$validator._base.validateAll()
-            },
-            abrirModalRelatorio() {
-                this.modalRelatorio = true
-            },
-            fecharModalRelatorio() {
-                this.modalRelatorio = false
             }
+        },
+        async validarDadosFormulario() {
+            return this.$validator._base.validateAll()
+        },
+        abrirModalRelatorio() {
+            this.modalRelatorio = true
+        },
+        fecharModalRelatorio() {
+            this.modalRelatorio = false
         }
     }
+}
 </script>
 
 <style scoped lang="stylus">

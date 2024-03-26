@@ -4,11 +4,10 @@
       <v-card :elevation="hover ? 5 : 2" class="item">
         <v-container>
             <div class="text-head d-inline-block d-inline-block text-truncate max-width-item">
-              <span class="text-info">{{ value.id | textoSemValor }}</span> |
-              <span class="text-info">{{ value.nome | textoSemValor }}</span><br/>
+              <span class="text-info">{{ value.login | textoSemValor }}</span><br/>
             </div><br/>
             <span class="text-info d-inline-block d-inline-block text-truncate max-width-item">
-              {{ value.nome_completo | textoSemValor }}</span><br/>
+              {{ value.nome | textoSemValor }}</span><br/>
             <span class="text-info d-inline-block d-inline-block text-truncate max-width-item">
               {{ value.email | textoSemValor }}</span>
         </v-container>

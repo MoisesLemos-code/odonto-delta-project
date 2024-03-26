@@ -10,13 +10,13 @@
 </template>
 
 <script>
-    import BotaoVoltar from '@/views/components/BotaoVoltar'
-    import ContainerComponent from '@/views/components/Container'
+import BotaoVoltar from '@/views/components/BotaoVoltar'
+import ContainerComponent from '@/views/components/Container'
 
-    export default {
-        name: 'Paciente',
-        components: {ContainerComponent, BotaoVoltar}
-    }
+export default {
+    name: 'Paciente',
+    components: {ContainerComponent, BotaoVoltar}
+}
 </script>
 
 <style scoped>

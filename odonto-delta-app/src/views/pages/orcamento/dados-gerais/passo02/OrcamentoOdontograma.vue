@@ -12,54 +12,54 @@
 </template>
 
 <script>
-    import AcoesOrcamento from '@/views/pages/orcamento/dados-gerais/registro-orcamento/AcoesOrcamento'
-    import OdontogramaHeader from './OdontogramaHeader'
-    import OdontogramaComponent from './OdontogramaComponent'
+import AcoesOrcamento from '@/views/pages/orcamento/dados-gerais/registro-orcamento/AcoesOrcamento'
+import OdontogramaHeader from './OdontogramaHeader'
+import OdontogramaComponent from './OdontogramaComponent'
 
-    export default {
-        name: 'OrcamentoOdontograma',
-        components: {OdontogramaComponent, OdontogramaHeader, AcoesOrcamento},
-        data() {
-            return {
-                coresQuadrante: false,
-                orcamentoId: null,
-                podeContinuar: true,
+export default {
+    name: 'OrcamentoOdontograma',
+    components: {OdontogramaComponent, OdontogramaHeader, AcoesOrcamento},
+    data() {
+        return {
+            coresQuadrante: false,
+            orcamentoId: null,
+            podeContinuar: true,
+        }
+    },
+    mounted() {
+        this.setOrcamentoId()
+        this.verificarPasso3()
+    },
+    methods: {
+        setOrcamentoId() {
+            if (this.$route.params.orcamentoId) {
+                this.orcamentoId = this.$route.params.orcamentoId
             }
         },
-        mounted() {
-            this.setOrcamentoId()
-            this.verificarPasso3()
+        alterarCoresQuadrantes() {
+            this.coresQuadrante = !this.coresQuadrante
         },
-        methods: {
-            setOrcamentoId() {
-                if (this.$route.params.orcamentoId) {
-                    this.orcamentoId = this.$route.params.orcamentoId
-                }
-            },
-            alterarCoresQuadrantes() {
-                this.coresQuadrante = !this.coresQuadrante
-            },
-            verificarPasso3() {
-                if (this.podeContinuar) {
-                    this.$emit('habilitaPasso3')
-                } else {
-                    this.$emit('desabilitaPasso3')
-                }
-            },
-            tratarEventoVoltar() {
-                this.$router.push({
-                    name: 'OrcamentoPaciente',
-                    params: {orcamentoId: this.orcamentoId}
-                })
-            },
-            tratarEventoContinuar() {
-                this.$router.push({
-                    name: 'OrcamentoFinalizacao',
-                    params: {orcamentoId: this.orcamentoId}
-                })
+        verificarPasso3() {
+            if (this.podeContinuar) {
+                this.$emit('habilitaPasso3')
+            } else {
+                this.$emit('desabilitaPasso3')
             }
+        },
+        tratarEventoVoltar() {
+            this.$router.push({
+                name: 'OrcamentoPaciente',
+                params: {orcamentoId: this.orcamentoId}
+            })
+        },
+        tratarEventoContinuar() {
+            this.$router.push({
+                name: 'OrcamentoFinalizacao',
+                params: {orcamentoId: this.orcamentoId}
+            })
         }
     }
+}
 </script>
 
 <style lang="stylus">

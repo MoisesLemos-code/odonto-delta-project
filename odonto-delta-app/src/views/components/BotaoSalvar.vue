@@ -10,13 +10,13 @@
 </template>
 
 <script>
-    export default {
-        name: 'BotaoSalvar',
-        props:{
-            disabled:{
-                type: Boolean,
-                default: false
-            }
+export default {
+    name: 'BotaoSalvar',
+    props:{
+        disabled:{
+            type: Boolean,
+            default: false
         }
     }
+}
 </script>

@@ -54,64 +54,64 @@
 </template>
 
 <script>
-    import {actionTypes} from '@/core/constants'
-    import {mapActions} from 'vuex'
+import {actionTypes} from '@/core/constants'
+import {mapActions} from 'vuex'
 
-    export default {
-        name: 'ModalDenteItemPeca',
-        props: {
-            value: Boolean,
-            face: String
+export default {
+    name: 'ModalDenteItemPeca',
+    props: {
+        value: Boolean,
+        face: String
+    },
+    data() {
+        return {
+            pecas: [],
+            pecaSelecionada: {
+                valor: null,
+                descricao: null
+            }
+        }
+    },
+    async mounted() {
+        await this.buscarTodosServicos()
+    },
+    methods: {
+        ...mapActions([
+            actionTypes.ORCAMENTO.PECA.BUSCAR_TODAS_PECAS_SEM_PAGINACAO
+        ]),
+        async buscarTodosServicos() {
+            this.pecas = await this.buscarTodasPecasSemPaginacao()
         },
-        data() {
-            return {
-                pecas: [],
-                pecaSelecionada: {
-                    valor: null,
-                    descricao: null
-                }
+        fecharModal() {
+            this.$emit('fecharModalPeca')
+        },
+        async selecionarPecaDenteItem() {
+            if (await this.validarDadosFormulario() && this.pecaSelecionada.descricao) {
+                this.pecaSelecionada.localizacao = this.setarLocalizacao()
+                this.$emit('selecionarPeca', this.pecaSelecionada)
+                this.fecharModal()
+            } else {
+                this.mostrarNotificacaoAviso('Preencha todos os campos!')
             }
         },
-        async mounted() {
-            await this.buscarTodosServicos()
+        setarLocalizacao() {
+            if(this.face === 'Lingual/Palatal') return 'LINGUAL'
+            if(this.face === 'Oclusal') return 'OCLUSAL'
+            if(this.face === 'Vestibular') return 'VESTIBULAR'
+            if(this.face === 'Distal') return 'DISTAL'
+            if(this.face === 'Mesial') return 'MESIAL'
+            if(!this.face) return 'GERAL'
         },
-        methods: {
-            ...mapActions([
-                actionTypes.ORCAMENTO.PECA.BUSCAR_TODAS_PECAS_SEM_PAGINACAO
-            ]),
-            async buscarTodosServicos() {
-                this.pecas = await this.buscarTodasPecasSemPaginacao()
-            },
-            fecharModal() {
-                this.$emit('fecharModalPeca')
-            },
-            async selecionarPecaDenteItem() {
-                if (await this.validarDadosFormulario() && this.pecaSelecionada.descricao) {
-                    this.pecaSelecionada.localizacao = this.setarLocalizacao()
-                    this.$emit('selecionarPeca', this.pecaSelecionada)
-                    this.fecharModal()
-                } else {
-                    this.mostrarNotificacaoAviso('Preencha todos os campos!')
-                }
-            },
-            setarLocalizacao() {
-                if(this.face === 'Lingual/Palatal') return 'LINGUAL'
-                if(this.face === 'Oclusal') return 'OCLUSAL'
-                if(this.face === 'Vestibular') return 'VESTIBULAR'
-                if(this.face === 'Distal') return 'DISTAL'
-                if(this.face === 'Mesial') return 'MESIAL'
-                if(!this.face) return 'GERAL'
-            },
-            filtroComboAutoComplete(item, queryText) {
-                const text = item.descricao.toLowerCase()
-                const searchText = queryText.toLowerCase()
-                return text.indexOf(searchText) > -1
-            },
-            async validarDadosFormulario() {
-                return this.$validator._base.validateAll()
-            },
-        }
+        filtroComboAutoComplete(item, queryText) {
+            const text = item.descricao.toLowerCase()
+            const searchText = queryText.toLowerCase()
+            return text.indexOf(searchText) > -1
+        },
+        async validarDadosFormulario() {
+            return this.$validator._base.validateAll()
+        },
     }
+}
 </script>
 
 <style scoped lang="stylus">

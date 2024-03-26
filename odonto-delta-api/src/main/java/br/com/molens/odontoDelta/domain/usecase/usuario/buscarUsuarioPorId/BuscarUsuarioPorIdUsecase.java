@@ -8,6 +8,7 @@ import br.com.molens.odontoDelta.gateway.entity.Usuario;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 
+import java.util.Objects;
 import java.util.Optional;
 
 @Builder
@@ -24,12 +25,15 @@ public class BuscarUsuarioPorIdUsecase {
 
     private void validarDadosEntrada(BuscarUsuarioPorIdInput input) {
 
-        if (input.getUsuarioId() == 0) {
+        if (Objects.isNull(input.getUsuarioId())) {
             throw new BuscarUsuarioPorIdException("Identificador de usuário inválido.");
+        }
+        if (Objects.isNull(input.getEmpresaId())) {
+            throw new BuscarUsuarioPorIdException("Identificador de empresa inválido.");
         }
     }
     private Usuario buscarUsuario(BuscarUsuarioPorIdInput input) {
-        Optional<Usuario> usuario = usuarioDataProvider.buscarPorId(input.getUsuarioId());
+        Optional<Usuario> usuario = usuarioDataProvider.buscarPorIdEmpresaId(input.getUsuarioId(), input.getEmpresaId());
 
         if (!usuario.isPresent()) {
             throw new BuscarPacientePorIdException("Usuário não encontrado.");

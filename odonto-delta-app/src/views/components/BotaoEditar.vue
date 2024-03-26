@@ -12,23 +12,23 @@
 </template>
 
 <script>
-    export default {
-        name: 'BotaoEditar',
-        props:{
-            disabled: {
-                type: Boolean,
-                default: false
-            },
-            outlined: {
-                type: Boolean,
-                default: false
-            },
-            color: {
-                type: String,
-                default: 'white'
-            }
+export default {
+    name: 'BotaoEditar',
+    props:{
+        disabled: {
+            type: Boolean,
+            default: false
+        },
+        outlined: {
+            type: Boolean,
+            default: false
+        },
+        color: {
+            type: String,
+            default: 'white'
         }
     }
+}
 </script>
 
 <style lang="stylus" scoped>

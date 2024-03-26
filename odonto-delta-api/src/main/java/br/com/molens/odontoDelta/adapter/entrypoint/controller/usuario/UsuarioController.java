@@ -3,6 +3,7 @@ package br.com.molens.odontoDelta.adapter.entrypoint.controller.usuario;
 import br.com.molens.odontoDelta.domain.usecase.usuario.atualizarUsuario.AtualizarUsuarioInput;
 import br.com.molens.odontoDelta.domain.usecase.usuario.atualizarUsuario.AtualizarUsuarioOutput;
 import br.com.molens.odontoDelta.domain.usecase.usuario.buscarUsuarioPorId.BuscarUsuarioPorIdOutput;
+import br.com.molens.odontoDelta.domain.usecase.usuario.buscarUsuariosPaginado.BuscarUsuariosPaginadosOutput;
 import br.com.molens.odontoDelta.domain.usecase.usuario.inserirUsuario.InserirUsuarioInput;
 import br.com.molens.odontoDelta.domain.usecase.usuario.inserirUsuario.InserirUsuarioOutput;
 import io.swagger.annotations.Api;
@@ -27,6 +28,14 @@ public interface UsuarioController {
     @ApiOperation(value = "Atualiza um Usuario")
     @PutMapping(value = "{usuarioId}")
     ResponseEntity<AtualizarUsuarioOutput> atualizar(@PathVariable Long usuarioId, @RequestBody @Valid AtualizarUsuarioInput input);
+
+    @ApiOperation(value = "Busca paginada de Usuarios")
+    @GetMapping
+    ResponseEntity<BuscarUsuariosPaginadosOutput> buscaPaginada(@RequestParam(value = "page") Integer page,
+                                                                @RequestParam(value = "size") Integer size,
+                                                                @RequestParam(value = "nome", required = false) String nome,
+                                                                @RequestParam(value = "sort") String sort,
+                                                                @RequestParam(value = "direction") String direction);
 
 
 }

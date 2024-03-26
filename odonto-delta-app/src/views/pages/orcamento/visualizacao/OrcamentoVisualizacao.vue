@@ -3,9 +3,9 @@
 </template>
 
 <script>
-    export default {
-        name: 'OrcamentoVisualizacao'
-    }
+export default {
+    name: 'OrcamentoVisualizacao'
+}
 </script>
 
 <style scoped>

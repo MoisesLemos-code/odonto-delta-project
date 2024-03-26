@@ -87,69 +87,69 @@
 </template>
 
 <script>
-    import {mapActions} from 'vuex'
-    import {actionTypes} from '@/core/constants'
-    import ModalVisualizarRelatorioPaciente from './ModalVisualizarRelatorioPaciente'
+import {mapActions} from 'vuex'
+import {actionTypes} from '@/core/constants'
+import ModalVisualizarRelatorioPaciente from './ModalVisualizarRelatorioPaciente'
 
-    export default {
-        name: 'RelatorioPaciente',
-        components: {ModalVisualizarRelatorioPaciente},
-        data() {
-            return {
-                dadosGerais: {
-                    filtroOrtodontia: false,
-                    ortodontia: true,
-                    cidade: false,
-                    cidadeId: null
-                },
-                itens: [],
-                cidades: [],
-                modalRelatorio: false
+export default {
+    name: 'RelatorioPaciente',
+    components: {ModalVisualizarRelatorioPaciente},
+    data() {
+        return {
+            dadosGerais: {
+                filtroOrtodontia: false,
+                ortodontia: true,
+                cidade: false,
+                cidadeId: null
+            },
+            itens: [],
+            cidades: [],
+            modalRelatorio: false
+        }
+    },
+    async mounted() {
+        await this.buscarCidades()
+    },
+    methods: {
+        ...mapActions([
+            actionTypes.CADASTROS.CIDADE.BUSCAR_TODAS_CIDADES_SEM_PAGINACAO,
+            actionTypes.RELATORIOS.GERAR_RELATORIO_PACIENTES
+        ]),
+        async buscarCidades() {
+            const resultado = await this.buscarTodasCidadesSemPaginacao()
+            if (resultado) {
+                this.cidades = resultado
             }
         },
-        async mounted() {
-            await this.buscarCidades()
+        filtroComboAutoComplete(item, queryText) {
+            const text = item.nome.toLowerCase()
+            const searchText = queryText.toLowerCase()
+            return text.indexOf(searchText) > -1
         },
-        methods: {
-            ...mapActions([
-                actionTypes.CADASTROS.CIDADE.BUSCAR_TODAS_CIDADES_SEM_PAGINACAO,
-                actionTypes.RELATORIOS.GERAR_RELATORIO_PACIENTES
-            ]),
-            async buscarCidades() {
-                const resultado = await this.buscarTodasCidadesSemPaginacao()
-                if (resultado) {
-                    this.cidades = resultado
+        async gerarRelatorio() {
+            if (await this.validarDadosFormulario()) {
+                const data = {
+                    ortodontia: (this.dadosGerais.filtroOrtodontia ? this.dadosGerais.ortodontia : null),
+                    cidadeId: (this.dadosGerais.cidade ? this.dadosGerais.cidadeId : null)
                 }
-            },
-            filtroComboAutoComplete(item, queryText) {
-                const text = item.nome.toLowerCase()
-                const searchText = queryText.toLowerCase()
-                return text.indexOf(searchText) > -1
-            },
-            async gerarRelatorio() {
-                if (await this.validarDadosFormulario()) {
-                    const data = {
-                        ortodontia: (this.dadosGerais.filtroOrtodontia ? this.dadosGerais.ortodontia : null),
-                        cidadeId: (this.dadosGerais.cidade ? this.dadosGerais.cidadeId : null)
-                    }
-                    const response = await this.gerarRelatorioPacientes(data)
-                    if (response) {
-                        this.itens = response
-                        this.abrirModalRelatorio()
-                    }
+                const response = await this.gerarRelatorioPacientes(data)
+                if (response) {
+                    this.itens = response
+                    this.abrirModalRelatorio()
                 }
-            },
-            async validarDadosFormulario() {
-                return this.$validator._base.validateAll()
-            },
-            abrirModalRelatorio() {
-                this.modalRelatorio = true
-            },
-            fecharModalRelatorio() {
-                this.modalRelatorio = false
             }
+        },
+        async validarDadosFormulario() {
+            return this.$validator._base.validateAll()
+        },
+        abrirModalRelatorio() {
+            this.modalRelatorio = true
+        },
+        fecharModalRelatorio() {
+            this.modalRelatorio = false
         }
     }
+}
 </script>
 
 <style scoped lang="stylus">

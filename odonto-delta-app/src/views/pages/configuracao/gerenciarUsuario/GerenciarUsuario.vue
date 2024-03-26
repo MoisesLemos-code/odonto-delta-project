@@ -48,7 +48,7 @@
 
 <script>
 import _ from 'lodash'
-import {mapActions, mapMutations} from 'vuex'
+import {mapMutations} from 'vuex'
 import {actionTypes, mutationTypes} from '@/core/constants'
 import GerenciarUsuarioListagem from '@/views/pages/configuracao/gerenciarUsuario/GerenciarUsuarioListagem'
 import PesquisaAvancada from '@/views/components/PesquisaAvancada'
@@ -80,19 +80,15 @@ export default {
         await this.buscar()
     },
     methods: {
-        ...mapActions([
-            actionTypes.USUARIO.BUSCAR_TODOS_USUARIOS,
-            actionTypes.USUARIO.EDITAR_USUARIO,
-        ]),
         ...mapMutations([
             mutationTypes.USUARIO.SET_FILTROS_BUSCA_TODOS_USUARIOS,
             mutationTypes.USUARIO.SET_PAGINACAO_BUSCA_TODOS_USUARIOS,
             mutationTypes.USUARIO.RESETA_PAGE
         ]),
         async buscarUsuarios() {
-            const resultado = await this.buscarTodosUsuarios()
+            const resultado = await this.$store.dispatch(actionTypes.USUARIO.BUSCAR_TODOS_USUARIOS)
             if (resultado) {
-                this.itens = resultado.content
+                this.itens = resultado.items
                 this.paginas = resultado.totalPages
                 this.totalItens = resultado.totalElements
             }

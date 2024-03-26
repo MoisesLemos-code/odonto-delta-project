@@ -4,9 +4,9 @@
   </div>
 </template>
 <script>
-    export default {
-        name: 'item-de-pesquisa'
-    }
+export default {
+    name: 'item-de-pesquisa'
+}
 </script>
 <style lang="stylus">
 .search-items

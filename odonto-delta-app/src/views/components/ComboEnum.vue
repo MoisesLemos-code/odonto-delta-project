@@ -30,86 +30,86 @@
 </template>
 
 <script>
-    import _ from 'lodash'
+import _ from 'lodash'
 
-    export default {
-        name: 'ComboEnum',
-        props: {
-            enumObject: {
-                type: Object,
-                required: true
-            },
-            orderBy: {
-                type: String,
-                default: 'text'
-            },
-            label: {
-                type: String,
-                default: ''
-            },
-            chips: {
-                default: false
-            },
-            multiple: {
-                type:Boolean,
-                default: false
-            },
-            selectionSlot:{
-                type:Boolean,
-                default:false
-            },
-            name: {
-                type: String,
-                default: ''
-            },
-            placeholder: {
-                type: String,
-                default: ''
-            },
-            isRequired: {
-                type: Boolean,
-                default: false
-            },
-            value: {
-                required: true
-            },
-            disabled: {
-                type: Boolean,
-                default: false
-            },
-            insertNullItem: {
-                type: Boolean,
-                default: true
-            }
+export default {
+    name: 'ComboEnum',
+    props: {
+        enumObject: {
+            type: Object,
+            required: true
         },
-        inject: ['$validator'],
-        data() {
-            return {
-                combo: []
-            }
+        orderBy: {
+            type: String,
+            default: 'text'
         },
-        beforeMount() {
-            this.combo = this.converteParaCombo(this.enumObject)
+        label: {
+            type: String,
+            default: ''
         },
-        methods: {
-            alteraValor(event) {
-                this.$emit('input', event)
-            },
-            converteParaCombo(objeto) {
-                let novoArray = []
+        chips: {
+            default: false
+        },
+        multiple: {
+            type:Boolean,
+            default: false
+        },
+        selectionSlot:{
+            type:Boolean,
+            default:false
+        },
+        name: {
+            type: String,
+            default: ''
+        },
+        placeholder: {
+            type: String,
+            default: ''
+        },
+        isRequired: {
+            type: Boolean,
+            default: false
+        },
+        value: {
+            required: true
+        },
+        disabled: {
+            type: Boolean,
+            default: false
+        },
+        insertNullItem: {
+            type: Boolean,
+            default: true
+        }
+    },
+    inject: ['$validator'],
+    data() {
+        return {
+            combo: []
+        }
+    },
+    beforeMount() {
+        this.combo = this.converteParaCombo(this.enumObject)
+    },
+    methods: {
+        alteraValor(event) {
+            this.$emit('input', event)
+        },
+        converteParaCombo(objeto) {
+            let novoArray = []
 
-                if (objeto) {
-                    for (let [chave, valor] of Object.entries(objeto)) {
-                        novoArray.push({ text: valor, value: chave })
-                    }
-                    novoArray = _.sortBy(novoArray, this.orderBy)
+            if (objeto) {
+                for (let [chave, valor] of Object.entries(objeto)) {
+                    novoArray.push({ text: valor, value: chave })
                 }
-                if (this.insertNullItem) {
-                    return _.union([{ text: 'Selecione', value: null }], novoArray)
-                }
-
-                return novoArray
+                novoArray = _.sortBy(novoArray, this.orderBy)
             }
+            if (this.insertNullItem) {
+                return _.union([{ text: 'Selecione', value: null }], novoArray)
+            }
+
+            return novoArray
         }
     }
+}
 </script>

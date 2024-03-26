@@ -46,96 +46,96 @@
 </template>
 
 <script>
-    import AcoesOrcamento from '@/views/pages/orcamento/dados-gerais/registro-orcamento/AcoesOrcamento'
-    import OrcamentoPacienteVazio from '@/views/pages/orcamento/dados-gerais/passo01/OrcamentoPacienteVazio'
-    import OrcamentoModalPaciente from '@/views/modais/orcamento-paciente/OrcamentoModalPaciente'
-    import {actionTypes} from '@/core/constants'
-    import {mapActions} from 'vuex'
-    import _ from 'lodash'
+import AcoesOrcamento from '@/views/pages/orcamento/dados-gerais/registro-orcamento/AcoesOrcamento'
+import OrcamentoPacienteVazio from '@/views/pages/orcamento/dados-gerais/passo01/OrcamentoPacienteVazio'
+import OrcamentoModalPaciente from '@/views/modais/orcamento-paciente/OrcamentoModalPaciente'
+import {actionTypes} from '@/core/constants'
+import {mapActions} from 'vuex'
+import _ from 'lodash'
 
-    export default {
-        name: 'OrcamentoPaciente',
-        components: {OrcamentoModalPaciente, OrcamentoPacienteVazio, AcoesOrcamento},
-        data() {
-            return {
-                dadosDeEntrada: {
-                    id: null
-                },
-                orcamentoId: null,
-                modalPaciente: false
+export default {
+    name: 'OrcamentoPaciente',
+    components: {OrcamentoModalPaciente, OrcamentoPacienteVazio, AcoesOrcamento},
+    data() {
+        return {
+            dadosDeEntrada: {
+                id: null
+            },
+            orcamentoId: null,
+            modalPaciente: false
+        }
+    },
+    computed: {
+        podeContinuar() {
+            return this.dadosDeEntrada.paciente
+        }
+    },
+    async mounted() {
+        this.setOrcamentoId()
+        await this.buscarOrcamento()
+        this.verificarPasso2()
+    },
+    methods: {
+        ...mapActions([
+            actionTypes.ORCAMENTO.EDITAR_ORCAMENTO,
+            actionTypes.ORCAMENTO.BUSCAR_ORCAMENTO_POR_ID_SIMPLES,
+        ]),
+        setOrcamentoId() {
+            if (this.$route.params.orcamentoId) {
+                this.orcamentoId = this.$route.params.orcamentoId
             }
         },
-        computed: {
-            podeContinuar() {
-                return this.dadosDeEntrada.paciente
-            }
+        async buscarOrcamento() {
+            this.dadosDeEntrada = await this.buscarOrcamentoPorIdSimples(this.orcamentoId)
         },
-        async mounted() {
-            this.setOrcamentoId()
-            await this.buscarOrcamento()
+        async editarOrcamentoSelecionado() {
             this.verificarPasso2()
+            await this.editarOrcamento(this.setarDadosEdicao())
         },
-        methods: {
-            ...mapActions([
-                actionTypes.ORCAMENTO.EDITAR_ORCAMENTO,
-                actionTypes.ORCAMENTO.BUSCAR_ORCAMENTO_POR_ID_SIMPLES,
-            ]),
-            setOrcamentoId() {
-                if (this.$route.params.orcamentoId) {
-                    this.orcamentoId = this.$route.params.orcamentoId
-                }
-            },
-            async buscarOrcamento() {
-                this.dadosDeEntrada = await this.buscarOrcamentoPorIdSimples(this.orcamentoId)
-            },
-            async editarOrcamentoSelecionado() {
-                this.verificarPasso2()
-                await this.editarOrcamento(this.setarDadosEdicao())
-            },
-            setarDadosEdicao() {
-                const dados = _.cloneDeep(this.dadosDeEntrada)
-                dados.paciente = {id: this.dadosDeEntrada.paciente.id}
-                return dados
-            },
-            verificarPasso2() {
-                if (this.podeContinuar) {
-                    this.$emit('habilitaPasso2')
-                    this.$emit('habilitaPasso3')
-                } else {
-                    this.$emit('desabilitaPasso2')
-                    this.$emit('desabilitaPasso3')
-                }
-            },
-            abrirModalSelecionarPaciente() {
-                this.modalPaciente = true
-            },
-            direcionarFichaPaciente() {
-                if (this.dadosDeEntrada.paciente.id) {
-                    this.$router.push({
-                        name: 'PacienteFichaOrcamento',
-                        params: {id: this.dadosDeEntrada.paciente.id, orcamentoId: this.orcamentoId}
-                    })
-                }
-            },
-            fecharModalPaciente() {
-                this.modalPaciente = false
-            },
-            async selecionarPaciente(paciente) {
-                this.dadosDeEntrada.paciente = paciente
-                this.fecharModalPaciente()
-                await this.editarOrcamentoSelecionado()
-            },
-            tratarEventoVoltar() {
-                this.$router.push({name: 'OrcamentoListagem'})
-            },
-            tratarEventoContinuar() {
+        setarDadosEdicao() {
+            const dados = _.cloneDeep(this.dadosDeEntrada)
+            dados.paciente = {id: this.dadosDeEntrada.paciente.id}
+            return dados
+        },
+        verificarPasso2() {
+            if (this.podeContinuar) {
+                this.$emit('habilitaPasso2')
+                this.$emit('habilitaPasso3')
+            } else {
+                this.$emit('desabilitaPasso2')
+                this.$emit('desabilitaPasso3')
+            }
+        },
+        abrirModalSelecionarPaciente() {
+            this.modalPaciente = true
+        },
+        direcionarFichaPaciente() {
+            if (this.dadosDeEntrada.paciente.id) {
                 this.$router.push({
-                    name: 'OrcamentoOdontograma',
-                    params: {orcamentoId: this.orcamentoId}
+                    name: 'PacienteFichaOrcamento',
+                    params: {id: this.dadosDeEntrada.paciente.id, orcamentoId: this.orcamentoId}
                 })
             }
+        },
+        fecharModalPaciente() {
+            this.modalPaciente = false
+        },
+        async selecionarPaciente(paciente) {
+            this.dadosDeEntrada.paciente = paciente
+            this.fecharModalPaciente()
+            await this.editarOrcamentoSelecionado()
+        },
+        tratarEventoVoltar() {
+            this.$router.push({name: 'OrcamentoListagem'})
+        },
+        tratarEventoContinuar() {
+            this.$router.push({
+                name: 'OrcamentoOdontograma',
+                params: {orcamentoId: this.orcamentoId}
+            })
         }
     }
+}
 </script>
 
 <style scoped lang="stylus">

@@ -11,27 +11,27 @@
 </template>
 
 <script>
-    import mutationTypes from '@/core/constants/mutationTypes'
-    export default {
-        name: 'ToolbarView',
-        data() {
-            return {
-                isClosed: true
-            }
+import mutationTypes from '@/core/constants/mutationTypes'
+export default {
+    name: 'ToolbarView',
+    data() {
+        return {
+            isClosed: true
+        }
+    },
+    methods: {
+        toggle() {
+            this.isClosed = !this.isClosed
+            this.closeAsideMenu()
         },
-        methods: {
-            toggle() {
-                this.isClosed = !this.isClosed
-                this.closeAsideMenu()
-            },
-            close() {
-                this.isClosed = true
-            },
-            closeAsideMenu() {
-                this.$store.commit(mutationTypes.DRAWER.SET_ASIDE, true)
-            }
+        close() {
+            this.isClosed = true
+        },
+        closeAsideMenu() {
+            this.$store.commit(mutationTypes.DRAWER.SET_ASIDE, true)
         }
     }
+}
 </script>
 
 <style scoped lang="stylus">

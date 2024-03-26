@@ -19,80 +19,80 @@
 </template>
 
 <script>
-    import {mapActions} from 'vuex'
-    import {actionTypes} from '@/core/constants'
-    import PacienteFichaCabecalho from '@/views/pages/cadastros/paciente/ficha/PacienteFichaCabecalho'
-    import ConfirmModal from '@/views/components/ConfirmModal'
-    import PacienteFichaDadosGerais from '@/views/pages/cadastros/paciente/ficha/PacienteFichaDadosGerais'
-    import PacienteFichaDetalhes from '@/views/pages/cadastros/paciente/ficha/PacienteFichaDetalhes'
-    import PacienteFichaOrcamentos from './PacienteFichaOrcamentos'
+import {mapActions} from 'vuex'
+import {actionTypes} from '@/core/constants'
+import PacienteFichaCabecalho from '@/views/pages/cadastros/paciente/ficha/PacienteFichaCabecalho'
+import ConfirmModal from '@/views/components/ConfirmModal'
+import PacienteFichaDadosGerais from '@/views/pages/cadastros/paciente/ficha/PacienteFichaDadosGerais'
+import PacienteFichaDetalhes from '@/views/pages/cadastros/paciente/ficha/PacienteFichaDetalhes'
+import PacienteFichaOrcamentos from './PacienteFichaOrcamentos'
 
-    export default {
-        nome: 'PacienteFicha',
-        components: {
-            PacienteFichaOrcamentos,
-            PacienteFichaDetalhes, PacienteFichaDadosGerais, ConfirmModal, PacienteFichaCabecalho
-        },
-        data() {
-            return {
-                dadosGerais: {
+export default {
+    nome: 'PacienteFicha',
+    components: {
+        PacienteFichaOrcamentos,
+        PacienteFichaDetalhes, PacienteFichaDadosGerais, ConfirmModal, PacienteFichaCabecalho
+    },
+    data() {
+        return {
+            dadosGerais: {
+                nome: null,
+                cidade: {
                     nome: null,
-                    cidade: {
-                        nome: null,
-                        estado: { sigla: null }
-                    },
-                    ficha: {
-                        historiaMedica: {}
-                    }
+                    estado: { sigla: null }
                 },
-                pacienteId: null,
-                modalExcluir: false
-            }
-        },
-        async mounted() {
-            await this.buscarPaciente()
-        },
-        methods: {
-            ...mapActions([
-                actionTypes.CADASTROS.PACIENTE.EDITAR_PACIENTE,
-                actionTypes.CADASTROS.PACIENTE.BUSCAR_PACIENTE_POR_ID,
-                actionTypes.CADASTROS.PACIENTE.EXCLUIR_PACIENTE,
-                actionTypes.CADASTROS.PACIENTE.FICHA.EDITAR_FICHA,
-            ]),
-            async buscarPaciente() {
-                if (this.$route.params.id) {
-                    const resposta = await this.buscarPacientePorId(this.$route.params.id)
-                    if (resposta) {
-                        this.dadosGerais = resposta
-                        this.pacienteId = this.dadosGerais.id
-                        this.setarCidade()
-                    }
+                ficha: {
+                    historiaMedica: {}
                 }
             },
-            async tratarEventoSalvarFicha(dados) {
-                dados = {...dados, id: this.pacienteId}
-                await this.editarFicha(dados)
-            },
-            setarCidade() {
-                this.dadosGerais.cidadeId = this.dadosGerais.cidade.id
-            },
-            fecharModalExcluir() {
-                this.modalExcluir = false
-            },
-            abrirModalExcluir() {
-                this.modalExcluir = true
-            },
-            async excluirPacienteSelecionado() {
-                await this.excluirPaciente(this.pacienteId)
-                this.fecharModalExcluir()
-                this.$router.push({name: this.$route.meta.rotaOrigem})
-                this.mostrarNotificacaoSucessoDefault()
-            },
-            editarPaciente() {
-                this.$router.push({name: 'PacienteEdicao', params: this.pacienteId})
+            pacienteId: null,
+            modalExcluir: false
+        }
+    },
+    async mounted() {
+        await this.buscarPaciente()
+    },
+    methods: {
+        ...mapActions([
+            actionTypes.CADASTROS.PACIENTE.EDITAR_PACIENTE,
+            actionTypes.CADASTROS.PACIENTE.BUSCAR_PACIENTE_POR_ID,
+            actionTypes.CADASTROS.PACIENTE.EXCLUIR_PACIENTE,
+            actionTypes.CADASTROS.PACIENTE.FICHA.EDITAR_FICHA,
+        ]),
+        async buscarPaciente() {
+            if (this.$route.params.id) {
+                const resposta = await this.buscarPacientePorId(this.$route.params.id)
+                if (resposta) {
+                    this.dadosGerais = resposta
+                    this.pacienteId = this.dadosGerais.id
+                    this.setarCidade()
+                }
             }
+        },
+        async tratarEventoSalvarFicha(dados) {
+            dados = {...dados, id: this.pacienteId}
+            await this.editarFicha(dados)
+        },
+        setarCidade() {
+            this.dadosGerais.cidadeId = this.dadosGerais.cidade.id
+        },
+        fecharModalExcluir() {
+            this.modalExcluir = false
+        },
+        abrirModalExcluir() {
+            this.modalExcluir = true
+        },
+        async excluirPacienteSelecionado() {
+            await this.excluirPaciente(this.pacienteId)
+            this.fecharModalExcluir()
+            this.$router.push({name: this.$route.meta.rotaOrigem})
+            this.mostrarNotificacaoSucessoDefault()
+        },
+        editarPaciente() {
+            this.$router.push({name: 'PacienteEdicao', params: this.pacienteId})
         }
     }
+}
 </script>
 
 <style scoped lang="stylus">

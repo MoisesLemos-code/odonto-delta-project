@@ -8,23 +8,23 @@
 </template>
 
 <script>
-    import Loading from '@/views/components/Loading'
-    import {mutationTypes} from '@/core/constants'
-    import Notificacao from '@/views/components/Notificacao'
-    export default {
-        name: 'RootPage',
-        components: {Notificacao, Loading},
-        mounted() {
-            this.onResponsiveInverted()
-        },
-        methods: {
-            onResponsiveInverted() {
-                if (window.innerWidth <= 720) {
-                    this.$store.commit(mutationTypes.DRAWER.SET_ASIDE_HIDE, false)
-                }
+import Loading from '@/views/components/Loading'
+import {mutationTypes} from '@/core/constants'
+import Notificacao from '@/views/components/Notificacao'
+export default {
+    name: 'RootPage',
+    components: {Notificacao, Loading},
+    mounted() {
+        this.onResponsiveInverted()
+    },
+    methods: {
+        onResponsiveInverted() {
+            if (window.innerWidth <= 720) {
+                this.$store.commit(mutationTypes.DRAWER.SET_ASIDE_HIDE, false)
             }
         }
     }
+}
 </script>
 
 <style lang="stylus">

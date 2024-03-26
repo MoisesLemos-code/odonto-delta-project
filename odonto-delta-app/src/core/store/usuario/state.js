@@ -10,12 +10,11 @@ export default {
         paginacao: {
             groupBy: [],
             groupDesc: [],
-            itemsPerPage: 6,
             multiSort: false,
             mustSort: false,
             page: 1,
-            rowsPerPage: 6,
-            sortBy: ['id'],
+            size: 6,
+            sort: ['nome'],
             descending: false,
             sortDesc: [false]
         }

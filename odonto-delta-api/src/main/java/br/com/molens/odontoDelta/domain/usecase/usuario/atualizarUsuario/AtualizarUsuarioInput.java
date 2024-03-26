@@ -30,13 +30,10 @@ public class AtualizarUsuarioInput {
     private String logradouro;
     private String logradouroNumero;
     private String complemento;
-    @NotNull(message = "O atributo 'empresaId' não pode ser nulo.")
     private Long empresaId;
     private Boolean situacao;
     private String cargo;
     private String departamento;
-    @NotNull(message = "O atributo 'senha' não pode ser nulo.")
     private String senha;
-    @NotNull(message = "O atributo 'senhaAtual' não pode ser nulo.")
     private String senhaAtual;
 }

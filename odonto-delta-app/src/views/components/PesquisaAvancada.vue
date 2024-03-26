@@ -67,93 +67,93 @@
 </template>
 
 <script>
-    import {mutationTypes} from '@/core/constants'
+import {mutationTypes} from '@/core/constants'
 
-    export default {
-        name: 'PesquisaAvancada',
-        props: {
-            buscaAvancada: {
-                type: Boolean,
-                default: false
-            },
-            filter: {
-                type: Object,
-                required: true
-            },
-            maxlengthInput: {
-                type: Number,
-                default: 35
-            },
-            simpleSearchPlaceholder: {
-                type: String,
-                required: true
+export default {
+    name: 'PesquisaAvancada',
+    props: {
+        buscaAvancada: {
+            type: Boolean,
+            default: false
+        },
+        filter: {
+            type: Object,
+            required: true
+        },
+        maxlengthInput: {
+            type: Number,
+            default: 35
+        },
+        simpleSearchPlaceholder: {
+            type: String,
+            required: true
+        }
+    },
+    data() {
+        return {
+            searchText: null,
+            atributeSearch: null,
+            tipoSearch: null,
+            isClosedAdvancedSearch: false,
+            isSimpleSearch: false,
+            searchTextSize: 200
+        }
+    },
+    computed: {
+        inputSearchStyle() {
+            let size = Object.keys(this.filter).length * 100 + this.searchTextSize
+            return 'width: ' + size + 'px'
+        },
+        filledFilters() {
+            return Object.keys(this.filter)
+                .filter(key => this.filter[key].value)
+                .reduce((obj, key) => {
+                    obj[key] = this.filter[key]
+                    return obj
+                }, {})
+        }
+    },
+    mounted() {
+        this.atribuirCamposAvancados()
+    },
+    methods: {
+        atribuirCamposAvancados(){
+            if(this.buscaAvancada) {
+                this.atributeSearch = this.filter.atributo.value
+                this.tipoSearch = this.filter.tipo.value
             }
         },
-        data() {
-            return {
-                searchText: null,
-                atributeSearch: null,
-                tipoSearch: null,
-                isClosedAdvancedSearch: false,
-                isSimpleSearch: false,
-                searchTextSize: 200
-            }
+        cancel() {
+            this.toggle()
         },
-        computed: {
-            inputSearchStyle() {
-                let size = Object.keys(this.filter).length * 100 + this.searchTextSize
-                return 'width: ' + size + 'px'
-            },
-            filledFilters() {
-                return Object.keys(this.filter)
-                    .filter(key => this.filter[key].value)
-                    .reduce((obj, key) => {
-                        obj[key] = this.filter[key]
-                        return obj
-                    }, {})
-            }
+        clear() {
+            this.$emit('clear')
         },
-        mounted() {
-            this.atribuirCamposAvancados()
+        closeAsideMenu() {
+            this.$store.state.menu.asideClosed = true
+            this.$store.commit(mutationTypes.DRAWER.SET_ASIDE, true)
         },
-        methods: {
-            atribuirCamposAvancados(){
-                if(this.buscaAvancada) {
-                    this.atributeSearch = this.filter.atributo.value
-                    this.tipoSearch = this.filter.tipo.value
-                }
-            },
-            cancel() {
-                this.toggle()
-            },
-            clear() {
-                this.$emit('clear')
-            },
-            closeAsideMenu() {
-                this.$store.state.menu.asideClosed = true
-                this.$store.commit(mutationTypes.DRAWER.SET_ASIDE, true)
-            },
-            removeFilter(key) {
-                this.$emit('remove-filter', key)
-            },
-            simpleSearch() {
-                if(this.buscaAvancada) {
-                    this.$emit('simple-search',
-                               {atributo: this.atributeSearch, conteudo: this.searchText, tipo: this.tipoSearch})
-                }else{
-                    this.$emit('simple-search', this.searchText)
-                }
-                this.searchText = null
-            },
-            advancedSearch() {
-                this.$emit('advanced-search')
-            },
-            toggle() {
-                this.isClosedAdvancedSearch = !this.isClosedAdvancedSearch
-                this.closeAsideMenu()
+        removeFilter(key) {
+            this.$emit('remove-filter', key)
+        },
+        simpleSearch() {
+            if(this.buscaAvancada) {
+                this.$emit('simple-search',
+                    {atributo: this.atributeSearch, conteudo: this.searchText, tipo: this.tipoSearch})
+            }else{
+                this.$emit('simple-search', this.searchText)
             }
+            this.searchText = null
+        },
+        advancedSearch() {
+            this.$emit('advanced-search')
+        },
+        toggle() {
+            this.isClosedAdvancedSearch = !this.isClosedAdvancedSearch
+            this.closeAsideMenu()
         }
     }
+}
 </script>
 
 <style lang="stylus">

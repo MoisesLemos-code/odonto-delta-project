@@ -13,6 +13,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+
+import br.com.molens.odontoDelta.utils.HelpUtil;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -33,9 +35,9 @@ public class AtualizarUsuarioUsecase {
         buscarPaciente(input);
         buscarEmpresa(input);
         buscarMunicipio(input);
-        validarUsuarioLoginJaCadastrado(input);
+        Usuario usuarioAtual = validarUsuarioLoginJaCadastrado(input);
         validarSenhaUsuario(input);
-        Usuario usuario = atualizarUsuario(outputConverter.from(input));
+        Usuario usuario = atualizarUsuario(outputConverter.from(input), usuarioAtual);
         return outputConverter.to(usuario);
     }
 
@@ -47,7 +49,7 @@ public class AtualizarUsuarioUsecase {
         if (Objects.isNull(input.getMunicipioId())) {
             throw new AtualizarPacienteException("Identificador de municipio é obrigatório.");
         }
-        if (input.getEmpresaId() == 0) {
+        if (Objects.isNull(input.getEmpresaId())) {
             throw new AtualizarPacienteException("Identificador de empresa inválido.");
         }
     }
@@ -78,18 +80,19 @@ public class AtualizarUsuarioUsecase {
         return municipio.get();
     }
 
-    private void validarUsuarioLoginJaCadastrado(AtualizarUsuarioInput input) {
+    private Usuario validarUsuarioLoginJaCadastrado(AtualizarUsuarioInput input) {
         Optional<Usuario> usuario = usuarioDataProvider.buscarUsuarioPorLogin(input.getLogin());
         if (usuario.isPresent()) {
-            if (usuario.get().getId() != input.getId()) {
+            if (!Objects.equals(usuario.get().getId(), input.getId())) {
                 throw new AtualizarUsuarioException("Já existe um usuário com este login! (" + input.getLogin() + ")");
             }
             if(usuario.get().getLogin().equals("admin")){
                 throw new AtualizarUsuarioException("Não é possível alterar este usuário!");
             }
-            if(!passwordEncoder.matches(input.getSenhaAtual(), usuario.get().getSenha())){
+            if(Objects.nonNull(input.getSenha()) && !passwordEncoder.matches(input.getSenhaAtual(), usuario.get().getSenha())){
                 throw new AtualizarUsuarioException("A senha atual é inválida!");
             }
+            return usuario.get();
         } else {
             throw new AtualizarUsuarioException("Não foi possível identificar esse usuário! (" + input.getLogin() + ")");
         }
@@ -98,8 +101,15 @@ public class AtualizarUsuarioUsecase {
     private void validarSenhaUsuario(AtualizarUsuarioInput input) {
         String[] senhasInvalidas = new String[]{"1234", "12345", "123456", "1234567", "12345678", "123456789", "1234567890"};
         List<String> listSenhasInvalidas = Arrays.asList(senhasInvalidas);
+
+        if(Objects.isNull(input.getSenha())){
+            return;
+        }
         if (input.getSenha().length() < 4) {
             throw new AtualizarUsuarioException("A senha precisa ter no mínimo 4 caracteres");
+        }
+        if (input.getSenha().length() > 50) {
+            throw new AtualizarUsuarioException("A senha precisa ter no máximo 50 caracteres");
         }
         if (listSenhasInvalidas.contains(input.getSenha())) {
             throw new AtualizarUsuarioException("A senha é muito simples!");
@@ -107,8 +117,17 @@ public class AtualizarUsuarioUsecase {
     }
 
 
-    private Usuario atualizarUsuario(Usuario usuario) {
-        usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
+    private Usuario atualizarUsuario(Usuario usuario, Usuario usuarioAtual) {
+        usuario.setCnpjCpf(HelpUtil.obterApenasNumeros(usuario.getCnpjCpf()));
+        usuario.setCep(HelpUtil.obterApenasNumeros(usuario.getCep()));
+        usuario.setTelefone(HelpUtil.obterApenasNumeros(usuario.getTelefone()));
+
+        if(Objects.isNull(usuario.getSenha())){
+            usuario.setSenha(usuarioAtual.getSenha());
+        }else{
+            usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
+        }
+
         return usuarioDataProvider.atualizar(usuario);
     }
 

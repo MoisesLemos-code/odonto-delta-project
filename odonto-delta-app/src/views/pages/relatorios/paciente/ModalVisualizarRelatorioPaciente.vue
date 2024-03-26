@@ -34,63 +34,63 @@
 </template>
 
 <script>
-    export default {
-        name: 'ModalVisualizarRelatorioPaciente',
-        props: ['itens', 'value'],
-        data() {
-            return {
-                colunas: [
-                    {
-                        text: 'Nome',
-                        value: 'nome',
-                        sortable: true,
-                        align: 'left',
-                        width: '20%',
-                        class: 'gray--text'
-                    },
-                    {
-                        text: 'CPF/CNPJ',
-                        value: 'cpfOuCnpj',
-                        sortable: true,
-                        align: 'left',
-                        width: '10%',
-                        class: 'gray--text'
-                    },
-                    {
-                        text: 'E-mail',
-                        value: 'email',
-                        sortable: true,
-                        align: 'left',
-                        width: '15%',
-                        class: 'gray--text'
-                    },
-                    {
-                        text: 'Cidade',
-                        value: 'cidade',
-                        sortable: true,
-                        align: 'left',
-                        width: '15%',
-                        class: 'gray--text'
-                    },
-                ],
-            }
-        },
-        methods: {
-            formatarCpfCnpj(cpfCnpjValue) {
-                if (cpfCnpjValue) {
-                    const cnpjCpf = cpfCnpjValue.replace(/\D/g, '')
-                    if (cnpjCpf.length === 11) {
-                        return cnpjCpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/g, '$1.$2.$3-$4')
-                    }
-                    return cnpjCpf.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/g, '$1.$2.$3/$4-$5')
-                }
-                return ''
-            },
-            fecharModal() {
-                this.$emit('fecharModal')
-            },
+export default {
+    name: 'ModalVisualizarRelatorioPaciente',
+    props: ['itens', 'value'],
+    data() {
+        return {
+            colunas: [
+                {
+                    text: 'Nome',
+                    value: 'nome',
+                    sortable: true,
+                    align: 'left',
+                    width: '20%',
+                    class: 'gray--text'
+                },
+                {
+                    text: 'CPF/CNPJ',
+                    value: 'cpfOuCnpj',
+                    sortable: true,
+                    align: 'left',
+                    width: '10%',
+                    class: 'gray--text'
+                },
+                {
+                    text: 'E-mail',
+                    value: 'email',
+                    sortable: true,
+                    align: 'left',
+                    width: '15%',
+                    class: 'gray--text'
+                },
+                {
+                    text: 'Cidade',
+                    value: 'cidade',
+                    sortable: true,
+                    align: 'left',
+                    width: '15%',
+                    class: 'gray--text'
+                },
+            ],
         }
+    },
+    methods: {
+        formatarCpfCnpj(cpfCnpjValue) {
+            if (cpfCnpjValue) {
+                const cnpjCpf = cpfCnpjValue.replace(/\D/g, '')
+                if (cnpjCpf.length === 11) {
+                    return cnpjCpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/g, '$1.$2.$3-$4')
+                }
+                return cnpjCpf.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/g, '$1.$2.$3/$4-$5')
+            }
+            return ''
+        },
+        fecharModal() {
+            this.$emit('fecharModal')
+        },
     }
+}
 </script>
 
 <style scoped lang="stylus">

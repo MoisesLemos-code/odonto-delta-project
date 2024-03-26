@@ -10,6 +10,8 @@ public interface PerfilPermissaoDataProvider {
 
     Long inserir(PerfilPermissao perfilPermissaoId);
 
+    void inserirTodos(List<PerfilPermissao> perfilPermissaoList);
+
     PerfilPermissao atualizar(PerfilPermissao PerfilPermissao);
 
     Optional<PerfilPermissao> buscarPorId(Long permissaoId);

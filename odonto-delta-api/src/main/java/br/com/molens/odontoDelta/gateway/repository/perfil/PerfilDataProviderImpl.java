@@ -4,7 +4,7 @@ import br.com.molens.odontoDelta.domain.entity.ListaPaginada;
 import br.com.molens.odontoDelta.domain.interfaces.PerfilDataProvider;
 import br.com.molens.odontoDelta.gateway.entity.Perfil;
 import br.com.molens.odontoDelta.gateway.entity.QPerfil;
-import br.com.molens.odontoDelta.utils.AcetuacaoUtils;
+import br.com.molens.odontoDelta.utils.HelpUtil;
 import br.com.molens.odontoDelta.utils.ConstrutorPaginacao;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
@@ -85,7 +85,7 @@ public class PerfilDataProviderImpl implements PerfilDataProvider {
 
     private BooleanExpression compararSemAcentuacao(StringExpression path, String value) {
         StringExpression expr = Expressions.stringTemplate("upper(translate({0}, 'âàãáÁÂÀÃéêÉÊíÍóôõÓÔÕüúÜÚÇç', 'AAAAAAAAEEEEIIOOOOOOUUUUCC'))", path.trim());
-        return expr.containsIgnoreCase(AcetuacaoUtils.retiraAcentuacao(value.trim()));
+        return expr.containsIgnoreCase(HelpUtil.retiraAcentuacao(value.trim()));
     }
 
     private Page<Perfil> buscarComPaginacao(BooleanExpression expressaoBusca, Pageable paginacao) {

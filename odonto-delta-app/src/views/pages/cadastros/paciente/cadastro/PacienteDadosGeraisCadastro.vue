@@ -240,100 +240,100 @@
 </template>
 
 <script>
-    import {mapActions} from 'vuex'
-    import {actionTypes} from '@/core/constants'
-    import moment from 'moment'
-    import ModalGerenciarCidades from '@/views/modais/cidades/ModalGerenciarCidades'
-    import BotaoAcao from '@/views/components/BotaoAcao'
+import {mapActions} from 'vuex'
+import {actionTypes} from '@/core/constants'
+import moment from 'moment'
+import ModalGerenciarCidades from '@/views/modais/cidades/ModalGerenciarCidades'
+import BotaoAcao from '@/views/components/BotaoAcao'
 
-    export default {
-        name: 'PacienteDadosGeraisCadastro',
-        components: {ModalGerenciarCidades, BotaoAcao},
-        data() {
-            return {
-                dadosGerais: {
-                    nome: null,
-                    email: null,
-                    cpfOuCnpj: null,
-                    tipo: 1,
-                    contatoPrincipal: null,
-                    contato2: null,
-                    contato3: null,
-                    rua: null,
-                    numero: null,
-                    complemento: null,
-                    bairro: null,
-                    cep: null,
-                    cidadeId: null,
-                    dataAniversario: null,
-                    ortodontia: false,
-                    status: 1
-                },
-                masks: {
-                    cpf: '###.###.###-##',
-                    cnpj: '##.###.###/####-##',
-                    cep: '##.###-###',
-                    tel8: '(##) ####-####',
-                    tel9: '(##) #####-####'
-                },
-                tiposPessoa: [
-                    {codigo: 1, nome: 'Pessoa Física'},
-                    {codigo: 2, nome: 'Pessoa Jurídica'}
-                ],
-                cidades: [],
-                modalCidades: false,
-                pacienteId: null
+export default {
+    name: 'PacienteDadosGeraisCadastro',
+    components: {ModalGerenciarCidades, BotaoAcao},
+    data() {
+        return {
+            dadosGerais: {
+                nome: null,
+                email: null,
+                cpfOuCnpj: null,
+                tipo: 1,
+                contatoPrincipal: null,
+                contato2: null,
+                contato3: null,
+                rua: null,
+                numero: null,
+                complemento: null,
+                bairro: null,
+                cep: null,
+                cidadeId: null,
+                dataAniversario: null,
+                ortodontia: false,
+                status: 1
+            },
+            masks: {
+                cpf: '###.###.###-##',
+                cnpj: '##.###.###/####-##',
+                cep: '##.###-###',
+                tel8: '(##) ####-####',
+                tel9: '(##) #####-####'
+            },
+            tiposPessoa: [
+                {codigo: 1, nome: 'Pessoa Física'},
+                {codigo: 2, nome: 'Pessoa Jurídica'}
+            ],
+            cidades: [],
+            modalCidades: false,
+            pacienteId: null
+        }
+    },
+    async mounted() {
+        await this.buscarCidades()
+    },
+    methods: {
+        ...mapActions([
+            actionTypes.CADASTROS.CIDADE.BUSCAR_TODAS_CIDADES_SEM_PAGINACAO,
+            actionTypes.CADASTROS.PACIENTE.CADASTRAR_PACIENTE
+        ]),
+        async buscarCidades() {
+            const resultado = await this.buscarTodasCidadesSemPaginacao()
+            if (resultado) {
+                this.cidades = resultado
             }
         },
-        async mounted() {
+        abrirModalCidades() {
+            this.modalCidades = true
+        },
+        async fecharModalCidades() {
+            this.modalCidades = false
             await this.buscarCidades()
         },
-        methods: {
-            ...mapActions([
-                actionTypes.CADASTROS.CIDADE.BUSCAR_TODAS_CIDADES_SEM_PAGINACAO,
-                actionTypes.CADASTROS.PACIENTE.CADASTRAR_PACIENTE
-            ]),
-            async buscarCidades() {
-                const resultado = await this.buscarTodasCidadesSemPaginacao()
-                if (resultado) {
-                    this.cidades = resultado
-                }
-            },
-            abrirModalCidades() {
-                this.modalCidades = true
-            },
-            async fecharModalCidades() {
-                this.modalCidades = false
-                await this.buscarCidades()
-            },
-            filtroComboAutoComplete(item, queryText) {
-                const text = item.nome.toLowerCase()
-                const searchText = queryText.toLowerCase()
-                return text.indexOf(searchText) > -1
-            },
-            formatarData() {
-                if (this.dadosGerais.dataAniversario) {
-                    this.dadosGerais.dataAniversario = moment(this.dadosGerais.dataAniversario).format('YYYY-MM-DD')
-                }
-            },
-            tratarEventoCancelar() {
-                this.$router.push({name: 'PacienteListagem'})
-            },
-            async tratarEventoSalvar() {
-                if (await this.validarDadosFormulario()) {
-                    this.formatarData()
-                    this.setMensagemLoading('Salvando o paciente...')
-                    await this.cadastrarPaciente(this.dadosGerais)
-                    this.pacienteId = this.$store.state.paciente.dadosGerais.id
-                    this.mostrarNotificacaoSucessoDefault()
-                    await this.$router.push({name: 'PacienteFicha', params: { id: this.pacienteId}})
-                }
-            },
-            async validarDadosFormulario() {
-                return this.$validator._base.validateAll()
-            },
-        }
+        filtroComboAutoComplete(item, queryText) {
+            const text = item.nome.toLowerCase()
+            const searchText = queryText.toLowerCase()
+            return text.indexOf(searchText) > -1
+        },
+        formatarData() {
+            if (this.dadosGerais.dataAniversario) {
+                this.dadosGerais.dataAniversario = moment(this.dadosGerais.dataAniversario).format('YYYY-MM-DD')
+            }
+        },
+        tratarEventoCancelar() {
+            this.$router.push({name: 'PacienteListagem'})
+        },
+        async tratarEventoSalvar() {
+            if (await this.validarDadosFormulario()) {
+                this.formatarData()
+                this.setMensagemLoading('Salvando o paciente...')
+                await this.cadastrarPaciente(this.dadosGerais)
+                this.pacienteId = this.$store.state.paciente.dadosGerais.id
+                this.mostrarNotificacaoSucessoDefault()
+                await this.$router.push({name: 'PacienteFicha', params: { id: this.pacienteId}})
+            }
+        },
+        async validarDadosFormulario() {
+            return this.$validator._base.validateAll()
+        },
     }
+}
 </script>
 
 <style scoped lang="stylus">

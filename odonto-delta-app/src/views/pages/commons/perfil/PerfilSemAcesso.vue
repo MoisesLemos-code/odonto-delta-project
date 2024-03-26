@@ -15,9 +15,9 @@
 
 <script>
 
-    export default {
-        name: 'PerfilSemAcesso'
-    }
+export default {
+    name: 'PerfilSemAcesso'
+}
 </script>
 
 <style scoped lang="stylus">

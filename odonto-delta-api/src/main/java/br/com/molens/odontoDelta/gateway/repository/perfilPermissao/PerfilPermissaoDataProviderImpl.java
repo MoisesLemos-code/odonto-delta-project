@@ -22,6 +22,11 @@ public class PerfilPermissaoDataProviderImpl implements PerfilPermissaoDataProvi
     }
 
     @Override
+    public void inserirTodos(List<PerfilPermissao> perfilPermissaoList) {
+        repository.saveAll(perfilPermissaoList);
+    }
+
+    @Override
     public PerfilPermissao atualizar(PerfilPermissao perfilPermissao) {
         return repository.save(perfilPermissao);
     }
@@ -35,7 +40,6 @@ public class PerfilPermissaoDataProviderImpl implements PerfilPermissaoDataProvi
     public void remover(Long id) {
         repository.deleteById(id);
     }
-
 
     @Override
     public List<PerfilPermissao> buscarPorPerfil(Long perfilId) {

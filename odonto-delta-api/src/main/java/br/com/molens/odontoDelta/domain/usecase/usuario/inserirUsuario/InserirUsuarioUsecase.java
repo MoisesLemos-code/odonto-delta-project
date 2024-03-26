@@ -15,6 +15,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+
+import br.com.molens.odontoDelta.utils.HelpUtil;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -26,7 +28,6 @@ public class InserirUsuarioUsecase {
     private UsuarioDataProvider usuarioDataProvider;
     private EmpresaDataProvider empresaDataProvider;
     private MunicipioDataProvider municipioDataProvider;
-    private PerfilDataProvider perfilDataProvider;
     private InserirUsuarioOutputConverter outputConverter;
 
     private BCryptPasswordEncoder passwordEncoder;
@@ -35,7 +36,6 @@ public class InserirUsuarioUsecase {
         validarDadosEntrada(input);
         validarEmpresa(input);
         validarMunicipio(input);
-        validarPerfil(input);
         validarUsuarioJaCadastrado(input);
         validarSenhaUsuario(input);
         return inserirUsuario(input);
@@ -43,7 +43,7 @@ public class InserirUsuarioUsecase {
 
     private void validarDadosEntrada(InserirUsuarioInput input) {
 
-        if (Objects.isNull(input.getEmpresaId()) || input.getEmpresaId() == 0) {
+        if (Objects.isNull(input.getEmpresaId())) {
             throw new InserirUsuarioException("Identificador de empresa inválido.");
         }
     }
@@ -56,16 +56,9 @@ public class InserirUsuarioUsecase {
     }
 
     private void validarMunicipio(InserirUsuarioInput input) {
-        Optional<Municipio> municipio = municipioDataProvider.buscarPorId(input.getEmpresaId());
+        Optional<Municipio> municipio = municipioDataProvider.buscarPorId(input.getMunicipioId());
         if (!municipio.isPresent()) {
             throw new InserirUsuarioException("Municipio não identificado.");
-        }
-    }
-
-    private void validarPerfil(InserirUsuarioInput input) {
-        Optional<Perfil> perfil = perfilDataProvider.buscarPorId(input.getPerfilId(), input.getEmpresaId());
-        if (!perfil.isPresent()) {
-            throw new InserirUsuarioException("Perfil de usuário não identificado.");
         }
     }
 
@@ -85,10 +78,19 @@ public class InserirUsuarioUsecase {
         if(listSenhasInvalidas.contains(input.getSenha())){
             throw new AtualizarUsuarioException("A senha é muito simples!");
         }
+        if (input.getSenha().length() > 50) {
+            throw new AtualizarUsuarioException("A senha precisa ter no máximo 50 caracteres");
+        }
+        if(input.getSenha().equals(input.getLogin())){
+            throw new AtualizarUsuarioException("A senha não pode igual ao nome!");
+        }
     }
 
     private InserirUsuarioOutput inserirUsuario(InserirUsuarioInput input) {
         Usuario usuario = outputConverter.from(input);
+        usuario.setCnpjCpf(HelpUtil.obterApenasNumeros(usuario.getCnpjCpf()));
+        usuario.setCep(HelpUtil.obterApenasNumeros(usuario.getCep()));
+        usuario.setTelefone(HelpUtil.obterApenasNumeros(usuario.getTelefone()));
         usuario.setSenha(passwordEncoder.encode(input.getSenha()));
         Long usuarioId = usuarioDataProvider.inserir(usuario);
 

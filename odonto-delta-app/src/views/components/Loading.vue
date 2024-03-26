@@ -12,17 +12,17 @@
 </template>
 
 <script>
-    export default {
-        name: 'Loading',
-        computed: {
-            isLoading() {
-                return this.$store.state.comum.isLoading
-            },
-            loadingMessage() {
-                return this.$store.state.comum.loadingMessage
-            }
+export default {
+    name: 'Loading',
+    computed: {
+        isLoading() {
+            return this.$store.state.comum.isLoading
+        },
+        loadingMessage() {
+            return this.$store.state.comum.loadingMessage
         }
     }
+}
 </script>
 
 <style lang="stylus">

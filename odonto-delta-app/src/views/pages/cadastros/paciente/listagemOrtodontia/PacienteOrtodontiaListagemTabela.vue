@@ -48,92 +48,92 @@
 </template>
 
 <script>
-    import mutationTypes from '@/core/constants/mutationTypes'
-    import FormTable from '@/views/components/FormTable'
-    import ContainerComponent from '@/views/components/Container'
+import mutationTypes from '@/core/constants/mutationTypes'
+import FormTable from '@/views/components/FormTable'
+import ContainerComponent from '@/views/components/Container'
 
-    export default {
-        name: 'PacienteOrtodontiaListagemTabela',
-        components: {ContainerComponent, FormTable},
-        props: ['itens', 'paginacao', 'paginas', 'totalItens'],
-        data() {
-            return {
-                colunas: [
-                    {
-                        text: 'Nome',
-                        value: 'nome',
-                        sortable: true,
-                        align: 'left',
-                        width: '20%',
-                        class: 'gray--text'
-                    },
-                    {
-                        text: 'CPF/CNPJ',
-                        value: 'cpfOuCnpj',
-                        sortable: true,
-                        align: 'left',
-                        width: '15%',
-                        class: 'gray--text'
-                    },
-                    {
-                        text: 'E-mail',
-                        value: 'email',
-                        sortable: true,
-                        align: 'left',
-                        width: '15%',
-                        class: 'gray--text'
-                    },
-                    {
-                        text: 'Cidade',
-                        value: 'cidade',
-                        sortable: true,
-                        align: 'left',
-                        width: '10%',
-                        class: 'gray--text'
-                    },
-                    {
-                        text: '',
-                        value: 'acoes',
-                        sortable: false,
-                        align: 'right',
-                        width: '20%',
-                        class: 'gray--text'
-                    }
-                ],
-                paginacaoInterna: this.paginacao,
-                linhasPorPagina: [10, 25, 50, 100],
-            }
-        },
-        methods: {
-            tratarEventoAcessar(item) {
-                this.$emit('acessar', item)
-            },
-            tratarPaginacao(pagina) {
-                this.paginacaoInterna.page = pagina
-            },
-            resetaPage() {
-                this.$store.commit(mutationTypes.CADASTROS.PACIENTE.RESETA_PAGE_ORTODONTIA)
-            },
-            formatarCpfCnpj(cpfCnpjValue) {
-                if (cpfCnpjValue) {
-                    const cnpjCpf = cpfCnpjValue.replace(/\D/g, '')
-                    if (cnpjCpf.length === 11) {
-                        return cnpjCpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/g, '$1.$2.$3-$4')
-                    }
-                    return cnpjCpf.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/g, '$1.$2.$3/$4-$5')
-                }
-                return ''
-            }
-        },
-        watch: {
-            paginacaoInterna: {
-                handler(novoValor) {
-                    this.$emit('paginar', novoValor)
+export default {
+    name: 'PacienteOrtodontiaListagemTabela',
+    components: {ContainerComponent, FormTable},
+    props: ['itens', 'paginacao', 'paginas', 'totalItens'],
+    data() {
+        return {
+            colunas: [
+                {
+                    text: 'Nome',
+                    value: 'nome',
+                    sortable: true,
+                    align: 'left',
+                    width: '20%',
+                    class: 'gray--text'
                 },
-                deep: true,
-            },
+                {
+                    text: 'CPF/CNPJ',
+                    value: 'cpfOuCnpj',
+                    sortable: true,
+                    align: 'left',
+                    width: '15%',
+                    class: 'gray--text'
+                },
+                {
+                    text: 'E-mail',
+                    value: 'email',
+                    sortable: true,
+                    align: 'left',
+                    width: '15%',
+                    class: 'gray--text'
+                },
+                {
+                    text: 'Cidade',
+                    value: 'cidade',
+                    sortable: true,
+                    align: 'left',
+                    width: '10%',
+                    class: 'gray--text'
+                },
+                {
+                    text: '',
+                    value: 'acoes',
+                    sortable: false,
+                    align: 'right',
+                    width: '20%',
+                    class: 'gray--text'
+                }
+            ],
+            paginacaoInterna: this.paginacao,
+            linhasPorPagina: [10, 25, 50, 100],
+        }
+    },
+    methods: {
+        tratarEventoAcessar(item) {
+            this.$emit('acessar', item)
         },
-    }
+        tratarPaginacao(pagina) {
+            this.paginacaoInterna.page = pagina
+        },
+        resetaPage() {
+            this.$store.commit(mutationTypes.CADASTROS.PACIENTE.RESETA_PAGE_ORTODONTIA)
+        },
+        formatarCpfCnpj(cpfCnpjValue) {
+            if (cpfCnpjValue) {
+                const cnpjCpf = cpfCnpjValue.replace(/\D/g, '')
+                if (cnpjCpf.length === 11) {
+                    return cnpjCpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/g, '$1.$2.$3-$4')
+                }
+                return cnpjCpf.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/g, '$1.$2.$3/$4-$5')
+            }
+            return ''
+        }
+    },
+    watch: {
+        paginacaoInterna: {
+            handler(novoValor) {
+                this.$emit('paginar', novoValor)
+            },
+            deep: true,
+        },
+    },
+}
 </script>
 
 <style scoped lang="stylus">

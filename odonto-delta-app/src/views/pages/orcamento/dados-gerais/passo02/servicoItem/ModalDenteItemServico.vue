@@ -54,64 +54,64 @@
 </template>
 
 <script>
-    import {actionTypes} from '@/core/constants'
-    import {mapActions} from 'vuex'
+import {actionTypes} from '@/core/constants'
+import {mapActions} from 'vuex'
 
-    export default {
-        name: 'ModalDenteItemServico',
-        props: {
-            value: Boolean,
-            face: String
+export default {
+    name: 'ModalDenteItemServico',
+    props: {
+        value: Boolean,
+        face: String
+    },
+    data() {
+        return {
+            servicos: [],
+            servicoSelecionado: {
+                valor: null,
+                descricao: null
+            }
+        }
+    },
+    async mounted() {
+        await this.buscarTodosServicos()
+    },
+    methods: {
+        ...mapActions([
+            actionTypes.ORCAMENTO.SERVICO.BUSCAR_TODOS_SERVICOS_SEM_PAGINACAO
+        ]),
+        async buscarTodosServicos() {
+            this.servicos = await this.buscarTodosServicosSemPaginacao()
         },
-        data() {
-            return {
-                servicos: [],
-                servicoSelecionado: {
-                    valor: null,
-                    descricao: null
-                }
+        fecharModal() {
+            this.$emit('fecharModalServico')
+        },
+        async selecionarServicoDenteItem() {
+            if (await this.validarDadosFormulario() && this.servicoSelecionado.descricao) {
+                this.servicoSelecionado.localizacao = this.setarLocalizacao()
+                this.$emit('selecionarServico', this.servicoSelecionado)
+                this.fecharModal()
+            } else {
+                this.mostrarNotificacaoAviso('Preencha todos os campos!')
             }
         },
-        async mounted() {
-            await this.buscarTodosServicos()
+        setarLocalizacao() {
+            if(this.face === 'Lingual/Palatal') return 'LINGUAL'
+            if(this.face === 'Oclusal') return 'OCLUSAL'
+            if(this.face === 'Vestibular') return 'VESTIBULAR'
+            if(this.face === 'Distal') return 'DISTAL'
+            if(this.face === 'Mesial') return 'MESIAL'
+            if(!this.face) return 'GERAL'
         },
-        methods: {
-            ...mapActions([
-                actionTypes.ORCAMENTO.SERVICO.BUSCAR_TODOS_SERVICOS_SEM_PAGINACAO
-            ]),
-            async buscarTodosServicos() {
-                this.servicos = await this.buscarTodosServicosSemPaginacao()
-            },
-            fecharModal() {
-                this.$emit('fecharModalServico')
-            },
-            async selecionarServicoDenteItem() {
-                if (await this.validarDadosFormulario() && this.servicoSelecionado.descricao) {
-                    this.servicoSelecionado.localizacao = this.setarLocalizacao()
-                    this.$emit('selecionarServico', this.servicoSelecionado)
-                    this.fecharModal()
-                } else {
-                    this.mostrarNotificacaoAviso('Preencha todos os campos!')
-                }
-            },
-            setarLocalizacao() {
-                if(this.face === 'Lingual/Palatal') return 'LINGUAL'
-                if(this.face === 'Oclusal') return 'OCLUSAL'
-                if(this.face === 'Vestibular') return 'VESTIBULAR'
-                if(this.face === 'Distal') return 'DISTAL'
-                if(this.face === 'Mesial') return 'MESIAL'
-                if(!this.face) return 'GERAL'
-            },
-            filtroComboAutoComplete(item, queryText) {
-                const text = item.descricao.toLowerCase()
-                const searchText = queryText.toLowerCase()
-                return text.indexOf(searchText) > -1
-            },
-            async validarDadosFormulario() {
-                return this.$validator._base.validateAll()
-            },
-        }
+        filtroComboAutoComplete(item, queryText) {
+            const text = item.descricao.toLowerCase()
+            const searchText = queryText.toLowerCase()
+            return text.indexOf(searchText) > -1
+        },
+        async validarDadosFormulario() {
+            return this.$validator._base.validateAll()
+        },
     }
+}
 </script>
 
 <style scoped lang="stylus">

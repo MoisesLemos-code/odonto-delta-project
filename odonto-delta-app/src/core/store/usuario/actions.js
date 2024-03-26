@@ -9,11 +9,11 @@ export default {
         return data
     },
 
-    async [actionTypes.USUARIO.CADASTRAR_USUARIO]({commit}, dados) {
+    async [actionTypes.USUARIO.CADASTRAR_USUARIO](context, dados) {
         await api.usuario.cadastrar(dados)
     },
 
-    async [actionTypes.USUARIO.EDITAR_USUARIO]({commit}, dados) {
+    async [actionTypes.USUARIO.EDITAR_USUARIO](context, dados) {
         const { data } = await api.usuario.editar(dados)
         return data
     },

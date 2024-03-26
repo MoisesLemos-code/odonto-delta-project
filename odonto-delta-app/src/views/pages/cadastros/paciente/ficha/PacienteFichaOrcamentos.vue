@@ -33,58 +33,58 @@
 </template>
 
 <script>
-    import {mapActions, mapMutations} from 'vuex'
-    import {actionTypes, mutationTypes} from '@/core/constants'
-    import PacienteFichaOrcamentosTabela from './PacienteFichaOrcamentosTabela'
-    import PacienteFichaOrcamentoModal from './PacienteFichaOrcamentoModal'
+import {mapActions, mapMutations} from 'vuex'
+import {actionTypes, mutationTypes} from '@/core/constants'
+import PacienteFichaOrcamentosTabela from './PacienteFichaOrcamentosTabela'
+import PacienteFichaOrcamentoModal from './PacienteFichaOrcamentoModal'
 
-    export default {
-        name: 'PacienteFichaOrcamentos',
-        components: {PacienteFichaOrcamentoModal, PacienteFichaOrcamentosTabela},
-        data() {
-            return {
-                exibirPanel: false,
-                idPaciente: null,
-                itens: [],
-                paginas: 0,
-                totalItens: 0,
-                orcamentoSelecionado: {},
-                orcamentoModal: false,
+export default {
+    name: 'PacienteFichaOrcamentos',
+    components: {PacienteFichaOrcamentoModal, PacienteFichaOrcamentosTabela},
+    data() {
+        return {
+            exibirPanel: false,
+            idPaciente: null,
+            itens: [],
+            paginas: 0,
+            totalItens: 0,
+            orcamentoSelecionado: {},
+            orcamentoModal: false,
+        }
+    },
+    mounted() {
+        this.setarIdPaciente()
+    },
+    methods: {
+        ...mapActions([actionTypes.ORCAMENTO.BUSCAR_ORCAMENTOS_POR_PACIENTE]),
+        ...mapMutations([mutationTypes.ORCAMENTO.SET_PAGINACAO_BUSCA_ORCAMENTOS_POR_PACIENTE]),
+        setarIdPaciente() {
+            if (this.$route.params.id) {
+                this.idPaciente = this.$route.params.id
             }
         },
-        mounted() {
-            this.setarIdPaciente()
-        },
-        methods: {
-            ...mapActions([actionTypes.ORCAMENTO.BUSCAR_ORCAMENTOS_POR_PACIENTE]),
-            ...mapMutations([mutationTypes.ORCAMENTO.SET_PAGINACAO_BUSCA_ORCAMENTOS_POR_PACIENTE]),
-            setarIdPaciente() {
-                if (this.$route.params.id) {
-                    this.idPaciente = this.$route.params.id
-                }
-            },
-            async buscaTodosOrcamentosPorPaciente() {
-                const resultado = await this.buscarOrcamentosPorPaciente(this.idPaciente)
-                if (resultado) {
-                    this.itens = resultado.content
-                    this.paginas = resultado.totalPages
-                    this.totalItens = resultado.totalElements
-                }
-            },
-            tratarEventoAcessar(item) {
-                this.orcamentoSelecionado = item
-                this.orcamentoModal = true
-            },
-            tratarEventoPaginar(paginacao) {
-                this.setPaginacaoBuscaOrcamentosPorPaciente(paginacao)
-                this.buscaTodosOrcamentosPorPaciente()
-            },
-            fecharModalOrcamento() {
-                this.orcamentoSelecionado = null
-                this.orcamentoModal = false
+        async buscaTodosOrcamentosPorPaciente() {
+            const resultado = await this.buscarOrcamentosPorPaciente(this.idPaciente)
+            if (resultado) {
+                this.itens = resultado.content
+                this.paginas = resultado.totalPages
+                this.totalItens = resultado.totalElements
             }
+        },
+        tratarEventoAcessar(item) {
+            this.orcamentoSelecionado = item
+            this.orcamentoModal = true
+        },
+        tratarEventoPaginar(paginacao) {
+            this.setPaginacaoBuscaOrcamentosPorPaciente(paginacao)
+            this.buscaTodosOrcamentosPorPaciente()
+        },
+        fecharModalOrcamento() {
+            this.orcamentoSelecionado = null
+            this.orcamentoModal = false
         }
     }
+}
 </script>
 
 <style scoped lang="stylus">

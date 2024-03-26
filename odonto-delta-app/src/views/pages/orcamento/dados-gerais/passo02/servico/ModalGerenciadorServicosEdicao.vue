@@ -67,60 +67,60 @@
 </template>
 
 <script>
-    import _ from 'lodash'
-    import {mapActions} from 'vuex'
-    import {actionTypes} from '@/core/constants'
+import _ from 'lodash'
+import {mapActions} from 'vuex'
+import {actionTypes} from '@/core/constants'
 
-    export default {
-        name: 'ModalGerenciarServicosEdicao',
-        props: {
-            value: Boolean,
-            item: Object
+export default {
+    name: 'ModalGerenciarServicosEdicao',
+    props: {
+        value: Boolean,
+        item: Object
+    },
+    data() {
+        return {
+            dadosGerais: {},
+            modalExcluir: false,
+        }
+    },
+    mounted() {
+        this.setarDadosGerais()
+    },
+    methods: {
+        ...mapActions([
+            actionTypes.ORCAMENTO.SERVICO.EDITAR_SERVICO,
+            actionTypes.ORCAMENTO.SERVICO.EXCLUIR_SERVICO
+        ]),
+        setarDadosGerais() {
+            this.dadosGerais = _.cloneDeep(this.item)
         },
-        data() {
-            return {
-                dadosGerais: {},
-                modalExcluir: false,
+        fecharModalExcluir() {
+            this.modalExcluir = false
+        },
+        abrirModalExcluir() {
+            this.modalExcluir = true
+        },
+        async tratarEventoExcluir() {
+            await this.excluirServico(this.dadosGerais.id)
+            this.fecharModalExcluir()
+            this.tratarEventoCancelar()
+            this.mostrarNotificacaoSucessoDefault()
+        },
+        tratarEventoCancelar() {
+            this.$emit('cancelarAcaoEditar')
+        },
+        async tratarEventoSalvar() {
+            if (await this.validarDadosFormulario()) {
+                this.setMensagemLoading('Salvando alterações do serviço...')
+                await this.editarServico(this.dadosGerais)
+                this.mostrarNotificacaoSucessoDefault()
             }
         },
-        mounted() {
-            this.setarDadosGerais()
+        async validarDadosFormulario() {
+            return this.$validator._base.validateAll()
         },
-        methods: {
-            ...mapActions([
-                actionTypes.ORCAMENTO.SERVICO.EDITAR_SERVICO,
-                actionTypes.ORCAMENTO.SERVICO.EXCLUIR_SERVICO
-            ]),
-            setarDadosGerais() {
-                this.dadosGerais = _.cloneDeep(this.item)
-            },
-            fecharModalExcluir() {
-                this.modalExcluir = false
-            },
-            abrirModalExcluir() {
-                this.modalExcluir = true
-            },
-            async tratarEventoExcluir() {
-                await this.excluirServico(this.dadosGerais.id)
-                this.fecharModalExcluir()
-                this.tratarEventoCancelar()
-                this.mostrarNotificacaoSucessoDefault()
-            },
-            tratarEventoCancelar() {
-                this.$emit('cancelarAcaoEditar')
-            },
-            async tratarEventoSalvar() {
-                if (await this.validarDadosFormulario()) {
-                    this.setMensagemLoading('Salvando alterações do serviço...')
-                    await this.editarServico(this.dadosGerais)
-                    this.mostrarNotificacaoSucessoDefault()
-                }
-            },
-            async validarDadosFormulario() {
-                return this.$validator._base.validateAll()
-            },
-        }
     }
+}
 </script>
 
 <style scoped lang="stylus">

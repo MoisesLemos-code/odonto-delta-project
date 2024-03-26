@@ -38,7 +38,7 @@ public class Permissao {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "seq_permissao")
-    @Column(name = "pp_id")
+    @Column(name = "pe_id")
     @EqualsAndHashCode.Include
     private Long id;
 

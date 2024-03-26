@@ -32,5 +32,4 @@ public class BuscarUsuarioPorIdOutput {
     private String cargo;
     private String departamento;
     private String senha;
-    private String senhaAtual;
 }

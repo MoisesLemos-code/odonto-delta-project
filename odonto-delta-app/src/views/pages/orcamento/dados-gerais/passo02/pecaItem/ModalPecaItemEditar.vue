@@ -67,83 +67,83 @@
 </template>
 
 <script>
-    import _ from 'lodash'
-    import {mapActions} from 'vuex'
-    import {actionTypes} from '@/core/constants'
-    import ComboEnum from '@/views/components/ComboEnum'
-    import facesDente from '@/core/constants/enums/facesDente'
+import _ from 'lodash'
+import {mapActions} from 'vuex'
+import {actionTypes} from '@/core/constants'
+import ComboEnum from '@/views/components/ComboEnum'
+import facesDente from '@/core/constants/enums/facesDente'
 
-    export default {
-        name: 'ModalPecaItemEditar',
-        components: {ComboEnum},
-        props: {
-            value: Boolean,
-            item: Object
+export default {
+    name: 'ModalPecaItemEditar',
+    components: {ComboEnum},
+    props: {
+        value: Boolean,
+        item: Object
+    },
+    data() {
+        return {
+            facesDente,
+            dadosGerais: {},
+            modalExcluir: false,
+            estados: []
+        }
+    },
+    mounted() {
+        this.setarDadosGerais()
+    },
+    methods: {
+        ...mapActions([
+            actionTypes.ORCAMENTO.PECA_ITEM.EDITAR_PECA_ITEM,
+            actionTypes.ORCAMENTO.PECA_ITEM.EXCLUIR_PECA_ITEM
+        ]),
+        setarDadosGerais() {
+            this.dadosGerais = _.cloneDeep(this.item)
         },
-        data() {
-            return {
-                facesDente,
-                dadosGerais: {},
-                modalExcluir: false,
-                estados: []
+        fecharModalExcluir() {
+            this.modalExcluir = false
+        },
+        abrirModalExcluir() {
+            this.modalExcluir = true
+        },
+        async tratarEventoExcluir() {
+            await this.excluirPecaItem(this.dadosGerais.id)
+            this.fecharModalExcluir()
+            this.tratarEventoCancelar()
+            this.mostrarNotificacaoSucessoDefault()
+        },
+        tratarEventoCancelar() {
+            this.$emit('cancelarAcaoEditar')
+        },
+        async tratarEventoSalvar() {
+            if (await this.validarDadosFormulario()) {
+                this.setMensagemLoading('Salvando alterações da peça...')
+                const pecaItem = this.construirPecaItem()
+                await this.editarPecaItem(pecaItem)
+                this.mostrarNotificacaoSucessoDefault()
             }
         },
-        mounted() {
-            this.setarDadosGerais()
+        construirPecaItem() {
+            let pecaItem
+            if (this.$route.params.orcamentoId) {
+                pecaItem = {
+                    id: this.dadosGerais.id,
+                    peca_id: this.dadosGerais.peca.id,
+                    orcamento_id: this.$route.params.orcamentoId,
+                    denteItem_id: this.dadosGerais.denteItem.id,
+                    localizacao: this.dadosGerais.localizacao,
+                    valor: this.dadosGerais.valor
+                }
+            } else {
+                this.mostrarNotificacaoErro('Não foi possível editar as informações da peça.')
+                return null
+            }
+            return pecaItem
         },
-        methods: {
-            ...mapActions([
-                actionTypes.ORCAMENTO.PECA_ITEM.EDITAR_PECA_ITEM,
-                actionTypes.ORCAMENTO.PECA_ITEM.EXCLUIR_PECA_ITEM
-            ]),
-            setarDadosGerais() {
-                this.dadosGerais = _.cloneDeep(this.item)
-            },
-            fecharModalExcluir() {
-                this.modalExcluir = false
-            },
-            abrirModalExcluir() {
-                this.modalExcluir = true
-            },
-            async tratarEventoExcluir() {
-                await this.excluirPecaItem(this.dadosGerais.id)
-                this.fecharModalExcluir()
-                this.tratarEventoCancelar()
-                this.mostrarNotificacaoSucessoDefault()
-            },
-            tratarEventoCancelar() {
-                this.$emit('cancelarAcaoEditar')
-            },
-            async tratarEventoSalvar() {
-                if (await this.validarDadosFormulario()) {
-                    this.setMensagemLoading('Salvando alterações da peça...')
-                    const pecaItem = this.construirPecaItem()
-                    await this.editarPecaItem(pecaItem)
-                    this.mostrarNotificacaoSucessoDefault()
-                }
-            },
-            construirPecaItem() {
-                let pecaItem
-                if (this.$route.params.orcamentoId) {
-                    pecaItem = {
-                        id: this.dadosGerais.id,
-                        peca_id: this.dadosGerais.peca.id,
-                        orcamento_id: this.$route.params.orcamentoId,
-                        denteItem_id: this.dadosGerais.denteItem.id,
-                        localizacao: this.dadosGerais.localizacao,
-                        valor: this.dadosGerais.valor
-                    }
-                } else {
-                    this.mostrarNotificacaoErro('Não foi possível editar as informações da peça.')
-                    return null
-                }
-                return pecaItem
-            },
-            async validarDadosFormulario() {
-                return this.$validator._base.validateAll()
-            },
-        }
+        async validarDadosFormulario() {
+            return this.$validator._base.validateAll()
+        },
     }
+}
 </script>
 
 <style scoped lang="stylus">

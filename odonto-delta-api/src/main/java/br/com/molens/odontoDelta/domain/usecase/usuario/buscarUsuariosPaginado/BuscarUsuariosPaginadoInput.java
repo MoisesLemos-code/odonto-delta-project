@@ -1,4 +1,4 @@
-package br.com.molens.odontoDelta.domain.usecase.usuario.buscarUsuarioPorId;
+package br.com.molens.odontoDelta.domain.usecase.usuario.buscarUsuariosPaginado;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,9 +11,13 @@ import javax.validation.constraints.NotNull;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class BuscarUsuarioPorIdInput {
+public class BuscarUsuariosPaginadoInput {
 
-    @NotNull(message = "O atributo 'usuarioId' não pode ser nulo.")
-    private Long usuarioId;
+    int size;
+    int page;
+    String nome;
+    String sort;
+    String direction;
     private Long empresaId;
+
 }

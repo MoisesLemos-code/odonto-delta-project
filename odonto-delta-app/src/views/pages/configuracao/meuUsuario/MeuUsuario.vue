@@ -20,7 +20,7 @@
                     v-validate="{required: true, min: 2, max: 100}"
                     :error-messages="errors.collect('nome')">
                   <template v-slot:label>
-                    Nome
+                    Nome Usuário
                     <span class="ml-1 red--text">*</span>
                   </template>
                 </v-text-field>
@@ -179,8 +179,6 @@
                     :append-icon="showPasswordAtual ? 'mdi-eye' : 'mdi-eye-off'"
                     :type="showPasswordAtual ? 'text' : 'password'"
                     @click:append="showPasswordAtual = !showPasswordAtual"
-                    v-validate="{ required: true}"
-                    :error-messages="errors.collect('senhaAtual')"
                 />
               </v-col>
             </v-row>
@@ -258,7 +256,7 @@ export default {
             showPassword2: false,
             dadosGerais: {
                 nome: null,
-                nome_completo: null,
+                login: null,
                 email: null,
                 senha: null,
                 municipio: {
@@ -308,7 +306,7 @@ export default {
         },
         async tratarEventoSalvar() {
             if (await this.validarDadosFormulario()) {
-                if(!this.senhaDois){
+                if(this.dadosGerais.senhaAtual && !this.senhaDois){
                     this.mostrarNotificacaoErro('Informe a senha nova!')
                     return
                 }

@@ -3,9 +3,9 @@
 </template>
 
 <script>
-    export default {
-        name: 'Cadastros'
-    }
+export default {
+    name: 'Cadastros'
+}
 </script>
 
 <style scoped>

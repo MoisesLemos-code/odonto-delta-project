@@ -240,134 +240,134 @@
 </template>
 
 <script>
-    import {mapActions} from 'vuex'
-    import {actionTypes} from '@/core/constants'
-    import moment from 'moment'
-    import BotaoAcao from '@/views/components/BotaoAcao'
-    import ModalGerenciarCidades from '@/views/modais/cidades/ModalGerenciarCidades'
-    import DateInput from '@/views/components/DateInput'
+import {mapActions} from 'vuex'
+import {actionTypes} from '@/core/constants'
+import moment from 'moment'
+import BotaoAcao from '@/views/components/BotaoAcao'
+import ModalGerenciarCidades from '@/views/modais/cidades/ModalGerenciarCidades'
+import DateInput from '@/views/components/DateInput'
 
-    export default {
-        name: 'ClienteDadosGeraisEdicao',
-        components: {DateInput, ModalGerenciarCidades, BotaoAcao},
-        data() {
-            return {
-                dadosGerais: {
-                    nome: null,
-                    email: null,
-                    cpfOuCnpj: null,
-                    tipo: 1,
-                    contatoPrincipal: null,
-                    contato2: null,
-                    contato3: null,
-                    rua: null,
-                    numero: null,
-                    complemento: null,
-                    bairro: null,
-                    cep: null,
-                    cidadeId: null,
-                    dataAniversario: null,
-                    ortodontia: null,
-                    status: 1
-                },
-                masks: {
-                    cpf: '###.###.###-##',
-                    cnpj: '##.###.###/####-##',
-                    cep: '##.###-###',
-                    tel8: '(##) ####-####',
-                    tel9: '(##) #####-####'
-                },
-                tiposPessoa: [
-                    {codigo: 1, nome: 'Pessoa Física'},
-                    {codigo: 2, nome: 'Pessoa Jurídica'}
-                ],
-                cidades: [],
-                pacienteId: null,
-                modalCidades: false
+export default {
+    name: 'ClienteDadosGeraisEdicao',
+    components: {DateInput, ModalGerenciarCidades, BotaoAcao},
+    data() {
+        return {
+            dadosGerais: {
+                nome: null,
+                email: null,
+                cpfOuCnpj: null,
+                tipo: 1,
+                contatoPrincipal: null,
+                contato2: null,
+                contato3: null,
+                rua: null,
+                numero: null,
+                complemento: null,
+                bairro: null,
+                cep: null,
+                cidadeId: null,
+                dataAniversario: null,
+                ortodontia: null,
+                status: 1
+            },
+            masks: {
+                cpf: '###.###.###-##',
+                cnpj: '##.###.###/####-##',
+                cep: '##.###-###',
+                tel8: '(##) ####-####',
+                tel9: '(##) #####-####'
+            },
+            tiposPessoa: [
+                {codigo: 1, nome: 'Pessoa Física'},
+                {codigo: 2, nome: 'Pessoa Jurídica'}
+            ],
+            cidades: [],
+            pacienteId: null,
+            modalCidades: false
+        }
+    },
+    async mounted() {
+        await this.buscarPaciente()
+        await this.buscarCidades()
+    },
+    methods: {
+        ...mapActions([
+            actionTypes.CADASTROS.CIDADE.BUSCAR_TODAS_CIDADES_SEM_PAGINACAO,
+            actionTypes.CADASTROS.PACIENTE.EDITAR_PACIENTE,
+            actionTypes.CADASTROS.PACIENTE.BUSCAR_PACIENTE_POR_ID
+        ]),
+        async buscarCidades() {
+            const resultado = await this.buscarTodasCidadesSemPaginacao()
+            if (resultado) {
+                this.cidades = resultado
             }
         },
-        async mounted() {
-            await this.buscarPaciente()
-            await this.buscarCidades()
-        },
-        methods: {
-            ...mapActions([
-                actionTypes.CADASTROS.CIDADE.BUSCAR_TODAS_CIDADES_SEM_PAGINACAO,
-                actionTypes.CADASTROS.PACIENTE.EDITAR_PACIENTE,
-                actionTypes.CADASTROS.PACIENTE.BUSCAR_PACIENTE_POR_ID
-            ]),
-            async buscarCidades() {
-                const resultado = await this.buscarTodasCidadesSemPaginacao()
+        async buscarPaciente() {
+            if (this.$route.params.id) {
+                const resultado = await this.buscarPacientePorId(this.$route.params.id)
                 if (resultado) {
-                    this.cidades = resultado
+                    this.dadosGerais = resultado
+                    this.pacienteId = this.dadosGerais.id
+                    this.setarCidade()
+                    this.setarTipo()
+                    this.setarStatus()
                 }
-            },
-            async buscarPaciente() {
-                if (this.$route.params.id) {
-                    const resultado = await this.buscarPacientePorId(this.$route.params.id)
-                    if (resultado) {
-                        this.dadosGerais = resultado
-                        this.pacienteId = this.dadosGerais.id
-                        this.setarCidade()
-                        this.setarTipo()
-                        this.setarStatus()
-                    }
-                }
-            },
-            setarCidade() {
-                this.dadosGerais.cidadeId = this.dadosGerais.cidade.id
-            },
-            setarTipo() {
-                if (this.dadosGerais.tipo === 'PESSOAFISICA') {
-                    this.dadosGerais.tipo = 1
-                } else if (this.dadosGerais.tipo === 'PESSOAJURIDICA') {
-                    this.dadosGerais.tipo = 2
-                }
-            },
-            setarStatus() {
-                if (this.dadosGerais.status === 'SEM_PENDENCIAS') {
-                    this.dadosGerais.status = 1
-                } else if (this.dadosGerais.status === 'COM_PARCELAS') {
-                    this.dadosGerais.status = 2
-                } else if (this.dadosGerais.status === 'ATRASADO') {
-                    this.dadosGerais.status = 3
-                }
-            },
-            filtroComboAutoComplete(item, queryText) {
-                const text = item.nome.toLowerCase()
-                const searchText = queryText.toLowerCase()
-                return text.indexOf(searchText) > -1
-            },
-            formatarData() {
-                if (this.dadosGerais.dataAniversario) {
-                    this.dadosGerais.dataAniversario = moment(this.dadosGerais.dataAniversario).format('YYYY-MM-DD')
-                }
-            },
-            tratarEventoCancelar() {
-                this.$router.push({name: 'PacienteFicha', params: { id: this.pacienteId}})
-            },
-            async tratarEventoSalvar() {
-                if (await this.validarDadosFormulario()) {
-                    this.formatarData()
-                    this.setMensagemLoading('Salvando alterações do paciente...')
-                    await this.editarPaciente(this.dadosGerais)
-                    this.pacienteId = this.$store.state.paciente.dadosGerais.id
-                    this.mostrarNotificacaoSucessoDefault()
-                    this.tratarEventoCancelar()
-                }
-            },
-            async validarDadosFormulario() {
-                return this.$validator._base.validateAll()
-            },
-            abrirModalCidades() {
-                this.modalCidades = true
-            },
-            async fecharModalCidades() {
-                this.modalCidades = false
-                await this.buscarCidades()
             }
+        },
+        setarCidade() {
+            this.dadosGerais.cidadeId = this.dadosGerais.cidade.id
+        },
+        setarTipo() {
+            if (this.dadosGerais.tipo === 'PESSOAFISICA') {
+                this.dadosGerais.tipo = 1
+            } else if (this.dadosGerais.tipo === 'PESSOAJURIDICA') {
+                this.dadosGerais.tipo = 2
+            }
+        },
+        setarStatus() {
+            if (this.dadosGerais.status === 'SEM_PENDENCIAS') {
+                this.dadosGerais.status = 1
+            } else if (this.dadosGerais.status === 'COM_PARCELAS') {
+                this.dadosGerais.status = 2
+            } else if (this.dadosGerais.status === 'ATRASADO') {
+                this.dadosGerais.status = 3
+            }
+        },
+        filtroComboAutoComplete(item, queryText) {
+            const text = item.nome.toLowerCase()
+            const searchText = queryText.toLowerCase()
+            return text.indexOf(searchText) > -1
+        },
+        formatarData() {
+            if (this.dadosGerais.dataAniversario) {
+                this.dadosGerais.dataAniversario = moment(this.dadosGerais.dataAniversario).format('YYYY-MM-DD')
+            }
+        },
+        tratarEventoCancelar() {
+            this.$router.push({name: 'PacienteFicha', params: { id: this.pacienteId}})
+        },
+        async tratarEventoSalvar() {
+            if (await this.validarDadosFormulario()) {
+                this.formatarData()
+                this.setMensagemLoading('Salvando alterações do paciente...')
+                await this.editarPaciente(this.dadosGerais)
+                this.pacienteId = this.$store.state.paciente.dadosGerais.id
+                this.mostrarNotificacaoSucessoDefault()
+                this.tratarEventoCancelar()
+            }
+        },
+        async validarDadosFormulario() {
+            return this.$validator._base.validateAll()
+        },
+        abrirModalCidades() {
+            this.modalCidades = true
+        },
+        async fecharModalCidades() {
+            this.modalCidades = false
+            await this.buscarCidades()
         }
     }
+}
 </script>
 
 <style scoped lang="stylus">

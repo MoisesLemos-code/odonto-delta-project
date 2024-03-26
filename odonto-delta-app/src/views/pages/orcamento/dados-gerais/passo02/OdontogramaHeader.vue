@@ -57,47 +57,47 @@
 </template>
 
 <script>
-    import OdontogramaModalQuadrante from './OdontogramaModalQuadrante'
-    import ModalGerenciarServicos from './servico/ModalGerenciarServicos'
-    import ModalGerenciarPecas from './peca/ModalGerenciarPecas'
+import OdontogramaModalQuadrante from './OdontogramaModalQuadrante'
+import ModalGerenciarServicos from './servico/ModalGerenciarServicos'
+import ModalGerenciarPecas from './peca/ModalGerenciarPecas'
 
-    export default {
-        name: 'OdontogramaHeader',
-        components: {ModalGerenciarPecas, ModalGerenciarServicos, OdontogramaModalQuadrante},
-        props: {
-            coresQuadrante: Boolean
+export default {
+    name: 'OdontogramaHeader',
+    components: {ModalGerenciarPecas, ModalGerenciarServicos, OdontogramaModalQuadrante},
+    props: {
+        coresQuadrante: Boolean
+    },
+    data() {
+        return {
+            quadranteModal: false,
+            servicosModal: false,
+            pecasModal: false,
+        }
+    },
+    methods: {
+        abrirModalQuadrante() {
+            this.quadranteModal = true
         },
-        data() {
-            return {
-                quadranteModal: false,
-                servicosModal: false,
-                pecasModal: false,
-            }
+        fecharModalQuadrante() {
+            this.quadranteModal = false
         },
-        methods: {
-            abrirModalQuadrante() {
-                this.quadranteModal = true
-            },
-            fecharModalQuadrante() {
-                this.quadranteModal = false
-            },
-            abrirModalServicos() {
-                this.servicosModal = true
-            },
-            fecharModalServicos() {
-                this.servicosModal = false
-            },
-            abrirModalPecas() {
-                this.pecasModal = true
-            },
-            fecharModalPecas() {
-                this.pecasModal = false
-            },
-            alterarCoresQuadrante() {
-                this.$emit('alterarCoresQuadrantes')
-            }
+        abrirModalServicos() {
+            this.servicosModal = true
+        },
+        fecharModalServicos() {
+            this.servicosModal = false
+        },
+        abrirModalPecas() {
+            this.pecasModal = true
+        },
+        fecharModalPecas() {
+            this.pecasModal = false
+        },
+        alterarCoresQuadrante() {
+            this.$emit('alterarCoresQuadrantes')
         }
     }
+}
 </script>
 
 <style scoped lang="stylus">

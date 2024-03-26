@@ -67,83 +67,83 @@
 </template>
 
 <script>
-    import _ from 'lodash'
-    import {mapActions} from 'vuex'
-    import {actionTypes} from '@/core/constants'
-    import ComboEnum from '@/views/components/ComboEnum'
-    import facesDente from '@/core/constants/enums/facesDente'
+import _ from 'lodash'
+import {mapActions} from 'vuex'
+import {actionTypes} from '@/core/constants'
+import ComboEnum from '@/views/components/ComboEnum'
+import facesDente from '@/core/constants/enums/facesDente'
 
-    export default {
-        name: 'ModalServicoItemEditar',
-        components: {ComboEnum},
-        props: {
-            value: Boolean,
-            item: Object
+export default {
+    name: 'ModalServicoItemEditar',
+    components: {ComboEnum},
+    props: {
+        value: Boolean,
+        item: Object
+    },
+    data() {
+        return {
+            facesDente,
+            dadosGerais: {},
+            modalExcluir: false,
+            estados: []
+        }
+    },
+    mounted() {
+        this.setarDadosGerais()
+    },
+    methods: {
+        ...mapActions([
+            actionTypes.ORCAMENTO.SERVICO_ITEM.EDITAR_SERVICO_ITEM,
+            actionTypes.ORCAMENTO.SERVICO_ITEM.EXCLUIR_SERVICO_ITEM
+        ]),
+        setarDadosGerais() {
+            this.dadosGerais = _.cloneDeep(this.item)
         },
-        data() {
-            return {
-                facesDente,
-                dadosGerais: {},
-                modalExcluir: false,
-                estados: []
+        fecharModalExcluir() {
+            this.modalExcluir = false
+        },
+        abrirModalExcluir() {
+            this.modalExcluir = true
+        },
+        async tratarEventoExcluir() {
+            await this.excluirServicoItem(this.dadosGerais.id)
+            this.fecharModalExcluir()
+            this.tratarEventoCancelar()
+            this.mostrarNotificacaoSucessoDefault()
+        },
+        tratarEventoCancelar() {
+            this.$emit('cancelarAcaoEditar')
+        },
+        async tratarEventoSalvar() {
+            if (await this.validarDadosFormulario()) {
+                this.setMensagemLoading('Salvando alterações do serviço...')
+                const servicoItem = this.construirServicoItem()
+                await this.editarServicoItem(servicoItem)
+                this.mostrarNotificacaoSucessoDefault()
             }
         },
-        mounted() {
-            this.setarDadosGerais()
+        construirServicoItem() {
+            let servicoItem
+            if (this.$route.params.orcamentoId) {
+                servicoItem = {
+                    id: this.dadosGerais.id,
+                    servico_id: this.dadosGerais.servico.id,
+                    orcamento_id: this.$route.params.orcamentoId,
+                    denteItem_id: this.dadosGerais.denteItem.id,
+                    localizacao: this.dadosGerais.localizacao,
+                    valor: this.dadosGerais.valor
+                }
+            } else {
+                this.mostrarNotificacaoErro('Não foi possível editar as informações do serviço.')
+                return null
+            }
+            return servicoItem
         },
-        methods: {
-            ...mapActions([
-                actionTypes.ORCAMENTO.SERVICO_ITEM.EDITAR_SERVICO_ITEM,
-                actionTypes.ORCAMENTO.SERVICO_ITEM.EXCLUIR_SERVICO_ITEM
-            ]),
-            setarDadosGerais() {
-                this.dadosGerais = _.cloneDeep(this.item)
-            },
-            fecharModalExcluir() {
-                this.modalExcluir = false
-            },
-            abrirModalExcluir() {
-                this.modalExcluir = true
-            },
-            async tratarEventoExcluir() {
-                await this.excluirServicoItem(this.dadosGerais.id)
-                this.fecharModalExcluir()
-                this.tratarEventoCancelar()
-                this.mostrarNotificacaoSucessoDefault()
-            },
-            tratarEventoCancelar() {
-                this.$emit('cancelarAcaoEditar')
-            },
-            async tratarEventoSalvar() {
-                if (await this.validarDadosFormulario()) {
-                    this.setMensagemLoading('Salvando alterações do serviço...')
-                    const servicoItem = this.construirServicoItem()
-                    await this.editarServicoItem(servicoItem)
-                    this.mostrarNotificacaoSucessoDefault()
-                }
-            },
-            construirServicoItem() {
-                let servicoItem
-                if (this.$route.params.orcamentoId) {
-                    servicoItem = {
-                        id: this.dadosGerais.id,
-                        servico_id: this.dadosGerais.servico.id,
-                        orcamento_id: this.$route.params.orcamentoId,
-                        denteItem_id: this.dadosGerais.denteItem.id,
-                        localizacao: this.dadosGerais.localizacao,
-                        valor: this.dadosGerais.valor
-                    }
-                } else {
-                    this.mostrarNotificacaoErro('Não foi possível editar as informações do serviço.')
-                    return null
-                }
-                return servicoItem
-            },
-            async validarDadosFormulario() {
-                return this.$validator._base.validateAll()
-            },
-        }
+        async validarDadosFormulario() {
+            return this.$validator._base.validateAll()
+        },
     }
+}
 </script>
 
 <style scoped lang="stylus">

@@ -14,6 +14,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import br.com.molens.odontoDelta.domain.entity.FiltroBase;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -94,5 +96,15 @@ public class Usuario {
 
     @Column(name = "us_dthr_ultimo_acesso")
     private LocalDateTime dataHoraUltimoAcesso;
+
+    @EqualsAndHashCode(callSuper = true)
+    @Data
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class Filtro extends FiltroBase {
+        private String nome;
+        private Long empresaId;
+    }
 
 }

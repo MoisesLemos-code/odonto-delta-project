@@ -23,57 +23,57 @@
 </template>
 
 <script>
-    export default {
-        name: 'Confirm-modal',
-        props: {
-            value: Boolean,
-            mensagemInicial: String,
-            mensagemMeio: String,
-            mensagemFinal: String,
-            persistencia: {
-                type: Boolean,
-                default: true
-            },
-            titulo: {
-                type: String,
-                default: 'Atenção!'
-            },
-            textCancelar: {
-                type: String,
-                default: 'Cancelar'
-            },
-            textConfirmar: {
-                type: String,
-                default: 'Excluir'
-            },
-            corCancelar: {
-                type: String,
-                default: 'black'
-            },
-            corConfirmar: {
-                type: String,
-                default: 'red'
-            },
-            maxWidth: {
-                type: Number,
-                default: 400
+export default {
+    name: 'Confirm-modal',
+    props: {
+        value: Boolean,
+        mensagemInicial: String,
+        mensagemMeio: String,
+        mensagemFinal: String,
+        persistencia: {
+            type: Boolean,
+            default: true
+        },
+        titulo: {
+            type: String,
+            default: 'Atenção!'
+        },
+        textCancelar: {
+            type: String,
+            default: 'Cancelar'
+        },
+        textConfirmar: {
+            type: String,
+            default: 'Excluir'
+        },
+        corCancelar: {
+            type: String,
+            default: 'black'
+        },
+        corConfirmar: {
+            type: String,
+            default: 'red'
+        },
+        maxWidth: {
+            type: Number,
+            default: 400
+        }
+    },
+    methods: {
+        fecharModal(){
+            if(!this.persistencia){
+                this.cancelar()
             }
         },
-        methods: {
-            fecharModal(){
-                if(!this.persistencia){
-                    this.cancelar()
-                }
-            },
-            cancelar() {
-                this.$emit('modalAcaoCancelar')
-            },
-            confirmar() {
-                this.$emit('modalAcaoConfirmar', this.produto)
-            }
+        cancelar() {
+            this.$emit('modalAcaoCancelar')
+        },
+        confirmar() {
+            this.$emit('modalAcaoConfirmar', this.produto)
         }
-
     }
+
+}
 </script>
 
 <style scoped lang="stylus">

@@ -5,9 +5,9 @@
 </template>
 
 <script>
-    export default {
-        name: 'container-component'
-    }
+export default {
+    name: 'container-component'
+}
 </script>
 
 <style scoped lang="stylus">

@@ -41,37 +41,37 @@
 </template>
 
 <script>
-    import {mapActions} from 'vuex'
-    import {actionTypes} from '@/core/constants'
-    import statusOrcamento from '@/core/constants/enums/statusOrcamento'
+import {mapActions} from 'vuex'
+import {actionTypes} from '@/core/constants'
+import statusOrcamento from '@/core/constants/enums/statusOrcamento'
 
-    export default {
-        name: 'PacienteFichaOrcamentoModal',
-        props: {
-            value: Boolean,
-            item: Object
-        },
-        data() {
-            return {
-                dadosGerais: {},
-                statusOrcamento
-            }
-        },
-        async mounted() {
-            await this.setarDadosGerais()
-        },
-        methods: {
-            ...mapActions([
-                actionTypes.ORCAMENTO.BURCAR_ORCAMENTO_MODAL_POR_ID
-            ]),
-            async setarDadosGerais() {
-                this.dadosGerais = await this.buscarOrcamentoModalPorId(this.item.id)
-            },
-            fecharModal() {
-                this.$emit('fecharEdicao')
-            },
+export default {
+    name: 'PacienteFichaOrcamentoModal',
+    props: {
+        value: Boolean,
+        item: Object
+    },
+    data() {
+        return {
+            dadosGerais: {},
+            statusOrcamento
         }
+    },
+    async mounted() {
+        await this.setarDadosGerais()
+    },
+    methods: {
+        ...mapActions([
+            actionTypes.ORCAMENTO.BURCAR_ORCAMENTO_MODAL_POR_ID
+        ]),
+        async setarDadosGerais() {
+            this.dadosGerais = await this.buscarOrcamentoModalPorId(this.item.id)
+        },
+        fecharModal() {
+            this.$emit('fecharEdicao')
+        },
     }
+}
 </script>
 
 <style scoped lang="stylus">

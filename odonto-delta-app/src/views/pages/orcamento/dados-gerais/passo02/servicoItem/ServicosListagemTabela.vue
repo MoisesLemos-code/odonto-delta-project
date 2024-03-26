@@ -46,78 +46,78 @@
 </template>
 
 <script>
-    import FormTable from '@/views/components/FormTable'
-    import ContainerComponent from '@/views/components/Container'
-    import facesDente from '@/core/constants/enums/facesDente'
-    import BotaoEditar from '@/views/components/BotaoEditar'
+import FormTable from '@/views/components/FormTable'
+import ContainerComponent from '@/views/components/Container'
+import facesDente from '@/core/constants/enums/facesDente'
+import BotaoEditar from '@/views/components/BotaoEditar'
 
-    export default {
-        name: 'ServicosListagemTabela',
-        components: {BotaoEditar, FormTable, ContainerComponent},
-        props: ['itens', 'paginacao', 'paginas', 'totalItens'],
-        data() {
-            return {
-                colunas: [
-                    {
-                        text: 'Código',
-                        value: 'id',
-                        sortable: true,
-                        align: 'left',
-                        width: '90px',
-                        class: 'gray--text'
-                    },
-                    {
-                        text: 'Descrição',
-                        value: 'servico.descricao',
-                        sortable: false,
-                        align: 'left',
-                        width: '200px',
-                        class: 'gray--text'
-                    },
-                    {
-                        text: 'Localização',
-                        value: 'localizacao',
-                        sortable: true,
-                        align: 'left',
-                        width: '120px',
-                        class: 'gray--text'
-                    },
-                    {
-                        text: 'Valor',
-                        value: 'valor',
-                        sortable: true,
-                        align: 'left',
-                        width: '50px',
-                        class: 'gray--text'
-                    },
-                    {
-                        text: '',
-                        value: 'acoes',
-                        sortable: false,
-                        align: 'right',
-                        width: '20px',
-                        class: 'gray--text'
-                    }
-                ],
-                paginacaoInterna: this.paginacao,
-                linhasPorPagina: [5, 10, 25, 50, 100],
-                facesDente
-            }
-        },
-        watch: {
-            paginacaoInterna: {
-                handler(novoValor) {
-                    this.$emit('paginar', novoValor)
+export default {
+    name: 'ServicosListagemTabela',
+    components: {BotaoEditar, FormTable, ContainerComponent},
+    props: ['itens', 'paginacao', 'paginas', 'totalItens'],
+    data() {
+        return {
+            colunas: [
+                {
+                    text: 'Código',
+                    value: 'id',
+                    sortable: true,
+                    align: 'left',
+                    width: '90px',
+                    class: 'gray--text'
                 },
-                deep: true,
+                {
+                    text: 'Descrição',
+                    value: 'servico.descricao',
+                    sortable: false,
+                    align: 'left',
+                    width: '200px',
+                    class: 'gray--text'
+                },
+                {
+                    text: 'Localização',
+                    value: 'localizacao',
+                    sortable: true,
+                    align: 'left',
+                    width: '120px',
+                    class: 'gray--text'
+                },
+                {
+                    text: 'Valor',
+                    value: 'valor',
+                    sortable: true,
+                    align: 'left',
+                    width: '50px',
+                    class: 'gray--text'
+                },
+                {
+                    text: '',
+                    value: 'acoes',
+                    sortable: false,
+                    align: 'right',
+                    width: '20px',
+                    class: 'gray--text'
+                }
+            ],
+            paginacaoInterna: this.paginacao,
+            linhasPorPagina: [5, 10, 25, 50, 100],
+            facesDente
+        }
+    },
+    watch: {
+        paginacaoInterna: {
+            handler(novoValor) {
+                this.$emit('paginar', novoValor)
             },
+            deep: true,
         },
-        methods: {
-            editarServico(item) {
-                this.$emit('editarServico', item)
-            }
-        },
-    }
+    },
+    methods: {
+        editarServico(item) {
+            this.$emit('editarServico', item)
+        }
+    },
+}
 </script>
 
 <style scoped lang="stylus">

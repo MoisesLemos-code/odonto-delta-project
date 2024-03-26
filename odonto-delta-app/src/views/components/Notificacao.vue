@@ -22,33 +22,33 @@
 </template>
 
 <script>
-    import { mapState } from 'vuex'
-    import { mutationTypes } from '@/core/constants'
+import { mapState } from 'vuex'
+import { mutationTypes } from '@/core/constants'
 
-    export default {
-        name: 'notificacao',
-        data: () => ({
-            top: true,
-            right: true,
-            timeout: 6000
-        }),
-        computed: {
-            ...mapState(['notificacao'])
-        },
-        destroyed() {
-            this.fecharNotificacao()
-        },
-        methods:{
-            fecharNotificacao(){
-                this.$store.commit(mutationTypes.COMUM.SET_NOTIFICACAO, {
-                    cor: '',
-                    titulo: '',
-                    mensagem: '',
-                    mostrar: false
-                })
-            }
+export default {
+    name: 'notificacao',
+    data: () => ({
+        top: true,
+        right: true,
+        timeout: 6000
+    }),
+    computed: {
+        ...mapState(['notificacao'])
+    },
+    destroyed() {
+        this.fecharNotificacao()
+    },
+    methods:{
+        fecharNotificacao(){
+            this.$store.commit(mutationTypes.COMUM.SET_NOTIFICACAO, {
+                cor: '',
+                titulo: '',
+                mensagem: '',
+                mostrar: false
+            })
         }
     }
+}
 </script>
 
 <style scoped lang='stylus'>

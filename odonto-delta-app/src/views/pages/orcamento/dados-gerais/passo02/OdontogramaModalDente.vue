@@ -62,52 +62,52 @@
 
 <script>
 
-    import OdontogramaFaces from './OdontogramaFaces'
-    import OdontogramaModalDenteServicosRealizados from './servicoItem/OdontogramaModalDenteServicosRealizados'
-    import OdontogramaModalDentePecasRealizadas from './pecaItem/OdontogramaModalDentePecasRealizadas'
+import OdontogramaFaces from './OdontogramaFaces'
+import OdontogramaModalDenteServicosRealizados from './servicoItem/OdontogramaModalDenteServicosRealizados'
+import OdontogramaModalDentePecasRealizadas from './pecaItem/OdontogramaModalDentePecasRealizadas'
 
-    export default {
-        name: 'OdontogramaModalDente',
-        components: {OdontogramaModalDentePecasRealizadas, OdontogramaModalDenteServicosRealizados, OdontogramaFaces},
-        props: {
-            value: Boolean,
-            item: Object,
-            face: String
+export default {
+    name: 'OdontogramaModalDente',
+    components: {OdontogramaModalDentePecasRealizadas, OdontogramaModalDenteServicosRealizados, OdontogramaFaces},
+    props: {
+        value: Boolean,
+        item: Object,
+        face: String
+    },
+    data() {
+        return {
+            tab: null,
+            abas: [
+                'Serviços', 'Peças'
+            ],
+            faceSelecionada: this.face,
+            totalServicos: 0,
+            totalPecas: 0
+        }
+    },
+    computed: {
+        valorTotal() {
+            return this.totalServicos + this.totalPecas
+        }
+    },
+    methods: {
+        selecionarFaceDente(face) {
+            this.faceSelecionada = face
         },
-        data() {
-            return {
-                tab: null,
-                abas: [
-                    'Serviços', 'Peças'
-                ],
-                faceSelecionada: this.face,
-                totalServicos: 0,
-                totalPecas: 0
-            }
+        atualizarDadosOdontograma() {
+            this.$emit('atualizarOdontograma')
         },
-        computed: {
-            valorTotal() {
-                return this.totalServicos + this.totalPecas
-            }
+        fecharModal() {
+            this.$emit('fecharModalDente')
         },
-        methods: {
-            selecionarFaceDente(face) {
-                this.faceSelecionada = face
-            },
-            atualizarDadosOdontograma() {
-                this.$emit('atualizarOdontograma')
-            },
-            fecharModal() {
-                this.$emit('fecharModalDente')
-            },
-            atualizarValorServico(valor){
-                this.totalServicos = valor
-            },
-            atualizarValorPeca(valor){
-                this.totalPecas = valor
-            }
+        atualizarValorServico(valor){
+            this.totalServicos = valor
+        },
+        atualizarValorPeca(valor){
+            this.totalPecas = valor
         }
     }
+}
 </script>
 
 <style scoped lang="stylus">

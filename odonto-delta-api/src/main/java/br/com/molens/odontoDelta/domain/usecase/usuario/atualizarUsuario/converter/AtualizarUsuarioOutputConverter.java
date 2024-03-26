@@ -36,7 +36,6 @@ public class AtualizarUsuarioOutputConverter extends GenericConverter<Usuario, A
 
         target.setId(source.getId());
         target.setLogin(source.getLogin());
-        target.setSenha(source.getSenha());
         target.setNome(source.getNome());
         target.setEmail(source.getEmail());
         target.setCnpjCpf(source.getCnpjCpf());
@@ -49,6 +48,10 @@ public class AtualizarUsuarioOutputConverter extends GenericConverter<Usuario, A
         target.setSituacao(source.getSituacao());
         target.setCargo(source.getCargo());
         target.setDepartamento(source.getDepartamento());
+
+        if(Objects.nonNull(source.getSenha())){
+            target.setSenha(source.getSenha());
+        }
 
         if (Objects.nonNull(source.getEmpresaId())) {
             target.setEmpresa(Empresa.builder()

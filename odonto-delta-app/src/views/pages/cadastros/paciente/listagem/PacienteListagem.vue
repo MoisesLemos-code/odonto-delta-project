@@ -48,88 +48,88 @@
 </template>
 
 <script>
-    import _ from 'lodash'
-    import {mapActions, mapMutations} from 'vuex'
-    import {actionTypes, mutationTypes} from '@/core/constants'
-    import PacienteListagemTabela from '@/views/pages/cadastros/paciente/listagem/PacienteListagemTabela'
-    import PesquisaAvancada from '@/views/components/PesquisaAvancada'
-    import ItemDePesquisa from '@/views/components/ItemDePesquisa'
+import _ from 'lodash'
+import {mapActions, mapMutations} from 'vuex'
+import {actionTypes, mutationTypes} from '@/core/constants'
+import PacienteListagemTabela from '@/views/pages/cadastros/paciente/listagem/PacienteListagemTabela'
+import PesquisaAvancada from '@/views/components/PesquisaAvancada'
+import ItemDePesquisa from '@/views/components/ItemDePesquisa'
 
-    export default {
-        name: 'PacienteListagem',
-        components: {ItemDePesquisa, PesquisaAvancada, PacienteListagemTabela},
-        data() {
-            return {
-                filtrosInterno: this.getFiltros(),
-                itens: [],
-                paginas: 0,
-                totalItens: 0,
-                maxInputPesquisa: 30,
-                empresaId: 0
+export default {
+    name: 'PacienteListagem',
+    components: {ItemDePesquisa, PesquisaAvancada, PacienteListagemTabela},
+    data() {
+        return {
+            filtrosInterno: this.getFiltros(),
+            itens: [],
+            paginas: 0,
+            totalItens: 0,
+            maxInputPesquisa: 30,
+            empresaId: 0
+        }
+    },
+    methods: {
+        ...mapActions([actionTypes.CADASTROS.PACIENTE.BUSCAR_TODOS_PACIENTES]),
+        ...mapMutations([
+            mutationTypes.CADASTROS.PACIENTE.SET_FILTROS_BUSCA_TODOS_PACIENTES,
+            mutationTypes.CADASTROS.PACIENTE.SET_PAGINACAO_BUSCA_TODOS_PACIENTES,
+            mutationTypes.CADASTROS.PACIENTE.RESETA_PAGE
+        ]),
+        tratarEventoCadastroPaciente() {
+            this.$router.push({name: 'PacienteCadastro'})
+        },
+        async buscar() {
+            this.setFiltrosBuscaTodosPacientes(this.getFiltrosInterno())
+            await this.buscaTodosPacientes()
+        },
+        async buscaTodosPacientes() {
+            this.empresaId = this.$store.state.comum.usuarioLogado.empresa.id
+            const resultado = await this.buscarTodosPacientes(this.empresaId)
+            if (resultado) {
+                this.itens = resultado.content
+                this.paginas = resultado.totalPages
+                this.totalItens = resultado.totalElements
             }
         },
-        methods: {
-            ...mapActions([actionTypes.CADASTROS.PACIENTE.BUSCAR_TODOS_PACIENTES]),
-            ...mapMutations([
-                mutationTypes.CADASTROS.PACIENTE.SET_FILTROS_BUSCA_TODOS_PACIENTES,
-                mutationTypes.CADASTROS.PACIENTE.SET_PAGINACAO_BUSCA_TODOS_PACIENTES,
-                mutationTypes.CADASTROS.PACIENTE.RESETA_PAGE
-            ]),
-            tratarEventoCadastroPaciente() {
-                this.$router.push({name: 'PacienteCadastro'})
-            },
-            async buscar() {
-                this.setFiltrosBuscaTodosPacientes(this.getFiltrosInterno())
-                await this.buscaTodosPacientes()
-            },
-            async buscaTodosPacientes() {
-                this.empresaId = this.$store.state.comum.usuarioLogado.empresa.id
-                const resultado = await this.buscarTodosPacientes(this.empresaId)
-                if (resultado) {
-                    this.itens = resultado.content
-                    this.paginas = resultado.totalPages
-                    this.totalItens = resultado.totalElements
-                }
-            },
-            getFiltros() {
-                return _.cloneDeep(this.$store.state.paciente.resultadoBuscaTodosPacientes.filtros)
-            },
-            getFiltrosInterno() {
-                return _.cloneDeep(this.filtrosInterno)
-            },
-            tratarEventoAcessar(item) {
-                const id = item.id
-                this.$router.push({name: 'PacienteFicha', params: {id}})
-            },
-            tratarEventoBuscaSimples(busca) {
-                this.resetaPage()
-                this.filtrosInterno.tipo.value = busca.tipo
-                this.filtrosInterno.atributo.value = busca.atributo
-                this.filtrosInterno.conteudo.value = busca.conteudo
-                this.buscar()
-            },
-            tratarEventoBuscaAvancada() {
-                this.resetaPage()
-                this.buscar()
-            },
-            tratarEventoLimparBuscaAvancada() {
-                this.filtrosInterno.tipo.value = this.filtrosInterno.tipo.default
-                this.filtrosInterno.atributo.value = this.filtrosInterno.atributo.default
-                this.filtrosInterno.conteudo.value = this.filtrosInterno.conteudo.default
-                this.buscar()
-            },
-            tratarEventoPaginar(paginacao) {
-                this.setPaginacaoBuscaTodosPacientes(paginacao)
-                this.buscar()
-            },
-            tratarEventoRemoverFiltro(propriedade) {
-                if (this.filtrosInterno[propriedade]) {
-                    this.filtrosInterno[propriedade].value = this.filtrosInterno[propriedade].default
-                }
-                this.buscar()
+        getFiltros() {
+            return _.cloneDeep(this.$store.state.paciente.resultadoBuscaTodosPacientes.filtros)
+        },
+        getFiltrosInterno() {
+            return _.cloneDeep(this.filtrosInterno)
+        },
+        tratarEventoAcessar(item) {
+            const id = item.id
+            this.$router.push({name: 'PacienteFicha', params: {id}})
+        },
+        tratarEventoBuscaSimples(busca) {
+            this.resetaPage()
+            this.filtrosInterno.tipo.value = busca.tipo
+            this.filtrosInterno.atributo.value = busca.atributo
+            this.filtrosInterno.conteudo.value = busca.conteudo
+            this.buscar()
+        },
+        tratarEventoBuscaAvancada() {
+            this.resetaPage()
+            this.buscar()
+        },
+        tratarEventoLimparBuscaAvancada() {
+            this.filtrosInterno.tipo.value = this.filtrosInterno.tipo.default
+            this.filtrosInterno.atributo.value = this.filtrosInterno.atributo.default
+            this.filtrosInterno.conteudo.value = this.filtrosInterno.conteudo.default
+            this.buscar()
+        },
+        tratarEventoPaginar(paginacao) {
+            this.setPaginacaoBuscaTodosPacientes(paginacao)
+            this.buscar()
+        },
+        tratarEventoRemoverFiltro(propriedade) {
+            if (this.filtrosInterno[propriedade]) {
+                this.filtrosInterno[propriedade].value = this.filtrosInterno[propriedade].default
             }
+            this.buscar()
         }
     }
+}
 </script>
 
 <style scoped lang="stylus">
