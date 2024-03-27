@@ -1,4 +1,4 @@
-package br.com.molens.odontoDelta.gateway.repository.sessaousuario;
+package br.com.molens.odontoDelta.gateway.repository.sessaoUsuario;
 
 import br.com.molens.odontoDelta.domain.entity.SessaoUsuario;
 import br.com.molens.odontoDelta.domain.interfaces.SessaoUsuarioDataProvider;

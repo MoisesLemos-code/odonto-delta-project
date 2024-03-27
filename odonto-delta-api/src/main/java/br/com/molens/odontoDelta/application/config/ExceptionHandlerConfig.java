@@ -7,6 +7,7 @@ import br.com.molens.odontoDelta.domain.exception.AtualizarPerfilPermissaoExcept
 import br.com.molens.odontoDelta.domain.exception.AtualizarUsuarioException;
 import br.com.molens.odontoDelta.domain.exception.BuscarPacientePorIdException;
 import br.com.molens.odontoDelta.domain.exception.BuscarPerfilPorIdException;
+import br.com.molens.odontoDelta.domain.exception.BuscarPerfisDoUsuarioException;
 import br.com.molens.odontoDelta.domain.exception.BuscarPermissaoPorPerfilException;
 import br.com.molens.odontoDelta.domain.exception.BuscarUsuarioPorIdException;
 import br.com.molens.odontoDelta.domain.exception.InserirPacienteException;
@@ -110,7 +111,8 @@ public class ExceptionHandlerConfig {
                     InserirPerfilPermissaoException.class,
                     RemoverPermissaoPorIdException.class,
                     BuscarPermissaoPorPerfilException.class,
-                    AtualizarPerfilPermissaoException.class
+                    AtualizarPerfilPermissaoException.class,
+                    BuscarPerfisDoUsuarioException.class
             })
     public ResponseEntity<ExceptionServer> handlerMethodArgumentNotValidException(
             RuntimeException exception) {

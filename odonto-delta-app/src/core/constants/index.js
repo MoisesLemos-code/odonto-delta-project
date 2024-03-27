@@ -9,7 +9,6 @@ import produto from './produto'
 import situacoesPaciente from './enums/situacoesPaciente'
 import tipoPaciente from './enums/tipoPaciente'
 import statusOrcamento from './enums/statusOrcamento'
-import humanizaPermissao from './enums/humanizaPermissao'
 import facesDente from './enums/facesDente'
 
 export {
@@ -24,6 +23,5 @@ export {
     situacoesPaciente,
     tipoPaciente,
     statusOrcamento,
-    humanizaPermissao,
     facesDente
 }

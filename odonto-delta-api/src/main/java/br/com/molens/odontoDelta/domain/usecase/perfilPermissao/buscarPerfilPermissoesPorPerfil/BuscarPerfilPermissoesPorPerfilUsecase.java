@@ -30,6 +30,7 @@ public class BuscarPerfilPermissoesPorPerfilUsecase {
 
         if(perfilPermissaoList.isEmpty()){
             List<Permissao> permissaoList = buscarTodasPermissoes();
+            //TODO -> Remover essa implementação, não inserir permissões perfil!!!! fazer validação com base nas permissões perfil existente para o perfil.
             perfilPermissaoList = criarPermissoesPerfil(permissaoList, perfil);
         }
 

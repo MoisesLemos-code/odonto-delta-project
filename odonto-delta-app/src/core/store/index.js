@@ -16,6 +16,7 @@ import relatorios from './relatorios'
 import perfil from './perfil'
 import permissao from './permissao'
 import perfilPermissao from './perfilPermissao'
+import perfilUsuario from './perfilUsuario'
 
 export default new Vuex.Store({
     state,
@@ -38,6 +39,7 @@ export default new Vuex.Store({
         relatorios,
         perfil,
         permissao,
-        perfilPermissao
+        perfilPermissao,
+        perfilUsuario
     }
 })

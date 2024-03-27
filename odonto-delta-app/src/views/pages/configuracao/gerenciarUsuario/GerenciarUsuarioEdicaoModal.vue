@@ -171,64 +171,73 @@
                           </v-text-field>
                         </v-col>
                       </v-row>
-                      <v-row wrap align-center white class="pl-5 pr-5">
-                        <v-col cols="12" md="12" sm="12" xs="12">
-                          <v-divider :inset="false" class="divider"></v-divider>
-                          <span class="section-label">Senha atual</span>
-                        </v-col>
-                        <v-col cols="12" md="6" sm="6" xs="12">
-                          <v-text-field
-                              v-model="dadosGerais.senhaAtual"
-                              name="senhaAtual"
-                              prepend-inner-icon="mdi-lock"
-                              :append-icon="showPasswordAtual ? 'mdi-eye' : 'mdi-eye-off'"
-                              :type="showPasswordAtual ? 'text' : 'password'"
-                              @click:append="showPasswordAtual = !showPasswordAtual"
-                          />
-                        </v-col>
-                      </v-row>
-                        <v-row wrap align-center white class="pl-5 pr-5">
+                      <v-expansion-panels>
+                      <v-expansion-panel>
+                        <v-expansion-panel-header>
+                         <div> <v-icon class="mr-1">vpn_key</v-icon><label class="trocar-senha-titulo">Trocar Senha</label></div>
+                        </v-expansion-panel-header>
+                        <v-expansion-panel-content>
+                          <v-row wrap align-center white class="pl-5 pr-5">
                             <v-col cols="12" md="12" sm="12" xs="12">
-                                <v-divider :inset="false" class="divider"></v-divider>
-                                <span class="section-label">Alterar senha</span>
+                              <v-divider :inset="false" class="divider"></v-divider>
+                              <span class="section-label">Senha atual</span>
                             </v-col>
                             <v-col cols="12" md="6" sm="6" xs="12">
-                                <v-text-field
-                                        v-model="dadosGerais.senha"
-                                        ref="senha"
-                                        data-vv-name="pass"
-                                        counter="20"
-                                        maxlength="20"
-                                        prepend-inner-icon="mdi-lock"
-                                        :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-                                        :type="showPassword ? 'text' : 'password'"
-                                        @click:append="showPassword = !showPassword"
-                                        v-validate="{min: 4, max: 20}"
-                                        :error-messages="errors.collect('pass')"
-                                >
-                                    <template v-slot:message>
-                                        Deve possuir entre 4 a 20 caracteres
-                                    </template>
-                                </v-text-field>
+                              <v-text-field
+                                  v-model="dadosGerais.senhaAtual"
+                                  name="senhaAtual"
+                                  prepend-inner-icon="mdi-lock"
+                                  :append-icon="showPasswordAtual ? 'mdi-eye' : 'mdi-eye-off'"
+                                  :type="showPasswordAtual ? 'text' : 'password'"
+                                  @click:append="showPasswordAtual = !showPasswordAtual"
+                              />
+                            </v-col>
+                          </v-row>
+                          <v-row wrap align-center white class="pl-5 pr-5">
+                            <v-col cols="12" md="12" sm="12" xs="12">
+                              <v-divider :inset="false" class="divider"></v-divider>
+                              <span class="section-label">Nova senha</span>
                             </v-col>
                             <v-col cols="12" md="6" sm="6" xs="12">
-                                <v-text-field
-                                        v-model="senhaDois"
-                                        data-vv-name="senha2"
-                                        counter="20"
-                                        maxlength="20"
-                                        :append-icon="showPassword2 ? 'mdi-eye' : 'mdi-eye-off'"
-                                        :type="showPassword2 ? 'text' : 'password'"
-                                        @click:append="showPassword2 = !showPassword2"
-                                        :error-messages="errors.collect('senha2')"
-                                        v-validate="{min: 4, max: 20, confirmed: 'senha'}"
-                                >
-                                    <template v-slot:message>
-                                        As senhas não se coincidem
-                                    </template>
-                                </v-text-field>
+                              <v-text-field
+                                  v-model="dadosGerais.senha"
+                                  ref="senha"
+                                  data-vv-name="pass"
+                                  counter="20"
+                                  maxlength="20"
+                                  prepend-inner-icon="mdi-lock"
+                                  :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+                                  :type="showPassword ? 'text' : 'password'"
+                                  @click:append="showPassword = !showPassword"
+                                  v-validate="{min: 4, max: 20}"
+                                  :error-messages="errors.collect('pass')"
+                              >
+                                <template v-slot:message>
+                                  Deve possuir entre 4 a 20 caracteres
+                                </template>
+                              </v-text-field>
                             </v-col>
-                        </v-row>
+                            <v-col cols="12" md="6" sm="6" xs="12">
+                              <v-text-field
+                                  v-model="senhaDois"
+                                  data-vv-name="senha2"
+                                  counter="20"
+                                  maxlength="20"
+                                  :append-icon="showPassword2 ? 'mdi-eye' : 'mdi-eye-off'"
+                                  :type="showPassword2 ? 'text' : 'password'"
+                                  @click:append="showPassword2 = !showPassword2"
+                                  :error-messages="errors.collect('senha2')"
+                                  v-validate="{min: 4, max: 20, confirmed: 'senha'}"
+                              >
+                                <template v-slot:message>
+                                  As senhas não se coincidem
+                                </template>
+                              </v-text-field>
+                            </v-col>
+                          </v-row>
+                        </v-expansion-panel-content>
+                      </v-expansion-panel>
+                    </v-expansion-panels>
                     </v-container>
                 </v-form>
             </v-card-text>
@@ -352,5 +361,9 @@ export default {
         padding 0px !important
         overflow-x hidden
         height auto
+
+    .trocar-senha-titulo
+        font-weight bold
+        color #666
 
 </style>

@@ -166,6 +166,12 @@
                 </v-text-field>
               </v-col>
             </v-row>
+            <v-expansion-panels>
+              <v-expansion-panel>
+                <v-expansion-panel-header>
+                  <div> <v-icon class="mr-1">vpn_key</v-icon><label class="trocar-senha-titulo">Trocar Senha</label></div>
+                </v-expansion-panel-header>
+                <v-expansion-panel-content>
             <v-row wrap align-center white class="pl-5 pr-5">
               <v-col cols="12" md="12" sm="12" xs="12">
                 <v-divider :inset="false" class="divider"></v-divider>
@@ -224,6 +230,9 @@
                 </v-text-field>
               </v-col>
             </v-row>
+                </v-expansion-panel-content>
+              </v-expansion-panel>
+            </v-expansion-panels>
           </v-card-text>
           <v-card-actions>
             <v-btn
@@ -358,5 +367,9 @@ export default {
   padding-top 10px
   display flex
   justify-content space-between
+
+  .trocar-senha-titulo
+    font-weight bold
+    color #666
 
 </style>

@@ -3,7 +3,7 @@ package br.com.molens.odontoDelta.application.factory.sessaoUsuario;
 import br.com.molens.odontoDelta.application.security.UserSS;
 import br.com.molens.odontoDelta.domain.exception.SessaoUsuarioException;
 import br.com.molens.odontoDelta.domain.interfaces.SessaoUsuarioDataProvider;
-import br.com.molens.odontoDelta.gateway.repository.sessaousuario.SessaoUsuarioDataProviderImpl;
+import br.com.molens.odontoDelta.gateway.repository.sessaoUsuario.SessaoUsuarioDataProviderImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

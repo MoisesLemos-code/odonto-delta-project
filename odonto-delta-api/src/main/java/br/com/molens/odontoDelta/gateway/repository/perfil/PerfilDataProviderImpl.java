@@ -70,6 +70,16 @@ public class PerfilDataProviderImpl implements PerfilDataProvider {
         return repository.buscarPorNomeEmpresa(nome, empresaId);
     }
 
+    @Override
+    public List<Perfil> buscarPorEmpresaId(Long empresaId) {
+        return repository.buscarPorEmpresaId(empresaId);
+    }
+
+    @Override
+    public List<Perfil> buscarAtivosPorEmpresaId(Long empresaId) {
+        return repository.buscarAtivosPorEmpresaId(empresaId);
+    }
+
     private BooleanExpression montarFiltroDeBusca(Perfil.Filtro filtro){
         QPerfil query = QPerfil.perfil;
         BooleanExpression expressaoDeBusca = query.id.isNotNull();

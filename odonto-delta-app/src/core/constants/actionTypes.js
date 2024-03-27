@@ -16,6 +16,9 @@ export default {
         BUSCAR_PERFIL_POR_ID: 'buscarPerfilPorId',
         REMOVER_PERFIL: 'removerPerfil'
     },
+    PERFIL_USUARIO:{
+        BUSCAR_PERFIS_DO_USUARIO: 'buscarPerfisDoUsuario'
+    },
     PERFIL_PERMISSAO: {
         BUSCAR_POR_PERFIL: 'buscarPorPerfil',
         CADASTRAR_PERMISSAO: 'cadastrarPermissao',

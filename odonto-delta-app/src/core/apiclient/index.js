@@ -13,6 +13,7 @@ import relatorios from './RelatoriosApiClient'
 import perfil from './PerfilApiClient'
 import perfilPermissao from './PerfilPermissaoApiClient'
 import permissao from './PermissaoApiClient'
+import perfilUsuario from './PerfilUsuarioApiClient'
 
 export default {
     usuario,
@@ -29,5 +30,6 @@ export default {
     relatorios,
     perfil,
     perfilPermissao,
-    permissao
+    permissao,
+    perfilUsuario
 }
