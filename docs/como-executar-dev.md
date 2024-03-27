@@ -95,6 +95,6 @@ Senha:
 [‹ voltar ao README](../README.md)
 
 -----
-© Copyright 2021 - All rights reserved | Todos os direitos Reservados
+© Copyright 2023 - All rights reserved | Todos os direitos Reservados
 
-__AZ Tecnologia em Gestão__
+__Moisés Lemos__
