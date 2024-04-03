@@ -13,7 +13,7 @@ export default {
             multiSort: false,
             mustSort: false,
             page: 1,
-            size: 6,
+            size: 10,
             sort: ['nome'],
             descending: false,
             sortDesc: [false]

@@ -10,7 +10,7 @@
         <v-spacer v-if="paginas <= 1"/>
         <div class="select-pagination alinhamentoFiltragem">
           <span>Linhas por página:</span>
-          <v-select :items="linhasPorPagina" @change="resetaPage" v-model="paginacaoInterna.rowsPerPage"/>
+          <v-select :items="linhasPorPagina" @change="resetaPage" v-model="paginacaoInterna.size"/>
         </div>
       </div>
     </form-table>
@@ -27,7 +27,7 @@ export default {
     data() {
         return {
             paginacaoInterna: this.paginacao,
-            linhasPorPagina: [6, 10, 25, 50, 100],
+            linhasPorPagina: [10, 25, 50, 100],
         }
     },
     methods: {
