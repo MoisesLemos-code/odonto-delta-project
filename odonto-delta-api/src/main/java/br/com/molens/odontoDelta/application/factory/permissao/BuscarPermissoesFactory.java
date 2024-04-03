@@ -1,7 +1,7 @@
 package br.com.molens.odontoDelta.application.factory.permissao;
 
 import br.com.molens.odontoDelta.domain.interfaces.PermissaoDataProvider;
-import br.com.molens.odontoDelta.domain.usecase.permissao.buscarPermissoes.BuscarPermissoesUsecase;
+import br.com.molens.odontoDelta.domain.usecase.permissao.buscarPermissoesUsuario.BuscarPermissoesUsuarioUsecase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Bean;
@@ -16,8 +16,8 @@ public class BuscarPermissoesFactory {
 
     @Bean("BuscarPermissoesUsecase")
     @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-    public BuscarPermissoesUsecase criar() {
-        return BuscarPermissoesUsecase.builder()
+    public BuscarPermissoesUsuarioUsecase criar() {
+        return BuscarPermissoesUsuarioUsecase.builder()
                 .permissaoDataProvider(permissaoDataProvider)
                 .build();
     }

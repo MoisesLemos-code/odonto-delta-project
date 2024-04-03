@@ -10,5 +10,7 @@ public interface PermissaoDataProvider {
 
     List<Permissao> buscarTodas();
 
+    List<Permissao> buscarTodasPermissoesPorUsuario(Long usuarioId);
+
     Optional<Permissao> buscarPorId(Long id);
 }

@@ -30,8 +30,7 @@ public class BuscarPerfilPermissoesPorPerfilUsecase {
 
         if(perfilPermissaoList.isEmpty()){
             List<Permissao> permissaoList = buscarTodasPermissoes();
-            //TODO -> Remover essa implementação, não inserir permissões perfil!!!! fazer validação com base nas permissões perfil existente para o perfil.
-            perfilPermissaoList = criarPermissoesPerfil(permissaoList, perfil);
+            return setarDadosPermissao(permissaoList, perfil);
         }
 
         return setarDados(perfilPermissaoList);
@@ -59,21 +58,6 @@ public class BuscarPerfilPermissoesPorPerfilUsecase {
         return permissaoDataProvider.buscarTodas();
     }
 
-    private List<PerfilPermissao> criarPermissoesPerfil(List<Permissao> permissaoList, Perfil perfil) {
-        List<PerfilPermissao> perfilPermissaoList = new ArrayList<>();
-        for(Permissao permissao : permissaoList){
-            PerfilPermissao perfilPermissao = PerfilPermissao.builder()
-                    .perfil(perfil)
-                    .permissao(permissao)
-                    .ativo(Boolean.FALSE)
-                    .build();
-
-            perfilPermissaoList.add(perfilPermissao);
-        }
-        perfilPermissaoDataProvider.inserirTodos(perfilPermissaoList);
-        return perfilPermissaoList;
-    }
-
     private BuscarPermissoesPorPerfilOutput setarDados(List<PerfilPermissao> perfilPermissaoList) {
         List<BuscarPermissoesPorPerfilOutput.Permissao> permissaoList = new ArrayList<>();
 
@@ -97,6 +81,32 @@ public class BuscarPerfilPermissoesPorPerfilUsecase {
 
         return BuscarPermissoesPorPerfilOutput.builder()
                 .items(permissaoList)
+                .build();
+    }
+
+    private BuscarPermissoesPorPerfilOutput setarDadosPermissao(List<Permissao> permissaoList, Perfil perfil) {
+        List<BuscarPermissoesPorPerfilOutput.Permissao> permissaoListOutput = new ArrayList<>();
+
+        for(Permissao permissao : permissaoList){
+            BuscarPermissoesPorPerfilOutput.Permissao item = new BuscarPermissoesPorPerfilOutput.Permissao();
+            item.setId(null);
+            item.setPerfilId(perfil.getId());
+            item.setPermissaoId(permissao.getId());
+            item.setNome(permissao.getNome());
+            item.setDescricao(permissao.getDescricao());
+            item.setAtivo(Boolean.FALSE);
+            permissaoListOutput.add(item);
+        }
+
+        permissaoListOutput.sort(new Comparator<BuscarPermissoesPorPerfilOutput.Permissao>() {
+            @Override
+            public int compare(BuscarPermissoesPorPerfilOutput.Permissao p1, BuscarPermissoesPorPerfilOutput.Permissao p2) {
+                return p1.getNome().compareTo(p2.getNome());
+            }
+        });
+
+        return BuscarPermissoesPorPerfilOutput.builder()
+                .items(permissaoListOutput)
                 .build();
     }
 

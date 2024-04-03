@@ -1,4 +1,4 @@
-package br.com.molens.odontoDelta.domain.usecase.permissao.buscarPermissoes;
+package br.com.molens.odontoDelta.domain.usecase.permissao.buscarPermissoesUsuario;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,7 +11,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class BuscarPermissoesOutput {
+public class BuscarPermissoesUsuarioOutput {
 
     private List<Permissao> items;
 

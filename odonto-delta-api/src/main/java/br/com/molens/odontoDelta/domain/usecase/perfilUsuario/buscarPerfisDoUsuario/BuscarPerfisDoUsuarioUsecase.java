@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -49,6 +50,14 @@ public class BuscarPerfisDoUsuarioUsecase {
 
             perfisList.add(perfilUsuario);
         }
+
+        perfisList.sort(new Comparator<BuscarPerfisDoUsuarioOutput.Perfil>() {
+            @Override
+            public int compare(BuscarPerfisDoUsuarioOutput.Perfil p1, BuscarPerfisDoUsuarioOutput.Perfil p2) {
+                return p1.getNome().compareTo(p2.getNome());
+            }
+        });
+
         output.setItems(perfisList);
 
         return output;
@@ -67,6 +76,13 @@ public class BuscarPerfisDoUsuarioUsecase {
 
             permissaoList.add(permissao);
         }
+
+        permissaoList.sort(new Comparator<BuscarPerfisDoUsuarioOutput.Permissao>() {
+            @Override
+            public int compare(BuscarPerfisDoUsuarioOutput.Permissao p1, BuscarPerfisDoUsuarioOutput.Permissao p2) {
+                return p1.getNome().compareTo(p2.getNome());
+            }
+        });
 
         return permissaoList;
     }

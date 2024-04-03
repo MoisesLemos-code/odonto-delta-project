@@ -27,4 +27,14 @@ public class PerfilUsuarioDataProviderImpl implements PerfilUsuarioDataProvider 
     public void remover(Long id) {
         repository.deleteById(id);
     }
+
+    @Override
+    public void inserirTodos(List<PerfilUsuario> perfilUsuarioList) {
+        repository.saveAll(perfilUsuarioList);
+    }
+
+    @Override
+    public void removerTodos(List<PerfilUsuario> perfilUsuarioList) {
+        repository.deleteAll(perfilUsuarioList);
+    }
 }

@@ -20,6 +20,11 @@ public class PermissaoDataProviderImpl implements PermissaoDataProvider {
     }
 
     @Override
+    public List<Permissao> buscarTodasPermissoesPorUsuario(Long usuarioId) {
+        return repository.buscarTodasPermissoesPorUsuario(usuarioId);
+    }
+
+    @Override
     public Optional<Permissao> buscarPorId(Long id) {
         return repository.findById(id);
     }

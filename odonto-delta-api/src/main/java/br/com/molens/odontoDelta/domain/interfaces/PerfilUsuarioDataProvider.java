@@ -13,5 +13,9 @@ public interface PerfilUsuarioDataProvider {
 
     void remover(Long id);
 
+    void inserirTodos(List<PerfilUsuario> perfilUsuarioList);
+
+    void removerTodos(List<PerfilUsuario> perfilUsuarioList);
+
 
 }

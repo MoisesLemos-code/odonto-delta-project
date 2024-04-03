@@ -3,10 +3,13 @@ package br.com.molens.odontoDelta.domain.usecase.perfilPermissao.atualizarPerfil
 import br.com.molens.odontoDelta.domain.exception.AtualizarPerfilPermissaoException;
 import br.com.molens.odontoDelta.domain.interfaces.PerfilPermissaoDataProvider;
 import br.com.molens.odontoDelta.domain.usecase.perfilPermissao.buscarPerfilPermissoesPorPerfil.BuscarPermissoesPorPerfilInput;
+import br.com.molens.odontoDelta.gateway.entity.Perfil;
 import br.com.molens.odontoDelta.gateway.entity.PerfilPermissao;
+import br.com.molens.odontoDelta.gateway.entity.Permissao;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -19,8 +22,7 @@ public class AtualizarPerfilPermissaolUsecase {
 
     public void executar(AtualizarPerfilPermissaoInput input) {
         validarDadosEntrada(input);
-        List<PerfilPermissao> perfilPermissao = buscarPermissoes(input);
-        atualizarPermissao(perfilPermissao, input);
+        atualizarPerfilPermissao(input);
     }
 
     private void validarDadosEntrada(AtualizarPerfilPermissaoInput input) {
@@ -35,15 +37,20 @@ public class AtualizarPerfilPermissaolUsecase {
         }
     }
 
-    private List<PerfilPermissao> buscarPermissoes(AtualizarPerfilPermissaoInput input){
-        return perfilPermissaoDataProvider.buscarPorPerfil(input.getPerfilId());
-    }
+    private void atualizarPerfilPermissao(AtualizarPerfilPermissaoInput input) {
+        List<PerfilPermissao> perfilPermissaoList = new ArrayList<>();
 
-    private void atualizarPermissao(List<PerfilPermissao> perfilPermissaoList, AtualizarPerfilPermissaoInput input) {
+        if(!input.getItems().isEmpty()){
+            for(AtualizarPerfilPermissaoInput.Permissao item : input.getItems()){
+                PerfilPermissao perfilPermissao = new PerfilPermissao();
 
-        for(PerfilPermissao permissao : perfilPermissaoList){
-            Optional<AtualizarPerfilPermissaoInput.Permissao> permissaoInput = input.getItems().stream().filter(item -> item.getId().equals(permissao.getId())).findFirst();
-            permissaoInput.ifPresent(value -> permissao.setAtivo(value.getAtivo()));
+                perfilPermissao.setId(item.getId());
+                perfilPermissao.setPerfil(Perfil.builder().id(input.getPerfilId()).build());
+                perfilPermissao.setPermissao(Permissao.builder().id(item.getPermissaoId()).build());
+                perfilPermissao.setAtivo(item.getAtivo());
+
+                perfilPermissaoList.add(perfilPermissao);
+            }
         }
 
         perfilPermissaoDataProvider.inserirTodos(perfilPermissaoList);

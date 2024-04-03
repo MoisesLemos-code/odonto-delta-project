@@ -17,7 +17,8 @@ export default {
         REMOVER_PERFIL: 'removerPerfil'
     },
     PERFIL_USUARIO:{
-        BUSCAR_PERFIS_DO_USUARIO: 'buscarPerfisDoUsuario'
+        BUSCAR_PERFIS_DO_USUARIO: 'buscarPerfisDoUsuario',
+        ATUALIZAR_PERFIS_DO_USUARIO: 'atualizarPerfisDoUsuario'
     },
     PERFIL_PERMISSAO: {
         BUSCAR_POR_PERFIL: 'buscarPorPerfil',
@@ -26,7 +27,7 @@ export default {
         REMOVER_PERMISSAO: 'removerPermissao'
     },
     PERMISSAO: {
-        BUSCAR_TODAS_PERMISSOES: 'buscarTodasPermissoes',
+        BUSCAR_TODAS_PERMISSOES_USUARIO: 'buscarTodasPermissoes',
     },
     ROTULOS_PERSONALIZADOS: {
         GET_ALL_ROTULOS_PERSONALIZADOS: 'getAllRotulosPersonlizados',

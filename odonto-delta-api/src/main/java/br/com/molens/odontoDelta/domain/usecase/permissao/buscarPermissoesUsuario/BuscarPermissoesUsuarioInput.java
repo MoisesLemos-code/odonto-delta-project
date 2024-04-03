@@ -1,17 +1,16 @@
-package br.com.molens.odontoDelta.domain.usecase.permissao.buscarPermissoes;
+package br.com.molens.odontoDelta.domain.usecase.permissao.buscarPermissoesUsuario;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotNull;
-
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class BuscarPermissoesInput {
+public class BuscarPermissoesUsuarioInput {
 
     private Long empresaId;
+    private Long usuarioId;
 }

@@ -25,6 +25,7 @@ public class AtualizarPerfilPermissaoInput {
     @NoArgsConstructor
     public static class Permissao {
         private Long id;
+        private Long permissaoId;
         private Boolean ativo;
     }
 

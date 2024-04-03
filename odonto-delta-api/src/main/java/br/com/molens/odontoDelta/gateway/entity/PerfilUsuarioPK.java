@@ -19,9 +19,9 @@ import lombok.NoArgsConstructor;
 public class PerfilUsuarioPK implements Serializable {
 
     @Column(name = "PF_ID", nullable = false)
-    private Integer idPerfil;
+    private Long idPerfil;
 
     @Column(name = "US_ID", nullable = false)
-    private Integer idUsuario;
+    private Long idUsuario;
 
 }
