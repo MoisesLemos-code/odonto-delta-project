@@ -7,10 +7,10 @@ import VerificarPerfilUsuario from '@/core/utils/VerificarPerfilUsuario'
 
 import comum from './routes/comum'
 import login from './routes/login'
-import orcamento from './routes/orcamento'
+//import orcamento from './routes/orcamento'
 import cadastros from './routes/cadastros/cadastros'
 import configuracao from './routes/configuracao'
-import relatorios from './routes/relatorios'
+//import relatorios from './routes/relatorios'
 
 let router = new Router({
     routes: [

@@ -7,18 +7,18 @@ import OrcamentoOdontograma from '@/views/pages/orcamento/dados-gerais/passo02/O
 import OrcamentoFinalizacao from '@/views/pages/orcamento/dados-gerais/passo03/OrcamentoFinalizacao'
 
 export default [
-            {
-                path: '/orcamentos',
-                name: 'OrcamentoListagem',
-                component: OrcamentoListagem,
-                meta: {
-                    requiresAuth: true,
-                    page: {
-                        title: 'Orçamentos',
-                        subtitle: 'Lista geral de orçamentos'
-                    }
-                }
-            },
+    {
+        path: '/orcamentos',
+        name: 'OrcamentoListagem',
+        component: OrcamentoListagem,
+        meta: {
+            requiresAuth: true,
+            page: {
+                title: 'Orçamentos',
+                subtitle: 'Lista geral de orçamentos'
+            }
+        }
+    },
     {
         path: '/orcamento',
         name: 'Orcamento',

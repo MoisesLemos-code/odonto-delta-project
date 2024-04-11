@@ -20,3 +20,11 @@ VALUES (nextval('odonto.seq_perfil'), 'Administrador', 'Administrador do sistema
 
 INSERT INTO odonto.tb_perfil (pf_id, pf_nome, pf_descricao, "em_id", "pf_ativo")
 VALUES (nextval('odonto.seq_perfil'), 'Recepcionista', 'Realiza cadastros no geral.', 1, true);
+
+INSERT INTO odonto.tb_perfil_permissao (pp_id, pf_id, pe_id, "pp_ativo")
+VALUES (nextval('odonto.seq_perfil_permissao'), (select pf_id from odonto.tb_perfil where pf_nome = 'Administrador' and em_id = 1),
+        (select pe_id from odonto.tb_permissao where pe_nome = 'ADMINISTRADOR'), true);
+
+INSERT INTO odonto.tb_perfil_usuario(pf_id, us_id)
+VALUES ((select pf_id from odonto.tb_perfil where pf_nome = 'Administrador' and em_id = 1),
+        (select us_id from odonto.tb_usuario where us_nome = 'Administrador' and em_id = 1));

@@ -1,6 +1,5 @@
 <template>
     <v-form class="form-content mt-0 pl-0 pr-0">
-        <modal-gerenciar-cidades v-model="modalCidades" @fechar="fecharModalCidades"/>
         <v-container fluid grid-list-xl white>
             <v-row wrap align-center white class="pl-10 pr-10">
                 <v-col cols="12" md="3" sm="3" xs="12">
@@ -43,7 +42,7 @@
                 </v-col>
                 <v-col cols="12" md="4" sm="4" xs="12">
                     <v-text-field
-                            v-model="dadosGerais.cpfOuCnpj"
+                            v-model="dadosGerais.cnpjCpf"
                             name="cpfCnpj"
                             :placeholder="(dadosGerais.tipo == 1 ? 'Informe o CPF' : 'Informe o CNPJ')"
                             v-mask="(dadosGerais.tipo == 1 ? masks.cpf : masks.cnpj)"
@@ -57,7 +56,7 @@
                 </v-col>
                 <v-col cols="12" md="3" sm="3" xs="12">
                     <date-input
-                            v-model="dadosGerais.dataAniversario"
+                            v-model="dadosGerais.dataNascimento"
                             name-date="dataNascimento"
                             date
                             placeholderDate="Informe a data de nascimento">
@@ -70,7 +69,7 @@
                     <v-switch
                             v-model="dadosGerais.ortodontia"
                             label="Ortodontia"
-                    ></v-switch>
+                    />
                 </v-col>
             </v-row>
             <v-row wrap align-center white class="pl-10 pr-10">
@@ -82,37 +81,15 @@
             <v-row wrap align-center white class="pl-10 pr-10">
                 <v-col cols="12" md="4" sm="3" xs="12">
                     <v-text-field
-                            v-model="dadosGerais.contatoPrincipal"
+                            v-model="dadosGerais.telefone"
                             name="contato principal"
-                            placeholder="Informe o telefone principal"
+                            placeholder="Informe o telefone"
                             v-mask="[masks.tel8, masks.tel9]"
                             v-validate="{required: true}"
                             :error-messages="errors.collect('contato principal')">
                         <template v-slot:label>
-                            Contato principal
+                            Telefone pra contato
                             <span class="ml-1 red--text">*</span>
-                        </template>
-                    </v-text-field>
-                </v-col>
-                <v-col cols="12" md="4" sm="3" xs="12">
-                    <v-text-field
-                            v-model="dadosGerais.contato2"
-                            name="contato2"
-                            placeholder="Informe o segundo contato"
-                            v-mask="[masks.tel8, masks.tel9]">
-                        <template v-slot:label>
-                            Segundo contato
-                        </template>
-                    </v-text-field>
-                </v-col>
-                <v-col cols="12" md="4" sm="3" xs="12">
-                    <v-text-field
-                            v-model="dadosGerais.contato3"
-                            name="contato3"
-                            placeholder="Informe o terceiro contato"
-                            v-mask="[masks.tel8, masks.tel9]">
-                        <template v-slot:label>
-                            Terceiro contato
                         </template>
                     </v-text-field>
                 </v-col>
@@ -139,40 +116,16 @@
                     </v-text-field>
                 </v-col>
                 <v-col cols="12" md="3" sm="3" xs="12">
-                    <v-autocomplete
-                            v-model="dadosGerais.cidadeId"
-                            name="cidade"
-                            placeholder="Selecione a cidade"
-                            :items="cidades"
-                            item-text="nome"
-                            item-value="id"
-                            :filter="filtroComboAutoComplete"
-                            v-validate="{required: true}"
-                            :error-messages="errors.collect('cidade')">
-                        <template v-slot:label>
-                            Cidade
-                            <span class="ml-1 red--text">*</span>
-                        </template>
-                        <template v-slot:item="data">
-                            <label class="auto-complete-item-text">{{data.item.nome}}</label>
-                        </template>
-                        <template v-slot:append-item>
-                            <botao-acao
-                                    class="btn-gerenciar-cidades"
-                                    @click="abrirModalCidades">
-                                <v-icon size="16" color="gray">
-                                    fas fa-cog
-                                </v-icon>
-                                <label class="btn-text-gerenciar-cidades">Gerenciar Cidades</label>
-                            </botao-acao>
-                        </template>
-                    </v-autocomplete>
+                  <buscar-municipio :municipio-id="dadosGerais.municipioId"
+                                    :estado-id="dadosGerais.estadoId"
+                                    @emitirSelecionarCidade="selecionarCidade"
+                  />
                 </v-col>
             </v-row>
             <v-row wrap align-center white class="pl-10 pr-10">
                 <v-col cols="12" md="3" sm="3" xs="12">
                     <v-text-field
-                            v-model="dadosGerais.rua"
+                            v-model="dadosGerais.logradouro"
                             name="rua"
                             placeholder="Informe o nome da rua"
                             counter="100"
@@ -187,7 +140,7 @@
                 </v-col>
                 <v-col cols="12" md="3" sm="3" xs="12">
                     <v-text-field
-                            v-model="dadosGerais.numero"
+                            v-model="dadosGerais.logradouroNumero"
                             name="número"
                             placeholder="Informe o número"
                             counter="50"
@@ -240,34 +193,31 @@
 </template>
 
 <script>
-import {mapActions} from 'vuex'
 import {actionTypes} from '@/core/constants'
 import moment from 'moment'
-import ModalGerenciarCidades from '@/views/modais/cidades/ModalGerenciarCidades'
-import BotaoAcao from '@/views/components/BotaoAcao'
+import BuscarMunicipio from '@/views/components/BuscarMunicipio.vue'
 
 export default {
     name: 'PacienteDadosGeraisCadastro',
-    components: {ModalGerenciarCidades, BotaoAcao},
+    components: {BuscarMunicipio},
     data() {
         return {
             dadosGerais: {
                 nome: null,
                 email: null,
-                cpfOuCnpj: null,
+                cnpjCpf: null,
                 tipo: 1,
-                contatoPrincipal: null,
-                contato2: null,
-                contato3: null,
-                rua: null,
-                numero: null,
+                telefone: null,
+                logradouro: null,
+                logradouroNumero: null,
                 complemento: null,
                 bairro: null,
                 cep: null,
-                cidadeId: null,
-                dataAniversario: null,
+                municipioId: null,
+                estadoId: null,
+                dataNascimento: null,
                 ortodontia: false,
-                status: 1
+                situacao: 'ATIVO',
             },
             masks: {
                 cpf: '###.###.###-##',
@@ -280,40 +230,16 @@ export default {
                 {codigo: 1, nome: 'Pessoa Física'},
                 {codigo: 2, nome: 'Pessoa Jurídica'}
             ],
-            cidades: [],
-            modalCidades: false,
             pacienteId: null
         }
     },
-    async mounted() {
-        await this.buscarCidades()
-    },
     methods: {
-        ...mapActions([
-            actionTypes.CADASTROS.CIDADE.BUSCAR_TODAS_CIDADES_SEM_PAGINACAO,
-            actionTypes.CADASTROS.PACIENTE.CADASTRAR_PACIENTE
-        ]),
-        async buscarCidades() {
-            const resultado = await this.buscarTodasCidadesSemPaginacao()
-            if (resultado) {
-                this.cidades = resultado
-            }
-        },
-        abrirModalCidades() {
-            this.modalCidades = true
-        },
-        async fecharModalCidades() {
-            this.modalCidades = false
-            await this.buscarCidades()
-        },
-        filtroComboAutoComplete(item, queryText) {
-            const text = item.nome.toLowerCase()
-            const searchText = queryText.toLowerCase()
-            return text.indexOf(searchText) > -1
+        selecionarCidade(municipioId){
+            this.dadosGerais.municipioId = municipioId
         },
         formatarData() {
-            if (this.dadosGerais.dataAniversario) {
-                this.dadosGerais.dataAniversario = moment(this.dadosGerais.dataAniversario).format('YYYY-MM-DD')
+            if (this.dadosGerais.dataNascimento) {
+                this.dadosGerais.dataNascimento = moment(this.dadosGerais.dataNascimento).format('YYYY-MM-DD')
             }
         },
         tratarEventoCancelar() {
@@ -323,7 +249,7 @@ export default {
             if (await this.validarDadosFormulario()) {
                 this.formatarData()
                 this.setMensagemLoading('Salvando o paciente...')
-                await this.cadastrarPaciente(this.dadosGerais)
+                await this.$store.dispatch(actionTypes.CADASTROS.PACIENTE.CADASTRAR_PACIENTE, this.dadosGerais)
                 this.pacienteId = this.$store.state.paciente.dadosGerais.id
                 this.mostrarNotificacaoSucessoDefault()
                 await this.$router.push({name: 'PacienteFicha', params: { id: this.pacienteId}})

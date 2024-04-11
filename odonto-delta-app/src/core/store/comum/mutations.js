@@ -10,7 +10,7 @@ export default {
         }
     },
 
-    [mutationTypes.COMUM.EFETUAR_LOGOUT]({ commit }){
+    [mutationTypes.COMUM.EFETUAR_LOGOUT](){
         LocalStorageManager.removeItemStorage()
     },
 
@@ -25,8 +25,6 @@ export default {
 
     [mutationTypes.COMUM.SET_USUARIO_LOGADO](state, usuario) {
         LocalStorageManager.setItemStorage(usuario)
-        console.log('--- SET_USUARIO_LOGADO')
-        console.log(usuario)
         usuario.token = null
         state.comum.usuarioLogado = usuario
     },

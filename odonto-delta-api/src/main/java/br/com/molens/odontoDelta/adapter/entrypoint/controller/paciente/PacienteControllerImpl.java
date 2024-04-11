@@ -14,6 +14,7 @@ import br.com.molens.odontoDelta.domain.usecase.paciente.inserirPaciente.Inserir
 import br.com.molens.odontoDelta.domain.usecase.paciente.inserirPaciente.InserirPacienteUsecase;
 import br.com.molens.odontoDelta.domain.usecase.paciente.removerPacientePorId.RemoverPacientePorIdInput;
 import br.com.molens.odontoDelta.domain.usecase.paciente.removerPacientePorId.RemoverPacientePorIdUsecase;
+import br.com.molens.odontoDelta.domain.usecase.sessaoUsuario.userData.UserDataUsecase;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,8 +30,11 @@ public class PacienteControllerImpl implements PacienteController {
     private RemoverPacientePorIdUsecase removerPacientePorIdUsecase;
     private AtualizarPacienteUsecase atualizarPacienteUsecase;
 
+    private UserDataUsecase userDataUsecase;
+
     @Override
     public ResponseEntity<InserirPacienteOutput> inserir(InserirPacienteInput input) {
+        input.setEmpresaId(userDataUsecase.executar().getEmpresa().getId());
         return new ResponseEntity<>(inserirPacienteUsecase.executar(input), HttpStatus.CREATED);
     }
 
@@ -43,7 +47,8 @@ public class PacienteControllerImpl implements PacienteController {
     }
 
     @Override
-    public ResponseEntity<BuscaPaginadaPacienteOutput> buscar(BuscaPaginadaPacienteInput inputData) {
+    public ResponseEntity<BuscaPaginadaPacienteOutput> buscaPaginada(BuscaPaginadaPacienteInput inputData) {
+        inputData.setEmpresaId(userDataUsecase.executar().getEmpresa().getId());
         BuscaPaginadaPacienteOutput output = buscaPaginadaPacienteUsecase.executar(inputData);
         return new ResponseEntity<>(output, HttpStatus.OK);
     }

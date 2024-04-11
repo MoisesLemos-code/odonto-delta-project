@@ -24,13 +24,13 @@
                  relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
     </changeSet>
 
-    <changeSet id="004-carga-desenv" author="moises.santos" context="desenv">
-        <sqlFile dbms="postgresql" encoding="utf8" path="postgresql/004-carga-desenv.sql"
+    <changeSet id="004-carga-permissoes" author="moises.santos">
+        <sqlFile dbms="postgresql" encoding="utf8" path="postgresql/004-carga-permissoes.sql"
                  relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
     </changeSet>
 
-    <changeSet id="005-carga-permissoes" author="moises.santos">
-        <sqlFile dbms="postgresql" encoding="utf8" path="postgresql/005-carga-permissoes.sql"
+    <changeSet id="005-carga-desenv" author="moises.santos" context="desenv">
+        <sqlFile dbms="postgresql" encoding="utf8" path="postgresql/005-carga-desenv.sql"
                  relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
     </changeSet>
 

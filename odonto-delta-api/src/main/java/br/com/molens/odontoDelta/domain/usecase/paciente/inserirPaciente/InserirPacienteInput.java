@@ -23,20 +23,19 @@ public class InserirPacienteInput {
     private String nome;
     @Email(message = "O parametro 'email' é inválido")
     private String email;
-    @Pattern(regexp = "^\\d{11}$|^\\d{14}$", message = "O parametro 'cpfCnpj' é inválido")
     private String cnpjCpf;
     @NotNull(message = "O atributo 'telefone' não pode ser nulo.")
     private String telefone;
     private String rg;
     @DateFormat(message="O parametro 'dataNascimento' é inválido, o formato esperado yyyy-MM-dd")
     private String dataNascimento;
+    private Boolean ortodontia;
     private Long municipioId;
     private String cep;
     private String bairro;
     private String logradouro;
     private String logradouroNumero;
     private String complemento;
-    @NotNull(message = "O atributo 'empresa' não pode ser nulo.")
     private Long empresaId;
     @EnumType(enumClass = SituacaoPacienteEnum.class, message = "O atributo 'situação' é inválido.")
     private String situacao;

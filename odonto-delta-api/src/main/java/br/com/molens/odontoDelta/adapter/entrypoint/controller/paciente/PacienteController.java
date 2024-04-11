@@ -28,7 +28,7 @@ public interface PacienteController {
 
     @ApiOperation(value = "Busca paginada de Paciente")
     @GetMapping
-    ResponseEntity<BuscaPaginadaPacienteOutput> buscar(@Valid BuscaPaginadaPacienteInput inputData);
+    ResponseEntity<BuscaPaginadaPacienteOutput> buscaPaginada(@Valid BuscaPaginadaPacienteInput inputData);
 
     @ApiOperation(value = "Remove um Paciente")
     @DeleteMapping(value = "{empresaId}/{pacienteId}")

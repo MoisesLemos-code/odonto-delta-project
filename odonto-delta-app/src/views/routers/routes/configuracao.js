@@ -33,7 +33,7 @@ export default [
                     page: {
                         title: 'Gerenciar Usuários'
                     },
-                    perfis: ['ADMINISTRADOR', 'USER_FIND'],
+                    perfis: ['ADMINISTRADOR'],
                 }
             },
             {

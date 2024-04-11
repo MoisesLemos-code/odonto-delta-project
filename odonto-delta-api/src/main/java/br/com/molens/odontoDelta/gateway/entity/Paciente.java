@@ -74,6 +74,9 @@ public class Paciente {
     @Column(name = "pa_situacao")
     private String situacao;
 
+    @Column(name = "pa_ortodontia")
+    private Boolean ortodontia;
+
     @Column(name = "pa_dthr_ultima_visita")
     private LocalDateTime ultimaVisita;
 
@@ -83,8 +86,12 @@ public class Paciente {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Filtro extends FiltroBase {
-        String conteudo;
         private Long empresaId;
+        private String conteudo;
+        private String cpfCnpj;
+        private String telefone;
+        private Long municipioId;
+        private Long estadoId;
     }
 
 }

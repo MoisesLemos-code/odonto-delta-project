@@ -5,6 +5,10 @@ import br.com.molens.odontoDelta.domain.entity.SessaoUsuario;
 import br.com.molens.odontoDelta.domain.exception.SessaoUsuarioException;
 import br.com.molens.odontoDelta.domain.interfaces.SessaoUsuarioDataProvider;
 import br.com.molens.odontoDelta.domain.interfaces.UsuarioDataProvider;
+import br.com.molens.odontoDelta.domain.usecase.permissao.buscarPermissoesUsuario.BuscarPermissoesUsuarioInput;
+import br.com.molens.odontoDelta.domain.usecase.permissao.buscarPermissoesUsuario.BuscarPermissoesUsuarioOutput;
+import br.com.molens.odontoDelta.domain.usecase.permissao.buscarPermissoesUsuario.BuscarPermissoesUsuarioUsecase;
+import br.com.molens.odontoDelta.domain.usecase.permissao.validarPermissoesUsuario.ValidarPermissaoUsuarioInput;
 import br.com.molens.odontoDelta.gateway.entity.Usuario;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,11 +22,13 @@ public class UserDataUsecase {
 
     private UsuarioDataProvider usuarioDataProvider;
     private SessaoUsuarioDataProvider sessaoUsuarioDataProvider;
+    private BuscarPermissoesUsuarioUsecase buscarPermissoesUsuarioUsecase;
 
     public ResponseUserBody executar(){
         SessaoUsuario sessaoUsuario = buscarSessaoUsuario();
         Usuario usuario = buscarUsuario(sessaoUsuario);
-        return setarDados(usuario);
+        BuscarPermissoesUsuarioOutput permissoes = buscarPermissoesUsuario(usuario);
+        return setarDados(usuario, permissoes);
     }
 
     private SessaoUsuario buscarSessaoUsuario() {
@@ -37,8 +43,14 @@ public class UserDataUsecase {
         return usuario.get();
     }
 
-    private ResponseUserBody setarDados(Usuario usuario) {
+    private BuscarPermissoesUsuarioOutput buscarPermissoesUsuario(Usuario usuario) {
+        return buscarPermissoesUsuarioUsecase.executar(BuscarPermissoesUsuarioInput.builder()
+                .usuarioId(usuario.getId())
+                .empresaId(usuario.getEmpresa().getId())
+                .build());
+    }
 
+    private ResponseUserBody setarDados(Usuario usuario, BuscarPermissoesUsuarioOutput permissoes) {
 
         return ResponseUserBody.builder()
                 .id(usuario.getId())
@@ -49,16 +61,20 @@ public class UserDataUsecase {
                         .nome(usuario.getEmpresa().getNome())
                         .razaoSocial(usuario.getEmpresa().getRazaoSocial())
                         .build())
-                .permissao(setarPermissoes(usuario))
+                .permissao(setarPermissoes(permissoes))
                 .build();
     }
 
-    private List<String> setarPermissoes(Usuario usuario) {
-        List<String> permissoes = new ArrayList<>();
-        if(usuario.getLogin().equals("admin")){
-            permissoes.add("ADMINISTRADOR");
+    private List<String> setarPermissoes(BuscarPermissoesUsuarioOutput permissoes) {
+        List<String> permissoesList = new ArrayList<>();
+
+        if(!permissoes.getItems().isEmpty()){
+            for(BuscarPermissoesUsuarioOutput.Permissao permissao : permissoes.getItems()){
+                permissoesList.add(permissao.getNome());
+            }
         }
-        return permissoes;
+
+        return permissoesList;
     }
 
 }

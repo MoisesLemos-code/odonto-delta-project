@@ -28,18 +28,5 @@ public class BuscaPaginadaPacienteOutputConverter {
 
     private static class BuscarClientesOutputItemConverter extends GenericConverter<Paciente, BuscaPaginadaPacienteOutput.Item> {
 
-        @Override
-        public BuscaPaginadaPacienteOutput.Item to(Paciente source) {
-            BuscaPaginadaPacienteOutput.Item target = super.to(source);
-
-            if (Objects.nonNull(source.getEmpresa())) {
-                target.setEmpresa(Empresa.builder()
-                        .id(source.getEmpresa().getId())
-                        .build());
-            }
-
-            return target;
-        }
-
     }
 }

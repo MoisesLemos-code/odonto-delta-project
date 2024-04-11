@@ -7,12 +7,13 @@ class PacienteApiClient {
         return axios.get('/paciente/all')
     }
 
-    async buscarTodos(filtros, paginacao) {
+    async buscarTodosPacientes(filtros, paginacao) {
         const url = SearchUrlBuilder.buildAvanced(
             '/paciente',
             filtros,
             paginacao
         )
+        console.log(url)
         return axios.get(url)
     }
 
@@ -26,7 +27,7 @@ class PacienteApiClient {
     }
 
     async cadastrar(dados) {
-        return axios.post('/paciente/insert/', dados)
+        return axios.post('/paciente/inserir/', dados)
     }
 
     async editar(dados) {

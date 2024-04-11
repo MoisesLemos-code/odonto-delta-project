@@ -19,17 +19,10 @@ export default {
             }
         },
         paginacao: {
-            groupBy: [],
-            groupDesc: [],
-            itemsPerPage: 10,
-            multiSort: false,
-            mustSort: false,
             page: 1,
-            rowsPerPage: 10,
-            sortBy: ['nome'],
-            descending: false,
-            sortDesc: [false],
-            empresaId: 0,
+            size: 10,
+            sort: 'nome',
+            direction: 'ASC',
         }
     },
     resultadoBuscaTodosPacientesOrtodontia: {
@@ -51,16 +44,10 @@ export default {
             }
         },
         paginacao: {
-            groupBy: [],
-            groupDesc: [],
-            itemsPerPage: 10,
-            multiSort: false,
-            mustSort: false,
             page: 1,
-            rowsPerPage: 10,
-            sortBy: ['nome'],
-            descending: false,
-            sortDesc: [false]
+            size: 10,
+            sort: 'nome',
+            direction: 'ASC',
         }
     }
 }

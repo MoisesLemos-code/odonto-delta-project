@@ -32,4 +32,3 @@ VALUES (nextval('odonto.seq_permissao'), 'USUARIO_ATUALIZAR', 'Permite atualizar
 
 INSERT INTO odonto.tb_permissao (pe_id, pe_nome, pe_descricao)
 VALUES (nextval('odonto.seq_permissao'), 'USUARIO_DELETAR', 'Permite excluir cadastros de usuários.');
-

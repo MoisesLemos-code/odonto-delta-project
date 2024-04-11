@@ -65,6 +65,10 @@ public class Perfil {
     @OneToMany(mappedBy = "perfil", cascade = CascadeType.ALL)
     private List<PerfilPermissao> perfilPermissaoList;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "perfil", cascade = CascadeType.ALL)
+    private List<PerfilUsuario> perfilUsuarioList;
+
     @EqualsAndHashCode(callSuper = true)
     @Data
     @Builder

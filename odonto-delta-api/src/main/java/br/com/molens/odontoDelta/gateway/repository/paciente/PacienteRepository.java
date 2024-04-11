@@ -17,7 +17,7 @@ public interface PacienteRepository extends JpaRepository<Paciente, Long>, Query
     @Query("SELECT obj FROM Paciente obj WHERE obj.id = :pacienteId and obj.empresa.id = :empresaId")
     Optional<Paciente> buscarPorId(@Param("pacienteId") Long pacienteId, @Param("empresaId") Long empresaId);
 
-    boolean existsByCnpjCpfAndEmpresa(String cpfCnpj, Long empresaId);
+    boolean existsByCnpjCpfAndEmpresaId(String cpfCnpj, Long empresaId);
 
     @Transactional(readOnly = true)
     @Query("SELECT obj FROM Paciente obj WHERE obj.cnpjCpf = :cnpjCpf and obj.empresa.id = :empresaId")

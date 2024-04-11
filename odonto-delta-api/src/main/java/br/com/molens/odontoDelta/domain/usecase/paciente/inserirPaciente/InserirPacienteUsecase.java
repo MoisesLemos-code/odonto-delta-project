@@ -33,7 +33,7 @@ public class InserirPacienteUsecase {
 
     private void validarDadosEntrada(InserirPacienteInput input) {
 
-        if (Objects.isNull(input.getEmpresaId()) || input.getEmpresaId() == 0) {
+        if (Objects.isNull(input.getEmpresaId())) {
             throw new InserirPacienteException("Identificador de empresa inválido.");
         }
     }

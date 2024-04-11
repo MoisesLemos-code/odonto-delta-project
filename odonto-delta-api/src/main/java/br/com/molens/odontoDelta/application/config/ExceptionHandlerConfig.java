@@ -6,6 +6,7 @@ import br.com.molens.odontoDelta.domain.exception.AtualizarPerfilException;
 import br.com.molens.odontoDelta.domain.exception.AtualizarPerfilPermissaoException;
 import br.com.molens.odontoDelta.domain.exception.AtualizarPerfilUsuarioException;
 import br.com.molens.odontoDelta.domain.exception.AtualizarUsuarioException;
+import br.com.molens.odontoDelta.domain.exception.BuscaPaginadaPacienteException;
 import br.com.molens.odontoDelta.domain.exception.BuscarPacientePorIdException;
 import br.com.molens.odontoDelta.domain.exception.BuscarPerfilPorIdException;
 import br.com.molens.odontoDelta.domain.exception.BuscarPerfisDoUsuarioException;
@@ -21,6 +22,7 @@ import br.com.molens.odontoDelta.domain.exception.RemoverPacientePorIdException;
 import br.com.molens.odontoDelta.domain.exception.RemoverPerfilPorIdException;
 import br.com.molens.odontoDelta.domain.exception.RemoverPermissaoPorIdException;
 import br.com.molens.odontoDelta.domain.exception.SessaoUsuarioException;
+import br.com.molens.odontoDelta.domain.exception.ValidarPermissaoUsuarioException;
 import br.com.molens.odontoDelta.utils.exception.ExceptionCommons;
 import br.com.molens.odontoDelta.utils.exception.ExceptionServer;
 import br.com.molens.odontoDelta.utils.exception.ExceptionValidFields;
@@ -117,6 +119,8 @@ public class ExceptionHandlerConfig {
                     BuscarPerfisDoUsuarioException.class,
                     AtualizarPerfilUsuarioException.class,
                     BuscarPermissoesUsuarioException.class,
+                    ValidarPermissaoUsuarioException.class,
+                    BuscaPaginadaPacienteException.class,
             })
     public ResponseEntity<ExceptionServer> handlerMethodArgumentNotValidException(
             RuntimeException exception) {

@@ -4,19 +4,20 @@ import br.com.molens.odontoDelta.domain.entity.ListaPaginada;
 import br.com.molens.odontoDelta.domain.interfaces.PacienteDataProvider;
 import br.com.molens.odontoDelta.gateway.entity.Paciente;
 import br.com.molens.odontoDelta.gateway.entity.QPaciente;
-import br.com.molens.odontoDelta.utils.HelpUtil;
 import br.com.molens.odontoDelta.utils.ConstrutorPaginacao;
+import br.com.molens.odontoDelta.utils.HelpUtil;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.StringExpression;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Component
@@ -32,7 +33,7 @@ public class PacienteDataProviderImpl implements PacienteDataProvider {
 
     @Override
     public boolean existeCnpjCpf(String cpfCnpj, Long empresaId) {
-        return repository.existsByCnpjCpfAndEmpresa(cpfCnpj, empresaId);
+        return repository.existsByCnpjCpfAndEmpresaId(cpfCnpj, empresaId);
     }
 
     @Override
@@ -74,16 +75,33 @@ public class PacienteDataProviderImpl implements PacienteDataProvider {
 
     private BooleanExpression montarFiltroDeBusca(Paciente.Filtro filtro){
         QPaciente clienteQuery = QPaciente.paciente;
-        BooleanExpression expressaoDeBusca = clienteQuery.id.isNotNull();
+        BooleanExpression expressaoDeBusca = clienteQuery.empresa.id.eq(filtro.getEmpresaId());
 
-        if (!StringUtils.isEmpty(filtro.getConteudo())) {
+        if (StringUtils.isNotEmpty(filtro.getConteudo())) {
             BooleanExpression filtrosParaBusca = compararSemAcentuacao(clienteQuery.nome, filtro.getConteudo())
                     .or(compararSemAcentuacao(clienteQuery.cnpjCpf, filtro.getConteudo()))
-                    .or(compararSemAcentuacao(clienteQuery.email, filtro.getConteudo()))
-                    .or(compararSemAcentuacao(clienteQuery.telefone, filtro.getConteudo()))
-                    .and(clienteQuery.empresa.id.eq(filtro.getEmpresaId()));
+                    .or(compararSemAcentuacao(clienteQuery.telefone, filtro.getConteudo()));
             expressaoDeBusca = expressaoDeBusca.and(filtrosParaBusca);
+        } else {
+            if(StringUtils.isNotEmpty(filtro.getCpfCnpj())){
+                BooleanExpression filtrosParaBusca = compararSemAcentuacao(clienteQuery.cnpjCpf, filtro.getCpfCnpj());
+                expressaoDeBusca = expressaoDeBusca.and(filtrosParaBusca);
+            }
+            if(StringUtils.isNotEmpty(filtro.getTelefone())){
+                BooleanExpression filtrosParaBusca = compararSemAcentuacao(clienteQuery.telefone, filtro.getTelefone());
+                expressaoDeBusca = expressaoDeBusca.and(filtrosParaBusca);
+            }
+            if(Objects.nonNull(filtro.getMunicipioId())){
+                BooleanExpression filtrosParaBusca = clienteQuery.municipio.id.eq(filtro.getMunicipioId());
+                expressaoDeBusca = expressaoDeBusca.and(filtrosParaBusca);
+            }
+            if(Objects.nonNull(filtro.getEstadoId())){
+                BooleanExpression filtrosParaBusca = clienteQuery.municipio.estado.id.eq(filtro.getEstadoId());
+                expressaoDeBusca = expressaoDeBusca.and(filtrosParaBusca);
+            }
         }
+
+
         return expressaoDeBusca;
     }
 

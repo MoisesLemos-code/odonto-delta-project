@@ -3,15 +3,14 @@ import {actionTypes, mutationTypes} from '@/core/constants'
 
 export default {
 
-    async [actionTypes.CADASTROS.PACIENTE.BUSCAR_TODOS_PACIENTES_SEM_PAGINACAO]({commit}) {
+    async [actionTypes.CADASTROS.PACIENTE.BUSCAR_TODOS_PACIENTES_SEM_PAGINACAO]() {
         const {data} = await api.paciente.buscarTodosSemPaginacao()
         return data
     },
 
-    async [actionTypes.CADASTROS.PACIENTE.BUSCAR_TODOS_PACIENTES]({state}, empresaId) {
+    async [actionTypes.CADASTROS.PACIENTE.BUSCAR_TODOS_PACIENTES]({state}) {
         const {filtros, paginacao} = state.resultadoBuscaTodosPacientes
-        paginacao.empresaId = empresaId
-        const {data} = await api.paciente.buscarTodos(filtros, paginacao)
+        const {data} = await api.paciente.buscarTodosPacientes(filtros, paginacao)
         return data
     },
 

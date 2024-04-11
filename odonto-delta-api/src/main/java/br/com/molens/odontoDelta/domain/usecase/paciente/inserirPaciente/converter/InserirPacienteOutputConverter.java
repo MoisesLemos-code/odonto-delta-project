@@ -5,6 +5,7 @@ import br.com.molens.odontoDelta.domain.usecase.paciente.inserirPaciente.Inserir
 import br.com.molens.odontoDelta.gateway.entity.Empresa;
 import br.com.molens.odontoDelta.gateway.entity.Municipio;
 import br.com.molens.odontoDelta.gateway.entity.Paciente;
+import br.com.molens.odontoDelta.utils.HelpUtil;
 import br.com.molens.odontoDelta.utils.converter.GenericConverter;
 
 import java.text.ParseException;
@@ -20,6 +21,9 @@ public class InserirPacienteOutputConverter extends GenericConverter<Paciente, I
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
             target.setDataNascimento(sdf.parse(source.getDataNascimento()));
+            target.setCnpjCpf(HelpUtil.obterApenasNumeros(source.getCnpjCpf()));
+            target.setCep(HelpUtil.obterApenasNumeros(source.getCep()));
+            target.setTelefone(HelpUtil.obterApenasNumeros(source.getTelefone()));
 
             if (Objects.nonNull(source.getEmpresaId())) {
                 target.setEmpresa(Empresa.builder()

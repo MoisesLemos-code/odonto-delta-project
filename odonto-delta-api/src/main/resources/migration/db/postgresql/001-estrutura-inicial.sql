@@ -9,9 +9,7 @@ Database: PostgreSQL 10
 
 
 -- Create schemas section -------------------------------------------------
-
-COMMENT ON SCHEMA "odonto" IS 'standard odonto schema'
-;
+COMMENT ON SCHEMA "odonto" IS 'standard odonto schema';
 
 -- Create sequences section -------------------------------------------------
 
@@ -503,6 +501,7 @@ CREATE TABLE "odonto"."tb_paciente"
     "pa_complemento" varchar(50),
     "em_id" Integer,
     "pa_situacao" varchar(50),
+    "pa_ortodontia" Boolean DEFAULT false,
     "pa_dthr_ultima_visita" timestamp(6),
     "pa_dthr_cadastro" timestamp(6),
     "pa_dthr_alteracao" timestamp(6),

@@ -49,6 +49,9 @@
                 </template>
               </v-text-field>
             </v-col>
+            <v-col cols="12" md="6" sm="6" xs="12">
+              <v-checkbox v-model="dadosGerais.ativo" label="Perfil ativo" />
+            </v-col>
           </v-row>
           <v-row wrap align-center white class="pl-5 pr-5">
             <div class="header-permissao-crud">

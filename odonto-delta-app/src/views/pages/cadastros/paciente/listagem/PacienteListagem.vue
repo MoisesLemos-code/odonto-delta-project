@@ -83,9 +83,10 @@ export default {
             await this.buscaTodosPacientes()
         },
         async buscaTodosPacientes() {
-            this.empresaId = this.$store.state.comum.usuarioLogado.empresa.id
-            const resultado = await this.buscarTodosPacientes(this.empresaId)
+            const resultado = await this.buscarTodosPacientes()
             if (resultado) {
+                console.log('---buscaTodosPacientes')
+                console.log(resultado)
                 this.itens = resultado.content
                 this.paginas = resultado.totalPages
                 this.totalItens = resultado.totalElements
