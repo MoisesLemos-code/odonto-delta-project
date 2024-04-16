@@ -23,7 +23,6 @@ public class AtualizarPacienteInput {
     private String nome;
     @Email(message = "O parametro 'email' é inválido")
     private String email;
-    @Pattern(regexp = "^\\d{11}$|^\\d{14}$", message = "O parametro 'cpfCnpj' é inválido")
     private String cnpjCpf;
     @NotNull(message = "O atributo 'telefone' não pode ser nulo.")
     private String telefone;
@@ -36,7 +35,6 @@ public class AtualizarPacienteInput {
     private String logradouro;
     private String logradouroNumero;
     private String complemento;
-    @NotNull(message = "O atributo 'empresaId' não pode ser nulo.")
     private Long empresaId;
     @EnumType(enumClass = SituacaoPacienteEnum.class, message = "O atributo 'situação' é inválido.")
     private String situacao;

@@ -58,7 +58,6 @@
                     <date-input
                             v-model="dadosGerais.dataNascimento"
                             name-date="dataNascimento"
-                            date
                             placeholderDate="Informe a data de nascimento">
                         <template v-slot:label-date>
                             Nascimento
@@ -196,10 +195,11 @@
 import {actionTypes} from '@/core/constants'
 import moment from 'moment'
 import BuscarMunicipio from '@/views/components/BuscarMunicipio.vue'
+import DateInput from '@/views/components/DateInput.vue'
 
 export default {
     name: 'PacienteDadosGeraisCadastro',
-    components: {BuscarMunicipio},
+    components: {DateInput, BuscarMunicipio},
     data() {
         return {
             dadosGerais: {
@@ -239,7 +239,7 @@ export default {
         },
         formatarData() {
             if (this.dadosGerais.dataNascimento) {
-                this.dadosGerais.dataNascimento = moment(this.dadosGerais.dataNascimento).format('YYYY-MM-DD')
+                this.dadosGerais.dataNascimento = moment(this.dadosGerais.dataNascimento).add(5, 'hours').format('YYYY-MM-DD')
             }
         },
         tratarEventoCancelar() {
@@ -249,8 +249,8 @@ export default {
             if (await this.validarDadosFormulario()) {
                 this.formatarData()
                 this.setMensagemLoading('Salvando o paciente...')
-                await this.$store.dispatch(actionTypes.CADASTROS.PACIENTE.CADASTRAR_PACIENTE, this.dadosGerais)
-                this.pacienteId = this.$store.state.paciente.dadosGerais.id
+                const resultado = await this.$store.dispatch(actionTypes.CADASTROS.PACIENTE.CADASTRAR_PACIENTE, this.dadosGerais)
+                this.pacienteId = resultado.pacienteId
                 this.mostrarNotificacaoSucessoDefault()
                 await this.$router.push({name: 'PacienteFicha', params: { id: this.pacienteId}})
             }

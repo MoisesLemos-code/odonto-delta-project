@@ -13,15 +13,13 @@ export default {
             type: String,
             required: true
         },
-        route: Object
+        route: Object,
     },
     methods: {
         voltar() {
             if(this.route){
                 this.$router.push(this.route)
-                return
             }
-            window.history.back()
         }
     }
 }

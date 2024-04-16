@@ -20,7 +20,9 @@ public class InserirPacienteOutputConverter extends GenericConverter<Paciente, I
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
-            target.setDataNascimento(sdf.parse(source.getDataNascimento()));
+            if(Objects.nonNull(source.getDataNascimento())){
+                target.setDataNascimento(sdf.parse(source.getDataNascimento()));
+            }
             target.setCnpjCpf(HelpUtil.obterApenasNumeros(source.getCnpjCpf()));
             target.setCep(HelpUtil.obterApenasNumeros(source.getCep()));
             target.setTelefone(HelpUtil.obterApenasNumeros(source.getTelefone()));

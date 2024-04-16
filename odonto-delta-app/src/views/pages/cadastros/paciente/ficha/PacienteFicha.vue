@@ -19,7 +19,6 @@
 </template>
 
 <script>
-import {mapActions} from 'vuex'
 import {actionTypes} from '@/core/constants'
 import PacienteFichaCabecalho from '@/views/pages/cadastros/paciente/ficha/PacienteFichaCabecalho'
 import ConfirmModal from '@/views/components/ConfirmModal'
@@ -37,10 +36,8 @@ export default {
         return {
             dadosGerais: {
                 nome: null,
-                cidade: {
-                    nome: null,
-                    estado: { sigla: null }
-                },
+                cidade: null,
+                estado: null,
                 ficha: {
                     historiaMedica: {}
                 }
@@ -53,28 +50,18 @@ export default {
         await this.buscarPaciente()
     },
     methods: {
-        ...mapActions([
-            actionTypes.CADASTROS.PACIENTE.EDITAR_PACIENTE,
-            actionTypes.CADASTROS.PACIENTE.BUSCAR_PACIENTE_POR_ID,
-            actionTypes.CADASTROS.PACIENTE.EXCLUIR_PACIENTE,
-            actionTypes.CADASTROS.PACIENTE.FICHA.EDITAR_FICHA,
-        ]),
         async buscarPaciente() {
             if (this.$route.params.id) {
-                const resposta = await this.buscarPacientePorId(this.$route.params.id)
+                const resposta = await this.$store.dispatch(actionTypes.CADASTROS.PACIENTE.BUSCAR_PACIENTE_POR_ID, this.$route.params.id)
                 if (resposta) {
                     this.dadosGerais = resposta
                     this.pacienteId = this.dadosGerais.id
-                    this.setarCidade()
                 }
             }
         },
         async tratarEventoSalvarFicha(dados) {
             dados = {...dados, id: this.pacienteId}
-            await this.editarFicha(dados)
-        },
-        setarCidade() {
-            this.dadosGerais.cidadeId = this.dadosGerais.cidade.id
+            await this.$store.dispatch(actionTypes.CADASTROS.PACIENTE.EDITAR_PACIENTE, dados)
         },
         fecharModalExcluir() {
             this.modalExcluir = false
@@ -83,9 +70,9 @@ export default {
             this.modalExcluir = true
         },
         async excluirPacienteSelecionado() {
-            await this.excluirPaciente(this.pacienteId)
+            await this.$store.dispatch(actionTypes.CADASTROS.PACIENTE.EXCLUIR_PACIENTE, this.$route.params.id)
             this.fecharModalExcluir()
-            this.$router.push({name: this.$route.meta.rotaOrigem})
+            this.$router.push({name: this.$store.state.paciente.rotaOrigem})
             this.mostrarNotificacaoSucessoDefault()
         },
         editarPaciente() {

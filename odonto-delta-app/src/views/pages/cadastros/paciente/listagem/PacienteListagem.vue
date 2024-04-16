@@ -49,7 +49,7 @@
 
 <script>
 import _ from 'lodash'
-import {mapActions, mapMutations} from 'vuex'
+import {mapMutations} from 'vuex'
 import {actionTypes, mutationTypes} from '@/core/constants'
 import PacienteListagemTabela from '@/views/pages/cadastros/paciente/listagem/PacienteListagemTabela'
 import PesquisaAvancada from '@/views/components/PesquisaAvancada'
@@ -69,7 +69,6 @@ export default {
         }
     },
     methods: {
-        ...mapActions([actionTypes.CADASTROS.PACIENTE.BUSCAR_TODOS_PACIENTES]),
         ...mapMutations([
             mutationTypes.CADASTROS.PACIENTE.SET_FILTROS_BUSCA_TODOS_PACIENTES,
             mutationTypes.CADASTROS.PACIENTE.SET_PAGINACAO_BUSCA_TODOS_PACIENTES,
@@ -80,14 +79,14 @@ export default {
         },
         async buscar() {
             this.setFiltrosBuscaTodosPacientes(this.getFiltrosInterno())
-            await this.buscaTodosPacientes()
+            await this.buscarTodosPacientes()
         },
-        async buscaTodosPacientes() {
-            const resultado = await this.buscarTodosPacientes()
+        async buscarTodosPacientes() {
+            const resultado = await this.$store.dispatch(actionTypes.CADASTROS.PACIENTE.BUSCAR_TODOS_PACIENTES)
             if (resultado) {
                 console.log('---buscaTodosPacientes')
                 console.log(resultado)
-                this.itens = resultado.content
+                this.itens = resultado.items
                 this.paginas = resultado.totalPages
                 this.totalItens = resultado.totalElements
             }

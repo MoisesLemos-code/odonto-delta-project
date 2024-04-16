@@ -16,7 +16,7 @@
       </v-col>
       <v-col class="headerCabecalho pl-0" md="3" sm="3" xs="6">
         <span class="font-weight-bold">Cidade</span>
-        <p class="mb-0 text-truncate">{{ paciente.cidade.nome | textoSemValor }} - {{ paciente.cidade.estado.sigla | textoSemValor}}</p>
+        <p class="mb-0 text-truncate">{{ paciente.cidade | textoSemValor }} - {{ paciente.estado | textoSemValor}}</p>
       </v-col>
       <v-col class="headerCabecalho" md="5" sm="5" xs="6">
         <div class="ficha-header-actions">

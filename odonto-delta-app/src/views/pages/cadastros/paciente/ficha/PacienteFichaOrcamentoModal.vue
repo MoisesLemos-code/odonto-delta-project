@@ -41,7 +41,6 @@
 </template>
 
 <script>
-import {mapActions} from 'vuex'
 import {actionTypes} from '@/core/constants'
 import statusOrcamento from '@/core/constants/enums/statusOrcamento'
 
@@ -61,11 +60,8 @@ export default {
         await this.setarDadosGerais()
     },
     methods: {
-        ...mapActions([
-            actionTypes.ORCAMENTO.BURCAR_ORCAMENTO_MODAL_POR_ID
-        ]),
         async setarDadosGerais() {
-            this.dadosGerais = await this.buscarOrcamentoModalPorId(this.item.id)
+            this.dadosGerais = await this.$store.dispatch(actionTypes.ORCAMENTO.BURCAR_ORCAMENTO_MODAL_POR_ID, this.item.id)
         },
         fecharModal() {
             this.$emit('fecharEdicao')

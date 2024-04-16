@@ -11,17 +11,12 @@
                             <v-row>
                                 <v-col cols="12" md="3" sm="6" xs="12">
                                     <span class="font-weight-bold label">CPF/CNPJ</span>
-                                    <p class="mb-0 text-truncate texto">{{ formatarCpfCnpj(paciente.cpfOuCnpj) | textoSemValor }}</p>
-                                </v-col>
-                                <v-col cols="12" md="3" sm="6" xs="12">
-                                    <span class="font-weight-bold label">Tipo</span>
-                                    <p class="mb-0 text-truncate texto">{{ paciente.tipo | filterEnum(tipoPaciente)
-                                        }}</p>
+                                    <p class="mb-0 text-truncate texto">{{ paciente.cnpjCpf | formatarCpfCnpj }}</p>
                                 </v-col>
                                 <v-col cols="12" md="3" sm="6" xs="12">
                                     <span class="font-weight-bold label">Data aniversário</span>
-                                    <p class="mb-0 text-truncate texto">{{ paciente.dataAniversario |
-                                        filterDate(paciente.dataAniversario) }}</p>
+                                    <p class="mb-0 text-truncate texto">{{ paciente.dataNascimento |
+                                        filterDate(paciente.dataNascimento) }}</p>
                                 </v-col>
                                 <v-col cols="12" md="3" sm="6" xs="12">
                                     <span class="font-weight-bold label">E-mail</span>
@@ -29,11 +24,11 @@
                                 </v-col>
                                 <v-col cols="12" md="3" sm="6" xs="12">
                                     <span class="font-weight-bold label">Rua</span>
-                                    <p class="mb-0 text-truncate texto">{{ paciente.rua | textoSemValor }}</p>
+                                    <p class="mb-0 text-truncate texto">{{ paciente.logradouro | textoSemValor }}</p>
                                 </v-col>
                                 <v-col cols="12" md="3" sm="6" xs="12">
                                     <span class="font-weight-bold label">Número</span>
-                                    <p class="mb-0 text-truncate texto">{{ paciente.numero | textoSemValor }}</p>
+                                    <p class="mb-0 text-truncate texto">{{ paciente.logradouroNumero | textoSemValor }}</p>
                                 </v-col>
                                 <v-col cols="12" md="3" sm="6" xs="12">
                                     <span class="font-weight-bold label">Bairro</span>
@@ -41,7 +36,7 @@
                                 </v-col>
                                 <v-col cols="12" md="3" sm="6" xs="12">
                                     <span class="font-weight-bold label">CEP</span>
-                                    <p class="mb-0 text-truncate texto">{{ paciente.cep | textoSemValor }}</p>
+                                    <p class="mb-0 text-truncate texto">{{ paciente.cep | formatarCEP }}</p>
                                 </v-col>
                                 <v-col cols="12" md="3" sm="6" xs="12">
                                     <span class="font-weight-bold label">Complemento</span>
@@ -49,18 +44,8 @@
                                 </v-col>
                                 <v-col cols="12" md="3" sm="6" xs="12">
                                     <span class="font-weight-bold label">Contato Principal</span>
-                                    <p class="mb-0 text-truncate texto">{{ paciente.contatoPrincipal | textoSemValor
-                                        }}</p>
+                                    <p class="mb-0 text-truncate texto">{{ paciente.telefone | formatarTelefone }}</p>
                                 </v-col>
-                                <v-col cols="12" md="3" sm="6" xs="12">
-                                    <span class="font-weight-bold label">2º Contato</span>
-                                    <p class="mb-0 text-truncate texto">{{ paciente.contato2 | textoSemValor }}</p>
-                                </v-col>
-                                <v-col cols="12" md="3" sm="6" xs="12">
-                                    <span class="font-weight-bold label">3º Contato</span>
-                                    <p class="mb-0 text-truncate texto">{{ paciente.contato3 | textoSemValor }}</p>
-                                </v-col>
-
                             </v-row>
                         </v-expansion-panel-content>
                     </v-expansion-panel>
@@ -71,7 +56,6 @@
 </template>
 
 <script>
-import tipoPaciente from '@/core/constants/enums/tipoPaciente'
 
 export default {
     name: 'PacienteFichaDadosGerais',
@@ -83,21 +67,8 @@ export default {
     data() {
         return {
             exibirPanel: 0,
-            tipoPaciente
         }
     },
-    methods: {
-        formatarCpfCnpj(cpfCnpjValue) {
-            if (cpfCnpjValue) {
-                const cnpjCpf = cpfCnpjValue.replace(/\D/g, '')
-                if (cnpjCpf.length === 11) {
-                    return cnpjCpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/g, '$1.$2.$3-$4')
-                }
-                return cnpjCpf.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/g, '$1.$2.$3/$4-$5')
-            }
-            return ''
-        }
-    }
 }
 </script>
 

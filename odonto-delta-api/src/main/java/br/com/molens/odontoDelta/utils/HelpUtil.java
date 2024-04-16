@@ -1,6 +1,11 @@
 package br.com.molens.odontoDelta.utils;
 
 import java.text.Normalizer;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Period;
+import java.time.ZoneOffset;
+import java.util.Date;
 
 public class HelpUtil {
     public static String retiraAcentuacao(String texto) {
@@ -10,5 +15,13 @@ public class HelpUtil {
 
     public static String obterApenasNumeros(String texto){
         return texto.replaceAll("[^0-9]", "");
+    }
+
+    public static int obterIdade(Date dataNascimento){
+        return obterIdade(LocalDateTime.ofInstant(dataNascimento.toInstant(), ZoneOffset.UTC).toLocalDate());
+    }
+
+    public static int obterIdade(final LocalDate aniversario) {
+        return Period.between(aniversario, LocalDate.now()).getYears();
     }
 }

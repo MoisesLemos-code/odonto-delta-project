@@ -27,7 +27,8 @@ public class BuscaPaginadaPacienteOutput {
         private String email;
         private String cnpjCpf;
         private String telefone;
-        private Municipio municipio;
+        private String cidade;
+        private String estado;
     }
 
 }

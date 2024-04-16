@@ -45,7 +45,6 @@ export default [
                         title: 'Paciente',
                         subtitle: 'Ficha de Paciente'
                     },
-                    rotaOrigem: 'PacienteListagem'
                 }
             },
             {
@@ -58,7 +57,6 @@ export default [
                         title: 'Orçamento',
                         subtitle: 'Ficha de Paciente'
                     },
-                    rotaOrigem: 'OrcamentoPaciente'
                 }
             },
             {
@@ -71,7 +69,6 @@ export default [
                         title: 'Paciente',
                         subtitle: 'Cadastro de Paciente'
                     },
-                    rotaOrigem: 'PacienteListagem'
                 }
             },
             {
@@ -85,7 +82,6 @@ export default [
                         subtitle: 'Edição de Paciente'
                     },
                     perfis: ['ADMINISTRADOR', 'PACIENTE_UPDATE'],
-                    rotaOrigem: 'PacienteFicha'
                 }
             }
         ]

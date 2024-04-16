@@ -13,7 +13,6 @@ class PacienteApiClient {
             filtros,
             paginacao
         )
-        console.log(url)
         return axios.get(url)
     }
 
@@ -31,15 +30,15 @@ class PacienteApiClient {
     }
 
     async editar(dados) {
-        return axios.put(`/paciente/update/${dados.id}`, dados)
+        return axios.put(`/paciente/atualizar/${dados.id}`, dados)
     }
 
     async buscarId(id) {
-        return axios.get(`/paciente/find/${id}`)
+        return axios.get(`/paciente/buscarPorId/${id}`)
     }
 
     async excluir(id) {
-        return axios.delete(`/paciente/delete/${id}`)
+        return axios.delete(`/paciente/deletar/${id}`)
     }
 
 }

@@ -1,6 +1,5 @@
 package br.com.molens.odontoDelta.domain.usecase.paciente.buscarPacientePorId;
 
-import br.com.molens.odontoDelta.gateway.entity.Empresa;
 import br.com.molens.odontoDelta.gateway.entity.Municipio;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,13 +22,17 @@ public class BuscarPacientePorIdOutput {
     private String telefone;
     private String rg;
     private Date dataNascimento;
-    private Municipio municipio;
+    private int idade;
+    private String cidade;
+    private String estado;
+    private Long municipioId;
+    private Long estadoId;
     private String cep;
     private String bairro;
     private String logradouro;
     private String logradouroNumero;
     private String complemento;
-    private Empresa empresa;
     private String situacao;
+    private Boolean ortodontia;
     private LocalDateTime ultimaVisita;
 }

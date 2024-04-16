@@ -143,7 +143,7 @@ export default {
             default: false
         },
         minDate: {
-            type: String
+            type: String,
         },
         maxDate: {
             type: String

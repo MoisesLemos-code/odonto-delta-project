@@ -19,8 +19,8 @@
                 <template v-slot:item.paciente="{item}">
                     <span class="d-inline-block text-truncate max-20">{{ item.paciente | textoSemValor }}</span>
                 </template>
-                <template v-slot:item.cpfOuCnpj="{item}">
-                    <span class="d-inline-block text-truncate max-15">{{ formatarCpfCnpj(item.cpfOuCnpj) | textoSemValor }}</span>
+                <template v-slot:item.cnpjCpf="{item}">
+                    <span class="d-inline-block text-truncate max-15">{{ item.cnpjCpf | formatarCpfCnpj }}</span>
                 </template>
                 <template v-slot:item.status="{item}">
                     <span class="d-inline-block text-truncate max-10">{{ item.status | filterEnum(statusOrcamento) }}</span>
@@ -43,7 +43,7 @@
                 <v-spacer v-if="paginas <= 1"/>
                 <div class="select-pagination alinhamentoFiltragem">
                     <span>Linhas por página:</span>
-                    <v-select :items="linhasPorPagina" @change="resetaPage" v-model="paginacaoInterna.rowsPerPage"/>
+                    <v-select :items="linhasPorPagina" @change="resetaPage" v-model="paginacaoInterna.size"/>
                 </div>
             </div>
         </form-table>
@@ -81,7 +81,7 @@ export default {
                 },
                 {
                     text: 'CPF/CNPJ',
-                    value: 'cpfOuCnpj',
+                    value: 'cnpjCpf',
                     sortable: true,
                     align: 'left',
                     width: '15%',
@@ -121,22 +121,9 @@ export default {
         tratarEventoAcessar(item) {
             this.$emit('acessar', item)
         },
-        tratarPaginacao(pagina) {
-            this.paginacaoInterna.page = pagina
-        },
         resetaPage() {
             this.$store.commit(mutationTypes.ORCAMENTO.RESETA_PAGE_POR_PACIENTE)
         },
-        formatarCpfCnpj(cpfCnpjValue) {
-            if (cpfCnpjValue) {
-                const cnpjCpf = cpfCnpjValue.replace(/\D/g, '')
-                if (cnpjCpf.length === 11) {
-                    return cnpjCpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/g, '$1.$2.$3-$4')
-                }
-                return cnpjCpf.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/g, '$1.$2.$3/$4-$5')
-            }
-            return ''
-        }
     },
     watch: {
         paginacaoInterna: {

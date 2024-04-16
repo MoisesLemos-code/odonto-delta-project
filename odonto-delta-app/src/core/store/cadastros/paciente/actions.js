@@ -1,5 +1,5 @@
 import api from '@/core/apiclient'
-import {actionTypes, mutationTypes} from '@/core/constants'
+import {actionTypes} from '@/core/constants'
 
 export default {
 
@@ -20,14 +20,14 @@ export default {
         return data
     },
 
-    async [actionTypes.CADASTROS.PACIENTE.CADASTRAR_PACIENTE]({commit}, dados) {
+    async [actionTypes.CADASTROS.PACIENTE.CADASTRAR_PACIENTE](context, dados) {
         const {data} = await api.paciente.cadastrar(dados)
-        commit(mutationTypes.CADASTROS.PACIENTE.SET_DADOS_GERAIS, data)
+        return data
     },
 
-    async [actionTypes.CADASTROS.PACIENTE.EDITAR_PACIENTE]({commit}, dados) {
+    async [actionTypes.CADASTROS.PACIENTE.EDITAR_PACIENTE](context, dados) {
         const {data} = await api.paciente.editar(dados)
-        commit(mutationTypes.CADASTROS.PACIENTE.SET_DADOS_GERAIS, data)
+        return data
     },
 
     async [actionTypes.CADASTROS.PACIENTE.BUSCAR_PACIENTE_POR_ID](context, id) {

@@ -23,19 +23,19 @@ public interface PacienteController {
     ResponseEntity<InserirPacienteOutput> inserir(@RequestBody @Valid InserirPacienteInput input);
 
     @ApiOperation(value = "Busca único Paciente")
-    @GetMapping(value = "{empresaId}/{pacienteId}")
-    ResponseEntity<BuscarPacientePorIdOutput> buscarPorId(@PathVariable @Valid Long pacienteId, @PathVariable @Valid Long empresaId);
+    @GetMapping(value = "/buscarPorId/{pacienteId}")
+    ResponseEntity<BuscarPacientePorIdOutput> buscarPorId(@PathVariable @Valid Long pacienteId);
 
     @ApiOperation(value = "Busca paginada de Paciente")
     @GetMapping
     ResponseEntity<BuscaPaginadaPacienteOutput> buscaPaginada(@Valid BuscaPaginadaPacienteInput inputData);
 
     @ApiOperation(value = "Remove um Paciente")
-    @DeleteMapping(value = "{empresaId}/{pacienteId}")
-    ResponseEntity<Void> remover(@PathVariable @Valid Long pacienteId, @PathVariable @Valid Long empresaId);
+    @DeleteMapping(value = "/deletar/{pacienteId}")
+    ResponseEntity<Void> remover(@PathVariable @Valid Long pacienteId);
 
     @ApiOperation(value = "Atualiza um Paciente")
-    @PutMapping(value = "{pacienteId}")
+    @PutMapping(value = "/atualizar/{pacienteId}")
     ResponseEntity<AtualizarPacienteOutput> atualizar(@PathVariable Long pacienteId, @RequestBody @Valid AtualizarPacienteInput input);
 
 

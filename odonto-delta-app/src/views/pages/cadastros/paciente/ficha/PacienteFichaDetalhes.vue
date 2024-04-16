@@ -179,7 +179,6 @@
 
 <script>
 import _ from 'lodash'
-import {mapActions} from 'vuex'
 import {actionTypes} from '@/core/constants'
 import tipoPaciente from '@/core/constants/enums/tipoPaciente'
 import CampoCheckBoxEditavel from '@/views/components/camposEditaveis/campo-check-box-editavel'
@@ -201,14 +200,12 @@ export default {
         }
     },
     async mounted() {
-        await this.buscarFicha()
         await this.setarHistoriaMedicaAnterior()
         await this.setarUsoMedicamentoAnterior()
     },
     methods: {
-        ...mapActions([ actionTypes.CADASTROS.PACIENTE.FICHA.BUSCAR_POR_PACIENTE ]),
         async buscarFicha() {
-            this.fichaDadosGerais = await this.buscarPorPaciente(this.pacienteId)
+            this.fichaDadosGerais = await this.$store.dispatch(actionTypes.CADASTROS.PACIENTE.FICHA.BUSCAR_POR_PACIENTE, this.pacienteId)
         },
         async setarHistoriaMedicaAnterior() {
             this.historiaMedicaAnterior = _.cloneDeep(this.fichaDadosGerais.historiaMedica)

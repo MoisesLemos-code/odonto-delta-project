@@ -39,10 +39,10 @@ public class PacienteControllerImpl implements PacienteController {
     }
 
     @Override
-    public ResponseEntity<BuscarPacientePorIdOutput> buscarPorId(Long pacienteId, Long empresaId) {
+    public ResponseEntity<BuscarPacientePorIdOutput> buscarPorId(Long pacienteId) {
         return new ResponseEntity<>(buscarPacientePorIdUsecase.executar(BuscarPacientePorIdInput.builder()
                 .pacienteId(pacienteId)
-                .empresaId(empresaId)
+                .empresaId(userDataUsecase.executar().getEmpresa().getId())
                 .build()), HttpStatus.OK);
     }
 
@@ -54,10 +54,10 @@ public class PacienteControllerImpl implements PacienteController {
     }
 
     @Override
-    public ResponseEntity<Void> remover(Long pacienteId, Long empresaId) {
+    public ResponseEntity<Void> remover(Long pacienteId) {
         removerPacientePorIdUsecase.executar(RemoverPacientePorIdInput.builder()
                 .pacienteId(pacienteId)
-                .empresaId(empresaId)
+                .empresaId(userDataUsecase.executar().getEmpresa().getId())
                 .build());
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
@@ -65,6 +65,7 @@ public class PacienteControllerImpl implements PacienteController {
     @Override
     public ResponseEntity<AtualizarPacienteOutput> atualizar(Long pacienteId, AtualizarPacienteInput input) {
         input.setPacienteId(pacienteId);
+        input.setEmpresaId(userDataUsecase.executar().getEmpresa().getId());
         AtualizarPacienteOutput output = atualizarPacienteUsecase.executar(input);
         return new ResponseEntity<>(output, HttpStatus.OK);
     }
