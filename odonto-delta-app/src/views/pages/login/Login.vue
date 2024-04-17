@@ -4,7 +4,7 @@
       <notificacao/>
       <v-container fluid>
         <v-row class="v-row" align="center" justify="center">
-          <v-col cols="12" sm="8" md="4">
+          <v-col cols="12" sm="8" md="4" lg="3">
             <v-img :src="require('@/images/logo-01.png')" aspect-ratio="2.5" id="logo"/>
             <v-card class="elevation-12">
               <v-form @submit.prevent="efetuarLogin">

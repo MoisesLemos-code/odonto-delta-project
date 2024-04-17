@@ -62,7 +62,20 @@ class SearchUrlBuilder {
 
         for (const [key] of Object.entries(filters)) {
             if (filters[key].value) {
-                param.push(`${key}=${filters[key].value}`)
+
+                let valorFiltro = filters[key].value
+                let valorIdFiltro = filters[key].valueId
+
+                if(valorFiltro === 'Começa com')
+                    valorFiltro = 'COMECA_COM'
+                if(valorFiltro === 'Contém')
+                    valorFiltro = 'CONTEM'
+                if(valorFiltro === 'Termina com')
+                    valorFiltro = 'TERMINA_COM'
+                if(valorIdFiltro != null)
+                    valorFiltro = valorIdFiltro
+
+                param.push(`${key}=${valorFiltro}`)
             }
         }
         return param.join('&')

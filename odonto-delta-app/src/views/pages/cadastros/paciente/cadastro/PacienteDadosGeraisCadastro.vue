@@ -117,6 +117,7 @@
                 <v-col cols="12" md="3" sm="3" xs="12">
                   <buscar-municipio :municipio-id="dadosGerais.municipioId"
                                     :estado-id="dadosGerais.estadoId"
+                                    obrigatorio
                                     @emitirSelecionarCidade="selecionarCidade"
                   />
                 </v-col>
@@ -247,6 +248,10 @@ export default {
         },
         async tratarEventoSalvar() {
             if (await this.validarDadosFormulario()) {
+                if(this.municipioInvalido()){
+                    this.mostrarNotificacaoErro('Informe a cidade!')
+                    return
+                }
                 this.formatarData()
                 this.setMensagemLoading('Salvando o paciente...')
                 const resultado = await this.$store.dispatch(actionTypes.CADASTROS.PACIENTE.CADASTRAR_PACIENTE, this.dadosGerais)
@@ -254,6 +259,10 @@ export default {
                 this.mostrarNotificacaoSucessoDefault()
                 await this.$router.push({name: 'PacienteFicha', params: { id: this.pacienteId}})
             }
+        },
+        municipioInvalido(){
+            if(!this.dadosGerais.municipioId)
+                return true
         },
         async validarDadosFormulario() {
             return this.$validator._base.validateAll()

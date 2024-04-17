@@ -1,5 +1,5 @@
 <template>
-<div class="container-municipio">
+<div :class="{ 'container-municipio-em-linha': emLinha, 'container-municipio-em-coluna': !emLinha }">
   <v-autocomplete
       v-model="estadoSelecionado"
       label="Estado"
@@ -20,11 +20,11 @@
       class="select-municipios"
       :filter="filtroComboAutoComplete"
       v-on:change="emitirSelecionarCidade"
-      v-validate="{required: obrigatorio}"
+      :v-validate="{required: obrigatorio}"
       :error-messages="errors.collect('cidade')">
     <template v-slot:label>
       Cidade
-      <span class="ml-1 red--text">*</span>
+      <span v-if="obrigatorio" class="ml-1 red--text">*</span>
     </template>
     <template v-slot:item="{item}">
       <label class="auto-complete-item-text">{{ item.nome }}</label>
@@ -50,6 +50,10 @@ export default {
             type: Boolean,
             default: false
         },
+        emLinha: {
+            type: Boolean,
+            default: true
+        }
     },
     data(){
         return{
@@ -70,11 +74,15 @@ export default {
             actionTypes.CADASTROS.CIDADE.BUSCAR_TODAS_CIDADES_SEM_PAGINACAO,
         ]),
         async setarEstado(){
-            this.estadoSelecionado = this.estadoId
-            await this.buscarCidades()
+            if(this.estadoId > 0){
+                this.estadoSelecionado = this.estadoId
+                await this.buscarCidades()
+            }
         },
         setarMunicipio(){
-            this.municipioSelecionado = this.municipioId
+            if(this.municipioId > 0){
+                this.municipioSelecionado = this.municipioId
+            }
         },
         async buscarEstados(){
             const resultado = await this.buscarTodosEstadosSemPaginacao()
@@ -92,7 +100,11 @@ export default {
                 if(!cidade)
                     this.municipioSelecionado = null
                 this.emitirSelecionarCidade()
+                this.emitirSelecionarEstado()
             }
+        },
+        emitirSelecionarEstado(){
+            this.$emit('emitirSelecionarEstado', this.estadoSelecionado)
         },
         emitirSelecionarCidade(){
             this.$emit('emitirSelecionarCidade', this.municipioSelecionado)
@@ -113,9 +125,14 @@ export default {
 </script>
 
 <style scoped lang="stylus">
-.container-municipio
+.container-municipio-em-linha
   display flex
   flex-direction row
+
+.container-municipio-em-coluna
+  display flex
+  flex-direction column
+
 .select-estados
   max-width 210px
   margin-right 30px

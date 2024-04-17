@@ -77,26 +77,71 @@ public class PacienteDataProviderImpl implements PacienteDataProvider {
         QPaciente clienteQuery = QPaciente.paciente;
         BooleanExpression expressaoDeBusca = clienteQuery.empresa.id.eq(filtro.getEmpresaId());
 
-        if (StringUtils.isNotEmpty(filtro.getConteudo())) {
-            BooleanExpression filtrosParaBusca = compararSemAcentuacao(clienteQuery.nome, filtro.getConteudo())
-                    .or(compararSemAcentuacao(clienteQuery.cnpjCpf, filtro.getConteudo()))
-                    .or(compararSemAcentuacao(clienteQuery.telefone, filtro.getConteudo()));
+        if(Objects.nonNull(filtro.getOrtodontia())){
+            BooleanExpression filtrosParaBusca = clienteQuery.ortodontia.eq(filtro.getOrtodontia());
             expressaoDeBusca = expressaoDeBusca.and(filtrosParaBusca);
+        }
+        if(Objects.nonNull(filtro.getMunicipioId()) && filtro.getMunicipioId() > 0){
+            BooleanExpression filtrosParaBusca = clienteQuery.municipio.id.eq(filtro.getMunicipioId());
+            expressaoDeBusca = expressaoDeBusca.and(filtrosParaBusca);
+        }
+        if(Objects.nonNull(filtro.getEstadoId()) && filtro.getEstadoId() > 0){
+            BooleanExpression filtrosParaBusca = clienteQuery.municipio.estado.id.eq(filtro.getEstadoId());
+            expressaoDeBusca = expressaoDeBusca.and(filtrosParaBusca);
+        }
+
+        if(StringUtils.isNotEmpty(filtro.getAtributo())){
+
+            if(filtro.getAtributo().equals("Nome")){
+                if(filtro.getTipo().equals("COMECA_COM")){
+                    BooleanExpression filtrosParaBusca = clienteQuery.nome.startsWith(filtro.getConteudo());
+                    expressaoDeBusca = expressaoDeBusca.and(filtrosParaBusca);
+                } else if(filtro.getTipo().equals("CONTEM")){
+                    BooleanExpression filtrosParaBusca = compararSemAcentuacao(clienteQuery.nome, filtro.getConteudo());
+                    expressaoDeBusca = expressaoDeBusca.and(filtrosParaBusca);
+                } else if(filtro.getTipo().equals("TERMINA_COM")){
+                    BooleanExpression filtrosParaBusca = clienteQuery.nome.endsWith(filtro.getConteudo());
+                    expressaoDeBusca = expressaoDeBusca.and(filtrosParaBusca);
+                }
+            } else if(filtro.getAtributo().equals("Documento")){
+                if(filtro.getTipo().equals("COMECA_COM")){
+                    BooleanExpression filtrosParaBusca = clienteQuery.cnpjCpf.startsWith(filtro.getConteudo());
+                    expressaoDeBusca = expressaoDeBusca.and(filtrosParaBusca);
+                } else if(filtro.getTipo().equals("CONTEM")){
+                    BooleanExpression filtrosParaBusca = compararSemAcentuacao(clienteQuery.cnpjCpf, filtro.getConteudo());
+                    expressaoDeBusca = expressaoDeBusca.and(filtrosParaBusca);
+                } else if(filtro.getTipo().equals("TERMINA_COM")){
+                    BooleanExpression filtrosParaBusca = clienteQuery.cnpjCpf.endsWith(filtro.getConteudo());
+                    expressaoDeBusca = expressaoDeBusca.and(filtrosParaBusca);
+                }
+            } else if(filtro.getAtributo().equals("E-mail")){
+                if(filtro.getTipo().equals("COMECA_COM")){
+                    BooleanExpression filtrosParaBusca = clienteQuery.email.startsWith(filtro.getConteudo());
+                    expressaoDeBusca = expressaoDeBusca.and(filtrosParaBusca);
+                } else if(filtro.getTipo().equals("CONTEM")){
+                    BooleanExpression filtrosParaBusca = compararSemAcentuacao(clienteQuery.email, filtro.getConteudo());
+                    expressaoDeBusca = expressaoDeBusca.and(filtrosParaBusca);
+                } else if(filtro.getTipo().equals("TERMINA_COM")){
+                    BooleanExpression filtrosParaBusca = clienteQuery.email.endsWith(filtro.getConteudo());
+                    expressaoDeBusca = expressaoDeBusca.and(filtrosParaBusca);
+                }
+            } else if(filtro.getAtributo().equals("Telefone")){
+                if(filtro.getTipo().equals("COMECA_COM")){
+                    BooleanExpression filtrosParaBusca = clienteQuery.telefone.startsWith(filtro.getConteudo());
+                    expressaoDeBusca = expressaoDeBusca.and(filtrosParaBusca);
+                } else if(filtro.getTipo().equals("CONTEM")){
+                    BooleanExpression filtrosParaBusca = compararSemAcentuacao(clienteQuery.telefone, filtro.getConteudo());
+                    expressaoDeBusca = expressaoDeBusca.and(filtrosParaBusca);
+                } else if(filtro.getTipo().equals("TERMINA_COM")){
+                    BooleanExpression filtrosParaBusca = clienteQuery.telefone.endsWith(filtro.getConteudo());
+                    expressaoDeBusca = expressaoDeBusca.and(filtrosParaBusca);
+                }
+            }
         } else {
-            if(StringUtils.isNotEmpty(filtro.getCpfCnpj())){
-                BooleanExpression filtrosParaBusca = compararSemAcentuacao(clienteQuery.cnpjCpf, filtro.getCpfCnpj());
-                expressaoDeBusca = expressaoDeBusca.and(filtrosParaBusca);
-            }
-            if(StringUtils.isNotEmpty(filtro.getTelefone())){
-                BooleanExpression filtrosParaBusca = compararSemAcentuacao(clienteQuery.telefone, filtro.getTelefone());
-                expressaoDeBusca = expressaoDeBusca.and(filtrosParaBusca);
-            }
-            if(Objects.nonNull(filtro.getMunicipioId())){
-                BooleanExpression filtrosParaBusca = clienteQuery.municipio.id.eq(filtro.getMunicipioId());
-                expressaoDeBusca = expressaoDeBusca.and(filtrosParaBusca);
-            }
-            if(Objects.nonNull(filtro.getEstadoId())){
-                BooleanExpression filtrosParaBusca = clienteQuery.municipio.estado.id.eq(filtro.getEstadoId());
+            if (StringUtils.isNotEmpty(filtro.getConteudo())) {
+                BooleanExpression filtrosParaBusca = compararSemAcentuacao(clienteQuery.nome, filtro.getConteudo())
+                        .or(compararSemAcentuacao(clienteQuery.cnpjCpf, filtro.getConteudo()))
+                        .or(compararSemAcentuacao(clienteQuery.telefone, filtro.getConteudo()));
                 expressaoDeBusca = expressaoDeBusca.and(filtrosParaBusca);
             }
         }

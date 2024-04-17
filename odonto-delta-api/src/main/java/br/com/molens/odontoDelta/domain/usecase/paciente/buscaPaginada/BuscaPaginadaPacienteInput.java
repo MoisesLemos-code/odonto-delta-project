@@ -20,8 +20,9 @@ public class BuscaPaginadaPacienteInput {
     private Long empresaId;
 
     private String conteudo;
-    private String cpfCnpj;
-    private String telefone;
+    private String atributo;
+    private String tipo;
+    private Boolean ortodontia;
     private Long municipioId;
     private Long estadoId;
 }

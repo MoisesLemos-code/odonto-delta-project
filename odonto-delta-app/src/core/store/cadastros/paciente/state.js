@@ -10,14 +10,32 @@ export default {
             },
             atributo: {
                 default: null,
-                data: [ 'nome', 'cpfOuCnpj', 'email', 'cidade'],
+                data: [ 'Nome', 'Documento', 'E-mail', 'Telefone'],
                 value: ''
             },
             conteudo: {
                 default: null,
                 label: 'Pesquisa',
                 value: ''
-            }
+            },
+            ortodontia: {
+                default: null,
+                label: 'Ortodontia',
+                value: '',
+                valueId: null,
+            },
+            estadoId: {
+                default: null,
+                label: 'Estado',
+                value: '',
+                valueId: null
+            },
+            municipioId: {
+                default: null,
+                label: 'Cidade',
+                value: '',
+                valueId: null
+            },
         },
         paginacao: {
             page: 1,

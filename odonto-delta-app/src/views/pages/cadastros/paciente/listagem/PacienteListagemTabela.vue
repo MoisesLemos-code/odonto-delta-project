@@ -17,10 +17,10 @@
           <span class="d-inline-block text-truncate max-20">{{item.nome | textoSemValor}}</span>
         </template>
         <template v-slot:item.cnpjCpf="{item}">
-          <span class="d-inline-block text-truncate max-15">{{item.cnpjCpf | formatarCpfCnpj }}</span>
+          <span class="d-inline-block text-truncate max-15">{{item.cnpjCpf | formatarCpfCnpj}}</span>
         </template>
-        <template v-slot:item.email="{item}">
-          <span class="d-inline-block text-truncate max-15">{{item.email | textoSemValor}}</span>
+        <template v-slot:item.telefone="{item}">
+          <span class="d-inline-block text-truncate max-15">{{item.telefone | formatarTelefone}}</span>
         </template>
         <template v-slot:item.cidade="{item}">
           <span class="d-inline-block text-truncate max-10">{{item.cidade | textoSemValor}} ({{item.estado | textoSemValor}})</span>
@@ -76,8 +76,8 @@ export default {
                     class: 'gray--text'
                 },
                 {
-                    text: 'E-mail',
-                    value: 'email',
+                    text: 'Telefone',
+                    value: 'telefone',
                     sortable: true,
                     align: 'left',
                     width: '15%',
