@@ -1,18 +1,21 @@
 package br.com.molens.odontoDelta.application.config;
 
 import br.com.molens.odontoDelta.adapter.gateway.integration.utils.exception.AsaasValidationException;
+import br.com.molens.odontoDelta.domain.exception.AtualizarFichaPacienteException;
 import br.com.molens.odontoDelta.domain.exception.AtualizarPacienteException;
 import br.com.molens.odontoDelta.domain.exception.AtualizarPerfilException;
 import br.com.molens.odontoDelta.domain.exception.AtualizarPerfilPermissaoException;
 import br.com.molens.odontoDelta.domain.exception.AtualizarPerfilUsuarioException;
 import br.com.molens.odontoDelta.domain.exception.AtualizarUsuarioException;
 import br.com.molens.odontoDelta.domain.exception.BuscaPaginadaPacienteException;
+import br.com.molens.odontoDelta.domain.exception.BuscarFichaPacientePorPacienteException;
 import br.com.molens.odontoDelta.domain.exception.BuscarPacientePorIdException;
 import br.com.molens.odontoDelta.domain.exception.BuscarPerfilPorIdException;
 import br.com.molens.odontoDelta.domain.exception.BuscarPerfisDoUsuarioException;
 import br.com.molens.odontoDelta.domain.exception.BuscarPermissaoPorPerfilException;
 import br.com.molens.odontoDelta.domain.exception.BuscarPermissoesUsuarioException;
 import br.com.molens.odontoDelta.domain.exception.BuscarUsuarioPorIdException;
+import br.com.molens.odontoDelta.domain.exception.InserirFichaPacienteException;
 import br.com.molens.odontoDelta.domain.exception.InserirPacienteException;
 import br.com.molens.odontoDelta.domain.exception.InserirPerfilException;
 import br.com.molens.odontoDelta.domain.exception.InserirPerfilPermissaoException;
@@ -121,6 +124,9 @@ public class ExceptionHandlerConfig {
                     BuscarPermissoesUsuarioException.class,
                     ValidarPermissaoUsuarioException.class,
                     BuscaPaginadaPacienteException.class,
+                    InserirFichaPacienteException.class,
+                    BuscarFichaPacientePorPacienteException.class,
+                    AtualizarFichaPacienteException.class
             })
     public ResponseEntity<ExceptionServer> handlerMethodArgumentNotValidException(
             RuntimeException exception) {

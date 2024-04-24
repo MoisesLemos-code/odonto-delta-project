@@ -115,7 +115,7 @@
             </template>
           </v-text-field>
         </v-col>
-        <v-col cols="12" md="3" sm="3" xs="12">
+        <v-col cols="12" md="4" sm="4" xs="12">
           <buscar-municipio
                             :municipio-id="dadosGerais.municipioId"
                             :estado-id="dadosGerais.estadoId"
@@ -195,7 +195,8 @@
 </template>
 
 <script>
-import {actionTypes} from '@/core/constants'
+import {actionTypes, mutationTypes} from '@/core/constants'
+import {mapMutations} from 'vuex'
 import moment from 'moment'
 import DateInput from '@/views/components/DateInput'
 import BuscarMunicipio from '@/views/components/BuscarMunicipio.vue'
@@ -234,9 +235,11 @@ export default {
     },
     async mounted() {
         this.setarPacienteId()
+        this.setarRotaOrigem()
         await this.buscarPaciente()
     },
     methods: {
+        ...mapMutations([mutationTypes.CADASTROS.PACIENTE.SET_ROTA_ORIGEM]),
         async buscarPaciente() {
             const resultado = await this.$store.dispatch(actionTypes.CADASTROS.PACIENTE.BUSCAR_PACIENTE_POR_ID, this.pacienteId)
             if (resultado) {
@@ -256,6 +259,9 @@ export default {
             if (this.$route.params.id) {
                 this.pacienteId = this.$route.params.id
             }
+        },
+        setarRotaOrigem(){
+            this.setRotaOrigem({name: 'PacienteFicha', params: {id: this.pacienteId}})
         },
         setarTipo() {
             if (this.dadosGerais.cnpjCpf.length === 11) {

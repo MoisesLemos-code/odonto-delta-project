@@ -1,7 +1,7 @@
 <template>
     <div>
         <toolbar-view>
-            <botao-voltar slot="actions" text="Voltar" :route="{name: this.$store.state.paciente.rotaOrigem }"/>
+            <botao-voltar slot="actions" text="Voltar" :route="this.$store.state.paciente.rotaOrigem"/>
         </toolbar-view>
         <container-component>
             <router-view/>

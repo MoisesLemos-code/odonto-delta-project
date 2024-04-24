@@ -2,12 +2,12 @@ import axios from 'axios'
 
 class FichaApiClient {
 
-    async editar(dados) {
-        return axios.put(`/ficha/update/${dados.id}`, dados)
+    async editarFichaPaciente(dados) {
+        return axios.put(`/fichaPaciente/atualizar/${dados.id}`, dados)
     }
 
     async buscarPorPaciente(id){
-        return axios.get(`/ficha/paciente/find/${id}`)
+        return axios.get(`/fichaPaciente/buscarPorPacienteId/${id}`)
     }
 
 }

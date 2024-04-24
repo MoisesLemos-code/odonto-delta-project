@@ -5,6 +5,8 @@ import br.com.molens.odontoDelta.domain.exception.JaExistePacienteCnpjCpfExcepti
 import br.com.molens.odontoDelta.domain.interfaces.EmpresaDataProvider;
 import br.com.molens.odontoDelta.domain.interfaces.MunicipioDataProvider;
 import br.com.molens.odontoDelta.domain.interfaces.PacienteDataProvider;
+import br.com.molens.odontoDelta.domain.usecase.fichaPaciente.inserirFichaPaciente.InserirFichaPacienteInput;
+import br.com.molens.odontoDelta.domain.usecase.fichaPaciente.inserirFichaPaciente.InserirFichaPacienteUsecase;
 import br.com.molens.odontoDelta.domain.usecase.paciente.inserirPaciente.converter.InserirPacienteOutputConverter;
 import br.com.molens.odontoDelta.gateway.entity.Empresa;
 import br.com.molens.odontoDelta.gateway.entity.Municipio;
@@ -21,6 +23,7 @@ public class InserirPacienteUsecase {
     private PacienteDataProvider pacienteDataProvider;
     private EmpresaDataProvider empresaDataProvider;
     private MunicipioDataProvider municipioDataProvider;
+    private InserirFichaPacienteUsecase inserirFichaPacienteUsecase;
     private InserirPacienteOutputConverter outputConverter;
 
     public InserirPacienteOutput executar(InserirPacienteInput input) {
@@ -28,7 +31,10 @@ public class InserirPacienteUsecase {
         validarEmpresa(input);
         validarMunicipio(input);
         validarPacienteJaCadastrado(input);
-        return inserirPaciente(input);
+        Long pacienteId = inserirPaciente(input);
+        inserirFichaPaciente(pacienteId, input.getEmpresaId());
+
+        return InserirPacienteOutput.builder().pacienteId(pacienteId).build();
     }
 
     private void validarDadosEntrada(InserirPacienteInput input) {
@@ -58,9 +64,16 @@ public class InserirPacienteUsecase {
         }
     }
 
-    private InserirPacienteOutput inserirPaciente(InserirPacienteInput input) {
+    private Long inserirPaciente(InserirPacienteInput input) {
         Long pacienteId = pacienteDataProvider.inserir(outputConverter.from(input));
 
-        return new InserirPacienteOutput(pacienteId);
+        return pacienteId;
+    }
+
+    private void inserirFichaPaciente(Long pacienteId, Long empresaId) {
+        inserirFichaPacienteUsecase.executar(InserirFichaPacienteInput.builder()
+                .pacienteId(pacienteId)
+                .empresaId(empresaId)
+                .build());
     }
 }

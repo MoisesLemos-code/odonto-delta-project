@@ -156,8 +156,6 @@ export default {
         async buscarTodosPacientes() {
             const resultado = await this.$store.dispatch(actionTypes.CADASTROS.PACIENTE.BUSCAR_TODOS_PACIENTES)
             if (resultado) {
-                console.log('---buscaTodosPacientes')
-                console.log(resultado)
                 this.itens = resultado.items
                 this.paginas = resultado.totalPages
                 this.totalItens = resultado.totalElements

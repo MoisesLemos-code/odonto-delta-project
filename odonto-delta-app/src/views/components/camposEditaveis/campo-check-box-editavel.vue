@@ -12,32 +12,85 @@
     </v-tooltip>
     <v-tooltip top v-if="editing">
       <template v-slot:activator="{ on }">
-        <v-btn v-on="on" icon @click="submitEdit" class="edit-btn-check">
-          <v-icon small class="primary--text">fas fa-check</v-icon>
-        </v-btn>
-      </template>
-      {{ labelBtnSave }}
-    </v-tooltip>
-    <v-tooltip top v-if="editing">
-      <template v-slot:activator="{ on }">
         <v-btn v-on="on" icon @click="cancelEdit" class="edit-btn-check">
           <v-icon small>fas fa-times</v-icon>
         </v-btn>
       </template>
       {{ labelBtnCancel }}
     </v-tooltip>
+      <v-tooltip top v-if="editing">
+        <template v-slot:activator="{ on }">
+          <v-btn v-on="on" icon @click="submitEdit" class="edit-btn-check">
+            <v-icon small class="primary--text">fas fa-check</v-icon>
+          </v-btn>
+        </template>
+        {{ labelBtnSave }}
+      </v-tooltip>
     </div>
     <div v-if="!editing">
       <v-card class="elevation-0">
         <v-card-text class="ml-2 pa-0">
           <v-row>
-            <div :key="item.id" v-for="(item) in value">
-              <v-checkbox v-model="item.atribuido" disabled class="item-check-box">
+              <v-checkbox v-model="value.cardiopatia" disabled class="item-check-box">
                 <template v-slot:label>
-                  <label class="font-weight-bold label-check-box">{{ item.nome }}</label>
+                  <label class="font-weight-bold label-check-box">Cardiopatia</label>
                 </template>
               </v-checkbox>
-            </div>
+              <v-checkbox v-model="value.anemia" disabled class="item-check-box">
+                <template v-slot:label>
+                  <label class="font-weight-bold label-check-box">Anemia</label>
+                </template>
+              </v-checkbox>
+              <v-checkbox v-model="value.ulcera" disabled class="item-check-box">
+                <template v-slot:label>
+                  <label class="font-weight-bold label-check-box">Úlcera</label>
+                </template>
+              </v-checkbox>
+              <v-checkbox v-model="value.doencaPulmonar" disabled class="item-check-box">
+                <template v-slot:label>
+                  <label class="font-weight-bold label-check-box">Doença Pulmonar</label>
+                </template>
+              </v-checkbox>
+              <v-checkbox v-model="value.diabetes" disabled class="item-check-box">
+                <template v-slot:label>
+                  <label class="font-weight-bold label-check-box">Diabetes</label>
+                </template>
+              </v-checkbox>
+              <v-checkbox v-model="value.artriteReumatismo" disabled class="item-check-box">
+                <template v-slot:label>
+                  <label class="font-weight-bold label-check-box">Artrite/Reumatismo</label>
+                </template>
+              </v-checkbox>
+              <v-checkbox v-model="value.doencaInfecciosa" disabled class="item-check-box">
+                <template v-slot:label>
+                  <label class="font-weight-bold label-check-box">Doença Infecciosa</label>
+                </template>
+              </v-checkbox>
+              <v-checkbox v-model="value.alergia" disabled class="item-check-box">
+                <template v-slot:label>
+                  <label class="font-weight-bold label-check-box">Alergia</label>
+                </template>
+              </v-checkbox>
+              <v-checkbox v-model="value.cancer" disabled class="item-check-box">
+                <template v-slot:label>
+                  <label class="font-weight-bold label-check-box">Câncer</label>
+                </template>
+              </v-checkbox>
+              <v-checkbox v-model="value.sinusite" disabled class="item-check-box">
+                <template v-slot:label>
+                  <label class="font-weight-bold label-check-box">Sinusite</label>
+                </template>
+              </v-checkbox>
+              <v-checkbox v-model="value.gastrite" disabled class="item-check-box">
+                <template v-slot:label>
+                  <label class="font-weight-bold label-check-box">Gastrite</label>
+                </template>
+              </v-checkbox>
+              <v-checkbox v-model="value.hepatite" disabled class="item-check-box">
+                <template v-slot:label>
+                  <label class="font-weight-bold label-check-box">Hepatite</label>
+                </template>
+              </v-checkbox>
           </v-row>
           <v-tooltip top v-if="!disabled && !label">
             <template v-slot:activator="{ on }">
@@ -55,13 +108,66 @@
       <v-card class="elevation-0">
         <v-card-text class="ml-2 pa-0">
           <v-row>
-            <div :key="item.id" v-for="(item) in value">
-              <v-checkbox v-model="item.atribuido" class="item-check-box">
-                <template v-slot:label>
-                  <label class="font-weight-bold label-check-box">{{ item.nome }}</label>
-                </template>
-              </v-checkbox>
-            </div>
+            <v-checkbox v-model="value.cardiopatia" class="item-check-box">
+              <template v-slot:label>
+                <label class="font-weight-bold label-check-box">Cardiopatia</label>
+              </template>
+            </v-checkbox>
+            <v-checkbox v-model="value.anemia" class="item-check-box">
+              <template v-slot:label>
+                <label class="font-weight-bold label-check-box">Anemia</label>
+              </template>
+            </v-checkbox>
+            <v-checkbox v-model="value.ulcera" class="item-check-box">
+              <template v-slot:label>
+                <label class="font-weight-bold label-check-box">Úlcera</label>
+              </template>
+            </v-checkbox>
+            <v-checkbox v-model="value.doencaPulmonar" class="item-check-box">
+              <template v-slot:label>
+                <label class="font-weight-bold label-check-box">Doença Pulmonar</label>
+              </template>
+            </v-checkbox>
+            <v-checkbox v-model="value.diabetes" class="item-check-box">
+              <template v-slot:label>
+                <label class="font-weight-bold label-check-box">Diabetes</label>
+              </template>
+            </v-checkbox>
+            <v-checkbox v-model="value.artriteReumatismo" class="item-check-box">
+              <template v-slot:label>
+                <label class="font-weight-bold label-check-box">Artrite/Reumatismo</label>
+              </template>
+            </v-checkbox>
+            <v-checkbox v-model="value.doencaInfecciosa" class="item-check-box">
+              <template v-slot:label>
+                <label class="font-weight-bold label-check-box">Doença Infecciosa</label>
+              </template>
+            </v-checkbox>
+            <v-checkbox v-model="value.alergia" class="item-check-box">
+              <template v-slot:label>
+                <label class="font-weight-bold label-check-box">Alergia</label>
+              </template>
+            </v-checkbox>
+            <v-checkbox v-model="value.cancer" class="item-check-box">
+              <template v-slot:label>
+                <label class="font-weight-bold label-check-box">Câncer</label>
+              </template>
+            </v-checkbox>
+            <v-checkbox v-model="value.sinusite" class="item-check-box">
+              <template v-slot:label>
+                <label class="font-weight-bold label-check-box">Sinusite</label>
+              </template>
+            </v-checkbox>
+            <v-checkbox v-model="value.gastrite" class="item-check-box">
+              <template v-slot:label>
+                <label class="font-weight-bold label-check-box">Gastrite</label>
+              </template>
+            </v-checkbox>
+            <v-checkbox v-model="value.hepatite" class="item-check-box">
+              <template v-slot:label>
+                <label class="font-weight-bold label-check-box">Hepatite</label>
+              </template>
+            </v-checkbox>
           </v-row>
         </v-card-text>
       </v-card>
@@ -70,66 +176,69 @@
 </template>
 
 <script>
-    export default {
-        inject: ['$validator'],
-        name: 'campo-check-box-editavel',
-        props: {
-            value: {
-                required: true
-            },
-            name: {
-                required: true,
-                type: String
-            },
-            label: {
-                type: String,
-                default: ''
-            },
-            labelBtnSave: {
-                type: String,
-                default: 'Salvar'
-            },
-            labelBtnCancel: {
-                type: String,
-                default: 'Cancelar'
-            },
-            labelBtnEdit: {
-                type: String,
-                default: 'Editar'
-            },
-            disabled: {
-                type: Boolean,
-                default: false
-            }
+import _ from 'lodash'
+
+export default {
+    inject: ['$validator'],
+    name: 'campo-check-box-editavel',
+    props: {
+        value: {
+            required: true
         },
-        data() {
-            return {
-                model: undefined,
-                editing: false
-            }
+        name: {
+            required: true,
+            type: String
         },
-        methods: {
-            startEdit() {
-                this.editing = true
-                this.$emit('setaEditando', this.name)
-            },
-            async submitEdit() {
-                if (this.validarDadosFormulario()) {
-                    this.editing = false
-                    this.$emit('retiraEditando', this.name)
-                    this.$emit('input', this.value)
-                }
-            },
-            cancelEdit() {
-                this.editing = false
-                this.$emit('cancelaEditando', this.name)
-            },
-            validarDadosFormulario() {
-                const item = this.$validator._base.errors.items.find(item => item.field === this.name)
-                return !item
-            },
+        label: {
+            type: String,
+            default: ''
+        },
+        labelBtnSave: {
+            type: String,
+            default: 'Salvar'
+        },
+        labelBtnCancel: {
+            type: String,
+            default: 'Cancelar'
+        },
+        labelBtnEdit: {
+            type: String,
+            default: 'Editar'
+        },
+        disabled: {
+            type: Boolean,
+            default: false
         }
+    },
+    data() {
+        return {
+            model: null,
+            editing: false
+        }
+    },
+    methods: {
+        startEdit() {
+            this.editing = true
+            this.model = _.cloneDeep(this.value)
+            this.$emit('setaEditando', this.name)
+        },
+        async submitEdit() {
+            if (this.validarDadosFormulario()) {
+                this.editing = false
+                this.$emit('retiraEditando', this.name)
+                this.$emit('input', this.value)
+            }
+        },
+        cancelEdit() {
+            this.editing = false
+            this.$emit('cancelarEdicao', this.model)
+        },
+        validarDadosFormulario() {
+            const item = this.$validator._base.errors.items.find(item => item.field === this.name)
+            return !item
+        },
     }
+}
 </script>
 
 <style lang="stylus">

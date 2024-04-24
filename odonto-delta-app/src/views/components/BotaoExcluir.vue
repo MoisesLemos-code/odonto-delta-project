@@ -1,14 +1,22 @@
 <template>
-    <v-btn
-            id="botaoExcluir"
-            outlined
-            :disabled="disabled"
-            icon
-            :color="color"
-            class="botao-excluir"
-            @click="$emit('excluir')">
+<div>
+  <v-tooltip top>
+    <template v-slot:activator={on}>
+      <v-btn
+          v-on="on"
+          id="botaoExcluir"
+          outlined
+          :disabled="disabled"
+          icon
+          :color="color"
+          class="botao-excluir"
+          @click="$emit('excluir')">
         <v-icon>mdi-delete</v-icon>
-    </v-btn>
+      </v-btn>
+    </template>
+    Excluir
+  </v-tooltip>
+</div>
 </template>
 
 <script>

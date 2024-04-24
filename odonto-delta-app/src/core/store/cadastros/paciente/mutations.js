@@ -28,5 +28,9 @@ export default {
 
     [mutationTypes.CADASTROS.PACIENTE.RESETA_PAGE_ORTODONTIA](state) {
         state.resultadoBuscaTodosPacientesOrtodontia.paginacao.page = 1
-    }
+    },
+
+    [mutationTypes.CADASTROS.PACIENTE.SET_ROTA_ORIGEM](state, rotaOrigem) {
+        state.rotaOrigem = rotaOrigem
+    },
 }

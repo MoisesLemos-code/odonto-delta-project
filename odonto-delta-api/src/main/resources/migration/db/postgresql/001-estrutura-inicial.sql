@@ -575,22 +575,32 @@ CREATE TABLE "odonto"."tb_ficha"
 (
     "fi_id" Integer NOT NULL,
     "pa_id" Integer,
-    "fi_descricao" varchar(150),
+    "fi_descricao" varchar(255),
     "fi_tratamento" Boolean,
     "fi_outros_medicamentos" varchar(255),
     "fi_anestesia_local" Boolean,
-    "fi_caso_positivo_anestesia_local" Boolean,
+    "fi_reacao_anestesia_local" Boolean,
     "fi_uso_antibiotico" Boolean,
-    "fi_caso_positivo_antibiotico" Boolean,
+    "fi_reacao_antibiotico" Boolean,
     "fi_nome_antibiotico" varchar(150),
-    "fi_alergia_medicamento" Boolean,
-    "fi_nome_medicameto_alergia" varchar(150),
+    "fi_nome_medicamento_alergia" varchar(255),
     "fi_cicatrizacao_normal" Boolean,
-    "fi_tique_mania" Boolean,
-    "fi_qual_tique_mania" varchar(150),
+    "fi_tique_mania" varchar(255),
     "fi_esta_gravida" Boolean,
     "fi_fumante" Boolean,
-    "fi_outras_informacoes_importantes" varchar(255),
+    "fi_outras_informacoes_importantes" varchar(500),
+    "fi_cardiopatia" Boolean,
+    "fi_anemia" Boolean,
+    "fi_ulcera" Boolean,
+    "fi_doenca_pulmonar" Boolean,
+    "fi_diabetes" Boolean,
+    "fi_artrite_reumatismo" Boolean,
+    "fi_doenca_infecciosa" Boolean,
+    "fi_alergia" Boolean,
+    "fi_cancer" Boolean,
+    "fi_sinusite" Boolean,
+    "fi_gastrite" Boolean,
+    "fi_hepatite" Boolean,
     "fi_dthr_cadastro" timestamp(6),
     "fi_dthr_alteracao" timestamp(6),
     "fi_usuario_cadastro" varchar(255),
@@ -621,31 +631,25 @@ COMMENT ON COLUMN "odonto"."tb_ficha"."fi_outros_medicamentos" IS 'Indica se est
 COMMENT ON COLUMN "odonto"."tb_ficha"."fi_anestesia_local" IS 'Indica se precisa de anestesia local.'
 ;
 
-COMMENT ON COLUMN "odonto"."tb_ficha"."fi_caso_positivo_anestesia_local" IS 'Caso positivo anestesia local.'
+COMMENT ON COLUMN "odonto"."tb_ficha"."fi_reacao_anestesia_local" IS 'Indica se já teve reação a anestesia local.'
 ;
 
 COMMENT ON COLUMN "odonto"."tb_ficha"."fi_uso_antibiotico" IS 'Uso antibiotico.'
 ;
 
-COMMENT ON COLUMN "odonto"."tb_ficha"."fi_caso_positivo_antibiotico" IS 'Caso positivo do uso de antibiotico.'
+COMMENT ON COLUMN "odonto"."tb_ficha"."fi_reacao_antibiotico" IS 'Indica se já teve reação a antibiotico.'
 ;
 
 COMMENT ON COLUMN "odonto"."tb_ficha"."fi_nome_antibiotico" IS 'Nome do antibiotico.'
 ;
 
-COMMENT ON COLUMN "odonto"."tb_ficha"."fi_alergia_medicamento" IS 'Indica se possui alergia a algum medicamento.'
-;
-
-COMMENT ON COLUMN "odonto"."tb_ficha"."fi_nome_medicameto_alergia" IS 'Nome do medicamento que possui alergia.'
+COMMENT ON COLUMN "odonto"."tb_ficha"."fi_nome_medicamento_alergia" IS 'Nome do medicamento que possui alergia.'
 ;
 
 COMMENT ON COLUMN "odonto"."tb_ficha"."fi_cicatrizacao_normal" IS 'Indica se possui cicatrizacao normal.'
 ;
 
 COMMENT ON COLUMN "odonto"."tb_ficha"."fi_tique_mania" IS 'Indica se possui algum tique.'
-;
-
-COMMENT ON COLUMN "odonto"."tb_ficha"."fi_qual_tique_mania" IS 'Indica qual o tipo de tique.'
 ;
 
 COMMENT ON COLUMN "odonto"."tb_ficha"."fi_esta_gravida" IS 'Indica se está gravida.'
@@ -655,6 +659,42 @@ COMMENT ON COLUMN "odonto"."tb_ficha"."fi_fumante" IS 'Indica se é fumante.'
 ;
 
 COMMENT ON COLUMN "odonto"."tb_ficha"."fi_outras_informacoes_importantes" IS 'Outras informações importante.'
+;
+
+COMMENT ON COLUMN "odonto"."tb_ficha"."fi_anemia" IS 'Indica se possui anemia.'
+;
+
+COMMENT ON COLUMN "odonto"."tb_ficha"."fi_ulcera" IS 'Indica se possui alguma ulcera.'
+;
+
+COMMENT ON COLUMN "odonto"."tb_ficha"."fi_doenca_pulmonar" IS 'Indica se possui doença pulmonar.'
+;
+
+COMMENT ON COLUMN "odonto"."tb_ficha"."fi_diabetes" IS 'Indica se possui diabetes.'
+;
+
+COMMENT ON COLUMN "odonto"."tb_ficha"."fi_artrite_reumatismo" IS 'Indica se possui artrite/reumatismo.'
+;
+
+COMMENT ON COLUMN "odonto"."tb_ficha"."fi_doenca_infecciosa" IS 'Indica se possui doença infecciosa.'
+;
+
+COMMENT ON COLUMN "odonto"."tb_ficha"."fi_alergia" IS 'Indica se possui alergia.'
+;
+
+COMMENT ON COLUMN "odonto"."tb_ficha"."fi_cancer" IS 'Indica se possui câncer.'
+;
+
+COMMENT ON COLUMN "odonto"."tb_ficha"."fi_sinusite" IS 'Indica se possui sinusite.'
+;
+
+COMMENT ON COLUMN "odonto"."tb_ficha"."fi_gastrite" IS 'Indica se possui gastrite.'
+;
+
+COMMENT ON COLUMN "odonto"."tb_ficha"."fi_hepatite" IS 'Indica se possui hepatite.'
+;
+
+COMMENT ON COLUMN "odonto"."tb_ficha"."fi_cardiopatia" IS 'Indica se possui cardiopatia.'
 ;
 
 CREATE UNIQUE INDEX "uk_ficha_paciente" ON "odonto"."tb_ficha" ("pa_id")

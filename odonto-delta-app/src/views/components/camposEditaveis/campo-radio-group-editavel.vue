@@ -58,75 +58,75 @@
 </template>
 
 <script>
-    export default {
-        inject: ['$validator'],
-        name: 'campo-radio-group-editavel',
-        props: {
-            value: {
-                required: false
-            },
-            name: {
-                required: true,
-                type: String
-            },
-            label: {
-                type: String,
-                default: ''
-            },
-            labelBtnSave: {
-                type: String,
-                default: 'Salvar'
-            },
-            labelBtnCancel: {
-                type: String,
-                default: 'Cancelar'
-            },
-            labelBtnEdit: {
-                type: String,
-                default: 'Editar'
-            },
-            disabled: {
-                type: Boolean,
-                default: false
-            }
+export default {
+    inject: ['$validator'],
+    name: 'campo-radio-group-editavel',
+    props: {
+        value: {
+            required: false
         },
-        data() {
-            return {
-                model: undefined,
-                editing: false
-            }
+        name: {
+            required: true,
+            type: String
         },
-        watch: {
-            value: {
-                handler(val) {
-                    this.model = val
-                },
-                immediate: true
-            }
+        label: {
+            type: String,
+            default: ''
         },
-        methods: {
-            startEdit() {
-                this.editing = true
-                this.$emit('setaEditando', this.name)
+        labelBtnSave: {
+            type: String,
+            default: 'Salvar'
+        },
+        labelBtnCancel: {
+            type: String,
+            default: 'Cancelar'
+        },
+        labelBtnEdit: {
+            type: String,
+            default: 'Editar'
+        },
+        disabled: {
+            type: Boolean,
+            default: false
+        }
+    },
+    data() {
+        return {
+            model: undefined,
+            editing: false
+        }
+    },
+    watch: {
+        value: {
+            handler(val) {
+                this.model = val
             },
-            async submitEdit() {
-                if (this.validarDadosFormulario()) {
-                    this.editing = false
-                    this.$emit('retiraEditando', this.name)
-                    this.$emit('input', this.model)
-                }
-            },
-            cancelEdit() {
+            immediate: true
+        }
+    },
+    methods: {
+        startEdit() {
+            this.editing = true
+            this.$emit('setaEditando', this.name)
+        },
+        async submitEdit() {
+            if (this.validarDadosFormulario()) {
                 this.editing = false
                 this.$emit('retiraEditando', this.name)
-                this.model = this.value
-            },
-            validarDadosFormulario() {
-                const item = this.$validator._base.errors.items.find(item => item.field === this.name)
-                return !item
-            },
-        }
+                this.$emit('input', this.model)
+            }
+        },
+        cancelEdit() {
+            this.editing = false
+            this.$emit('retiraEditando', this.name)
+            this.model = this.value
+        },
+        validarDadosFormulario() {
+            const item = this.$validator._base.errors.items.find(item => item.field === this.name)
+            return !item
+        },
     }
+}
 </script>
 
 <style lang="stylus">

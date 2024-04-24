@@ -1,6 +1,6 @@
 export default {
     dadosGerais: {},
-    rotaOrigem: 'PacienteListagem',
+    rotaOrigem: {name: 'PacienteListagem'},
     resultadoBuscaTodosPacientes: {
         filtros: {
             tipo:{

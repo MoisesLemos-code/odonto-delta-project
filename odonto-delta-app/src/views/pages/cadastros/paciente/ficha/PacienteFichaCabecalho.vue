@@ -20,8 +20,8 @@
       </v-col>
       <v-col class="headerCabecalho" md="5" sm="5" xs="6">
         <div class="ficha-header-actions">
-          <botao-editar outlined :disabled="!paciente.id" @editar="editarPaciente"/>
-
+          <botao-imprimir outlined :disabled="!paciente.id" @imprimirRelatorio="relatorioFichaPaciente"/>
+          <botao-editar outlined :disabled="!paciente.id" @editar="editarPaciente" class="btn-editar"/>
           <botao-excluir :disabled="!paciente.id" @excluir="abrirModalExcluir" class="btn-excluir"/>
         </div>
       </v-col>
@@ -32,10 +32,11 @@
 <script>
 import BotaoEditar from '@/views/components/BotaoEditar'
 import BotaoExcluir from '@/views/components/BotaoExcluir'
+import BotaoImprimir from '@/views/components/BotaoImprimir.vue'
 
 export default {
     name: 'PacienteFichaCabecalho',
-    components: { BotaoExcluir, BotaoEditar},
+    components: {BotaoImprimir, BotaoExcluir, BotaoEditar},
     props: {
         paciente: {
             required: true
@@ -47,6 +48,9 @@ export default {
         },
         editarPaciente(){
             this.$emit('editarPaciente')
+        },
+        relatorioFichaPaciente(){
+            this.$emit('relatorioFichaPaciente')
         }
     }
 }
@@ -64,9 +68,11 @@ export default {
 
 .ficha-header-actions
   margin-right 5px
-  text-align end
+  display flex
+  flex-direction row
+  justify-content end
 
-.btn-excluir
+.btn-excluir, .btn-editar
   margin-left 15px
 
 </style>

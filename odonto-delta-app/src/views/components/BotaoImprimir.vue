@@ -4,24 +4,23 @@
     <template v-slot:activator={on}>
       <v-btn
           v-on="on"
-          id="botaoEditar"
+          id="botaoImprimir"
           :outlined="outlined"
           :disabled="disabled"
           icon
           :color="color"
-          class="botao-editar"
-          @click="$emit('editar')">
-        <v-icon>mdi-pencil</v-icon>
+          @click="$emit('imprimirRelatorio')">
+        <v-icon>mdi-file-document</v-icon>
       </v-btn>
     </template>
-    Editar
+    {{ texto }}
   </v-tooltip>
 </div>
 </template>
 
 <script>
 export default {
-    name: 'BotaoEditar',
+    name: 'BotaoImprimir',
     props:{
         disabled: {
             type: Boolean,
@@ -34,6 +33,10 @@ export default {
         color: {
             type: String,
             default: 'white'
+        },
+        texto:{
+            type: String,
+            default: 'Imprimir Relatório'
         }
     }
 }

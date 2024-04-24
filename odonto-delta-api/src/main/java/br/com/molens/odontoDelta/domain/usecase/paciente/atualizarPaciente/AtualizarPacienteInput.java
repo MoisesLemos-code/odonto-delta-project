@@ -38,4 +38,5 @@ public class AtualizarPacienteInput {
     private Long empresaId;
     @EnumType(enumClass = SituacaoPacienteEnum.class, message = "O atributo 'situação' é inválido.")
     private String situacao;
+    private Boolean ortodontia;
 }

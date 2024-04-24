@@ -11,103 +11,86 @@
                             <v-row>
                                 <v-col cols="12" md="12" sm="12" xs="12" class="pt-5">
                                     <campo-check-box-editavel
-                                            v-model="fichaDadosGerais.historiaMedica"
+                                            v-model="fichaPaciente"
                                             :label="'História médica'"
                                             :name="'check-box'"
-                                            @cancelaEditando="cancelarEdicaoHistoriaMedica"
-                                            @input=" value => tratarEventoSalvar(value)"
+                                            @input="value => tratarEventoSalvar(value)"
+                                            @cancelarEdicao="value => tratarEventoCancelar(value)"
                                     />
                                 </v-col>
                                 <v-col cols="12" md="12" sm="12" xs="12">
                                     <campo-radio-group-editavel
-                                            v-model="fichaDadosGerais.estaFazendoTratamento"
+                                            v-model="fichaPaciente.tratamento"
                                             :label="'Está fazendo tratamento médico'"
                                             :name="'esta-fazendo-tratamento'"
                                             @input="value => tratarEventoSalvar(value)"
                                     />
                                 </v-col>
                                 <v-col cols="12" md="12" sm="12" xs="12">
-                                    <campo-check-box-editavel
-                                            v-model="fichaDadosGerais.usoMedicamento"
-                                            :label="'Está fazendo uso de medicamento'"
-                                            :name="'check-box'"
-                                            @cancelaEditando="cancelarEdicaoUsoMedico"
+                                  <campo-de-texto-editavel
+                                      v-model="fichaPaciente.outrosMedicamentos"
+                                      label="Outros medicamentos"
+                                      name="outros_medicamentos"
+                                      :maxlength="250"
+                                      :counter="250"
+                                      @input="value => tratarEventoSalvar(value)"
+                                  />
+                                </v-col>
+                            </v-row>
+                            <v-row>
+                                <v-col cols="12" md="6" sm="6" xs="12">
+                                    <campo-radio-group-editavel
+                                            v-model="fichaPaciente.anestesiaLocal"
+                                            label="Já fez uso de anestesia local?"
+                                            name="uso-anestesia-local"
+                                            @input="value => tratarEventoSalvar(value)"
+                                    />
+                                </v-col>
+                                <v-col cols="12" md="6" sm="6" xs="12">
+                                    <campo-radio-group-editavel
+                                            v-model="fichaPaciente.possuiReacaoAnestesiaLocal"
+                                            label="Em caso positivo, já sentiu alguma reação?"
+                                            name="caso-positivo-anestesia"
+                                            @input="value => tratarEventoSalvar(value)"
+                                    />
+                                </v-col>
+                            </v-row>
+                            <v-row>
+                                <v-col cols="12" md="6" sm="6" xs="12">
+                                    <campo-radio-group-editavel
+                                            v-model="fichaPaciente.usoAntibiotico"
+                                            label="Já fez uso de penicilina ou outros antibióticos?"
+                                            name="uso-antibiotico"
+                                            @input="value => tratarEventoSalvar(value)"
+                                    />
+                                </v-col>
+                                <v-col cols="12" md="6" sm="6" xs="12">
+                                    <campo-radio-group-editavel
+                                            v-model="fichaPaciente.possuiReacaoAntibiotico"
+                                            label="Em caso positivo, já sentiu alguma reação?"
+                                            name="caso-positivo-antibiotico"
                                             @input="value => tratarEventoSalvar(value)"
                                     />
                                 </v-col>
                                 <v-col cols="12" md="12" sm="12" xs="12">
                                     <campo-de-texto-editavel
-                                            v-model="fichaDadosGerais.outrosMedicamentos"
-                                            :label="'Outros medicamentos'"
-                                            :name="'outros_medicamentos'"
-                                            :maxlength="100"
-                                            :counter="100"
+                                            v-model="fichaPaciente.nomeAntibiotico"
+                                            label="Nome do antibótico que houve reação"
+                                            name="nome_antibiotico"
+                                            :maxlength="150"
+                                            :counter="150"
                                             @input="value => tratarEventoSalvar(value)"
                                     />
                                 </v-col>
                             </v-row>
                             <v-row>
-                                <v-col cols="12" md="6" sm="6" xs="12">
-                                    <campo-radio-group-editavel
-                                            v-model="fichaDadosGerais.fezUsoAnestesiaLocal"
-                                            :label="'Já fez uso de anestesia local?'"
-                                            :name="'uso-anestesia-local'"
-                                            @input="value => tratarEventoSalvar(value)"
-                                    />
-                                </v-col>
-                                <v-col cols="12" md="6" sm="6" xs="12">
-                                    <campo-radio-group-editavel
-                                            v-model="fichaDadosGerais.casoPositivoAnestesiaLocal"
-                                            :label="'Em caso positivo, já sentiu alguma reação?'"
-                                            :name="'caso-positivo-anestesia'"
-                                            @input="value => tratarEventoSalvar(value)"
-                                    />
-                                </v-col>
-                            </v-row>
-                            <v-row>
-                                <v-col cols="12" md="6" sm="6" xs="12">
-                                    <campo-radio-group-editavel
-                                            v-model="fichaDadosGerais.fezUsoAntibiotico"
-                                            :label="'Já fez uso de penicilina ou outros antibióticos?'"
-                                            :name="'uso-antibiotico'"
-                                            @input="value => tratarEventoSalvar(value)"
-                                    />
-                                </v-col>
-                                <v-col cols="12" md="6" sm="6" xs="12">
-                                    <campo-radio-group-editavel
-                                            v-model="fichaDadosGerais.casoPositivoAntibiotico"
-                                            :label="'Em caso positivo, já sentiu alguma reação?'"
-                                            :name="'caso-positivo-antibiotico'"
-                                            @input="value => tratarEventoSalvar(value)"
-                                    />
-                                </v-col>
                                 <v-col cols="12" md="12" sm="12" xs="12">
                                     <campo-de-texto-editavel
-                                            v-model="fichaDadosGerais.nomeAntibiotico"
-                                            :label="'Nome do antibótico'"
-                                            :name="'nome_antibiotico'"
-                                            :maxlength="100"
-                                            :counter="100"
-                                            @input="value => tratarEventoSalvar(value)"
-                                    />
-                                </v-col>
-                            </v-row>
-                            <v-row>
-                                <v-col cols="12" md="6" sm="6" xs="12">
-                                    <campo-radio-group-editavel
-                                            v-model="fichaDadosGerais.alergiaMedicamento"
-                                            :label="'Já teve alergia a algum tipo de medicamento?'"
-                                            :name="'alergia-medicamento'"
-                                            @input="tratarEventoSalvar()"
-                                    />
-                                </v-col>
-                                <v-col cols="12" md="6" sm="6" xs="12">
-                                    <campo-de-texto-editavel
-                                            v-model="fichaDadosGerais.nomeMedicamentoAlergia"
-                                            :label="'Nome do medicamento'"
-                                            :name="'nome_medicamento_alergia'"
-                                            :maxlength="100"
-                                            :counter="100"
+                                            v-model="fichaPaciente.nomeMedicamentoAlergia"
+                                            label="Possui alergia a algum medicamento?"
+                                            name="nome_medicamento_alergia"
+                                            :maxlength="250"
+                                            :counter="250"
                                             @input="tratarEventoSalvar()"
                                     />
                                 </v-col>
@@ -115,45 +98,37 @@
                             <v-row>
                                 <v-col cols="12" md="12" sm="12" xs="12">
                                     <campo-radio-group-editavel
-                                            v-model="fichaDadosGerais.cicatrizacaoNormal"
-                                            :label="'Quando se fere, o sangramento e a cicatrização são normais?'"
-                                            :name="'cicatrizacao-normal'"
+                                            v-model="fichaPaciente.cicatrizacaoNormal"
+                                            label="Quando se fere, o sangramento e a cicatrização são normais?"
+                                            name="cicatrizacao-normal"
                                             @input="tratarEventoSalvar()"
                                     />
                                 </v-col>
                             </v-row>
                             <v-row>
-                                <v-col cols="12" md="6" sm="6" xs="12">
-                                    <campo-radio-group-editavel
-                                            v-model="fichaDadosGerais.tiqueMania"
-                                            :label="'Possui algum tique ou mania?'"
-                                            :name="'tique-mania'"
-                                            @input="tratarEventoSalvar()"
-                                    />
-                                </v-col>
-                                <v-col cols="12" md="6" sm="6" xs="12">
+                                <v-col cols="12" md="12" sm="12" xs="12">
                                     <campo-de-texto-editavel
-                                            v-model="fichaDadosGerais.qualTiqueMania"
-                                            :label="'Qual?'"
-                                            :name="'qual-tique-mania'"
-                                            :maxlength="100"
-                                            :counter="100"
+                                            v-model="fichaPaciente.tiqueMania"
+                                            label="Possui algum tique ou mania?"
+                                            name="qual-tique-mania"
+                                            :maxlength="250"
+                                            :counter="250"
                                             @input="tratarEventoSalvar()"
                                     />
                                 </v-col>
                                 <v-col cols="12" md="6" sm="6" xs="12">
                                     <campo-radio-group-editavel
-                                            v-model="fichaDadosGerais.estaGravida"
-                                            :label="'Está gravida?'"
-                                            :name="'esta-gravida'"
+                                            v-model="fichaPaciente.estaGravida"
+                                            label="Está gravida?"
+                                            name="esta-gravida"
                                             @input="tratarEventoSalvar()"
                                     />
                                 </v-col>
                                 <v-col cols="12" md="6" sm="6" xs="12">
                                     <campo-radio-group-editavel
-                                            v-model="fichaDadosGerais.fumante"
-                                            :label="'Fuma?'"
-                                            :name="'fumante'"
+                                            v-model="fichaPaciente.fumante"
+                                            label="É fumante?"
+                                            name="fumante"
                                             @input="tratarEventoSalvar()"
                                     />
                                 </v-col>
@@ -161,10 +136,10 @@
                             <v-row>
                                 <v-col cols="12" md="12" sm="12" xs="12">
                                     <campo-text-area-editavel
-                                            v-model="fichaDadosGerais.outrasInformacoesImportantes"
-                                            :label="'Outras informações importantes'"
-                                            :name="'outras informações importantes'"
-                                            :validate="'max: 200'"
+                                            v-model="fichaPaciente.outrasInformacoesImportantes"
+                                            label="Outras informações importantes"
+                                            name="outras informações importantes"
+                                            :validate="{max: 500}"
                                             @input="tratarEventoSalvar()"
                                     />
                                 </v-col>
@@ -179,7 +154,6 @@
 
 <script>
 import _ from 'lodash'
-import {actionTypes} from '@/core/constants'
 import tipoPaciente from '@/core/constants/enums/tipoPaciente'
 import CampoCheckBoxEditavel from '@/views/components/camposEditaveis/campo-check-box-editavel'
 import CampoRadioGroupEditavel from '@/views/components/camposEditaveis/campo-radio-group-editavel'
@@ -189,62 +163,20 @@ import CampoTextAreaEditavel from '@/views/components/camposEditaveis/campo-text
 export default {
     name: 'PacienteFichaDetalhes',
     components: {CampoTextAreaEditavel, CampoDeTextoEditavel, CampoRadioGroupEditavel, CampoCheckBoxEditavel},
-    props: ['pacienteId'],
+    props: ['pacienteId', 'fichaPaciente'],
     data() {
         return {
-            fichaDadosGerais: {},
-            historiaMedicaAnterior: {},
-            usoMedicamentoAnterior: {},
             exibirPanel: false,
             tipoPaciente
         }
     },
-    async mounted() {
-        await this.setarHistoriaMedicaAnterior()
-        await this.setarUsoMedicamentoAnterior()
-    },
     methods: {
-        async buscarFicha() {
-            this.fichaDadosGerais = await this.$store.dispatch(actionTypes.CADASTROS.PACIENTE.FICHA.BUSCAR_POR_PACIENTE, this.pacienteId)
-        },
-        async setarHistoriaMedicaAnterior() {
-            this.historiaMedicaAnterior = _.cloneDeep(this.fichaDadosGerais.historiaMedica)
-        },
-        async setarUsoMedicamentoAnterior() {
-            this.usoMedicamentoAnterior = _.cloneDeep(this.fichaDadosGerais.usoMedicamento)
-        },
-        cancelarEdicaoHistoriaMedica() {
-            this.fichaDadosGerais.historiaMedica = _.cloneDeep(this.historiaMedicaAnterior)
-        },
-        cancelarEdicaoUsoMedico() {
-            this.fichaDadosGerais.usoMedicamento = _.cloneDeep(this.usoMedicamentoAnterior)
-        },
-        construirHistoriaMedica() {
-            let historiaMedicaFilter = []
-            this.setarHistoriaMedicaAnterior()
-            this.fichaDadosGerais.historiaMedica.forEach(x => {
-                if (x.atribuido) {
-                    historiaMedicaFilter.push(x.cod)
-                }
-            })
-            return historiaMedicaFilter
-        },
-        construirUsoMedicamento() {
-            let usoMedicamentoFilter = []
-            this.fichaDadosGerais.usoMedicamento.forEach(x => {
-                if (x.atribuido) {
-                    usoMedicamentoFilter.push(x.cod)
-                }
-            })
-            return usoMedicamentoFilter
-        },
         tratarEventoSalvar() {
-            let ficha = _.cloneDeep(this.fichaDadosGerais)
-            ficha.historiaMedica = this.construirHistoriaMedica()
-            ficha.usoMedicamento = this.construirUsoMedicamento()
-            this.setarHistoriaMedicaAnterior()
-            this.setarUsoMedicamentoAnterior()
-            this.$emit('salvar', ficha)
+            let ficha = _.cloneDeep(this.fichaPaciente)
+            this.$emit('salvarFicha', ficha)
+        },
+        tratarEventoCancelar(ficha){
+            this.$emit('cancelarEdicaoFicha', ficha)
         }
     }
 }

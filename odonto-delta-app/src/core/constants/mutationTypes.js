@@ -70,6 +70,7 @@ export default {
             SET_FILTROS_BUSCA_TODOS_PACIENTES_ORTODONTIA: 'setFiltrosBuscaTodosPacientesOrtodontia',
             SET_PAGINACAO_BUSCA_TODOS_PACIENTES_ORTODONTIA: 'setPaginacaoBuscaTodosPacientesOrtodontia',
             RESETA_PAGE_ORTODONTIA: 'resetaPageOrtodontia',
+            SET_ROTA_ORIGEM: 'setRotaOrigem',
         },
         CIDADE:{
             SET_DADOS_GERAIS: 'setDadosGerais',
