@@ -147,7 +147,11 @@ export default {
         },
         maxDate: {
             type: String
-        }
+        },
+        icon:{
+            type: Boolean,
+            default: false
+        },
     },
     inject: ['$validator'],
     data() {

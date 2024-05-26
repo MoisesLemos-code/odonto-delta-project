@@ -14,12 +14,6 @@ export default {
         return data
     },
 
-    async [actionTypes.CADASTROS.PACIENTE.BUSCAR_TODOS_PACIENTES_ORTODONTIA]({state}) {
-        const {filtros, paginacao} = state.resultadoBuscaTodosPacientesOrtodontia
-        const {data} = await api.paciente.buscarTodosOrtodontia(filtros, paginacao)
-        return data
-    },
-
     async [actionTypes.CADASTROS.PACIENTE.CADASTRAR_PACIENTE](context, dados) {
         const {data} = await api.paciente.cadastrar(dados)
         return data

@@ -14,7 +14,6 @@ import javax.validation.constraints.NotNull;
 public class BuscarFichaPacientePorPacienteOutput {
 
     private Long id;
-    private String descricao;
     private Boolean tratamento;
     private String outrosMedicamentos;
     private Boolean anestesiaLocal;

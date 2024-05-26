@@ -99,7 +99,7 @@ CREATE SEQUENCE "odonto"."seq_ficha"
 
 CREATE TABLE "odonto"."tb_plano"
 (
-  "pla_id" Bigint NOT NULL,
+  "pla_id" Integer NOT NULL,
   "pla_ciclo" varchar(255),
   "pla_descricao" varchar(50),
   "pla_valor" numeric,
@@ -575,7 +575,6 @@ CREATE TABLE "odonto"."tb_ficha"
 (
     "fi_id" Integer NOT NULL,
     "pa_id" Integer,
-    "fi_descricao" varchar(255),
     "fi_tratamento" Boolean,
     "fi_outros_medicamentos" varchar(255),
     "fi_anestesia_local" Boolean,
@@ -617,9 +616,6 @@ COMMENT ON COLUMN "odonto"."tb_ficha"."fi_id" IS 'Codigo gerado automaticamente 
 ;
 
 COMMENT ON COLUMN "odonto"."tb_ficha"."pa_id" IS 'Código referente ao paciente.'
-;
-
-COMMENT ON COLUMN "odonto"."tb_ficha"."fi_descricao" IS 'Descrição da ficha.'
 ;
 
 COMMENT ON COLUMN "odonto"."tb_ficha"."fi_tratamento" IS 'Indica se está fazendo tratamento.'
@@ -703,6 +699,118 @@ CREATE UNIQUE INDEX "uk_ficha_paciente" ON "odonto"."tb_ficha" ("pa_id")
 ALTER TABLE "odonto"."tb_ficha" ADD CONSTRAINT "pk_tb_ficha" PRIMARY KEY ("fi_id")
 ;
 
+-- Table odonto.tb_cobranca
+
+CREATE TABLE "odonto"."tb_cobranca"
+(
+    "co_id" Integer NOT NULL,
+    "pa_id" Integer,
+    "or_id" Integer,
+    "co_codigo" varchar(255) NOT NULL,
+    "co_valor_total" numeric,
+    "co_valor_pago" numeric,
+    "co_status" varchar(255) NOT NULL,
+    "co_descricao" varchar(255),
+    "co_observacao" varchar(400),
+    "co_data_vencimento" timestamp(6),
+    "em_id" Integer,
+    "co_dthr_cadastro" timestamp(6),
+    "co_dthr_alteracao" timestamp(6),
+    "co_usuario_cadastro" varchar(255),
+    "co_usuario_alteracao" varchar(255)
+)
+    WITH (
+        autovacuum_enabled=true)
+;
+
+COMMENT ON TABLE "odonto"."tb_cobranca" IS 'Armazena os dados de cobrança.'
+;
+
+COMMENT ON COLUMN "odonto"."tb_cobranca"."co_id" IS 'Codigo gerado automaticamente que identifica uma cobrança.'
+;
+
+COMMENT ON COLUMN "odonto"."tb_cobranca"."pa_id" IS 'Código referente ao paciente.'
+;
+
+COMMENT ON COLUMN "odonto"."tb_cobranca"."or_id" IS 'Código referente ao orçamento.'
+;
+
+COMMENT ON COLUMN "odonto"."tb_cobranca"."co_codigo" IS 'Indica o código da cobrança.'
+;
+
+COMMENT ON COLUMN "odonto"."tb_cobranca"."co_valor_total" IS 'Indica o valor total.'
+;
+
+COMMENT ON COLUMN "odonto"."tb_cobranca"."co_valor_pago" IS 'Indica o valor pago.'
+;
+
+COMMENT ON COLUMN "odonto"."tb_cobranca"."co_status" IS 'Indica o status.'
+;
+
+COMMENT ON COLUMN "odonto"."tb_cobranca"."co_descricao" IS 'Indica a descrição.'
+;
+
+COMMENT ON COLUMN "odonto"."tb_cobranca"."co_observacao" IS 'Indica a observação.'
+;
+
+COMMENT ON COLUMN "odonto"."tb_cobranca"."co_data_vencimento" IS 'Indica a data de vencimento.'
+;
+
+COMMENT ON COLUMN "odonto"."tb_cobranca"."em_id" IS 'Codigo da empresa'
+;
+
+CREATE INDEX "in_cobranca_id" ON "odonto"."tb_cobranca" ("co_id")
+;
+
+ALTER TABLE "odonto"."tb_cobranca" ADD CONSTRAINT "pk_cobranca" PRIMARY KEY ("co_id")
+;
+
+-- Table odonto.tb_orcamento
+
+CREATE TABLE "odonto"."tb_orcamento"
+(
+    "or_id" Integer NOT NULL,
+    "pa_id" Integer,
+    "or_codigo" varchar(255) NOT NULL,
+    "or_status" varchar(255) NOT NULL,
+    "or_observacao" varchar(400),
+    "em_id" Integer,
+    "or_dthr_cadastro" timestamp(6),
+    "or_dthr_alteracao" timestamp(6),
+    "or_usuario_cadastro" varchar(255),
+    "or_usuario_alteracao" varchar(255)
+)
+    WITH (
+        autovacuum_enabled=true)
+;
+
+COMMENT ON TABLE "odonto"."tb_orcamento" IS 'Armazena os dados de cobrança.'
+;
+
+COMMENT ON COLUMN "odonto"."tb_orcamento"."or_id" IS 'Codigo gerado automaticamente que identifica um orçamento.'
+;
+
+COMMENT ON COLUMN "odonto"."tb_orcamento"."pa_id" IS 'Código referente ao paciente.'
+;
+
+COMMENT ON COLUMN "odonto"."tb_orcamento"."or_codigo" IS 'Indica o código do orçamento.'
+;
+
+COMMENT ON COLUMN "odonto"."tb_orcamento"."or_status" IS 'Indica o status.'
+;
+
+COMMENT ON COLUMN "odonto"."tb_orcamento"."or_observacao" IS 'Indica a observação.'
+;
+
+COMMENT ON COLUMN "odonto"."tb_orcamento"."em_id" IS 'Codigo da empresa'
+;
+
+CREATE INDEX "in_orcamento_id" ON "odonto"."tb_orcamento" ("or_id")
+;
+
+ALTER TABLE "odonto"."tb_orcamento" ADD CONSTRAINT "pk_orcamento" PRIMARY KEY ("or_id")
+;
+
 -- Create foreign keys (relationships) section -------------------------------------------------
 
 
@@ -744,3 +852,19 @@ ALTER TABLE "odonto"."tb_perfil_permissao" ADD CONSTRAINT "fk_perfil_permissao_p
 
 ALTER TABLE "odonto"."tb_perfil_permissao" ADD CONSTRAINT "fk_perfil_permissao_pe" FOREIGN KEY ("pe_id") REFERENCES "odonto"."tb_permissao" ("pe_id")
 ;
+
+ALTER TABLE "odonto"."tb_cobranca" ADD CONSTRAINT "fk_cobranca_paciente" FOREIGN KEY ("pa_id") REFERENCES "odonto"."tb_paciente" ("pa_id")
+;
+
+ALTER TABLE "odonto"."tb_cobranca" ADD CONSTRAINT "fk_cobranca_orcamento" FOREIGN KEY ("or_id") REFERENCES "odonto"."tb_orcamento" ("or_id")
+;
+
+ALTER TABLE "odonto"."tb_cobranca" ADD CONSTRAINT "fk_cobranca_empresa" FOREIGN KEY ("em_id") REFERENCES "odonto"."tb_empresa" ("em_id")
+;
+
+ALTER TABLE "odonto"."tb_orcamento" ADD CONSTRAINT "fk_orcamento_paciente" FOREIGN KEY ("pa_id") REFERENCES "odonto"."tb_paciente" ("pa_id")
+;
+
+ALTER TABLE "odonto"."tb_orcamento" ADD CONSTRAINT "fk_orcamento_empresa" FOREIGN KEY ("em_id") REFERENCES "odonto"."tb_empresa" ("em_id")
+;
+

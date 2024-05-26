@@ -1,10 +1,22 @@
 import axios from 'axios'
-import SearchUrlBuilder from '@/core/utils/SearchUrlBuilder'
 
 class RelatoriosApiClient {
 
-    async gerarRelatorioPacientes(dados) {
-        return axios.post('/relatorios/pacientes', dados)
+    async gerarRelatorioFichaPaciente(pacienteId) {
+        axios({
+            url: `/relatorios/fichaPaciente/${pacienteId}`,
+            method: 'GET',
+            responseType: 'blob',
+        }).then((response) => {
+            var fileURL = window.URL.createObjectURL(new Blob([response.data]))
+            var fileLink = document.createElement('a')
+
+            fileLink.href = fileURL
+            fileLink.setAttribute('download', 'FichaPaciente.pdf')
+            document.body.appendChild(fileLink)
+
+            fileLink.click()
+        })
     }
 
     async gerarRelatorioOrcamentos(dados) {

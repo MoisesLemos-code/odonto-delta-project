@@ -1,0 +1,19 @@
+<table>
+    <tr>
+        <td class="left"></td>
+        <td class="right">
+            <span class="pagina">Página <span id="pagenumber"></span> de <span id="pagecount"></span></span>
+        </td>
+    </tr>
+    <tr>
+        <td class="col-2 left">
+            <img style="width: 150px;" th:src="|data:image/png;base64,${logoRelatorio}|" alt="Logo do cliente" class="pr-3"/>
+        </td>
+        <td class="col-8">
+            <strong th:text="${properties.header.titulo1} ? ${properties.header.titulo1} : ''"></strong><br>
+            <span th:text="${properties.header.titulo2} ? ${properties.header.titulo2} : ''"></span>
+            <span th:text="${properties.header.titulo3} ? ${properties.header.titulo3} : ''"></span><br>
+            <span th:text="${properties.header.titulo4} ? ${properties.header.titulo4} : ''"></span>
+        </td>
+    </tr>
+</table>

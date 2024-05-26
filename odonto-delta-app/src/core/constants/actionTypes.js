@@ -86,11 +86,17 @@ export default {
             BUSCAR_PECAS_ITEM_POR_DENTE_ITEM: 'buscarPecasItemPorDenteItem'
         },
     },
+    COBRANCA: {
+        BUSCAR_TODAS_COBRANCAS: 'buscarTodasCobrancas',
+        CADASTRAR_COBRANCA: 'cadastrarCobranca',
+        EDITAR_COBRANCA: 'editarCobranca',
+        EXCLUIR_COBRANCA: 'excluirCobranca',
+        BUSCAR_COBRANCA_POR_ID: 'buscarCobrancaPorId',
+    },
     CADASTROS: {
         PACIENTE: {
             BUSCAR_TODOS_PACIENTES_SEM_PAGINACAO: 'buscarTodosPacientesSemPaginacao',
             BUSCAR_TODOS_PACIENTES: 'buscarTodosPacientes',
-            BUSCAR_TODOS_PACIENTES_ORTODONTIA: 'buscarTodosPacientesOrtodontia',
             CADASTRAR_PACIENTE: 'cadastrarPaciente',
             EDITAR_PACIENTE: 'editarPaciente',
             EXCLUIR_PACIENTE: 'excluirPaciente',
@@ -113,7 +119,7 @@ export default {
         }
     },
     RELATORIOS:{
-        GERAR_RELATORIO_PACIENTES: 'gerarRelatorioPacientes',
+        GERAR_RELATORIO_FICHA_PACIENTE: 'gerarRelatorioFichaPaciente',
         GERAR_RELATORIO_ORCAMENTOS: 'gerarRelatorioOrcamentos'
     }
 }

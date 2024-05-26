@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8" content="width=device-width, initial-scale=1"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+  <title>Termo de Credenciamento</title>
+
+  <link rel="stylesheet" type="text/css" media="all" href="../css/style.css"/>
+  <style type="text/css">
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .container-info{
+        margin-top: 30px;
+        font-size: 14px;
+        line-height: 0.5em;
+    }
+    h2{
+      font-size: 18px;
+      text-align: center;
+      font-weight: normal;
+    }
+    hr{
+        margin-top: 20px;
+        height: 2px;
+    }
+    .container-text{
+        text-align: justify;
+    }
+    .container-text, p, label{
+        font-size: 12px;
+    }
+    .text-data{
+        text-align: right;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="header" th:include="${templateHeader}"></div>
+
+<div class="container-info">
+    <p>Nome: <label th:text="${nomePaciente}"></label></p>
+    <p>CPF/CNPJ: <label th:text="${documento}"></label></p>
+</div>
+<hr />
+<h2>Ficha de paciente</h2>
+<div class="container-text">
+
+</div>
+
+<div th:include="${templateFooter}"></div>
+
+</body>
+</html>

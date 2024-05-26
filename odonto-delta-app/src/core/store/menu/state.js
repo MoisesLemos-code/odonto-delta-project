@@ -18,11 +18,6 @@ export default {
                     icon: 'mdi-contacts',
                     name: 'Pacientes',
                 },
-                {
-                    path: '/pacientesOrtodontia',
-                    icon: 'mdi-contacts-outline',
-                    name: 'Pacientes Ortodontia',
-                }
             ]
         },
         // {

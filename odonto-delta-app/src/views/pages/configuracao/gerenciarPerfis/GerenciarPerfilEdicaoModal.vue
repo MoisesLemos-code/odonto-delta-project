@@ -73,7 +73,7 @@
         <v-container>
           <v-row wrap align-center white class="pl-10 pr-10 row-bottom">
             <botao-cancelar @cancelar="fecharModal"/>
-            <div>
+            <div style="display: flex; flex-direction: row">
               <botao-excluir @excluir="abrirModalExcluir" color="grey" v-if="itemId" class="mr-5"/>
               <botao-salvar @salvar="tratarEventoEditar"/>
             </div>

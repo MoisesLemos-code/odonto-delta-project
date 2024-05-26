@@ -14,6 +14,7 @@ import perfil from './PerfilApiClient'
 import perfilPermissao from './PerfilPermissaoApiClient'
 import permissao from './PermissaoApiClient'
 import perfilUsuario from './PerfilUsuarioApiClient'
+import cobranca from './CobrancaApiClient'
 
 export default {
     usuario,
@@ -31,5 +32,6 @@ export default {
     perfil,
     perfilPermissao,
     permissao,
-    perfilUsuario
+    perfilUsuario,
+    cobranca,
 }

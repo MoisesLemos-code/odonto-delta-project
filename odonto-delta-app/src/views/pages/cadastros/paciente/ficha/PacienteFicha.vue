@@ -14,6 +14,7 @@
             <paciente-ficha-dados-gerais :paciente="dadosGerais"/>
             <paciente-ficha-detalhes v-if="fichaPaciente" :ficha-paciente="fichaPaciente"  @salvarFicha="tratarEventoSalvarFicha"
                                      @cancelarEdicaoFicha="tratarEventoCancelarEdicaoFicha"/>
+            <paciente-ficha-cobrancas />
             <paciente-ficha-orcamentos v-if="false"/>
         </v-container>
     </v-form>
@@ -27,10 +28,12 @@ import ConfirmModal from '@/views/components/ConfirmModal'
 import PacienteFichaDadosGerais from '@/views/pages/cadastros/paciente/ficha/PacienteFichaDadosGerais'
 import PacienteFichaDetalhes from '@/views/pages/cadastros/paciente/ficha/PacienteFichaDetalhes'
 import PacienteFichaOrcamentos from './PacienteFichaOrcamentos'
+import PacienteFichaCobrancas from '@/views/pages/cadastros/paciente/ficha/PacienteFichaCobrancas.vue'
 
 export default {
     nome: 'PacienteFicha',
     components: {
+        PacienteFichaCobrancas,
         PacienteFichaOrcamentos,
         PacienteFichaDetalhes, PacienteFichaDadosGerais, ConfirmModal, PacienteFichaCabecalho
     },
@@ -89,8 +92,8 @@ export default {
         abrirModalExcluir() {
             this.modalExcluir = true
         },
-        imprimirRelatorioFichaPaciente(){
-            console.log('---imprimirRelatorioFichaPaciente')  
+        async imprimirRelatorioFichaPaciente(){
+            await this.$store.dispatch(actionTypes.RELATORIOS.GERAR_RELATORIO_FICHA_PACIENTE, this.pacienteId)
         },
         async excluirPacienteSelecionado() {
             await this.$store.dispatch(actionTypes.CADASTROS.PACIENTE.EXCLUIR_PACIENTE, this.$route.params.id)

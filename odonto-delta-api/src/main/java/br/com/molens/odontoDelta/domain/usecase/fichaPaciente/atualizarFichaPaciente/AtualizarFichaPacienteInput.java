@@ -15,7 +15,6 @@ public class AtualizarFichaPacienteInput {
 
     private Long id;
     private Long pacienteId;
-    private String descricao;
     private Boolean tratamento;
     private String outrosMedicamentos;
     private Boolean anestesiaLocal;

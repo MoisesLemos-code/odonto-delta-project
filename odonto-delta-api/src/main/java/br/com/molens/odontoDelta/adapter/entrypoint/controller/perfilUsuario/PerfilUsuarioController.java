@@ -7,6 +7,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,10 +20,10 @@ public interface PerfilUsuarioController {
 
 
     @ApiOperation(value = "Busca todos os perfis do usuário")
-    @GetMapping("/buscarPerfisDoUsuario")
-    ResponseEntity<BuscarPerfisDoUsuarioOutput> buscarPerfisDoUsuario(@Valid BuscarPerfisDoUsuarioInput inputData);
+    @GetMapping("/buscarPerfisDoUsuario/idUsuario={usuarioId}")
+    ResponseEntity<BuscarPerfisDoUsuarioOutput> buscarPerfisDoUsuario(@PathVariable @Valid Long usuarioId, @Valid BuscarPerfisDoUsuarioInput inputData);
 
     @ApiOperation(value = "Atualiza um perfil de usuário")
-    @PutMapping("/atualizar")
-    ResponseEntity<Void> atualizar(@RequestBody @Valid AtualizarPerfilUsuarioInput input);
+    @PutMapping("/atualizar/idUsuario={usuarioId}")
+    ResponseEntity<Void> atualizar(@PathVariable @Valid Long usuarioId, @RequestBody @Valid AtualizarPerfilUsuarioInput input);
 }

@@ -78,7 +78,6 @@ export default {
     data() {
         return {
             perfis: {},
-            dadosGerais: {},
         }
     },
     computed: {
@@ -91,10 +90,7 @@ export default {
     },
     methods: {
         async buscarPerfisUsuario() {
-            const permissoes = await this.$store.dispatch(actionTypes.PERMISSAO.BUSCAR_TODAS_PERMISSOES_USUARIO)
-            console.log('---buscar permissoes do usuario')
-            console.log(permissoes)
-            const resultado = await this.$store.dispatch(actionTypes.PERFIL_USUARIO.BUSCAR_PERFIS_DO_USUARIO)
+            const resultado = await this.$store.dispatch(actionTypes.PERFIL_USUARIO.BUSCAR_PERFIS_DO_USUARIO, this.item.id)
             if (resultado) {
                 this.perfis = resultado.items
             }
@@ -103,6 +99,7 @@ export default {
             if (this.possuiPermissao) {
                 this.setMensagemLoading('Salvando alterações do usuário...')
                 const input = {
+                    usuarioId: this.item.id,
                     items: this.perfis
                 }
                 await this.$store.dispatch(actionTypes.PERFIL_USUARIO.ATUALIZAR_PERFIS_DO_USUARIO, input)

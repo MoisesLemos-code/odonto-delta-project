@@ -16,15 +16,6 @@ class PacienteApiClient {
         return axios.get(url)
     }
 
-    async buscarTodosOrtodontia(filtros, paginacao) {
-        const url = SearchUrlBuilder.buildAvanced(
-            '/paciente/page/ortodontia',
-            filtros,
-            paginacao
-        )
-        return axios.get(url)
-    }
-
     async cadastrar(dados) {
         return axios.post('/paciente/inserir/', dados)
     }

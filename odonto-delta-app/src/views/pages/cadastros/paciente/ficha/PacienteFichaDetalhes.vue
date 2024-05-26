@@ -8,6 +8,17 @@
                             <h4 class="titulo">Ficha médica</h4>
                         </v-expansion-panel-header>
                         <v-expansion-panel-content>
+                          <v-row>
+                            <v-col cols="12" md="12" sm="12" xs="12" class="mt-5">
+                              <campo-text-area-editavel
+                                  v-model="fichaPaciente.outrasInformacoesImportantes"
+                                  label="Informações importantes"
+                                  name="informações importantes"
+                                  :validate="{max: 500}"
+                                  @input="tratarEventoSalvar()"
+                              />
+                            </v-col>
+                          </v-row>
                             <v-row>
                                 <v-col cols="12" md="12" sm="12" xs="12" class="pt-5">
                                     <campo-check-box-editavel
@@ -129,17 +140,6 @@
                                             v-model="fichaPaciente.fumante"
                                             label="É fumante?"
                                             name="fumante"
-                                            @input="tratarEventoSalvar()"
-                                    />
-                                </v-col>
-                            </v-row>
-                            <v-row>
-                                <v-col cols="12" md="12" sm="12" xs="12">
-                                    <campo-text-area-editavel
-                                            v-model="fichaPaciente.outrasInformacoesImportantes"
-                                            label="Outras informações importantes"
-                                            name="outras informações importantes"
-                                            :validate="{max: 500}"
                                             @input="tratarEventoSalvar()"
                                     />
                                 </v-col>

@@ -20,17 +20,17 @@ public class PerfilUsuarioControllerImpl implements PerfilUsuarioController{
 
     private UserDataUsecase userDataUsecase;
     @Override
-    public ResponseEntity<BuscarPerfisDoUsuarioOutput> buscarPerfisDoUsuario(BuscarPerfisDoUsuarioInput inputData) {
+    public ResponseEntity<BuscarPerfisDoUsuarioOutput> buscarPerfisDoUsuario(Long usuarioId, BuscarPerfisDoUsuarioInput inputData) {
         return new ResponseEntity<>(buscarPerfisDoUsuarioUsecase.executar(BuscarPerfisDoUsuarioInput.builder()
-                        .usuarioId(userDataUsecase.executar().getId())
+                        .usuarioId(usuarioId)
                         .empresaId(userDataUsecase.executar().getEmpresa().getId())
                 .build()), HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<Void> atualizar(AtualizarPerfilUsuarioInput input) {
+    public ResponseEntity<Void> atualizar(Long usuarioId, AtualizarPerfilUsuarioInput input) {
         input.setEmpresaId(userDataUsecase.executar().getEmpresa().getId());
-        input.setUsuarioId(userDataUsecase.executar().getId());
+        input.setUsuarioId(usuarioId);
         atualizarPerfilUsuarioUsecase.executar(input);
         return new ResponseEntity<>(HttpStatus.OK);
     }

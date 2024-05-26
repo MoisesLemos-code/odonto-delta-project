@@ -1,13 +1,16 @@
 package br.com.molens.odontoDelta.application.config;
 
 import br.com.molens.odontoDelta.adapter.gateway.integration.utils.exception.AsaasValidationException;
+import br.com.molens.odontoDelta.domain.exception.AtualizarCobrancaException;
 import br.com.molens.odontoDelta.domain.exception.AtualizarFichaPacienteException;
 import br.com.molens.odontoDelta.domain.exception.AtualizarPacienteException;
 import br.com.molens.odontoDelta.domain.exception.AtualizarPerfilException;
 import br.com.molens.odontoDelta.domain.exception.AtualizarPerfilPermissaoException;
 import br.com.molens.odontoDelta.domain.exception.AtualizarPerfilUsuarioException;
 import br.com.molens.odontoDelta.domain.exception.AtualizarUsuarioException;
+import br.com.molens.odontoDelta.domain.exception.BuscaPaginadaCobrancaException;
 import br.com.molens.odontoDelta.domain.exception.BuscaPaginadaPacienteException;
+import br.com.molens.odontoDelta.domain.exception.BuscarCobrancaPorIdException;
 import br.com.molens.odontoDelta.domain.exception.BuscarFichaPacientePorPacienteException;
 import br.com.molens.odontoDelta.domain.exception.BuscarPacientePorIdException;
 import br.com.molens.odontoDelta.domain.exception.BuscarPerfilPorIdException;
@@ -21,6 +24,9 @@ import br.com.molens.odontoDelta.domain.exception.InserirPerfilException;
 import br.com.molens.odontoDelta.domain.exception.InserirPerfilPermissaoException;
 import br.com.molens.odontoDelta.domain.exception.InserirUsuarioException;
 import br.com.molens.odontoDelta.domain.exception.JaExistePacienteCnpjCpfException;
+import br.com.molens.odontoDelta.domain.exception.RelatorioException;
+import br.com.molens.odontoDelta.domain.exception.RelatorioFichaPacienteException;
+import br.com.molens.odontoDelta.domain.exception.RemoverCobrancaPorIdException;
 import br.com.molens.odontoDelta.domain.exception.RemoverPacientePorIdException;
 import br.com.molens.odontoDelta.domain.exception.RemoverPerfilPorIdException;
 import br.com.molens.odontoDelta.domain.exception.RemoverPermissaoPorIdException;
@@ -126,7 +132,13 @@ public class ExceptionHandlerConfig {
                     BuscaPaginadaPacienteException.class,
                     InserirFichaPacienteException.class,
                     BuscarFichaPacientePorPacienteException.class,
-                    AtualizarFichaPacienteException.class
+                    AtualizarFichaPacienteException.class,
+                    RelatorioFichaPacienteException.class,
+                    RelatorioException.class,
+                    RemoverCobrancaPorIdException.class,
+                    AtualizarCobrancaException.class,
+                    BuscarCobrancaPorIdException.class,
+                    BuscaPaginadaCobrancaException.class,
             })
     public ResponseEntity<ExceptionServer> handlerMethodArgumentNotValidException(
             RuntimeException exception) {

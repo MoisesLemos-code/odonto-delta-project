@@ -7,6 +7,7 @@ import br.com.molens.odontoDelta.gateway.entity.Paciente;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 
+import java.util.Objects;
 import java.util.Optional;
 
 @Builder
@@ -23,10 +24,10 @@ public class BuscarPacientePorIdUsecase {
 
     private void validarDadosEntrada(BuscarPacientePorIdInput input) {
 
-        if (input.getPacienteId() == 0) {
+        if (Objects.isNull(input.getPacienteId())) {
             throw new BuscarPacientePorIdException("Identificador de paciente inválido.");
         }
-        if (input.getEmpresaId() == 0) {
+        if (Objects.isNull(input.getEmpresaId())) {
             throw new BuscarPacientePorIdException("Identificador de empresa inválido.");
         }
     }

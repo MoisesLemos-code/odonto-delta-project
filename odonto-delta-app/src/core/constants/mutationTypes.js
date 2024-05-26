@@ -61,15 +61,18 @@ export default {
             SET_PAGINACAO_BUSCA_TODAS_PECAS_POR_DENTE_ITEM: 'setPaginacaoBuscaTodasPecasPorDenteItem'
         },
     },
+    COBRANCA:{
+        SET_FILTROS_BUSCA_TODAS_COBRANCAS: 'setFiltrosBuscaTodasCobrancas',
+        SET_PAGINACAO_BUSCA_TODAS_COBRANCAS: 'setPaginacaoBuscaTodasCobrancas',
+        RESETA_PAGE: 'resetaPage',
+        SET_ROTA_ORIGEM: 'setRotaOrigem',
+    },
     CADASTROS:{
         PACIENTE:{
             SET_DADOS_GERAIS: 'setDadosGerais',
             SET_FILTROS_BUSCA_TODOS_PACIENTES: 'setFiltrosBuscaTodosPacientes',
             SET_PAGINACAO_BUSCA_TODOS_PACIENTES: 'setPaginacaoBuscaTodosPacientes',
             RESETA_PAGE: 'resetaPage',
-            SET_FILTROS_BUSCA_TODOS_PACIENTES_ORTODONTIA: 'setFiltrosBuscaTodosPacientesOrtodontia',
-            SET_PAGINACAO_BUSCA_TODOS_PACIENTES_ORTODONTIA: 'setPaginacaoBuscaTodosPacientesOrtodontia',
-            RESETA_PAGE_ORTODONTIA: 'resetaPageOrtodontia',
             SET_ROTA_ORIGEM: 'setRotaOrigem',
         },
         CIDADE:{

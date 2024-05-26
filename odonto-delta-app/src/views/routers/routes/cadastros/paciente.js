@@ -1,6 +1,5 @@
 import Paciente from '@/views/pages/cadastros/paciente/Paciente'
 import PacienteListagem from '@/views/pages/cadastros/paciente/listagem/PacienteListagem'
-import PacienteOrtodontiaListagem from '@/views/pages/cadastros/paciente/listagemOrtodontia/PacienteOrtodontiaListagem'
 import PacienteFicha from '@/views/pages/cadastros/paciente/ficha/PacienteFicha'
 import PacienteDadosGeraisCadastro from '@/views/pages/cadastros/paciente/cadastro/PacienteDadosGeraisCadastro'
 import PacienteDadosGeraisEdicao from '@/views/pages/cadastros/paciente/edicao/PacienteDadosGeraisEdicao'
@@ -15,18 +14,6 @@ export default [
             page: {
                 title: 'Pacientes',
                 subtitle: 'Lista geral pacientes'
-            }
-        }
-    },
-    {
-        path: '/pacientesOrtodontia',
-        name: 'PacienteOrtodontiaListagem',
-        component: PacienteOrtodontiaListagem,
-        meta: {
-            requiresAuth: true,
-            page: {
-                title: 'Pacientes Ortodontia',
-                subtitle: 'Lista geral de pacientes da ortodontia'
             }
         }
     },

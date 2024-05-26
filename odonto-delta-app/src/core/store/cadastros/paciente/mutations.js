@@ -18,18 +18,6 @@ export default {
         state.resultadoBuscaTodosPacientes.paginacao.page = 1
     },
 
-    [mutationTypes.CADASTROS.PACIENTE.SET_FILTROS_BUSCA_TODOS_PACIENTES_ORTODONTIA](state, filtros) {
-        state.resultadoBuscaTodosPacientesOrtodontia.filtros = filtros
-    },
-
-    [mutationTypes.CADASTROS.PACIENTE.SET_PAGINACAO_BUSCA_TODOS_PACIENTES_ORTODONTIA](state, paginacao) {
-        state.resultadoBuscaTodosPacientesOrtodontia.paginacao = paginacao
-    },
-
-    [mutationTypes.CADASTROS.PACIENTE.RESETA_PAGE_ORTODONTIA](state) {
-        state.resultadoBuscaTodosPacientesOrtodontia.paginacao.page = 1
-    },
-
     [mutationTypes.CADASTROS.PACIENTE.SET_ROTA_ORIGEM](state, rotaOrigem) {
         state.rotaOrigem = rotaOrigem
     },

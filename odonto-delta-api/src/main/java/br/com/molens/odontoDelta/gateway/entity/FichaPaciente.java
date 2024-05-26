@@ -46,9 +46,6 @@ public class FichaPaciente {
     @JoinColumn(name = "pa_id")
     private Paciente paciente;
 
-    @Column(name = "fi_descricao")
-    private String descricao;
-
     @Column(name = "fi_tratamento")
     private Boolean tratamento;
 

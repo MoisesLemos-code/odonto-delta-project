@@ -15,6 +15,5 @@ public class RemoverPacientePorIdInput {
 
     @NotNull(message = "O atributo 'pacienteId' não pode ser nulo.")
     private Long pacienteId;
-    @NotNull(message = "O atributo 'empresaId' não pode ser nulo.")
     private Long empresaId;
 }

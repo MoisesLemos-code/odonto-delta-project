@@ -17,7 +17,6 @@ public class InserirFichaPacienteInput {
     @NotNull(message = "O atributo 'pacienteId' não pode ser nulo.")
     private Long pacienteId;
     private Long empresaId;
-    private String descricao;
     private Boolean tratamento;
     private String outrosMedicamentos;
     private Boolean anestesiaLocal;
