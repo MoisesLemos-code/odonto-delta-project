@@ -5,6 +5,8 @@ import br.com.molens.odontoDelta.domain.usecase.cobranca.buscaPaginada.BuscaPagi
 import br.com.molens.odontoDelta.gateway.entity.Cobranca;
 import br.com.molens.odontoDelta.utils.converter.GenericConverter;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -33,6 +35,18 @@ public class BuscaPaginadaCobrancaOutputConverter {
 
             if (Objects.nonNull(source.getOrcamento())) {
                 target.setOrcamentoId(source.getOrcamento().getId());
+            }
+
+            if(Objects.nonNull(source.getDataVencimento())){
+                target.setDataVencimento(source.getDataVencimento().toString());
+
+                Date data = new Date();
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(data);
+                calendar.add(Calendar.DATE, -1);
+                data = calendar.getTime();
+
+                target.setIsVencido(source.getDataVencimento().before(data));
             }
 
             return target;

@@ -1,6 +1,7 @@
 package br.com.molens.odontoDelta.gateway.entity;
 
 
+import br.com.molens.odontoDelta.domain.entity.BaseObject;
 import br.com.molens.odontoDelta.domain.entity.FiltroBase;
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
@@ -40,7 +41,7 @@ import java.util.List;
         @AttributeOverride(name = "usuarioCadastro", column = @Column(name = "pf_usuario_cadastro")),
         @AttributeOverride(name = "usuarioAlteracao", column = @Column(name = "pf_usuario_alteracao"))
 })
-public class Perfil {
+public class Perfil extends BaseObject {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "seq_perfil")

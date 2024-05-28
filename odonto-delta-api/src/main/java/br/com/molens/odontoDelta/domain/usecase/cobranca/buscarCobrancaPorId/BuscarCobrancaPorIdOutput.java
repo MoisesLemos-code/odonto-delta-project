@@ -24,4 +24,6 @@ public class BuscarCobrancaPorIdOutput {
     private String descricao;
     private String observacao;
     private String dataVencimento;
+    private String codigoOrcamento;
+    private String statusOrcamento;
 }

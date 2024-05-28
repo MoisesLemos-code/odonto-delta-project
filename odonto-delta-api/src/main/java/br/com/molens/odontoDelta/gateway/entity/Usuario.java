@@ -15,6 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import br.com.molens.odontoDelta.domain.entity.BaseObject;
 import br.com.molens.odontoDelta.domain.entity.FiltroBase;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -36,7 +37,7 @@ import lombok.NoArgsConstructor;
         @AttributeOverride(name = "usuarioCadastro", column = @Column(name = "us_usuario_cadastro")),
         @AttributeOverride(name = "usuarioAlteracao", column = @Column(name = "us_usuario_alteracao"))
 })
-public class Usuario {
+public class Usuario extends BaseObject {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "seq_usuario")

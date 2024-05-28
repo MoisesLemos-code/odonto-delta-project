@@ -30,5 +30,6 @@ public class BuscaPaginadaCobrancaOutput {
         private String descricao;
         private String observacao;
         private String dataVencimento;
+        private Boolean isVencido;
     }
 }

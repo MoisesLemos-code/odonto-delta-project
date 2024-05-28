@@ -6,17 +6,17 @@
 </template>
 
 <script>
-    export default {
-        name: 'core-title',
-        computed: {
-            title() {
-                return this.$store.state.comum.page.title
-            },
-            subtitle() {
-                return this.$store.state.comum.page.subtitle
-            }
+export default {
+    name: 'core-title',
+    computed: {
+        title() {
+            return this.$store.state.comum.page.title
+        },
+        subtitle() {
+            return this.$store.state.comum.page.subtitle
         }
     }
+}
 </script>
 
 <style lang="stylus">

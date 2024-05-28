@@ -1,6 +1,7 @@
 package br.com.molens.odontoDelta.gateway.entity;
 
 
+import br.com.molens.odontoDelta.domain.entity.BaseObject;
 import lombok.*;
 
 import javax.persistence.*;
@@ -20,7 +21,7 @@ import java.math.BigDecimal;
         @AttributeOverride(name = "usuarioCadastro", column = @Column(name = "pla_usuario_cadastro")),
         @AttributeOverride(name = "usuarioAlteracao", column = @Column(name = "pla_usuario_alteracao"))
 })
-public class Plano {
+public class Plano extends BaseObject {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "seq_plano")

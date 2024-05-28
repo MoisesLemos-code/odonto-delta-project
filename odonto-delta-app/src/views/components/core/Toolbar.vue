@@ -12,20 +12,20 @@
 </template>
 
 <script>
-    import {mutationTypes} from '@/core/constants'
+import {mutationTypes} from '@/core/constants'
 
-    export default {
-        name: 'core-toolbar',
-        data: () => ({
-            notifications: [],
-        }),
-        methods:{
-            logout() {
-                this.$store.commit(mutationTypes.COMUM.EFETUAR_LOGOUT)
-                this.$router.push({ name: 'Login' })
-            }
+export default {
+    name: 'core-toolbar',
+    data: () => ({
+        notifications: [],
+    }),
+    methods:{
+        logout() {
+            this.$store.commit(mutationTypes.COMUM.EFETUAR_LOGOUT)
+            this.$router.push({ name: 'Login' })
         }
     }
+}
 </script>
 
 <style lang="stylus" scoped>

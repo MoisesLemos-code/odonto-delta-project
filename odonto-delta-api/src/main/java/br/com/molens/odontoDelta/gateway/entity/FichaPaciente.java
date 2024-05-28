@@ -1,6 +1,7 @@
 package br.com.molens.odontoDelta.gateway.entity;
 
 
+import br.com.molens.odontoDelta.domain.entity.BaseObject;
 import br.com.molens.odontoDelta.domain.entity.FiltroBase;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -34,7 +35,7 @@ import javax.persistence.Table;
         @AttributeOverride(name = "usuarioCadastro", column = @Column(name = "fi_usuario_cadastro")),
         @AttributeOverride(name = "usuarioAlteracao", column = @Column(name = "fi_usuario_alteracao"))
 })
-public class FichaPaciente {
+public class FichaPaciente extends BaseObject {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "seq_ficha")

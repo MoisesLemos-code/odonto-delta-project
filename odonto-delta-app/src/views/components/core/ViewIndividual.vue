@@ -4,9 +4,9 @@
         </div>
 </template>
 <script>
-    export default {
-        name: 'core-view-individual'
-    }
+export default {
+    name: 'core-view-individual'
+}
 </script>
 <style lang="stylus" scoped>
     .core-view-individual

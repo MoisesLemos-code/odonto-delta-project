@@ -31,7 +31,7 @@ export default {
         return data
     },
 
-    async [actionTypes.ORCAMENTO.PECA_ITEM.BUSCAR_TODAS_PECAS_ITEM_SEM_PAGINACAO](context) {
+    async [actionTypes.ORCAMENTO.PECA_ITEM.BUSCAR_TODAS_PECAS_ITEM_SEM_PAGINACAO]() {
         const {data} = await api.pecaItem.buscarTodosSemPaginacao()
         return data
     },

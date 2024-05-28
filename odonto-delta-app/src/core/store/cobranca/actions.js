@@ -28,4 +28,8 @@ export default {
     async [actionTypes.COBRANCA.EXCLUIR_COBRANCA](context, id) {
         await api.cobranca.excluir(id)
     },
+
+    async [actionTypes.COBRANCA.ESTORNAR_COBRANCA](context, id) {
+        await api.cobranca.estornar(id)
+    },
 }

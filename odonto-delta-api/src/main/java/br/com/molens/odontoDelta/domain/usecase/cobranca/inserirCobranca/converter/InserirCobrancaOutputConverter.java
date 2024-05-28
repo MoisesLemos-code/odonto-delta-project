@@ -42,6 +42,10 @@ public class InserirCobrancaOutputConverter extends GenericConverter<Cobranca, I
                         .build());
             }
 
+            if(Objects.nonNull(source.getStatus())){
+                target.setStatus(source.getStatus());
+            }
+
         } catch (ParseException e) {
             throw new DataEmFormatoIncorretoException();
         }

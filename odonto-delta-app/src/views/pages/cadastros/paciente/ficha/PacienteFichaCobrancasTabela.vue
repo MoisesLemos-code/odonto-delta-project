@@ -13,20 +13,26 @@
                     class="table-list"
                     hide-default-footer
                     @click:row="tratarEventoAcessar">
-                <template v-slot:item.id="{item}">
-                    <span class="d-inline-block text-truncate max-10">{{ item.id | textoSemValor }}</span>
+                <template v-slot:item.codigo="{item}">
+                    <span class="d-inline-block text-truncate max-10">{{ item.codigo | textoSemValor }}</span>
                 </template>
-                <template v-slot:item.paciente="{item}">
-                    <span class="d-inline-block text-truncate max-20">{{ item.paciente | textoSemValor }}</span>
+                <template v-slot:item.valorTotal="{item}">
+                    <span class="d-inline-block text-truncate max-20">{{ item.valorTotal | valorParaReal }}</span>
                 </template>
-                <template v-slot:item.cnpjCpf="{item}">
-                    <span class="d-inline-block text-truncate max-15">{{ item.cnpjCpf | formatarCpfCnpj }}</span>
-                </template>
+              <template v-slot:item.valorPago="{item}">
+                <span class="d-inline-block text-truncate max-20">{{ item.valorPago | valorParaReal }}</span>
+              </template>
                 <template v-slot:item.status="{item}">
-                    <span class="d-inline-block text-truncate max-10">{{ item.status | filterEnum(statusOrcamento) }}</span>
+                    <span :class="['d-inline-block text-truncate max-15', 'status-cobranca-' + item.status]">{{ item.status | filterEnum(statusCobranca)}}</span>
                 </template>
-                <template v-slot:item.data_abertura="{item}">
-                    <span class="d-inline-block text-truncate max-10">{{ item.data_abertura | textoSemValor }}</span>
+                <template v-slot:item.dataVencimento="{item}">
+                  <v-tooltip top v-if="item.isVencido">
+                    <template v-slot:activator={on}>
+                      <span class="d-inline-block text-truncate max-10 cobranca-vencida" v-on="on">{{ item.dataVencimento | filterDate }}</span>
+                    </template>
+                    Cobrança vencida!
+                  </v-tooltip>
+                    <span class="d-inline-block text-truncate max-10" v-else>{{ item.dataVencimento | filterDate }}</span>
                 </template>
                 <template v-slot:item.acoes="{  }">
                     <v-icon>keyboard_arrow_right</v-icon>
@@ -54,7 +60,7 @@
 import mutationTypes from '@/core/constants/mutationTypes'
 import FormTable from '@/views/components/FormTable'
 import ContainerComponent from '@/views/components/Container'
-import statusOrcamento from '@/core/constants/enums/statusOrcamento'
+import {statusCobranca} from '@/core/constants'
 
 export default {
     name: 'PacienteFichaCobrancasTabela',
@@ -80,7 +86,15 @@ export default {
                     class: 'gray--text'
                 },
                 {
-                    text: 'Stauts',
+                    text: 'Valor Pago',
+                    value: 'valorPago',
+                    sortable: true,
+                    align: 'left',
+                    width: '20%',
+                    class: 'gray--text'
+                },
+                {
+                    text: 'Status',
                     value: 'status',
                     sortable: true,
                     align: 'left',
@@ -106,7 +120,7 @@ export default {
             ],
             paginacaoInterna: this.paginacao,
             linhasPorPagina: [10, 25, 50, 100],
-            statusOrcamento
+            statusCobranca
         }
     },
     methods: {

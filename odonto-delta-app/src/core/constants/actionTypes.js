@@ -92,6 +92,7 @@ export default {
         EDITAR_COBRANCA: 'editarCobranca',
         EXCLUIR_COBRANCA: 'excluirCobranca',
         BUSCAR_COBRANCA_POR_ID: 'buscarCobrancaPorId',
+        ESTORNAR_COBRANCA: 'estornarCobranca'
     },
     CADASTROS: {
         PACIENTE: {

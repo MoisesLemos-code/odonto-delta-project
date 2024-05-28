@@ -22,40 +22,40 @@
 </template>
 
 <script>
-    import {mutationTypes} from '@/core/constants'
+import {mutationTypes} from '@/core/constants'
 
-    export default {
-        name: 'core-navigation-drawer',
-        props: {
-            width: {
-                default: 200
-            }
-        },
-        computed: {
-            asideClosed: {
-                get() {
-                    return this.$store.state.menu.asideClosed
-                },
-                set() {}
+export default {
+    name: 'core-navigation-drawer',
+    props: {
+        width: {
+            default: 200
+        }
+    },
+    computed: {
+        asideClosed: {
+            get() {
+                return this.$store.state.menu.asideClosed
             },
-            drawer: {
-                get() {
-                    return this.$store.state.menu.asideHide
-                },
-                set(hide) {
-                    this.$store.commit(mutationTypes.DRAWER.SET_ASIDE_HIDE, hide)
-                }
-            }
+            set() {}
         },
-        methods: {
-            toogle() {
-                this.$store.commit(mutationTypes.DRAWER.TOOGLE_ASIDE)
+        drawer: {
+            get() {
+                return this.$store.state.menu.asideHide
             },
-            change(closed) {
-                this.$store.commit(mutationTypes.DRAWER.SET_ASIDE, closed)
+            set(hide) {
+                this.$store.commit(mutationTypes.DRAWER.SET_ASIDE_HIDE, hide)
             }
         }
+    },
+    methods: {
+        toogle() {
+            this.$store.commit(mutationTypes.DRAWER.TOOGLE_ASIDE)
+        },
+        change(closed) {
+            this.$store.commit(mutationTypes.DRAWER.SET_ASIDE, closed)
+        }
     }
+}
 </script>
 <style lang='stylus' scoped>
 

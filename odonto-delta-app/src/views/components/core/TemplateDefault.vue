@@ -24,37 +24,37 @@
 </template>
 
 <script>
-    import {actionTypes, mutationTypes} from '@/core/constants'
-    import Loading from '@/views/components/Loading'
-    import Notificacao from '@/views/components/Notificacao'
-    import {mapActions} from 'vuex'
-    import CoreViewIndividual from '@/views/components/core/ViewIndividual.vue'
+import {actionTypes, mutationTypes} from '@/core/constants'
+import Loading from '@/views/components/Loading'
+import Notificacao from '@/views/components/Notificacao'
+import {mapActions} from 'vuex'
+import CoreViewIndividual from '@/views/components/core/ViewIndividual.vue'
 
-    export default {
-        name: 'core-template-default',
-        components: {CoreViewIndividual, Notificacao, Loading},
-        computed:{
-            rotaIndividual(){
-                return this.$route.meta.containerProprio
+export default {
+    name: 'core-template-default',
+    components: {CoreViewIndividual, Notificacao, Loading},
+    computed:{
+        rotaIndividual(){
+            return this.$route.meta.containerProprio
+        }
+    },
+    async mounted(){
+        await this.atualizarRegistroUsuario()
+    },
+    methods: {
+        ...mapActions([
+            actionTypes.COMUM.VERIFICAR_TOKEN
+        ]),
+        async atualizarRegistroUsuario(){
+            if(this.$route.meta.requiresAuth) {
+                await this.verificarToken()
             }
         },
-        async mounted(){
-            await this.atualizarRegistroUsuario()
-        },
-        methods: {
-            ...mapActions([
-                actionTypes.COMUM.VERIFICAR_TOKEN
-            ]),
-            async atualizarRegistroUsuario(){
-                if(this.$route.meta.requiresAuth) {
-                    await this.verificarToken()
-                }
-            },
-            showAside() {
-                this.$store.commit(mutationTypes.DRAWER.SET_ASIDE_HIDE, true)
-            }
+        showAside() {
+            this.$store.commit(mutationTypes.DRAWER.SET_ASIDE_HIDE, true)
         }
     }
+}
 </script>
 
 <style lang="stylus">

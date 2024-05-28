@@ -59,24 +59,26 @@ public class InserirCobrancaUsecase {
     }
 
     private Long inserirCobranca(InserirCobrancaInput input) {
-        Cobranca cobranca = cobrancaDataProvider.inserir(outputConverter.from(input));
+        Cobranca cobrancaPre = outputConverter.from(input);
+        Integer ultimoId = cobrancaDataProvider.buscarUltimoId(input.getEmpresaId());
 
-        String codigo = gerarCodigoCobranca(cobranca);
-        cobranca.setCodigo(codigo);
-        cobrancaDataProvider.atualizar(cobranca);
+        String codigo = gerarCodigoCobranca(cobrancaPre, ultimoId);
+        cobrancaPre.setCodigo(codigo);
+
+        Cobranca cobranca = cobrancaDataProvider.inserir(cobrancaPre);
 
         return cobranca.getId();
     }
 
-    private String gerarCodigoCobranca(Cobranca cobranca) {
+    private String gerarCodigoCobranca(Cobranca cobranca, Integer ultimoId) {
         String orcamento = "";
         if(Objects.nonNull(cobranca.getOrcamento()))
             orcamento = "OS" + cobranca.getOrcamento().getId();
 
-        return "CO" + formatarNumeroId(cobranca.getId()) + "PA" + cobranca.getPaciente().getId() + orcamento;
+        return "CO" + formatarNumeroId(ultimoId) + "PA" + cobranca.getPaciente().getId() + orcamento;
     }
 
-    private static String formatarNumeroId(Long id) {
+    private static String formatarNumeroId(Integer id) {
         DecimalFormat df = new DecimalFormat("000000");
         return df.format(id);
     }

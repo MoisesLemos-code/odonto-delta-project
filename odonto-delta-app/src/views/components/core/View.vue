@@ -6,9 +6,9 @@
         </div>
 </template>
 <script>
-    export default {
-        name: 'core-view'
-    }
+export default {
+    name: 'core-view'
+}
 </script>
 <style lang="stylus" scoped>
     .core-view

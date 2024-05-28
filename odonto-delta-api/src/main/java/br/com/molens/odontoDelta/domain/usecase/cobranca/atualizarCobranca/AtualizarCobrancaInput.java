@@ -17,7 +17,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class AtualizarCobrancaInput {
 
-    @NotNull(message = "O atributo 'pacienteId' não pode ser nulo.")
+    @NotNull(message = "O atributo 'id' não pode ser nulo.")
     private Long id;
     @NotNull(message = "O atributo 'pacienteId' não pode ser nulo.")
     private Long pacienteId;

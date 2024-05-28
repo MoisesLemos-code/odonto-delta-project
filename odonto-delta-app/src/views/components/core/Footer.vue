@@ -11,9 +11,9 @@
 </template>
 
 <script>
-    export default {
-        name: 'core-footer'
-    }
+export default {
+    name: 'core-footer'
+}
 </script>
 
 <style lang="stylus" scoped>

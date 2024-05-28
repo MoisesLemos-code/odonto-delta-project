@@ -1,6 +1,7 @@
 package br.com.molens.odontoDelta.gateway.entity;
 
 
+import br.com.molens.odontoDelta.domain.entity.BaseObject;
 import br.com.molens.odontoDelta.domain.entity.FiltroBase;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -35,7 +36,7 @@ import javax.persistence.Table;
         @AttributeOverride(name = "usuarioCadastro", column = @Column(name = "or_usuario_cadastro")),
         @AttributeOverride(name = "usuarioAlteracao", column = @Column(name = "or_usuario_alteracao"))
 })
-public class Orcamento {
+public class Orcamento extends BaseObject {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "seq_empresa")
@@ -51,7 +52,7 @@ public class Orcamento {
     private String codigo;
 
     @Column(name = "or_status")
-    private EnumStatusOrcamento status;
+    private String status;
 
     @Column(name = "or_observacao")
     private String observacao;
@@ -69,10 +70,6 @@ public class Orcamento {
 
         EnumStatusOrcamento(String valor) {
             this.valor = valor;
-        }
-
-        public String getValor() {
-            return valor;
         }
     }
 

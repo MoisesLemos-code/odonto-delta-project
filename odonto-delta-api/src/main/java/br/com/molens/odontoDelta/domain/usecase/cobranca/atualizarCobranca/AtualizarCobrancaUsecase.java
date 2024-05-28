@@ -9,6 +9,7 @@ import br.com.molens.odontoDelta.gateway.entity.Cobranca;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -21,12 +22,12 @@ public class AtualizarCobrancaUsecase {
     private EmpresaDataProvider empresaDataProvider;
     private AtualizarCobrancaOutputConverter outputConverter;
 
-    public Cobranca executar(AtualizarCobrancaInput input) {
+    public AtualizarCobrancaOutput executar(AtualizarCobrancaInput input) {
         validarDadosEntrada(input);
         validarCobranca(input);
         Cobranca cobranca = setarDados(input);
-
-        return atualizarCobranca(cobranca);
+        atualizarCobranca(cobranca);
+        return AtualizarCobrancaOutput.builder().cobrancaId(cobranca.getId()).build();
     }
 
     private void validarDadosEntrada(AtualizarCobrancaInput input) {
@@ -42,6 +43,25 @@ public class AtualizarCobrancaUsecase {
         if (Objects.isNull(input.getPacienteId())) {
             throw new AtualizarCobrancaException("Identificador de paciente inválido.");
         }
+
+        if(Objects.nonNull(input.getValorPago())){
+
+            if(input.getValorPago().compareTo(new BigDecimal(0)) == -1){
+                throw new AtualizarCobrancaException("O valor pago não pode ser negativo!");
+            }
+            if(input.getValorPago().compareTo(input.getValorTotal()) == 1){
+                throw new AtualizarCobrancaException("O valor pago é maior que o valor cobrado!");
+            }
+            if(input.getValorPago().compareTo(new BigDecimal(0)) == 1){
+                input.setStatus(Cobranca.EnumStatusCobranca.PARCIALMENTE_PAGO.name());
+            }
+            if(input.getValorPago().compareTo(new BigDecimal(0)) == 0){
+                input.setStatus(Cobranca.EnumStatusCobranca.PENDENTE.name());
+            }
+            if(input.getValorPago().compareTo(input.getValorTotal()) == 0){
+                input.setStatus(Cobranca.EnumStatusCobranca.PAGO.name());
+            }
+        }
     }
 
     private void validarCobranca(AtualizarCobrancaInput input) {
@@ -53,13 +73,10 @@ public class AtualizarCobrancaUsecase {
     }
 
     private Cobranca setarDados(AtualizarCobrancaInput input) {
-
         return outputConverter.from(input);
     }
 
     private Cobranca atualizarCobranca(Cobranca cobranca) {
-        Cobranca cobrancaSalva = cobrancaDataProvider.atualizar(cobranca);
-
-        return cobrancaSalva;
+       return cobrancaDataProvider.atualizar(cobranca);
     }
 }

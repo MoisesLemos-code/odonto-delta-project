@@ -23,7 +23,7 @@ export default {
         return data
     },
 
-    async [actionTypes.ORCAMENTO.EDITAR_ORCAMENTO]({commit}, dados) {
+    async [actionTypes.ORCAMENTO.EDITAR_ORCAMENTO](context, dados) {
         dados.usuario = null
         const {data} = await api.orcamento.editar(dados)
         return data

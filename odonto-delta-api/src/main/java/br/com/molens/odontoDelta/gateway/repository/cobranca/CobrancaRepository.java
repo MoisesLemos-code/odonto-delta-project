@@ -18,6 +18,6 @@ public interface CobrancaRepository extends JpaRepository<Cobranca, Long>, Query
     Optional<Cobranca> buscarPorId(@Param("cobrancaId") Long cobrancaId, @Param("empresaId") Long empresaId);
 
     @Transactional(readOnly = true)
-    @Query("SELECT obj FROM Cobranca obj WHERE obj.paciente.id = :pacienteId and obj.empresa.id = :empresaId")
-    Optional<Cobranca> buscarPorPacienteId(@Param("pacienteId") Long pacienteId, @Param("empresaId") Long empresaId);
+    @Query("SELECT max(obj.id) FROM Cobranca obj WHERE obj.empresa.id = :empresaId")
+    Integer buscarUltimoId(@Param("empresaId") Long empresaId);
 }

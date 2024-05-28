@@ -1,9 +1,22 @@
 package br.com.molens.odontoDelta.gateway.entity;
 
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 @Data
 @Builder
@@ -13,7 +26,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Table(name = "TB_MUNICIPIO", schema = "odonto")
 @SequenceGenerator(name = "seq_municipio", sequenceName = "odonto.seq_municipio", allocationSize = 1)
-public class Municipio {
+public class Municipio{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "seq_municipio")

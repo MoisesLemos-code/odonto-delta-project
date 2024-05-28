@@ -29,6 +29,8 @@ public class BuscarCobrancaPorIdOutputConverter extends GenericConverter<Cobranc
 
         if (Objects.nonNull(source.getOrcamento())) {
             target.setOrcamentoId(source.getOrcamento().getId());
+            target.setCodigoOrcamento(source.getOrcamento().getCodigo());
+            target.setStatusOrcamento(source.getOrcamento().getStatus());
         }
 
 

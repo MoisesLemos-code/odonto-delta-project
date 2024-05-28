@@ -71,105 +71,105 @@
 </template>
 
 <script>
-    export default {
-        inject: ['$validator'],
-        name: 'campo-de-texto-editavel',
-        props: {
-            value: {
-                required: true
-            },
-            idObjeto: {
-                type: Number
-            },
-            name: {
-                required: true,
-                type: String
-            },
-            label: {
-                type: String,
-                default: ''
-            },
-            labelInput:{
-                type: String,
-                default: null
-            },
-            labelBtnSave: {
-                type: String,
-                default: 'Salvar'
-            },
-            labelBtnCancel: {
-                type: String,
-                default: 'Cancelar'
-            },
-            labelBtnEdit: {
-                type: String,
-                default: 'Editar'
-            },
-            maxlength: {
-                default: 255
-            },
-            validate: {
-                type: String
-            },
-            counter: {
-                type: Number
-            },
-            placeholder: {
-                type: String
-            },
-            mask: {
-                type: String,
-                default: ''
-            },
-            estaAdicionando: {
-                type: Boolean,
-                default: false
-            },
-            disabled: {
-                type: Boolean,
-                default: false
-            }
+export default {
+    inject: ['$validator'],
+    name: 'campo-de-texto-editavel',
+    props: {
+        value: {
+            required: true
         },
-        data() {
-            return {
-                model: undefined,
-                editing: false
-            }
+        idObjeto: {
+            type: Number
         },
-        watch: {
-            value: {
-                handler(val) {
-                    this.model = val
-                },
-                immediate: true
-            }
+        name: {
+            required: true,
+            type: String
         },
-        methods: {
-            startEdit() {
-                if (this.estaAdicionando) {
-                    return this.$emit('estaAdicionando')
-                }
-                this.editing = true
-                this.$emit('setaEditando', {nome: this.name, id: this.idObjeto})
+        label: {
+            type: String,
+            default: ''
+        },
+        labelInput:{
+            type: String,
+            default: null
+        },
+        labelBtnSave: {
+            type: String,
+            default: 'Salvar'
+        },
+        labelBtnCancel: {
+            type: String,
+            default: 'Cancelar'
+        },
+        labelBtnEdit: {
+            type: String,
+            default: 'Editar'
+        },
+        maxlength: {
+            default: 255
+        },
+        validate: {
+            type: String
+        },
+        counter: {
+            type: Number
+        },
+        placeholder: {
+            type: String
+        },
+        mask: {
+            type: String,
+            default: ''
+        },
+        estaAdicionando: {
+            type: Boolean,
+            default: false
+        },
+        disabled: {
+            type: Boolean,
+            default: false
+        }
+    },
+    data() {
+        return {
+            model: undefined,
+            editing: false
+        }
+    },
+    watch: {
+        value: {
+            handler(val) {
+                this.model = val
             },
-            async submitEdit() {
-                if (this.validarDadosFormulario()) {
-                    this.editing = false
-                    this.$emit('retiraEditando', {nome: this.name, id: this.idObjeto})
-                    this.$emit('input', this.model)
-                }
-            },
-            cancelEdit() {
+            immediate: true
+        }
+    },
+    methods: {
+        startEdit() {
+            if (this.estaAdicionando) {
+                return this.$emit('estaAdicionando')
+            }
+            this.editing = true
+            this.$emit('setaEditando', {nome: this.name, id: this.idObjeto})
+        },
+        async submitEdit() {
+            if (this.validarDadosFormulario()) {
                 this.editing = false
                 this.$emit('retiraEditando', {nome: this.name, id: this.idObjeto})
-                this.model = this.value
-            },
-            validarDadosFormulario() {
-                const item = this.$validator._base.errors.items.find( item => item.field === this.name)
-                return !item
-            },
-        }
+                this.$emit('input', this.model)
+            }
+        },
+        cancelEdit() {
+            this.editing = false
+            this.$emit('retiraEditando', {nome: this.name, id: this.idObjeto})
+            this.model = this.value
+        },
+        validarDadosFormulario() {
+            const item = this.$validator._base.errors.items.find( item => item.field === this.name)
+            return !item
+        },
     }
+}
 </script>
 
 <style lang="stylus">

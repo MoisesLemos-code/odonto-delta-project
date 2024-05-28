@@ -5,6 +5,12 @@
             v-model="modalAdicionarCobranca"
             @fecharModalCadastro="fecharModalCadastroCobranca"
         />
+        <paciente-ficha-cobranca-edicao-modal
+            v-if="modalEditarCobranca"
+            v-model="modalEditarCobranca"
+            :id-cobranca="idCobranca"
+            @fecharModalEdicao="fecharModalEdicaoCobranca"
+          />
         <v-row class="white pl-3 pr-3 ml-0 mr-0 pb-5">
             <v-col cols="12">
                 <v-card class="dados-gerais">
@@ -61,7 +67,7 @@
                                     :paginas="paginas"
                                     :total-itens="totalItens"
                                     :paginacao="$store.state.cobranca.resultadoBuscaTodasCobrancas.paginacao"
-                                    @acessar="tratarEventoAcessar"
+                                    @acessar="tratarEventoAcessarCobranca"
                                     @paginar="tratarEventoPaginar"
                                 />
                               </div>
@@ -76,18 +82,20 @@
 </template>
 
 <script>
+import _ from 'lodash'
 import {mapMutations} from 'vuex'
 import {actionTypes, mutationTypes} from '@/core/constants'
 import PacienteFichaCobrancasTabela from '@/views/pages/cadastros/paciente/ficha/PacienteFichaCobrancasTabela.vue'
-import _ from 'lodash'
 import PesquisaAvancada from '@/views/components/PesquisaAvancada.vue'
 import ItemDePesquisa from '@/views/components/ItemDePesquisa.vue'
 import PacienteFichaCobrancaPesquisa from '@/views/pages/cadastros/paciente/ficha/PacienteFichaCobrancaPesquisa.vue'
 import PacienteFichaCobrancaModal from '@/views/pages/cadastros/paciente/ficha/PacienteFichaCobrancaModal.vue'
+import PacienteFichaCobrancaEdicaoModal from '@/views/pages/cadastros/paciente/ficha/PacienteFichaCobrancaEdicaoModal.vue'
 
 export default {
     name: 'PacienteFichaCobrancas',
     components: {
+        PacienteFichaCobrancaEdicaoModal,
         PacienteFichaCobrancaModal,
         PacienteFichaCobrancaPesquisa, ItemDePesquisa, PesquisaAvancada, PacienteFichaCobrancasTabela},
     data() {
@@ -102,6 +110,8 @@ export default {
             orcamentoSelecionado: {},
             orcamentoModal: false,
             modalAdicionarCobranca: false,
+            modalEditarCobranca: false,
+            idCobranca: null,
         }
     },
     async mounted() {
@@ -124,8 +134,6 @@ export default {
         },
         async buscarCobrancas(){
             const resposta = await this.$store.dispatch(actionTypes.COBRANCA.BUSCAR_TODAS_COBRANCAS, this.idPaciente)
-            console.log('----buscarCobrancas')
-            console.log(resposta)
             if(resposta){
                 this.itens = resposta.items
                 this.paginas = resposta.totalPages
@@ -148,9 +156,15 @@ export default {
             }
             this.buscar()
         },
-        tratarEventoAcessar(item) {
+        tratarEventoAcessarCobranca(item) {
             const id = item.id
-            console.log('---tratarEventoAcessar (id: ' + id + ')')
+            this.idCobranca = id
+            this.modalEditarCobranca = true
+        },
+        fecharModalEdicaoCobranca(){
+            this.modalEditarCobranca = false
+            this.idCobranca = null
+            this.buscar()
         },
         tratarEventoBuscaSimples(busca) {
             console.log('---tratarEventoBuscaSimples')
@@ -180,6 +194,7 @@ export default {
         },
         fecharModalCadastroCobranca(){
             this.modalAdicionarCobranca = false
+            this.buscar()
         }
     }
 }

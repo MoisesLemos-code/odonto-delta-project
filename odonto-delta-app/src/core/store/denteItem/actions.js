@@ -24,7 +24,7 @@ export default {
         return data
     },
 
-    async [actionTypes.ORCAMENTO.DENTE_ITEM.BUSCAR_TODOS_DENTES_SEM_PAGINACAO_ITEM](context) {
+    async [actionTypes.ORCAMENTO.DENTE_ITEM.BUSCAR_TODOS_DENTES_SEM_PAGINACAO_ITEM]() {
         const {data} = await api.denteItem.buscarTodosSemPaginacao()
         return data
     },

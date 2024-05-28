@@ -1,6 +1,7 @@
 package br.com.molens.odontoDelta.adapter.entrypoint.controller.cobranca;
 
 import br.com.molens.odontoDelta.domain.usecase.cobranca.atualizarCobranca.AtualizarCobrancaInput;
+import br.com.molens.odontoDelta.domain.usecase.cobranca.atualizarCobranca.AtualizarCobrancaOutput;
 import br.com.molens.odontoDelta.domain.usecase.cobranca.atualizarCobranca.AtualizarCobrancaUsecase;
 import br.com.molens.odontoDelta.domain.usecase.cobranca.buscaPaginada.BuscaPaginadaCobrancaInput;
 import br.com.molens.odontoDelta.domain.usecase.cobranca.buscaPaginada.BuscaPaginadaCobrancaOutput;
@@ -8,13 +9,15 @@ import br.com.molens.odontoDelta.domain.usecase.cobranca.buscaPaginada.BuscaPagi
 import br.com.molens.odontoDelta.domain.usecase.cobranca.buscarCobrancaPorId.BuscarCobrancaPorIdInput;
 import br.com.molens.odontoDelta.domain.usecase.cobranca.buscarCobrancaPorId.BuscarCobrancaPorIdOutput;
 import br.com.molens.odontoDelta.domain.usecase.cobranca.buscarCobrancaPorId.BuscarCobrancaPorIdUsecase;
+import br.com.molens.odontoDelta.domain.usecase.cobranca.estornarCobranca.EstornarCobrancaInput;
+import br.com.molens.odontoDelta.domain.usecase.cobranca.estornarCobranca.EstornarCobrancaOutput;
+import br.com.molens.odontoDelta.domain.usecase.cobranca.estornarCobranca.EstornarCobrancaUsecase;
 import br.com.molens.odontoDelta.domain.usecase.cobranca.inserirCobranca.InserirCobrancaInput;
 import br.com.molens.odontoDelta.domain.usecase.cobranca.inserirCobranca.InserirCobrancaOutput;
 import br.com.molens.odontoDelta.domain.usecase.cobranca.inserirCobranca.InserirCobrancaUsecase;
 import br.com.molens.odontoDelta.domain.usecase.cobranca.removerCobrancaPorId.RemoverCobrancaPorIdInput;
 import br.com.molens.odontoDelta.domain.usecase.cobranca.removerCobrancaPorId.RemoverCobrancaPorIdUsecase;
 import br.com.molens.odontoDelta.domain.usecase.sessaoUsuario.userData.UserDataUsecase;
-import br.com.molens.odontoDelta.gateway.entity.Cobranca;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +32,7 @@ public class CobrancaControllerImpl implements CobrancaController {
     private RemoverCobrancaPorIdUsecase removerCobrancaPorIdUsecase;
     private AtualizarCobrancaUsecase atualizarCobrancaUsecase;
     private BuscaPaginadaCobrancaUsecase buscaPaginadaCobrancaUsecase;
+    private EstornarCobrancaUsecase estornarCobrancaUsecase;
 
     private UserDataUsecase userDataUsecase;
 
@@ -63,10 +67,18 @@ public class CobrancaControllerImpl implements CobrancaController {
     }
 
     @Override
-    public ResponseEntity<Cobranca> atualizar(Long cobrancaId, AtualizarCobrancaInput input) {
-        input.setPacienteId(cobrancaId);
+    public ResponseEntity<AtualizarCobrancaOutput> atualizar(Long cobrancaId, AtualizarCobrancaInput input) {
+        input.setId(cobrancaId);
         input.setEmpresaId(userDataUsecase.executar().getEmpresa().getId());
-        Cobranca output = atualizarCobrancaUsecase.executar(input);
+        return new ResponseEntity<>(atualizarCobrancaUsecase.executar(input), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<EstornarCobrancaOutput> estornar(Long cobrancaId) {
+        EstornarCobrancaOutput output = estornarCobrancaUsecase.executar(EstornarCobrancaInput.builder()
+                        .id(cobrancaId)
+                        .empresaId(userDataUsecase.executar().getEmpresa().getId())
+                .build());
         return new ResponseEntity<>(output, HttpStatus.OK);
     }
 }

@@ -12,7 +12,7 @@
         </v-toolbar>
         <v-card-text class="pt-5">
           <v-row wrap align-center white class="pl-5 pr-5">
-            <v-col cols="12" md="6" sm="6" xs="12">
+            <v-col cols="12" md="12" sm="12" xs="12">
               <v-text-field
                   v-model="dadosGerais.descricao"
                   name="descricao"
@@ -26,18 +26,38 @@
                 </template>
               </v-text-field>
             </v-col>
-            <v-col cols="12" md="6" sm="6" xs="12">
+            <v-col cols="12" md="12" sm="12" xs="12">
+              <date-input
+                  v-model="dadosGerais.dataVencimento"
+                  label="Data vencimento"
+                  name-date="dataVencimento"
+                  placeholderDate="Informe a data de vencimento">
+              </date-input>
+            </v-col>
+            <v-col cols="12" md="12" sm="12" xs="12">
               <v-textarea
                   v-model="dadosGerais.observacao"
                   name="observacao"
                   label="Observação"
                   placeholder="Informe a observação"
-                  v-validate="{max: 350}"
+                  v-validate="{max: 400}"
                   :error-messages="errors.collect('observacao')"
                   counter
                   filled
                   auto-grow
               />
+            </v-col>
+            <v-col cols="12" md="12" sm="12" xs="12">
+             <input-valor
+                 v-model="dadosGerais.valorTotal"
+                 label="Valor"
+                 placeholder="Informe o valor"
+                 :event-submit="'blur'"
+                 :prefix="prefixo"
+                 :suffix="sufixo"
+                 :precision="casasDecimais"
+                 @blur="(valor) => dadosGerais.valorTotal = valor"
+             />
             </v-col>
           </v-row>
         </v-card-text>
@@ -59,10 +79,13 @@
 import {actionTypes} from '@/core/constants'
 import BotaoSalvar from '@/views/components/BotaoSalvar'
 import BotaoCancelar from '@/views/components/BotaoCancelar'
+import DateInput from '@/views/components/DateInput.vue'
+import InputValor from '@/views/components/InputValor.vue'
+import moment from 'moment/moment'
 
 export default {
     name: 'PacienteFichaCobrancaModal',
-    components: {BotaoCancelar, BotaoSalvar},
+    components: {InputValor, DateInput, BotaoCancelar, BotaoSalvar},
     props: {
         value: Boolean,
     },
@@ -71,18 +94,18 @@ export default {
             dadosGerais: {
                 pacienteId: null,
                 valorTotal: null,
-                valorPago: null,
                 status: 'PENDENTE',
                 descricao: null,
                 observacao: null,
                 dataVencimento: null,
             },
-            modalExcluir: false,
-            permissoes: [],
+            prefixo: 'R$',
+            sufixo: '',
+            casasDecimais: 2,
         }
     },
     mounted() {
-        this.setarPacienteId()  
+        this.setarPacienteId()
     },
     methods: {
         setarPacienteId(){
@@ -90,11 +113,26 @@ export default {
                 this.dadosGerais.pacienteId = this.$route.params.id
             }
         },
+        formatarData() {
+            if (this.dadosGerais.dataVencimento) {
+                this.dadosGerais.dataVencimento = moment(this.dadosGerais.dataVencimento).add(5, 'hours').format('YYYY-MM-DD')
+            }
+        },
         async tratarEventoCadastrar() {
             if (await this.validarDadosFormulario()) {
+                if(!this.dadosGerais.dataVencimento){
+                    this.mostrarNotificacaoErro('Informe a data de vencimento!')
+                    return
+                }
+                if(!this.dadosGerais.valorTotal){
+                    this.mostrarNotificacaoErro('Informe o valor da cobrança!')
+                    return
+                }
+                this.formatarData()
                 this.setMensagemLoading('Cadastrando registro de cobrança...')
-                await this.$store.dispatch(actionTypes.PERFIL.EDITAR_PERFIL, this.dadosGerais)
+                await this.$store.dispatch(actionTypes.COBRANCA.CADASTRAR_COBRANCA, this.dadosGerais)
                 this.mostrarNotificacaoSucessoDefault()
+                this.fecharModal()
             }
         },
         async validarDadosFormulario() {

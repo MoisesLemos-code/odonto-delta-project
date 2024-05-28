@@ -20,4 +20,5 @@ public interface CobrancaDataProvider {
 
     ListaPaginada<Cobranca> buscaPaginadaComFiltro(Cobranca.Filtro filtro);
 
+    Integer buscarUltimoId(Long empresaId);
 }

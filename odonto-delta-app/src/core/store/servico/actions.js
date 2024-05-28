@@ -24,7 +24,7 @@ export default {
         return data
     },
 
-    async [actionTypes.ORCAMENTO.SERVICO.BUSCAR_TODOS_SERVICOS_SEM_PAGINACAO](context) {
+    async [actionTypes.ORCAMENTO.SERVICO.BUSCAR_TODOS_SERVICOS_SEM_PAGINACAO]() {
         const {data} = await api.servico.buscarTodosSemPaginacao()
         return data
     },

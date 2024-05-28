@@ -65,6 +65,13 @@ public class CobrancaDataProviderImpl implements CobrancaDataProvider {
                 .build();
     }
 
+    @Override
+    public Integer buscarUltimoId(Long empresaId) {
+        Integer cobrancaId = repository.buscarUltimoId(empresaId);
+
+        return Objects.nonNull(cobrancaId) ? cobrancaId : 1;
+    }
+
     private BooleanExpression montarFiltroDeBusca(Cobranca.Filtro filtro){
         QCobranca query = QCobranca.cobranca;
         BooleanExpression expressaoDeBusca = query.empresa.id.eq(filtro.getEmpresaId());

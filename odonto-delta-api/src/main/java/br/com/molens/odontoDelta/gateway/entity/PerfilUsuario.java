@@ -10,6 +10,8 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import br.com.molens.odontoDelta.domain.entity.BaseObject;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -33,7 +35,7 @@ import lombok.Setter;
         @AttributeOverride(name = "usuarioCadastro", column = @Column(name = "pfu_usuario_cadastro")),
         @AttributeOverride(name = "usuarioAlteracao", column = @Column(name = "pfu_usuario_alteracao"))
 })
-public class PerfilUsuario {
+public class PerfilUsuario extends BaseObject {
 
     @EmbeddedId
     private PerfilUsuarioPK perfilUsuarioPK;

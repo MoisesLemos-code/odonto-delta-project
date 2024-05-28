@@ -13,7 +13,7 @@ class CobrancaApiClient {
     }
 
     async cadastrar(dados) {
-        return axios.post('/cobranca/inserir/', dados)
+        return axios.post('/cobranca/inserir', dados)
     }
 
     async editar(dados) {
@@ -26,6 +26,10 @@ class CobrancaApiClient {
 
     async excluir(id) {
         return axios.delete(`/cobranca/deletar/${id}`)
+    }
+
+    async estornar(id) {
+        return axios.put(`/cobranca/estornar/${id}`)
     }
 
 }

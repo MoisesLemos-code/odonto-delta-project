@@ -1,6 +1,7 @@
 package br.com.molens.odontoDelta.gateway.entity;
 
 
+import br.com.molens.odontoDelta.domain.entity.BaseObject;
 import br.com.molens.odontoDelta.domain.entity.FiltroBase;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,7 +22,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.Optional;
 
 @Data
 @Builder
@@ -37,7 +40,7 @@ import java.util.Date;
         @AttributeOverride(name = "usuarioCadastro", column = @Column(name = "co_usuario_cadastro")),
         @AttributeOverride(name = "usuarioAlteracao", column = @Column(name = "co_usuario_alteracao"))
 })
-public class Cobranca {
+public class Cobranca extends BaseObject {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "seq_empresa")
@@ -63,7 +66,7 @@ public class Cobranca {
     private BigDecimal valorPago;
 
     @Column(name = "co_status")
-    private EnumStatusCobranca status;
+    private String status;
 
     @Column(name = "co_descricao")
     private String descricao;
@@ -88,10 +91,6 @@ public class Cobranca {
 
         EnumStatusCobranca(String valor) {
             this.valor = valor;
-        }
-
-        public String getValor() {
-            return valor;
         }
     }
 

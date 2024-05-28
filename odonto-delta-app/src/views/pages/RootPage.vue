@@ -201,4 +201,16 @@ export default {
         opacity 1
         transform translateY(0%)
 
+.status-cobranca-PAGO
+    color #4caf50
+
+.status-cobranca-PARCIALMENTE_PAGO
+    color #FF6B35
+
+.status-cobranca-CANCELADA
+    color #f44336
+
+.cobranca-vencida
+    color #f44336
+
 </style>

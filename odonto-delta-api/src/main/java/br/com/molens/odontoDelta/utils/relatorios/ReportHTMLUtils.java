@@ -17,8 +17,6 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.Objects;
 
-import static com.itextpdf.text.pdf.BaseFont.EMBEDDED;
-
 @Component
 public class ReportHTMLUtils {
 
@@ -79,7 +77,7 @@ public class ReportHTMLUtils {
     private byte[] gerarPDFBytes(String xHtml) {
         try (ByteArrayOutputStream pdfWriter = new ByteArrayOutputStream()) {
             ITextRenderer renderer = new ITextRenderer();
-            renderer.getFontResolver().addFontDirectory("relatorios.html/times", EMBEDDED);
+            renderer.getFontResolver().addFontDirectory("relatorios/times", true);
             new ITextRelatorioPDFUserAgent(renderer, classpathResourceLoader).aplicar();
             String xmlNormalizado = xHtml.replaceAll("[\\000]+", "");
             renderer.setDocumentFromString(xmlNormalizado);

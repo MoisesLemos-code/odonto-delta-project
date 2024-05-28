@@ -18,6 +18,7 @@ import br.com.molens.odontoDelta.domain.exception.BuscarPerfisDoUsuarioException
 import br.com.molens.odontoDelta.domain.exception.BuscarPermissaoPorPerfilException;
 import br.com.molens.odontoDelta.domain.exception.BuscarPermissoesUsuarioException;
 import br.com.molens.odontoDelta.domain.exception.BuscarUsuarioPorIdException;
+import br.com.molens.odontoDelta.domain.exception.EstornarCobrancaException;
 import br.com.molens.odontoDelta.domain.exception.InserirFichaPacienteException;
 import br.com.molens.odontoDelta.domain.exception.InserirPacienteException;
 import br.com.molens.odontoDelta.domain.exception.InserirPerfilException;
@@ -139,6 +140,7 @@ public class ExceptionHandlerConfig {
                     AtualizarCobrancaException.class,
                     BuscarCobrancaPorIdException.class,
                     BuscaPaginadaCobrancaException.class,
+                    EstornarCobrancaException.class,
             })
     public ResponseEntity<ExceptionServer> handlerMethodArgumentNotValidException(
             RuntimeException exception) {
