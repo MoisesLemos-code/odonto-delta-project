@@ -34,6 +34,8 @@
           :max-date="maxDate"
           append-icon="event"
           class="az-date-date-input"
+          :hide-details="hideDetails"
+          :dense="dense"
           @click:append="openMenuDate"
           @keyup="validateAndParseDate(dateFormatted)">
         <template v-slot:label v-if="this.$slots['label-date']">
@@ -78,6 +80,7 @@
           v-model="timeFormatted"
           mask="time"
           :placeholder="placeholderHour"
+          :hide-details="hideDetails"
           append-icon="access_time"
           class="az-date-time-input"
           @click:append="openMenuTime"
@@ -139,6 +142,14 @@ export default {
             default: 'HH:mm'
         },
         isDisabled: {
+            type: Boolean,
+            default: false
+        },
+        hideDetails: {
+            type: Boolean,
+            default: false
+        },
+        dense: {
             type: Boolean,
             default: false
         },

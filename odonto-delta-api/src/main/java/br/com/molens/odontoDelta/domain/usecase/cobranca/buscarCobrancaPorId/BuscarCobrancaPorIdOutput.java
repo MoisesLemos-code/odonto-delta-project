@@ -20,6 +20,7 @@ public class BuscarCobrancaPorIdOutput {
     private String codigo;
     private BigDecimal valorTotal;
     private BigDecimal valorPago;
+    private BigDecimal valorRestante;
     private String status;
     private String descricao;
     private String observacao;

@@ -8,13 +8,18 @@ export default {
             },
             atributo: {
                 default: null,
-                data: [ 'Codigo', 'Status'],
+                data: [ 'Codigo'],
                 value: ''
             },
             conteudo: {
                 default: null,
                 label: 'Pesquisa',
                 value: ''
+            },
+            statusEnum: {
+                default: null,
+                label: 'Status',
+                value: 'STATUS'
             },
             dataVencimento: {
                 default: null,

@@ -4,6 +4,7 @@ import br.com.molens.odontoDelta.domain.usecase.cobranca.buscarCobrancaPorId.Bus
 import br.com.molens.odontoDelta.gateway.entity.Cobranca;
 import br.com.molens.odontoDelta.utils.converter.GenericConverter;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Objects;
 
@@ -32,7 +33,8 @@ public class BuscarCobrancaPorIdOutputConverter extends GenericConverter<Cobranc
             target.setCodigoOrcamento(source.getOrcamento().getCodigo());
             target.setStatusOrcamento(source.getOrcamento().getStatus());
         }
-
+        BigDecimal valorPago = Objects.nonNull(source.getValorPago()) ? source.getValorPago() : BigDecimal.ZERO;
+        target.setValorRestante(source.getValorTotal().subtract(valorPago));
 
         return target;
     }

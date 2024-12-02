@@ -236,7 +236,7 @@ export default {
       justify-content space-between
       align-items center
       padding 0 10px
-      margin-top 10px
+      margin-top 15px
 
     .container-tabela-cobrancas
       padding 0 24px 16px

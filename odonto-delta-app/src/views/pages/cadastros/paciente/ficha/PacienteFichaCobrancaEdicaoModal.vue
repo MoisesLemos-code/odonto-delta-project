@@ -74,9 +74,9 @@
                 <span class="text-valor-cobranca">{{dadosGerais.valorTotal | valorParaReal}}</span>
               </div>
               <input-valor
-                  v-if="!estornar"
+                  v-if="!estornar && dadosGerais.valorPago"
                   v-model="dadosGerais.valorPago"
-                  label="Valor pago"
+                  label="Atualizar valor"
                   placeholder="Informe o valor"
                   :event-submit="'blur'"
                   :prefix="prefixo"
@@ -99,8 +99,11 @@
              <div class="container-cobranca-status">
                <span :class="['status-cobranca-' + dadosGerais.status]">{{dadosGerais.status | filterEnum(statusCobranca)}}</span>
                <div v-if="dadosGerais.status === 'PARCIALMENTE_PAGO'" class="container-cobranca-parcial">
-                 <span>Restante</span>
-                 <label>{{dadosGerais.valorRestante | valorParaReal}}</label>
+                 <span class="ml-2">Pago</span>
+                 <label class="ml-2">{{dadosGerais.valorPago | valorParaReal}}</label>
+                 <div class="linha-horizontal"/>
+                 <span class="ml-2">Restante</span>
+                 <label class="ml-2">{{dadosGerais.valorRestante | valorParaReal}}</label>
                </div>
              </div>
             </v-col>
@@ -173,11 +176,6 @@ export default {
                 this.dadosGerais = resultado
                 if(this.dadosGerais.status === 'PAGO'){
                     this.estornar = true
-                } else {
-                    this.estornar = false
-                }
-                if(this.dadosGerais.status === 'PARCIALMENTE_PAGO'){
-                    this.dadosGerais.valorRestante = parseFloat(this.dadosGerais.valorTotal) - parseFloat(this.dadosGerais.valorPago)
                 }
             }
         },
@@ -218,6 +216,7 @@ export default {
         async estornarCobranca(){
             await this.$store.dispatch(actionTypes.COBRANCA.ESTORNAR_COBRANCA, this.idCobranca)
             await this.buscarCobranca()
+            this.estornar = false
             this.fecharModalEstorno()
         }
     }
@@ -247,24 +246,6 @@ export default {
 
 .container-permissao-list
   padding-top 10px
-
-.permissao-item
-  background-color #487B9C
-  padding 10px
-  margin 10px
-  border-radius 20px
-  display flex
-  align-items center
-  justify-content space-between
-  >>> label
-    color #ffff
-    font-size 16px
-    font-weight bold
-  >>> .v-input__control
-    margin 0px !important
-    height 30px
-  >>> .v-input__slot
-    margin 0px !important
 
 .container-cobranca-orcamento
   background-color #E0E0E0
@@ -305,11 +286,17 @@ export default {
 .container-cobranca-parcial
   display flex
   flex-direction column
+  width 100%
 
   span
     font-size 15px
 
 .botao-estornar-cobranca
   color #fff
+
+.linha-horizontal
+  width 100%
+  height 1px
+  background-color #5A5A5A
 
 </style>

@@ -26,5 +26,6 @@ public class BuscaPaginadaCobrancaInput {
     private String conteudo;
     private String atributo;
     private String tipo;
-    private Date dataVencimento;
+    private String dataVencimento;
+    private String statusEnum;
 }

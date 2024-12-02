@@ -101,11 +101,12 @@ public class Cobranca extends BaseObject {
     @AllArgsConstructor
     public static class Filtro extends FiltroBase {
         private Long empresaId;
+        private Long pacienteId;
         private String conteudo;
         private String atributo;
         private String tipo;
         private Date dataVencimento;
-        private Long pacienteId;
+        private String statusEnum;
     }
 
 }

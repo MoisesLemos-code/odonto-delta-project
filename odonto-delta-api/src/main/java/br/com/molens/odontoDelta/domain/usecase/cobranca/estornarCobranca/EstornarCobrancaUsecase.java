@@ -48,6 +48,9 @@ public class EstornarCobrancaUsecase {
 
     private void estornarCobranca(Cobranca cobranca) {
 
+        if(!cobranca.getStatus().equals(Cobranca.EnumStatusCobranca.PAGO.name())){
+            throw new EstornarCobrancaException("Não é possível estornar uma cobrança que ainda não foi paga.");
+        }
         cobranca.setValorPago(new BigDecimal(0));
         cobranca.setStatus(Cobranca.EnumStatusCobranca.PENDENTE.name());
 

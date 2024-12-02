@@ -77,7 +77,6 @@ public class CobrancaDataProviderImpl implements CobrancaDataProvider {
         BooleanExpression expressaoDeBusca = query.empresa.id.eq(filtro.getEmpresaId());
 
         if(StringUtils.isNotEmpty(filtro.getAtributo())){
-
             if(filtro.getAtributo().equals("Codigo")){
                 if(filtro.getTipo().equals("COMECA_COM")){
                     BooleanExpression filtrosParaBusca = query.codigo.startsWith(filtro.getConteudo());
@@ -89,12 +88,6 @@ public class CobrancaDataProviderImpl implements CobrancaDataProvider {
                     BooleanExpression filtrosParaBusca = query.codigo.endsWith(filtro.getConteudo());
                     expressaoDeBusca = expressaoDeBusca.and(filtrosParaBusca);
                 }
-            } else if(filtro.getAtributo().equals("Status")){
-                BooleanExpression filtrosParaBusca = query.status.eq(Cobranca.EnumStatusCobranca.valueOf(filtro.getConteudo()));
-                expressaoDeBusca = expressaoDeBusca.and(filtrosParaBusca);
-            } else if(filtro.getAtributo().equals("Data Vencimento")){
-                BooleanExpression filtrosParaBusca = query.dataVencimento.before(filtro.getDataVencimento());
-                expressaoDeBusca = expressaoDeBusca.and(filtrosParaBusca);
             }
         } else {
             if (StringUtils.isNotEmpty(filtro.getConteudo())) {
@@ -104,6 +97,14 @@ public class CobrancaDataProviderImpl implements CobrancaDataProvider {
             }
         }
 
+        if(StringUtils.isNotEmpty(filtro.getStatusEnum())){
+            BooleanExpression filtrosParaBusca = query.status.eq(Cobranca.EnumStatusCobranca.valueOf(filtro.getStatusEnum()));
+            expressaoDeBusca = expressaoDeBusca.and(filtrosParaBusca);
+        }
+        if(Objects.nonNull(filtro.getDataVencimento())){
+            BooleanExpression filtrosParaBusca = query.dataVencimento.before(filtro.getDataVencimento());
+            expressaoDeBusca = expressaoDeBusca.and(filtrosParaBusca);
+        }
         if (Objects.nonNull(filtro.getPacienteId())) {
             BooleanExpression filtrosParaBusca = query.paciente.id.eq(filtro.getPacienteId());
             expressaoDeBusca = expressaoDeBusca.and(filtrosParaBusca);
