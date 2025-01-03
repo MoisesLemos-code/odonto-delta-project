@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Objects;
 
 @AllArgsConstructor
 public class BuscaPaginadaCobrancaFiltroConverter extends GenericConverter<BuscaPaginadaCobrancaInput, Cobranca.Filtro> {
@@ -18,7 +19,13 @@ public class BuscaPaginadaCobrancaFiltroConverter extends GenericConverter<Busca
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
-            target.setDataVencimento(sdf.parse(source.getDataVencimento()));
+            if(Objects.nonNull(source.getDataVencimento())){
+                target.setDataVencimento(sdf.parse(source.getDataVencimento()));
+            }
+
+            if(Objects.nonNull(source.getStatusEnum()) && source.getStatusEnum().equals("STATUS")){
+                target.setStatusEnum(null);
+            }
 
         } catch (ParseException e) {
             throw new DataEmFormatoIncorretoException();

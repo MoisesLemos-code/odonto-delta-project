@@ -1,4 +1,5 @@
 import paciente from './paciente'
+import cobranca from './cobranca'
 
 export default [
     {
@@ -6,7 +7,8 @@ export default [
         name: 'cadastros',
         component: () => import ('@/views/pages/cadastros/Cadastros'),
         children: [
-            ...paciente
+            ...paciente,
+            ...cobranca
         ]
     }
 ]

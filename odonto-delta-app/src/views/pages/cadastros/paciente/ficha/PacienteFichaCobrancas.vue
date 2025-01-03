@@ -167,8 +167,6 @@ export default {
             this.buscar()
         },
         tratarEventoBuscaSimples(busca) {
-            console.log('---tratarEventoBuscaSimples')
-            console.log(busca)
             this.resetaPage()
             this.filtrosInterno.tipo.value = busca.tipo.value
             this.filtrosInterno.atributo.value = busca.atributo.value

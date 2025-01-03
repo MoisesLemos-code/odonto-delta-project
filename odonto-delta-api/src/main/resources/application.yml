@@ -21,5 +21,5 @@ spring:
     password: ${DATABASE_PASSWORD}
     driver-class-name: ${DATABASE_CLASSNAME}
 jwt:
-  secret: DiaSeteDeAbrilDoisMilEVinte
-  expiration: 23400000
+  secret: ${JWT_SECRET}
+  expiration: ${JWT_EXPIRATION}

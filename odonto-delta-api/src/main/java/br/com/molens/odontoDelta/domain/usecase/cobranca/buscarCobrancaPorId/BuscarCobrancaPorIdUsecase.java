@@ -33,11 +33,7 @@ public class BuscarCobrancaPorIdUsecase {
     }
 
     private Cobranca buscarCobranca(BuscarCobrancaPorIdInput input) {
-        Optional<Cobranca> cobranca = cobrancaDataProvider.buscarPorId(input.getCobrancaId());
-
-        if (!cobranca.isPresent()) {
-            throw new BuscarCobrancaPorIdException("Cobrança não encontrada.");
-        }
-        return cobranca.get();
+        return cobrancaDataProvider.buscarPorId(input.getCobrancaId())
+                .orElseThrow(() -> new BuscarCobrancaPorIdException("Cobrança não encontrada."));
     }
 }

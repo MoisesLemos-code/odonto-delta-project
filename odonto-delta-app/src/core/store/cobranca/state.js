@@ -33,16 +33,10 @@ export default {
             }
         },
         paginacao: {
-            groupBy: [],
-            groupDesc: [],
-            itemsPerPage: 10,
-            multiSort: false,
-            mustSort: false,
             page: 1,
-            rowsPerPage: 10,
-            sortBy: ['id'],
-            descending: false,
-            sortDesc: [false]
+            size: 10,
+            sort: 'codigo',
+            direction: 'ASC',
         }
     },
     rota: {

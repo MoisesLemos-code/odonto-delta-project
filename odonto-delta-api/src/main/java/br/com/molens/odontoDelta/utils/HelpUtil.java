@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.time.Period;
 import java.time.ZoneOffset;
 import java.util.Date;
+import java.util.Objects;
 
 public class HelpUtil {
     public static String retiraAcentuacao(String texto) {
@@ -14,6 +15,10 @@ public class HelpUtil {
     }
 
     public static String obterApenasNumeros(String texto){
+
+        if(Objects.isNull(texto)){
+            return null;
+        }
         return texto.replaceAll("[^0-9]", "");
     }
 

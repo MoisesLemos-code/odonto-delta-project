@@ -2,7 +2,6 @@ package br.com.molens.odontoDelta.domain.usecase.perfil.removerPerfilPorId;
 
 import br.com.molens.odontoDelta.domain.exception.RemoverPerfilPorIdException;
 import br.com.molens.odontoDelta.domain.interfaces.PerfilDataProvider;
-import br.com.molens.odontoDelta.domain.interfaces.PerfilPermissaoDataProvider;
 import br.com.molens.odontoDelta.gateway.entity.Perfil;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -37,6 +36,10 @@ public class RemoverPerfilPorIdUsecase {
 
         if (!perfil.isPresent()) {
             throw new RemoverPerfilPorIdException("Perfil não encontrado.");
+        }
+
+        if(perfil.get().getNome().equals("Administrador")){
+            throw new RemoverPerfilPorIdException("Não é possível remover o perfil administrador!");
         }
     }
 

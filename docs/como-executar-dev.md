@@ -4,8 +4,7 @@ Esse é um guia básico de como executar em desenvolvimento o projeto, mais info
 e formas de configuração podem ser encontradas na [nota técnica](./nota-tecnica.md).
 
 ### Passo 1 - Configuração do ambiente
-Para utilização dos sistemas Molens é necessário primeiro fazer uma configuração local da máquina
-para utilizar as ferramentas corporativas.
+Para utilização dos sistemas Molens é necessário primeiro fazer uma configuração local da máquina.
 
 ### Passo 2 - Subindo containers docker
 Estes comandos irá subir todas as dependências como containers docker. Para isso ele deverá ser executado na pasta

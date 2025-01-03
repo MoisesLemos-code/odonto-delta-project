@@ -56,6 +56,7 @@ export default [
                         title: 'Paciente',
                         subtitle: 'Cadastro de Paciente'
                     },
+                    perfis: ['ADMINISTRADOR', 'PACIENTE_CADASTRAR'],
                 }
             },
             {
@@ -68,7 +69,7 @@ export default [
                         title: 'Paciente',
                         subtitle: 'Edição de Paciente'
                     },
-                    perfis: ['ADMINISTRADOR', 'PACIENTE_UPDATE'],
+                    perfis: ['ADMINISTRADOR', 'PACIENTE_ATUALIZAR'],
                 }
             }
         ]

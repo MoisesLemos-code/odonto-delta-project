@@ -4,10 +4,11 @@ import br.com.molens.odontoDelta.domain.exception.AtualizarPerfilException;
 import br.com.molens.odontoDelta.domain.interfaces.PerfilDataProvider;
 import br.com.molens.odontoDelta.domain.usecase.perfil.atualizarPerfil.converter.AtualizarPerfilOutputConverter;
 import br.com.molens.odontoDelta.gateway.entity.Perfil;
-import java.util.Objects;
-import java.util.Optional;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+
+import java.util.Objects;
+import java.util.Optional;
 
 @Builder
 @AllArgsConstructor
@@ -40,12 +41,15 @@ public class AtualizarPerfilUsecase {
         if (!perfil.isPresent()) {
             throw new AtualizarPerfilException("Perfil não encontrado.");
         }
+        if(perfil.get().getNome().equals("Administrador")){
+            throw new AtualizarPerfilException("Não é possível atualizar o perfil administrador!");
+        }
     }
 
     private void validarPerfilNomeJaCadastrado(AtualizarPerfilInput input) {
         Optional<Perfil> perfil = perfilDataProvider.buscarPorNome(input.getNome(), input.getEmpresaId());
         if (perfil.isPresent()) {
-            if (perfil.get().getId() != input.getId()) {
+            if (!Objects.equals(perfil.get().getId(), input.getId())) {
                 throw new AtualizarPerfilException("Já existe um perfil com esse nome!");
             }
         }

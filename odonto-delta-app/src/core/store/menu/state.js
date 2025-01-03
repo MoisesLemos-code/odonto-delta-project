@@ -15,8 +15,13 @@ export default {
             children: [
                 {
                     path: '/pacientes',
-                    icon: 'mdi-contacts',
+                    icon: 'mdi-account-box',
                     name: 'Pacientes',
+                },
+                {
+                    path: '/cobrancas',
+                    icon: 'mdi-cash-multiple',
+                    name: 'Cobranças',
                 },
             ]
         },

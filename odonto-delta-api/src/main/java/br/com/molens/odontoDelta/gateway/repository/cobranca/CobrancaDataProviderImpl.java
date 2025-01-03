@@ -98,7 +98,7 @@ public class CobrancaDataProviderImpl implements CobrancaDataProvider {
         }
 
         if(StringUtils.isNotEmpty(filtro.getStatusEnum())){
-            BooleanExpression filtrosParaBusca = query.status.eq(Cobranca.EnumStatusCobranca.valueOf(filtro.getStatusEnum()));
+            BooleanExpression filtrosParaBusca = query.status.eq(Cobranca.EnumStatusCobranca.valueOf(filtro.getStatusEnum()).name());
             expressaoDeBusca = expressaoDeBusca.and(filtrosParaBusca);
         }
         if(Objects.nonNull(filtro.getDataVencimento())){

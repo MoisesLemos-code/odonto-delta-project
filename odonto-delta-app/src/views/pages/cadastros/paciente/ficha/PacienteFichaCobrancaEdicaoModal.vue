@@ -74,7 +74,7 @@
                 <span class="text-valor-cobranca">{{dadosGerais.valorTotal | valorParaReal}}</span>
               </div>
               <input-valor
-                  v-if="!estornar && dadosGerais.valorPago"
+                  v-if="!estornar"
                   v-model="dadosGerais.valorPago"
                   label="Atualizar valor"
                   placeholder="Informe o valor"

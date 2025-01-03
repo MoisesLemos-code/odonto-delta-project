@@ -81,7 +81,7 @@ public class OrcamentoDataProviderImpl implements OrcamentoDataProvider {
                     expressaoDeBusca = expressaoDeBusca.and(filtrosParaBusca);
                 }
             } else if(filtro.getAtributo().equals("Status")){
-                BooleanExpression filtrosParaBusca = query.status.eq(Orcamento.EnumStatusOrcamento.valueOf(filtro.getConteudo()));
+                BooleanExpression filtrosParaBusca = query.status.eq(Orcamento.EnumStatusOrcamento.valueOf(filtro.getConteudo()).name());
                 expressaoDeBusca = expressaoDeBusca.and(filtrosParaBusca);
             }
         } else {

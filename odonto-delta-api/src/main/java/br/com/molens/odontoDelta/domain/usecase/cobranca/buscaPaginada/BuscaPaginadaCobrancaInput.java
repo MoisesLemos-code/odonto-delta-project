@@ -19,10 +19,8 @@ public class BuscaPaginadaCobrancaInput {
     private int size;
     private String sort;
     private String direction;
-    @NotNull(message = "O atributo 'pacienteId' não pode ser nulo.")
     private Long pacienteId;
     private Long empresaId;
-
     private String conteudo;
     private String atributo;
     private String tipo;

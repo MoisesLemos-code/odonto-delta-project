@@ -11,6 +11,7 @@ import br.com.molens.odontoDelta.gateway.entity.Paciente;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.Objects;
 import java.util.Optional;
@@ -64,6 +65,7 @@ public class InserirCobrancaUsecase {
 
         String codigo = gerarCodigoCobranca(cobrancaPre, ultimoId);
         cobrancaPre.setCodigo(codigo);
+        cobrancaPre.setValorPago(new BigDecimal(0));
 
         Cobranca cobranca = cobrancaDataProvider.inserir(cobrancaPre);
 

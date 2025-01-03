@@ -28,9 +28,6 @@ public class BuscaPaginadaCobrancaUsecase {
     }
 
     private void validarDadosEntrada(BuscaPaginadaCobrancaInput input) {
-        if (Objects.isNull(input.getPacienteId())) {
-            throw new BuscaPaginadaCobrancaException("Identificador de paciente inválido.");
-        }
         if (Objects.isNull(input.getEmpresaId())) {
             throw new BuscaPaginadaCobrancaException("Identificador de empresa inválido.");
         }
