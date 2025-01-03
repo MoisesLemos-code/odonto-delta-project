@@ -157,34 +157,5 @@ export default {
   display flex
   justify-content space-between
 
-.header-permissao-crud
-  width 100%
-  padding-top 10px
-  margin-top 50px
-  margin-bottom 50px
-  border-top-width 1px
-  border-top-style solid
-  border-top-color #ccc
-
-.container-permissao-list
-  padding-top 10px
-
-.permissao-item
-  background-color #487B9C
-  padding 10px
-  margin 10px
-  border-radius 20px
-  display flex
-  align-items center
-  justify-content space-between
-  >>> label
-    color #ffff
-    font-size 16px
-    font-weight bold
-  >>> .v-input__control
-    margin 0px !important
-    height 30px
-  >>> .v-input__slot
-    margin 0px !important
 
 </style>

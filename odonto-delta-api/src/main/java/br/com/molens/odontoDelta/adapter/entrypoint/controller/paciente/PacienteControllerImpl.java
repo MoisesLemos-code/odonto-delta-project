@@ -12,6 +12,9 @@ import br.com.molens.odontoDelta.domain.usecase.paciente.buscarPacientePorId.Bus
 import br.com.molens.odontoDelta.domain.usecase.paciente.inserirPaciente.InserirPacienteInput;
 import br.com.molens.odontoDelta.domain.usecase.paciente.inserirPaciente.InserirPacienteOutput;
 import br.com.molens.odontoDelta.domain.usecase.paciente.inserirPaciente.InserirPacienteUsecase;
+import br.com.molens.odontoDelta.domain.usecase.paciente.pesquisarPaciente.PesquisarPacienteInput;
+import br.com.molens.odontoDelta.domain.usecase.paciente.pesquisarPaciente.PesquisarPacienteOutput;
+import br.com.molens.odontoDelta.domain.usecase.paciente.pesquisarPaciente.PesquisarPacienteUsecase;
 import br.com.molens.odontoDelta.domain.usecase.paciente.removerPacientePorId.RemoverPacientePorIdInput;
 import br.com.molens.odontoDelta.domain.usecase.paciente.removerPacientePorId.RemoverPacientePorIdUsecase;
 import br.com.molens.odontoDelta.domain.usecase.sessaoUsuario.userData.UserDataUsecase;
@@ -29,6 +32,7 @@ public class PacienteControllerImpl implements PacienteController {
     private BuscaPaginadaPacienteUsecase buscaPaginadaPacienteUsecase;
     private RemoverPacientePorIdUsecase removerPacientePorIdUsecase;
     private AtualizarPacienteUsecase atualizarPacienteUsecase;
+    private PesquisarPacienteUsecase pesquisarPacienteUsecase;
 
     private UserDataUsecase userDataUsecase;
 
@@ -50,6 +54,13 @@ public class PacienteControllerImpl implements PacienteController {
     public ResponseEntity<BuscaPaginadaPacienteOutput> buscaPaginada(BuscaPaginadaPacienteInput inputData) {
         inputData.setEmpresaId(userDataUsecase.executar().getEmpresa().getId());
         BuscaPaginadaPacienteOutput output = buscaPaginadaPacienteUsecase.executar(inputData);
+        return new ResponseEntity<>(output, HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<PesquisarPacienteOutput> pesquisaPaciente(PesquisarPacienteInput inputData) {
+        inputData.setEmpresaId(userDataUsecase.executar().getEmpresa().getId());
+        PesquisarPacienteOutput output = pesquisarPacienteUsecase.executar(inputData);
         return new ResponseEntity<>(output, HttpStatus.OK);
     }
 

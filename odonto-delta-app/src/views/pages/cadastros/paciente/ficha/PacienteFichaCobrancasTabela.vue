@@ -128,7 +128,7 @@ export default {
             this.$emit('acessar', item)
         },
         resetaPage() {
-            this.$store.commit(mutationTypes.COBRANCA.RESETA_PAGE)
+            this.$store.commit(mutationTypes.COBRANCA.RESETA_PAGE_INTERNO)
         },
     },
     watch: {

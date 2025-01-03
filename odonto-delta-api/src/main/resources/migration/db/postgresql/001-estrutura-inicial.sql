@@ -563,9 +563,6 @@ COMMENT ON COLUMN "odonto"."tb_paciente"."pa_situacao" IS 'ATIVO; INATIVO.'
 COMMENT ON COLUMN "odonto"."tb_paciente"."pa_dthr_ultima_visita" IS 'Data da última visita do paciente no sistema.'
 ;
 
-CREATE UNIQUE INDEX "uk_paciente_cnpj_cpf" ON "odonto"."tb_paciente" ("pa_cnpj_cpf")
-;
-
 ALTER TABLE "odonto"."tb_paciente" ADD CONSTRAINT "pk_tb_paciente" PRIMARY KEY ("pa_id")
 ;
 

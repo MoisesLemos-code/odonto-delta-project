@@ -3,8 +3,8 @@ import {actionTypes} from '@/core/constants'
 
 export default {
 
-    async [actionTypes.CADASTROS.PACIENTE.BUSCAR_TODOS_PACIENTES_SEM_PAGINACAO]() {
-        const {data} = await api.paciente.buscarTodosSemPaginacao()
+    async [actionTypes.CADASTROS.PACIENTE.BUSCAR_TODOS_PACIENTES_SEM_PAGINACAO](context, conteudo) {
+        const {data} = await api.paciente.buscarTodosSemPaginacao(conteudo)
         return data
     },
 

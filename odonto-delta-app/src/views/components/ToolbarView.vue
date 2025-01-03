@@ -1,8 +1,14 @@
 <template>
   <div class="toolbar">
+
+  <div class="container-toolbar">
     <div class="actions">
       <slot name="actions"></slot>
     </div>
+    <div class="actions-second">
+      <slot name="actions-second"></slot>
+    </div>
+  </div>
 
     <div class="search">
       <slot name="simpleSearch"></slot>
@@ -64,6 +70,8 @@ export default {
       i
         margin-right: 5px
         font-size: 18px
+.container-toolbar
+  display flex
   @media (max-width 720px)
     .actions
       padding: 0 5px 0 10px

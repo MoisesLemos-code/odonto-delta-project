@@ -5,6 +5,7 @@
       :dark="isDark"
       :outlined="isOutline"
       :class="style"
+      :disabled="disabled"
       @click="$emit('click')">
     <slot/>
   </v-btn>
@@ -29,7 +30,11 @@ export default {
         cssClass: {
             type: String,
             default: ''
-        }
+        },
+        disabled: {
+            type: Boolean,
+            default: false
+        },
     },
     computed: {
         color() {
@@ -79,4 +84,5 @@ export default {
 
   &.hide-border
     border 0 !important
+
 </style>

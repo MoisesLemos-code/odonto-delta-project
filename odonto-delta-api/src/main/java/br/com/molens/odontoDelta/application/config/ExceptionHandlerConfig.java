@@ -25,6 +25,7 @@ import br.com.molens.odontoDelta.domain.exception.InserirPerfilException;
 import br.com.molens.odontoDelta.domain.exception.InserirPerfilPermissaoException;
 import br.com.molens.odontoDelta.domain.exception.InserirUsuarioException;
 import br.com.molens.odontoDelta.domain.exception.JaExistePacienteCnpjCpfException;
+import br.com.molens.odontoDelta.domain.exception.PesquisarPacienteException;
 import br.com.molens.odontoDelta.domain.exception.RelatorioException;
 import br.com.molens.odontoDelta.domain.exception.RelatorioFichaPacienteException;
 import br.com.molens.odontoDelta.domain.exception.RemoverCobrancaPorIdException;
@@ -141,6 +142,7 @@ public class ExceptionHandlerConfig {
                     BuscarCobrancaPorIdException.class,
                     BuscaPaginadaCobrancaException.class,
                     EstornarCobrancaException.class,
+                    PesquisarPacienteException.class,
             })
     public ResponseEntity<ExceptionServer> handlerMethodArgumentNotValidException(
             RuntimeException exception) {

@@ -88,6 +88,7 @@ export default {
     },
     COBRANCA: {
         BUSCAR_TODAS_COBRANCAS: 'buscarTodasCobrancas',
+        BUSCAR_TODAS_COBRANCAS_INTERNO: 'buscarTodasCobrancasInterno',
         CADASTRAR_COBRANCA: 'cadastrarCobranca',
         EDITAR_COBRANCA: 'editarCobranca',
         EXCLUIR_COBRANCA: 'excluirCobranca',

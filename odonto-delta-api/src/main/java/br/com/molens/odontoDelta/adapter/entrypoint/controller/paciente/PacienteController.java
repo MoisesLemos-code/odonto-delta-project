@@ -7,6 +7,8 @@ import br.com.molens.odontoDelta.domain.usecase.paciente.buscaPaginada.BuscaPagi
 import br.com.molens.odontoDelta.domain.usecase.paciente.buscarPacientePorId.BuscarPacientePorIdOutput;
 import br.com.molens.odontoDelta.domain.usecase.paciente.inserirPaciente.InserirPacienteInput;
 import br.com.molens.odontoDelta.domain.usecase.paciente.inserirPaciente.InserirPacienteOutput;
+import br.com.molens.odontoDelta.domain.usecase.paciente.pesquisarPaciente.PesquisarPacienteInput;
+import br.com.molens.odontoDelta.domain.usecase.paciente.pesquisarPaciente.PesquisarPacienteOutput;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +31,10 @@ public interface PacienteController {
     @ApiOperation(value = "Busca paginada de Paciente")
     @GetMapping
     ResponseEntity<BuscaPaginadaPacienteOutput> buscaPaginada(@Valid BuscaPaginadaPacienteInput inputData);
+
+    @ApiOperation(value = "Pesquisa de Paciente")
+    @GetMapping(value = "/pesquisaPaciente")
+    ResponseEntity<PesquisarPacienteOutput> pesquisaPaciente(@Valid PesquisarPacienteInput inputData);
 
     @ApiOperation(value = "Remove um Paciente")
     @DeleteMapping(value = "/deletar/{pacienteId}")

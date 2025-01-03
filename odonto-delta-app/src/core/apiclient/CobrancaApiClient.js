@@ -9,8 +9,6 @@ class CobrancaApiClient {
             filtros,
             paginacao
         )
-        console.log('---buscarTodasCobrancas')
-        console.log(url)
         return axios.get(url)
     }
 

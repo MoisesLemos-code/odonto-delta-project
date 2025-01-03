@@ -3,8 +3,11 @@ import SearchUrlBuilder from '../utils/SearchUrlBuilder'
 
 class PacienteApiClient {
 
-    async buscarTodosSemPaginacao() {
-        return axios.get('/paciente/all')
+    async buscarTodosSemPaginacao(conteudo) {
+        let url = '/paciente/pesquisaPaciente'
+        if(conteudo)
+            url = `/paciente/pesquisaPaciente?conteudo=${conteudo}`
+        return axios.get(url)
     }
 
     async buscarTodosPacientes(filtros, paginacao) {

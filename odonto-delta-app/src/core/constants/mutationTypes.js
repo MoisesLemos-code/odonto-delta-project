@@ -66,6 +66,9 @@ export default {
         SET_PAGINACAO_BUSCA_TODAS_COBRANCAS: 'setPaginacaoBuscaTodasCobrancas',
         RESETA_PAGE: 'resetaPage',
         SET_ROTA_ORIGEM: 'setRotaOrigem',
+        SET_FILTROS_BUSCA_TODAS_COBRANCAS_INTERNO: 'setFiltrosBuscaTodasCobrancasInterno',
+        SET_PAGINACAO_BUSCA_TODAS_COBRANCAS_INTERNO: 'setPaginacaoBuscaTodasCobrancasInterno',
+        RESETA_PAGE_INTERNO: 'resetaPageInterno',
     },
     CADASTROS:{
         PACIENTE:{

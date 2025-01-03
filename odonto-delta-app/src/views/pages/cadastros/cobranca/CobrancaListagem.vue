@@ -1,9 +1,19 @@
 <template>
   <div>
+    <PesquisaPacienteModal
+        v-if="modalSelecionarPaciente"
+        v-model="modalSelecionarPaciente"
+        @fecharModalPesquisaPaciente="fecharModalSelecionarPaciente"
+        @confirmarPacienteSelecionado="selecionarPaciente"
+    />
     <toolbar-view>
       <botao-acao slot="actions" hideBorder @click="adicionarCobranca">
         <v-icon>add_circle</v-icon>
         Cadastrar
+      </botao-acao>
+      <botao-acao slot="actions-second" hideBorder @click="abrirModalSelecionarPaciente">
+        <v-icon>mdi-magnify</v-icon>
+        Selecionar Paciente
       </botao-acao>
       <v-flex slot="simpleSearch">
         <paciente-ficha-cobranca-pesquisa
@@ -42,6 +52,23 @@
         </pesquisa-avancada>
       </v-flex>
     </toolbar-view>
+    <div v-if="pacienteSelecionado" class="primary">
+      <div class="container-remover-paciente">
+        <v-btn class="close__button" text @click="removerPacienteSelecionado" icon>
+          <v-icon color="#fff">close</v-icon>
+        </v-btn>
+      </div>
+      <div class="atributos-paciente">
+      <div class="selecionado-label">
+        <span style="font-size: 14px">Nome</span>
+        <p>{{ pacienteSelecionado.nome }}</p>
+      </div>
+      <div class="selecionado-label" style="margin-top: 5px">
+        <span style="font-size: 14px">CPF/CNPJ</span>
+        <p>{{ pacienteSelecionado.cnpjCpf | formatarCpfCnpj }}</p>
+      </div>
+      </div>
+    </div>
     <cobranca-listagem-tabela
         :itens="itens"
         :paginas="paginas"
@@ -61,11 +88,12 @@ import CobrancaListagemTabela from '@/views/pages/cadastros/cobranca/CobrancaLis
 import PesquisaAvancada from '@/views/components/PesquisaAvancada.vue'
 import ItemDePesquisa from '@/views/components/ItemDePesquisa.vue'
 import PacienteFichaCobrancaPesquisa from '@/views/pages/cadastros/paciente/ficha/PacienteFichaCobrancaPesquisa.vue'
+import PesquisaPacienteModal from '@/views/modais/PesquisaPacienteModal.vue'
 
 export default {
     name: 'PacienteFichaCobrancas',
     components: {
-        PacienteFichaCobrancaPesquisa, ItemDePesquisa, PesquisaAvancada, CobrancaListagemTabela
+        PesquisaPacienteModal, PacienteFichaCobrancaPesquisa, ItemDePesquisa, PesquisaAvancada, CobrancaListagemTabela
     },
     data() {
         return {
@@ -75,10 +103,11 @@ export default {
             paginas: 0,
             totalItens: 0,
             maxInputPesquisa: 30,
-            orcamentoSelecionado: {},
+            pacienteSelecionado: null,
             orcamentoModal: false,
             modalAdicionarCobranca: false,
             modalEditarCobranca: false,
+            modalSelecionarPaciente: false,
             idCobranca: null,
         }
     },
@@ -161,6 +190,19 @@ export default {
         fecharModalCadastroCobranca() {
             this.modalAdicionarCobranca = false
             this.buscar()
+        },
+        abrirModalSelecionarPaciente(){
+            this.modalSelecionarPaciente = true
+        },
+        fecharModalSelecionarPaciente(){
+            this.modalSelecionarPaciente = false
+        },
+        selecionarPaciente(paciente){
+            this.fecharModalSelecionarPaciente()
+            this.pacienteSelecionado = paciente
+        },
+        removerPacienteSelecionado(){
+            this.pacienteSelecionado = null
         }
     }
 }
@@ -192,4 +234,24 @@ export default {
 
   &.hide-border
     border 0 !important
+
+.atributos-paciente
+  height 150px
+  width 100%
+  display flex
+  flex-direction column
+  justify-content center
+  align-items start
+  padding 15px
+  padding-top 0
+  font-size 20px
+
+.selecionado-label
+  font-weight bold
+  color white
+
+.container-remover-paciente
+  float right
+
+
 </style>

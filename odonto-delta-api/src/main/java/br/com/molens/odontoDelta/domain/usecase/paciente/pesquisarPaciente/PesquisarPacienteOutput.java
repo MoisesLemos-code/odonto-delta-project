@@ -1,4 +1,4 @@
-package br.com.molens.odontoDelta.domain.usecase.paciente.buscaPaginada;
+package br.com.molens.odontoDelta.domain.usecase.paciente.pesquisarPaciente;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,7 +11,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class BuscaPaginadaPacienteOutput {
+public class PesquisarPacienteOutput {
 
     private List<Item> items;
     private Long totalPages;
@@ -25,8 +25,6 @@ public class BuscaPaginadaPacienteOutput {
         private String email;
         private String cnpjCpf;
         private String telefone;
-        private String cidade;
-        private String estado;
     }
 
 }

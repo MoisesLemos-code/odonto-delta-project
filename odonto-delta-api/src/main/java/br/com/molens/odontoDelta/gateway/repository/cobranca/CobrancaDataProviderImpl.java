@@ -16,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -102,14 +103,17 @@ public class CobrancaDataProviderImpl implements CobrancaDataProvider {
             expressaoDeBusca = expressaoDeBusca.and(filtrosParaBusca);
         }
         if(Objects.nonNull(filtro.getDataVencimento())){
-            BooleanExpression filtrosParaBusca = query.dataVencimento.before(filtro.getDataVencimento());
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(filtro.getDataVencimento());
+            cal.add(Calendar.DATE, 1);
+
+            BooleanExpression filtrosParaBusca = query.dataVencimento.before(cal.getTime());
             expressaoDeBusca = expressaoDeBusca.and(filtrosParaBusca);
         }
         if (Objects.nonNull(filtro.getPacienteId())) {
             BooleanExpression filtrosParaBusca = query.paciente.id.eq(filtro.getPacienteId());
             expressaoDeBusca = expressaoDeBusca.and(filtrosParaBusca);
         }
-
 
         return expressaoDeBusca;
     }

@@ -10,6 +10,13 @@ export default {
         return data
     },
 
+    async [actionTypes.COBRANCA.BUSCAR_TODAS_COBRANCAS_INTERNO]({state}, pacienteId) {
+        const {filtros, paginacao} = state.resultadoBuscaTodasCobrancasInterno
+        filtros.pacienteId.value = pacienteId
+        const {data} = await api.cobranca.buscarTodasCobrancas(filtros, paginacao)
+        return data
+    },
+
     async [actionTypes.COBRANCA.CADASTRAR_COBRANCA](context, dados) {
         const {data} = await api.cobranca.cadastrar(dados)
         return data

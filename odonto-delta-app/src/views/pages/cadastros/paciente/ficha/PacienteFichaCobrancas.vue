@@ -66,7 +66,7 @@
                                     :itens="itens"
                                     :paginas="paginas"
                                     :total-itens="totalItens"
-                                    :paginacao="$store.state.cobranca.resultadoBuscaTodasCobrancas.paginacao"
+                                    :paginacao="$store.state.cobranca.resultadoBuscaTodasCobrancasInterno.paginacao"
                                     @acessar="tratarEventoAcessarCobranca"
                                     @paginar="tratarEventoPaginar"
                                 />
@@ -119,9 +119,9 @@ export default {
     },
     methods: {
         ...mapMutations([
-            mutationTypes.COBRANCA.SET_FILTROS_BUSCA_TODAS_COBRANCAS,
-            mutationTypes.COBRANCA.SET_PAGINACAO_BUSCA_TODAS_COBRANCAS,
-            mutationTypes.COBRANCA.RESETA_PAGE
+            mutationTypes.COBRANCA.SET_FILTROS_BUSCA_TODAS_COBRANCAS_INTERNO,
+            mutationTypes.COBRANCA.SET_PAGINACAO_BUSCA_TODAS_COBRANCAS_INTERNO,
+            mutationTypes.COBRANCA.RESETA_PAGE_INTERNO,
         ]),
         setarIdPaciente() {
             if (this.$route.params.id) {
@@ -129,11 +129,11 @@ export default {
             }
         },
         async buscar() {
-            this.setFiltrosBuscaTodasCobrancas(this.getFiltrosInterno())
+            this.setFiltrosBuscaTodasCobrancasInterno(this.getFiltrosInterno())
             await this.buscarCobrancas()
         },
         async buscarCobrancas(){
-            const resposta = await this.$store.dispatch(actionTypes.COBRANCA.BUSCAR_TODAS_COBRANCAS, this.idPaciente)
+            const resposta = await this.$store.dispatch(actionTypes.COBRANCA.BUSCAR_TODAS_COBRANCAS_INTERNO, this.idPaciente)
             if(resposta){
                 this.itens = resposta.items
                 this.paginas = resposta.totalPages
@@ -141,13 +141,13 @@ export default {
             }
         },
         getFiltros() {
-            return _.cloneDeep(this.$store.state.cobranca.resultadoBuscaTodasCobrancas.filtros)
+            return _.cloneDeep(this.$store.state.cobranca.resultadoBuscaTodasCobrancasInterno.filtros)
         },
         getFiltrosInterno() {
             return _.cloneDeep(this.filtrosInterno)
         },
         tratarEventoPaginar(paginacao) {
-            this.setPaginacaoBuscaTodasCobrancas(paginacao)
+            this.setPaginacaoBuscaTodasCobrancasInterno(paginacao)
             this.buscar()
         },
         tratarEventoRemoverFiltro(propriedade) {
@@ -167,7 +167,7 @@ export default {
             this.buscar()
         },
         tratarEventoBuscaSimples(busca) {
-            this.resetaPage()
+            this.resetaPageInterno()
             this.filtrosInterno.tipo.value = busca.tipo.value
             this.filtrosInterno.atributo.value = busca.atributo.value
             this.filtrosInterno.conteudo.value = busca.conteudo.value
@@ -178,7 +178,7 @@ export default {
                 this.mostrarNotificacaoErro('Informe o conteúdo da busca!')
                 return
             }
-            this.resetaPage()
+            this.resetaPageInterno()
             this.buscar()
         },
         tratarEventoLimparBuscaAvancada() {

@@ -10,6 +10,7 @@ import br.com.molens.odontoDelta.domain.usecase.fichaPaciente.inserirFichaPacien
 import br.com.molens.odontoDelta.domain.usecase.paciente.inserirPaciente.converter.InserirPacienteOutputConverter;
 import br.com.molens.odontoDelta.gateway.entity.Empresa;
 import br.com.molens.odontoDelta.gateway.entity.Municipio;
+import br.com.molens.odontoDelta.utils.HelpUtil;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 
@@ -59,7 +60,7 @@ public class InserirPacienteUsecase {
     }
 
     private void validarPacienteJaCadastrado(InserirPacienteInput input) {
-        if (pacienteDataProvider.existeCnpjCpf(input.getCnpjCpf(), input.getEmpresaId())) {
+        if (pacienteDataProvider.existeCnpjCpf(HelpUtil.obterApenasNumeros(input.getCnpjCpf()), input.getEmpresaId())) {
             throw new JaExistePacienteCnpjCpfException();
         }
     }
